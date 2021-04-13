@@ -5,6 +5,7 @@ import DynamicCreditCard from "./DynamicCreditCard";
 
 const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 	const [focus, setFocus] = useState("");
+	const [cardMaxLength, setCardMaxLength] = useState(16);
 
 	function handleFocus(e) {
 		if (e.target.name === "monthExpiry" || e.target.name === "yearExpiry") {
@@ -38,6 +39,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 							number={ccData.number}
 							focused={focus}
 							setCardType={setCardType}
+							setCardMaxLength={setCardMaxLength}
 						/>
 					</div>
 					<div>
@@ -55,6 +57,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onBlur={handleBlur}
 											required
 											type='text'
+											maxLength={cardMaxLength}
 										/>
 									</Form.Group>
 								</Col>
@@ -89,6 +92,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onBlur={handleBlur}
 											required
 											type='text'
+											maxLength='2'
 										/>
 									</Form.Group>
 								</Col>
@@ -104,6 +108,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onBlur={handleBlur}
 											required
 											type='text'
+											maxLength='2'
 										/>
 									</Form.Group>
 								</Col>
@@ -121,6 +126,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onBlur={handleBlur}
 											required
 											type='text'
+											maxLength='4'
 										/>
 									</Form.Group>
 								</Col>

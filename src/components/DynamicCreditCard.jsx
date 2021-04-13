@@ -3,7 +3,7 @@ import React from "react";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 
-const DynamicCreditCard = ({ number, name, cvc, expiryMonth, expiryYear, focused, setCardType }) => {
+const DynamicCreditCard = ({ number, name, cvc, expiryMonth, expiryYear, focused, setCardType, setCardMaxLength }) => {
 	const expiry = `${expiryMonth}/${expiryYear}`;
 	return (
 		<Cards
@@ -14,6 +14,7 @@ const DynamicCreditCard = ({ number, name, cvc, expiryMonth, expiryYear, focused
 			focused={focused}
 			callback={(e) => {
 				setCardType(e.issuer);
+				setCardMaxLength(e.maxLength);
 			}}
 			size='200px'
 		/>
