@@ -1,33 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { updateCreditCardByCustomerId } from "../api/apiFunctions";
-
-const initialCreditCardInfo = {
-	ccType: "Visa",
-	nameOnCard: "",
-	cardNumber: "",
-	monthExpiry: 1,
-	yearExpiry: 21,
-	cvv: "",
-	billingZip: "",
-};
-
-const CreditCardForm = ({ clientId, reservationId }) => {
-	const [ccData, setCCData] = useState(initialCreditCardInfo);
-
-	function handleSubmit(e) {
-		e.preventDefault();
-		// console.log(ccData);
-		updateCreditCardByCustomerId(clientId, reservationId, ccData);
-	}
-
-	function handleChange(e) {
-		setCCData({
-			...ccData,
-			[e.target.name]: e.target.value,
-		});
-	}
-
+const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 	return (
 		<form onSubmit={handleSubmit}>
 			<table>

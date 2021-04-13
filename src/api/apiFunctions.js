@@ -14,7 +14,7 @@ export async function updateCreditCardByCustomerId(clientId, reservationId, ccIn
 
 		token = data.apiToken.access_token;
 	} catch (error) {
-		console.log(`Auth Error: \n${error}`);
+		// console.log(`Auth Error: \n${error}`);
 		throw new Error("Auth Failed");
 	}
 
@@ -31,7 +31,8 @@ export async function updateCreditCardByCustomerId(clientId, reservationId, ccIn
 
 		customerId = data.reservationview.customerId;
 	} catch (error) {
-		console.log(`Finding Reservation Error: ${error}`);
+		// console.log(`Finding Reservation Error: ${error}`);
+		throw new Error("Could not find the reservation.");
 	}
 
 	// Formatting for Credit Card Input
@@ -70,7 +71,7 @@ export async function updateCreditCardByCustomerId(clientId, reservationId, ccIn
 	try {
 		await axios.post(`${BASE_URL}/Customer/InsertCreditCard`, ccPostBody, globalConfig);
 	} catch (error) {
-		console.log(`Credit Card Insert Error: ${error}`);
+		// console.log(`Credit Card Insert Error: ${error}`);
 		throw new Error("Error inserting the credit card details.");
 	}
 }
