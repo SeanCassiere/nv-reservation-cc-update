@@ -1,3 +1,6 @@
+import React from "react";
+import { Container } from "react-bootstrap";
+
 import QueryStringNotPassed from "./layouts/QueryStringNotPasses";
 import UserApplicationForm from "./layouts/UserApplicationForm";
 
@@ -6,7 +9,7 @@ const queryClientId = new URLSearchParams(window.location.search).get("clientId"
 
 const App = () => {
 	return (
-		<>
+		<Container>
 			{queryClientId !== null &&
 			queryReservationId !== null &&
 			queryClientId.length !== 0 &&
@@ -15,7 +18,7 @@ const App = () => {
 			) : (
 				<QueryStringNotPassed />
 			)}
-		</>
+		</Container>
 	);
 };
 

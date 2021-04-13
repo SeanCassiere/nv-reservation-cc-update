@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Card, Form, Row, Col, Button } from "react-bootstrap";
 
 import DynamicCreditCard from "./DynamicCreditCard";
 
@@ -24,109 +25,130 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 
 	return (
 		<>
-			<DynamicCreditCard
-				cvc={ccData.cvc}
-				expiryMonth={ccData.monthExpiry}
-				expiryYear={ccData.yearExpiry}
-				name={ccData.name}
-				number={ccData.number}
-				focused={focus}
-				setCardType={setCardType}
-			/>
-			<form onSubmit={handleSubmit}>
-				<table>
-					<thead>
-						<tr>
-							<th>Label</th>
-							<th>Input</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Card Number</td>
-							<td>
-								<input
-									type='number'
-									name='number'
-									value={ccData.number}
-									onChange={handleChange}
-									onFocus={handleFocus}
-									onBlur={handleBlur}
-									required
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>Name on Card</td>
-							<td>
-								<input
-									type='text'
-									name='name'
-									value={ccData.name}
-									onChange={handleChange}
-									onFocus={handleFocus}
-									onBlur={handleBlur}
-									required
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>Expiry Month</td>
-							<td>
-								<input
-									type='text'
-									name='monthExpiry'
-									value={ccData.monthExpiry}
-									onChange={handleChange}
-									onFocus={handleFocus}
-									onBlur={handleBlur}
-									required
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>Expiry Year</td>
-							<td>
-								<input
-									type='text'
-									name='yearExpiry'
-									value={ccData.yearExpiry}
-									onChange={handleChange}
-									onFocus={handleFocus}
-									onBlur={handleBlur}
-									required
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>CVV</td>
-							<td>
-								<input
-									type='number'
-									name='cvc'
-									defaultChecked={0}
-									value={ccData.cvc}
-									onChange={handleChange}
-									onFocus={handleFocus}
-									onBlur={handleBlur}
-									required
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>Billing Zip Code</td>
-							<td>
-								<input type='text' name='billingZip' value={ccData.billingZip} onChange={handleChange} required />
-							</td>
-						</tr>
-						<tr>
-							<td span={2}>
-								<button type='submit'>Submit</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</form>
+			<Card style={{ width: "25em" }}>
+				<Card.Body>
+					<Card.Title>Credit Card Information</Card.Title>
+					<Card.Subtitle>Please enter in your credit card information to used for your reservation.</Card.Subtitle>
+					<div style={{ margin: "2rem -1.5rem" }}>
+						<DynamicCreditCard
+							cvc={ccData.cvc}
+							expiryMonth={ccData.monthExpiry}
+							expiryYear={ccData.yearExpiry}
+							name={ccData.name}
+							number={ccData.number}
+							focused={focus}
+							setCardType={setCardType}
+						/>
+					</div>
+					<div>
+						<Form onSubmit={handleSubmit}>
+							<Row>
+								<Col>
+									<Form.Group controlId='numberInput'>
+										<Form.Label>Credit Card Number</Form.Label>
+										<Form.Control
+											placeholder='42XX-XXXX-XXXX-XXXX'
+											name='number'
+											value={ccData.number}
+											onChange={handleChange}
+											onFocus={handleFocus}
+											onBlur={handleBlur}
+											required
+											type='text'
+										/>
+									</Form.Group>
+								</Col>
+							</Row>
+							<Row>
+								<Col>
+									<Form.Group controlId='nameInput'>
+										<Form.Label>Name on the Credit Card</Form.Label>
+										<Form.Control
+											placeholder='John Doe'
+											name='name'
+											value={ccData.name}
+											onChange={handleChange}
+											onFocus={handleFocus}
+											onBlur={handleBlur}
+											required
+											type='text'
+										/>
+									</Form.Group>
+								</Col>
+							</Row>
+							<Row>
+								<Col>
+									<Form.Group controlId='monthInput'>
+										<Form.Label>Expiry Month</Form.Label>
+										<Form.Control
+											placeholder='MM'
+											name='monthExpiry'
+											value={ccData.monthExpiry}
+											onChange={handleChange}
+											onFocus={handleFocus}
+											onBlur={handleBlur}
+											required
+											type='text'
+										/>
+									</Form.Group>
+								</Col>
+								<Col>
+									<Form.Group controlId='monthInput'>
+										<Form.Label>Expiry Year</Form.Label>
+										<Form.Control
+											placeholder='YY'
+											name='yearExpiry'
+											value={ccData.yearExpiry}
+											onChange={handleChange}
+											onFocus={handleFocus}
+											onBlur={handleBlur}
+											required
+											type='text'
+										/>
+									</Form.Group>
+								</Col>
+							</Row>
+							<Row>
+								<Col>
+									<Form.Group controlId='monthInput'>
+										<Form.Label>CVV</Form.Label>
+										<Form.Control
+											placeholder='***'
+											name='cvc'
+											value={ccData.cvc}
+											onChange={handleChange}
+											onFocus={handleFocus}
+											onBlur={handleBlur}
+											required
+											type='text'
+										/>
+									</Form.Group>
+								</Col>
+								<Col>
+									<Form.Group controlId='monthInput'>
+										<Form.Label>Billing Zip Code</Form.Label>
+										<Form.Control
+											placeholder='Zip Code'
+											name='billingZip'
+											value={ccData.billingZip}
+											onChange={handleChange}
+											required
+											type='text'
+										/>
+									</Form.Group>
+								</Col>
+							</Row>
+							<Row>
+								<Col>
+									<Button variant='primary' type='submit' size='lg' block>
+										Submit
+									</Button>
+								</Col>
+							</Row>
+						</Form>
+					</div>
+				</Card.Body>
+			</Card>
 		</>
 	);
 };

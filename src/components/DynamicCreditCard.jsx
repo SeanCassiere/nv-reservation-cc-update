@@ -15,6 +15,7 @@ const DynamicCreditCard = ({ number, name, cvc, expiryMonth, expiryYear, focused
 			callback={(e) => {
 				setCardType(e.issuer);
 			}}
+			size='200px'
 		/>
 	);
 };

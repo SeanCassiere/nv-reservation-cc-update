@@ -11,8 +11,8 @@ const initialCreditCardInfo = {
 	ccType: "",
 	name: "",
 	number: "",
-	monthExpiry: "01",
-	yearExpiry: "21",
+	monthExpiry: "",
+	yearExpiry: "",
 	cvc: "",
 	billingZip: "",
 };
