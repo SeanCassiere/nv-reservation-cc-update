@@ -41,7 +41,7 @@ const initialState = {
 	submitFormSuccess: false,
 };
 
-const UserApplicationForm = ({ clientId, reservationId }) => {
+const UserApplicationForm = ({ clientId, reservationId, lang, translate }) => {
 	const [globalState, dispatch] = useReducer(reducer, initialState);
 	const [ccData, setCCData] = useState(initialCreditCardInfo);
 
@@ -66,11 +66,17 @@ const UserApplicationForm = ({ clientId, reservationId }) => {
 
 	return (
 		<>
-			{globalState.error && <ErrorSubmission />}
+			{globalState.error && <ErrorSubmission lang={lang} translate={translate} />}
 			{globalState.loadingFormSubmit && <LoadingSubmission />}
-			{globalState.submitFormSuccess && <SuccessSubmission />}
+			{globalState.submitFormSuccess && <SuccessSubmission lang={lang} translate={translate} />}
 			{!globalState.loadingFormSubmit && !globalState.submitFormSuccess && !globalState.error && (
-				<CreditCardForm ccData={ccData} handleChange={handleChange} handleSubmit={handleSubmit} />
+				<CreditCardForm
+					ccData={ccData}
+					handleChange={handleChange}
+					handleSubmit={handleSubmit}
+					lang={lang}
+					translate={translate}
+				/>
 			)}
 		</>
 	);

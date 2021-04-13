@@ -17,7 +17,7 @@ function range(start, end) {
 let numsOfYears = range(currentYearNum, 58);
 let numsOfMonths = range(1, 12);
 
-const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
+const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate }) => {
 	const [focus, setFocus] = useState("");
 	const [cardMaxLength, setCardMaxLength] = useState(16);
 
@@ -42,8 +42,8 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 		<>
 			<Card border='light' style={{ width: "100%" }}>
 				<Card.Body>
-					<Card.Title>Credit Card Information</Card.Title>
-					<Card.Subtitle>Please enter in your credit card information to be used for your reservation.</Card.Subtitle>
+					<Card.Title>{translate[lang].form.title}</Card.Title>
+					<Card.Subtitle>{translate[lang].form.message}</Card.Subtitle>
 					<div style={{ margin: "2rem -1.5rem" }}>
 						<DynamicCreditCard
 							cvc={ccData.cvc}
@@ -61,9 +61,9 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 							<Row>
 								<Col>
 									<Form.Group controlId='numberInput'>
-										<Form.Label>Credit Card Number</Form.Label>
+										<Form.Label>{translate[lang].form.labels.card_number}</Form.Label>
 										<Form.Control
-											placeholder='42XX-XXXX-XXXX-XXXX'
+											placeholder='XXXX-XXXX-XXXX-XXXX'
 											name='number'
 											value={ccData.number}
 											onChange={handleChange}
@@ -79,9 +79,9 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 							<Row>
 								<Col>
 									<Form.Group controlId='nameInput'>
-										<Form.Label>Name on the Credit Card</Form.Label>
+										<Form.Label>{translate[lang].form.labels.name_on_card}</Form.Label>
 										<Form.Control
-											placeholder='John Doe'
+											placeholder={translate[lang].form.labels.p_holders.name}
 											name='name'
 											value={ccData.name}
 											onChange={handleChange}
@@ -97,7 +97,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 							<Row>
 								<Col>
 									<Form.Group controlId='monthInput'>
-										<Form.Label>Expiry Month</Form.Label>
+										<Form.Label>{translate[lang].form.labels.exp_month}</Form.Label>
 										<Form.Control
 											name='monthExpiry'
 											defaultValue={ccData.monthExpiry}
@@ -117,7 +117,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 								</Col>
 								<Col>
 									<Form.Group controlId='yearInput'>
-										<Form.Label>Expiry Year</Form.Label>
+										<Form.Label>{translate[lang].form.labels.exp_year}</Form.Label>
 										<Form.Control
 											name='yearExpiry'
 											defaultValue={nextYearNum}
@@ -139,7 +139,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 							<Row>
 								<Col>
 									<Form.Group controlId='cvvInput'>
-										<Form.Label>CVV</Form.Label>
+										<Form.Label>{translate[lang].form.labels.cvv}</Form.Label>
 										<Form.Control
 											placeholder='***'
 											name='cvc'
@@ -156,9 +156,9 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 								</Col>
 								<Col>
 									<Form.Group controlId='zipCodeInput'>
-										<Form.Label>Billing Zip Code</Form.Label>
+										<Form.Label>{translate[lang].form.labels.billingZip}</Form.Label>
 										<Form.Control
-											placeholder='Zip Code'
+											placeholder={translate[lang].form.labels.p_holders.zip_code}
 											name='billingZip'
 											value={ccData.billingZip}
 											onChange={handleChange}
@@ -172,7 +172,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 							<Row>
 								<Col>
 									<Button variant='primary' type='submit' size='lg' block>
-										Submit
+										{translate[lang].form.labels.submit}
 									</Button>
 								</Col>
 							</Row>

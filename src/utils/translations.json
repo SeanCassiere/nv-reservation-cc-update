@@ -1,12 +1,38 @@
 {
 	"en": {
+		"form": {
+			"title": "Credit Card Information",
+			"message": "Please enter in your credit card information to be used for your reservation.",
+			"labels": {
+				"card_number": "Card Number",
+				"name_on_card": "Name on the Credit Card",
+				"cvv": "CVV",
+				"billingZip": "Billing Zip Code",
+				"submit": "Submit",
+				"exp_month": "Expiry Month",
+				"exp_year": "Expiry Year",
+				"p_holders": {
+					"name": "John Doe",
+					"zip_code": "Zip Code"
+				}
+			}
+		},
+		"success_submission": {
+			"title": "Success!",
+			"message": "Thank you for submitting your credit card information towards your reservation."
+		},
+		"bad_submission": {
+			"title": "Uh Oh",
+			"message": "I encountered an error when trying to submit your information.",
+			"report": "Please report to"
+		},
 		"query_missing": {
 			"title": "Uh Oh",
 			"message": "It looks like all not all the necessary information was sent.",
 			"report": "Please report to"
 		},
 		"footer": {
-			"POWERED_BY": "Powered by"
+			"powered_by": "Powered by"
 		}
 	}
 }
