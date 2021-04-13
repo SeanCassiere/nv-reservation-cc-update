@@ -3,16 +3,16 @@ import { Card } from "react-bootstrap";
 
 import ErrorImg from "../assets/undraw_warning_cyit.svg";
 
-const ErrorSubmission = () => {
+const ErrorSubmission = ({ lang, translate }) => {
 	return (
 		<Card border='danger' style={{ width: "100%", padding: "2rem 0.5rem" }}>
 			<Card.Img variant='top' alt='Not Found' src={ErrorImg} />
 			<Card.Body>
-				<Card.Title>Uh-Oh</Card.Title>
+				<Card.Title>{translate[lang].bad_submission.title}</Card.Title>
 				<Card.Text>
-					I encountered an error when trying to submit your information.
+					{translate[lang].bad_submission.message}
 					<br />
-					Please report to&nbsp;
+					{translate[lang].bad_submission.report}&nbsp;
 					<a href='mailto:support@navotar.com' target='_blank' rel='noreferrer'>
 						support@navotar.com
 					</a>

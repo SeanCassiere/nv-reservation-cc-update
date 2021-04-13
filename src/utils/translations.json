@@ -1,0 +1,122 @@
+{
+	"en": {
+		"form": {
+			"title": "Credit Card Information",
+			"message": "Please enter in your credit card information to be used for your reservation.",
+			"labels": {
+				"card_number": "Card Number",
+				"name_on_card": "Name on the Credit Card",
+				"cvv": "CVV",
+				"billingZip": "Billing Zip Code",
+				"submit": "Submit",
+				"exp_month": "Expiry Month",
+				"exp_year": "Expiry Year",
+				"p_holders": {
+					"name": "John Doe",
+					"zip_code": "Zip Code"
+				}
+			},
+			"credit_card": {
+				"valid_thru": "valid thru",
+				"your_name": "YOUR NAME HERE"
+			}
+		},
+		"success_submission": {
+			"title": "Success!",
+			"message": "Thank you for submitting your credit card information towards your reservation."
+		},
+		"bad_submission": {
+			"title": "Uh Oh",
+			"message": "I encountered an error when trying to submit your information.",
+			"report": "Please report to"
+		},
+		"query_missing": {
+			"title": "Uh Oh",
+			"message": "It looks like all not all the necessary information was sent.",
+			"report": "Please report to"
+		},
+		"footer": {
+			"powered_by": "Powered by"
+		}
+	},
+	"fr": {
+		"form": {
+			"title": "Informations de carte de crédit",
+			"message": "Veuillez saisir les informations de votre carte de crédit à utiliser pour votre réservation.",
+			"labels": {
+				"card_number": "Numéro de carte",
+				"name_on_card": "Nom sur la carte de crédit",
+				"cvv": "CVV",
+				"billingZip": "Code postal de facturation",
+				"submit": "Soumettre",
+				"exp_month": "Mois d'expiration",
+				"exp_year": "Année d'expiration ",
+				"p_holders": {
+					"name": "John Doe",
+					"zip_code": "Code postal"
+				}
+			},
+			"credit_card": {
+				"valid_thru": "valide à travers",
+				"your_name": "VOTRE NOM ICI"
+			}
+		},
+		"success_submission": {
+			"title": "Succès!",
+			"message": "Merci d'avoir soumis les informations de votre carte de crédit pour votre réservation."
+		},
+		"bad_submission": {
+			"title": "Uh Oh",
+			"message": "J'ai rencontré une erreur en essayant de soumettre vos informations.",
+			"report": "Veuillez signaler à"
+		},
+		"query_missing": {
+			"title": "Uh Oh",
+			"message": "Il semble que toutes les informations ne sont pas nécessaires a été envoyé.",
+			"report": "Veuillez signaler à"
+		},
+		"footer": {
+			"powered_by": "Alimenté par"
+		}
+	},
+	"de": {
+		"form": {
+			"title": "Kreditkarteninformationen",
+			"message": "Bitte geben Sie Ihre Kreditkarteninformationen ein, die für Ihre Reservierung verwendet werden sollen.",
+			"labels": {
+				"card_number": "Kartennummer",
+				"name_on_card": "Name auf der Kreditkarte",
+				"cvv": "CVV",
+				"billingZip": "Postleitzahl der Abrechnung",
+				"submit": "Senden",
+				"exp_month": "Ablaufmonat",
+				"exp_year": "Ablaufjahr ",
+				"p_holders": {
+					"name": "John Doe",
+					"zip_code": "PLZ"
+				}
+			},
+			"credit_card": {
+				"valid_thru": "Gültig bis",
+				"your_name": "DEINEN NAMEN HIER"
+			}
+		},
+		"success_submission": {
+			"title": "Erfolg!",
+			"message": "Vielen Dank, dass Sie Ihre Kreditkarteninformationen für Ihre Reservierung übermittelt haben."
+		},
+		"bad_submission": {
+			"title": "Oh oh",
+			"message": "Beim Versuch, Ihre Informationen zu übermitteln, ist ein Fehler aufgetreten.",
+			"report": "Bitte melden Sie sich bei"
+		},
+		"query_missing": {
+			"title": "Oh oh",
+			"message": "Es sieht so aus, als ob nicht alle erforderlichen Informationen gesendet wurden.",
+			"report": "Bitte melden Sie sich bei"
+		},
+		"footer": {
+			"powered_by": "Unterstützt von"
+		}
+	}
+}
