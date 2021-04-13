@@ -28,7 +28,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 			<Card style={{ width: "25em" }}>
 				<Card.Body>
 					<Card.Title>Credit Card Information</Card.Title>
-					<Card.Subtitle>Please enter in your credit card information to used for your reservation.</Card.Subtitle>
+					<Card.Subtitle>Please enter in your credit card information to be used for your reservation.</Card.Subtitle>
 					<div style={{ margin: "2rem -1.5rem" }}>
 						<DynamicCreditCard
 							cvc={ccData.cvc}
