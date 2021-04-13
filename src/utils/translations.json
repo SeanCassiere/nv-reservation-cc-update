@@ -15,6 +15,10 @@
 					"name": "John Doe",
 					"zip_code": "Zip Code"
 				}
+			},
+			"credit_card": {
+				"valid_thru": "valid thru",
+				"your_name": "YOUR NAME HERE"
 			}
 		},
 		"success_submission": {

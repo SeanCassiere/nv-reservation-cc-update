@@ -54,6 +54,8 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 							focused={focus}
 							setCardType={setCardType}
 							setCardMaxLength={setCardMaxLength}
+							locale={{ valid: translate[lang].form.credit_card.valid_thru }}
+							placeholders={{ name: translate[lang].form.credit_card.your_name }}
 						/>
 					</div>
 					<div>
