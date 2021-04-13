@@ -1,16 +1,16 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-import NotFoundImg from "../assets/undraw_page_not_found_su7k.svg";
+import ErrorImg from "../assets/undraw_warning_cyit.svg";
 
-const QueryStringNotPasses = () => {
+const ErrorSubmission = () => {
 	return (
-		<Card border='light' style={{ width: "100%", padding: "2rem 1rem" }}>
-			<Card.Img variant='top' alt='Not Found' src={NotFoundImg} />
+		<Card border='danger' style={{ width: "100%", padding: "2rem 0.5rem" }}>
+			<Card.Img variant='top' alt='Not Found' src={ErrorImg} />
 			<Card.Body>
 				<Card.Title>Uh-Oh</Card.Title>
 				<Card.Text>
-					<p>It looks like all the necessary information was not sent.</p>
+					<p>I encountered an error when trying to submit your information..</p>
 					<p>
 						Please report this issue to&nbsp;
 						<a href='mailto:support@navotar.com' target='_blank' rel='noreferrer'>
@@ -23,4 +23,4 @@ const QueryStringNotPasses = () => {
 	);
 };
 
-export default QueryStringNotPasses;
+export default ErrorSubmission;

@@ -3,7 +3,7 @@ import React, { useState, useReducer } from "react";
 import { updateCreditCardByCustomerId } from "../api/apiFunctions";
 
 import CreditCardForm from "../components/CreditCardForm";
-import ErrorSubmission from "../components/ErrorSubmission";
+import ErrorSubmission from "./ErrorSubmission";
 import SuccessSubmission from "../components/SuccessSubmission";
 import LoadingSubmission from "./LoadingSubmission";
 

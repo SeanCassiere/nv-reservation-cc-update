@@ -26,7 +26,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 
 	return (
 		<>
-			<Card style={{ width: "100%" }}>
+			<Card border='light' style={{ width: "100%" }}>
 				<Card.Body>
 					<Card.Title>Credit Card Information</Card.Title>
 					<Card.Subtitle>Please enter in your credit card information to be used for your reservation.</Card.Subtitle>
