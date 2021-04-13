@@ -56,7 +56,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onFocus={handleFocus}
 											onBlur={handleBlur}
 											required
-											type='text'
+											type='number'
 											maxLength={cardMaxLength}
 										/>
 									</Form.Group>
@@ -75,6 +75,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onBlur={handleBlur}
 											required
 											type='text'
+											autoComplete='off'
 										/>
 									</Form.Group>
 								</Col>
@@ -91,13 +92,13 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onFocus={handleFocus}
 											onBlur={handleBlur}
 											required
-											type='text'
+											type='number'
 											maxLength='2'
 										/>
 									</Form.Group>
 								</Col>
 								<Col>
-									<Form.Group controlId='monthInput'>
+									<Form.Group controlId='yearInput'>
 										<Form.Label>Expiry Year</Form.Label>
 										<Form.Control
 											placeholder='YY'
@@ -107,7 +108,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onFocus={handleFocus}
 											onBlur={handleBlur}
 											required
-											type='text'
+											type='number'
 											maxLength='2'
 										/>
 									</Form.Group>
@@ -115,7 +116,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 							</Row>
 							<Row>
 								<Col>
-									<Form.Group controlId='monthInput'>
+									<Form.Group controlId='cvvInput'>
 										<Form.Label>CVV</Form.Label>
 										<Form.Control
 											placeholder='***'
@@ -125,13 +126,13 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onFocus={handleFocus}
 											onBlur={handleBlur}
 											required
-											type='text'
+											type='number'
 											maxLength='4'
 										/>
 									</Form.Group>
 								</Col>
 								<Col>
-									<Form.Group controlId='monthInput'>
+									<Form.Group controlId='zipCodeInput'>
 										<Form.Label>Billing Zip Code</Form.Label>
 										<Form.Control
 											placeholder='Zip Code'
@@ -140,6 +141,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onChange={handleChange}
 											required
 											type='text'
+											autoComplete='off'
 										/>
 									</Form.Group>
 								</Col>
