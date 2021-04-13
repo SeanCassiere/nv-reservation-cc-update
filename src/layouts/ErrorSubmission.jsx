@@ -10,13 +10,12 @@ const ErrorSubmission = () => {
 			<Card.Body>
 				<Card.Title>Uh-Oh</Card.Title>
 				<Card.Text>
-					<p>I encountered an error when trying to submit your information..</p>
-					<p>
-						Please report this issue to&nbsp;
-						<a href='mailto:support@navotar.com' target='_blank' rel='noreferrer'>
-							support@navotar.com
-						</a>
-					</p>
+					I encountered an error when trying to submit your information.
+					<br />
+					Please report to&nbsp;
+					<a href='mailto:support@navotar.com' target='_blank' rel='noreferrer'>
+						support@navotar.com
+					</a>
 				</Card.Text>
 			</Card.Body>
 		</Card>

@@ -9,9 +9,7 @@ const SuccessSubmission = () => {
 			<Card.Img variant='top' alt='Not Found' src={SuccessImg} />
 			<Card.Body>
 				<Card.Title>Success!</Card.Title>
-				<Card.Text>
-					<p>Thank you for submitting your credit card information towards your reservation.</p>
-				</Card.Text>
+				<Card.Text>Thank you for submitting your credit card information towards your reservation.</Card.Text>
 			</Card.Body>
 		</Card>
 	);
