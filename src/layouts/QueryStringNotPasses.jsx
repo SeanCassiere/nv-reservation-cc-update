@@ -10,13 +10,12 @@ const QueryStringNotPasses = () => {
 			<Card.Body>
 				<Card.Title>Uh-Oh</Card.Title>
 				<Card.Text>
-					<p>It looks like all the necessary information was not sent.</p>
-					<p>
-						Please report this issue to&nbsp;
-						<a href='mailto:support@navotar.com' target='_blank' rel='noreferrer'>
-							support@navotar.com
-						</a>
-					</p>
+					It looks like all the necessary information was sent.
+					<br />
+					Please report to&nbsp;
+					<a href='mailto:support@navotar.com' target='_blank' rel='noreferrer'>
+						support@navotar.com
+					</a>
 				</Card.Text>
 			</Card.Body>
 		</Card>
