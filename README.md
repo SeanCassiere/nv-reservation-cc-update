@@ -8,7 +8,10 @@ URL Params
 ?reservationId=xxxxx&clientId=xxxx&lang=en
 ```
 
-Languages Supported:
+## Language Support
 
-- English
-- French
+Languages currently supported
+| Language | Code |
+| --- | --- |
+| English | en |
+| French | fr |
