@@ -38,5 +38,45 @@
 		"footer": {
 			"powered_by": "Powered by"
 		}
+	},
+	"fr": {
+		"form": {
+			"title": "Informations de carte de crédit",
+			"message": "Veuillez saisir les informations de votre carte de crédit à utiliser pour votre réservation.",
+			"labels": {
+				"card_number": "Numéro de carte",
+				"name_on_card": "Nom sur la carte de crédit",
+				"cvv": "CVV",
+				"billingZip": "Code postal de facturation",
+				"submit": "Soumettre",
+				"exp_month": "Mois d'expiration",
+				"exp_year": "Année d'expiration ",
+				"p_holders": {
+					"name": "John Doe",
+					"zip_code": "Code postal"
+				}
+			},
+			"credit_card": {
+				"valid_thru": "valide à travers",
+				"your_name": "VOTRE NOM ICI"
+			}
+		},
+		"success_submission": {
+			"title": "Succès!",
+			"message": "Merci d'avoir soumis les informations de votre carte de crédit pour votre réservation."
+		},
+		"bad_submission": {
+			"title": "Uh Oh",
+			"message": "J'ai rencontré une erreur en essayant de soumettre vos informations.",
+			"report": "Veuillez signaler à"
+		},
+		"query_missing": {
+			"title": "Uh Oh",
+			"message": "Il semble que toutes les informations ne sont pas nécessaires a été envoyé.",
+			"report": "Veuillez signaler à"
+		},
+		"footer": {
+			"powered_by": "Alimenté par"
+		}
 	}
 }
