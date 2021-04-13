@@ -3,6 +3,8 @@ import { Card, Form, Row, Col, Button } from "react-bootstrap";
 
 import DynamicCreditCard from "./DynamicCreditCard";
 
+const currentYearNum = new Date().getFullYear().toString().substr(-2);
+
 const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 	const [focus, setFocus] = useState("");
 	const [cardMaxLength, setCardMaxLength] = useState(16);
@@ -15,7 +17,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 		}
 	}
 
-	function handleBlur(e) {
+	function handleBlur() {
 		setFocus("");
 	}
 
@@ -91,6 +93,8 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onChange={handleChange}
 											onFocus={handleFocus}
 											onBlur={handleBlur}
+											min={1}
+											max={12}
 											required
 											type='number'
 											maxLength='2'
@@ -107,6 +111,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onChange={handleChange}
 											onFocus={handleFocus}
 											onBlur={handleBlur}
+											min={currentYearNum}
 											required
 											type='number'
 											maxLength='2'
