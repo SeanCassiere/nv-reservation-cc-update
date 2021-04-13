@@ -13,8 +13,8 @@ function range(start, end) {
 	return ans;
 }
 
-let numsOfYears = range(currentYearNum, 58);
-let numsOfMonths = range(1, 12);
+let numOfYears = range(currentYearNum, 58);
+let numOfMonths = range(1, 12);
 
 const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate }) => {
 	const [validated, setValidated] = useState(false);
@@ -88,7 +88,9 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											type='text'
 											maxLength={cardMaxLength}
 										/>
-										<Form.Control.Feedback type='invalid'>Enter a full credit card number.</Form.Control.Feedback>
+										<Form.Control.Feedback type='invalid'>
+											{translate[lang].form.errors.card_number}
+										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
@@ -107,9 +109,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											type='text'
 											autoComplete='off'
 										/>
-										<Form.Control.Feedback type='invalid'>
-											Enter the name printed on the credit card.
-										</Form.Control.Feedback>
+										<Form.Control.Feedback type='invalid'>{translate[lang].form.errors.name}</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
@@ -126,13 +126,15 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											required
 										>
 											<option value=''>{translate[lang].form.labels.p_holders.select}</option>
-											{numsOfMonths.map((val) => (
+											{numOfMonths.map((val) => (
 												<option value={val.toString().length === 1 ? `0${val}` : val} key={val}>
 													{val.toString().length === 1 ? `0${val}` : val}
 												</option>
 											))}
 										</Form.Control>
-										<Form.Control.Feedback type='invalid'>Enter the credit card expiry month.</Form.Control.Feedback>
+										<Form.Control.Feedback type='invalid'>
+											{translate[lang].form.errors.exp_month}
+										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 								<Col>
@@ -147,13 +149,13 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											required
 										>
 											<option value=''>{translate[lang].form.labels.p_holders.select}</option>
-											{numsOfYears.map((val) => (
+											{numOfYears.map((val) => (
 												<option value={val} key={val}>
 													20{val}
 												</option>
 											))}
 										</Form.Control>
-										<Form.Control.Feedback type='invalid'>Enter the credit card expiry year.</Form.Control.Feedback>
+										<Form.Control.Feedback type='invalid'>{translate[lang].form.errors.exp_year}</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
@@ -173,9 +175,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											type='number'
 											maxLength='4'
 										/>
-										<Form.Control.Feedback type='invalid'>
-											Enter the PIN on the back of the credit card.
-										</Form.Control.Feedback>
+										<Form.Control.Feedback type='invalid'>{translate[lang].form.errors.cvv}</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 								<Col>
@@ -190,7 +190,9 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											type='text'
 											autoComplete='off'
 										/>
-										<Form.Control.Feedback type='invalid'>Enter your billing zip code.</Form.Control.Feedback>
+										<Form.Control.Feedback type='invalid'>
+											{translate[lang].form.errors.billingZip}
+										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
