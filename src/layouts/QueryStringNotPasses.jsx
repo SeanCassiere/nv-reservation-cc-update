@@ -5,7 +5,7 @@ import NotFoundImg from "../assets/undraw_page_not_found_su7k.svg";
 
 const QueryStringNotPasses = () => {
 	return (
-		<Card style={{ width: "25em" }}>
+		<Card style={{ width: "100%" }}>
 			<Card.Img variant='top' alt='Not Found' src={NotFoundImg} />
 			<Card.Body>
 				<Card.Title>Uh-Oh</Card.Title>
