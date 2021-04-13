@@ -36,8 +36,7 @@ export async function updateCreditCardByCustomerId(clientId, reservationId, ccIn
 	}
 
 	// Formatting for Credit Card Input
-	const { nameOnCard, cardNumber, monthExpiry, yearExpiry, cvv, billingZip, ccType } = ccInfo;
-
+	const { name, number, monthExpiry, yearExpiry, cvc, billingZip, ccType } = ccInfo;
 	const currentDate = new Date();
 	const currentISODate = currentDate.toISOString();
 
@@ -48,9 +47,9 @@ export async function updateCreditCardByCustomerId(clientId, reservationId, ccIn
 		creditCardId: 0,
 		customerId: customerId,
 		creditCardType: ccType,
-		creditCardNo: cardNumber,
+		creditCardNo: number,
 		creditCardExpiryDate: newCCExpiryISODate,
-		creditCardCVSNo: cvv,
+		creditCardCVSNo: cvc,
 		createdDate: currentISODate,
 		lastUpdatedBy: 0,
 		lastUpdatedDate: currentISODate,
@@ -59,7 +58,7 @@ export async function updateCreditCardByCustomerId(clientId, reservationId, ccIn
 		year: yearExpiry,
 		month: monthExpiry,
 		creditCardExpiryDateStr: newCCExpiryISODate,
-		nameOnCard,
+		nameOnCard: name,
 		token: "",
 		gatewayCustomerID: "",
 		gatewayRedirectFlow: "",

@@ -9,11 +9,11 @@ import LoadingSubmission from "../components/LoadingSubmission";
 
 const initialCreditCardInfo = {
 	ccType: "Visa",
-	nameOnCard: "",
-	cardNumber: "",
-	monthExpiry: 1,
-	yearExpiry: 21,
-	cvv: "",
+	name: "",
+	number: "",
+	monthExpiry: "01",
+	yearExpiry: "21",
+	cvc: "",
 	billingZip: "",
 };
 
