@@ -1,0 +1,12 @@
+{
+	"en": {
+		"query_missing": {
+			"title": "Uh Oh",
+			"message": "It looks like all not all the necessary information was sent.",
+			"report": "Please report to"
+		},
+		"footer": {
+			"POWERED_BY": "Powered by"
+		}
+	}
+}

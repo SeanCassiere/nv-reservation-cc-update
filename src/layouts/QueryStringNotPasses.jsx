@@ -3,16 +3,16 @@ import { Card } from "react-bootstrap";
 
 import NotFoundImg from "../assets/undraw_page_not_found_su7k.svg";
 
-const QueryStringNotPasses = () => {
+const QueryStringNotPasses = ({ lang, translate }) => {
 	return (
 		<Card border='light' style={{ width: "100%", padding: "2rem 1rem" }}>
 			<Card.Img variant='top' alt='Not Found' src={NotFoundImg} />
 			<Card.Body>
-				<Card.Title>Uh-Oh</Card.Title>
+				<Card.Title>{translate[lang].query_missing.title}</Card.Title>
 				<Card.Text>
-					It looks like all the necessary information was sent.
+					{translate[lang].query_missing.message}
 					<br />
-					Please report to&nbsp;
+					{translate[lang].query_missing.report}&nbsp;
 					<a href='mailto:support@navotar.com' target='_blank' rel='noreferrer'>
 						support@navotar.com
 					</a>
