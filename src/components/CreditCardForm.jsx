@@ -17,6 +17,11 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 		setFocus("");
 	}
 
+	function setCardType(i) {
+		const e = { target: { name: "ccType", value: i } };
+		handleChange(e);
+	}
+
 	return (
 		<>
 			<DynamicCreditCard
@@ -26,6 +31,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 				name={ccData.name}
 				number={ccData.number}
 				focused={focus}
+				setCardType={setCardType}
 			/>
 			<form onSubmit={handleSubmit}>
 				<table>

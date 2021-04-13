@@ -8,7 +8,7 @@ import SuccessSubmission from "../components/SuccessSubmission";
 import LoadingSubmission from "../components/LoadingSubmission";
 
 const initialCreditCardInfo = {
-	ccType: "Visa",
+	ccType: "",
 	name: "",
 	number: "",
 	monthExpiry: "01",
