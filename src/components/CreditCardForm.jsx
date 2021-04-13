@@ -15,6 +15,7 @@ function range(start, end) {
 }
 
 let numsOfYears = range(currentYearNum, 58);
+let numsOfMonths = range(1, 12);
 
 const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 	const [focus, setFocus] = useState("");
@@ -98,18 +99,20 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 									<Form.Group controlId='monthInput'>
 										<Form.Label>Expiry Month</Form.Label>
 										<Form.Control
-											placeholder='MM'
 											name='monthExpiry'
-											value={ccData.monthExpiry}
+											defaultValue={ccData.monthExpiry}
 											onChange={handleChange}
 											onFocus={handleFocus}
 											onBlur={handleBlur}
-											min={1}
-											max={12}
+											as='select'
 											required
-											type='number'
-											maxLength='2'
-										/>
+										>
+											{numsOfMonths.map((val) => (
+												<option value={val.toString().length === 1 ? `0${val}` : val} key={val}>
+													{val.toString().length === 1 ? `0${val}` : val}
+												</option>
+											))}
+										</Form.Control>
 									</Form.Group>
 								</Col>
 								<Col>
@@ -145,6 +148,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit }) => {
 											onFocus={handleFocus}
 											onBlur={handleBlur}
 											required
+											min={0}
 											type='number'
 											maxLength='4'
 										/>
