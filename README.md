@@ -15,3 +15,4 @@ Languages currently supported
 | --- | --- |
 | English | en |
 | French | fr |
+| German| de |
