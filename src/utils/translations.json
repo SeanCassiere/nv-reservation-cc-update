@@ -13,12 +13,21 @@
 				"exp_year": "Expiry Year",
 				"p_holders": {
 					"name": "John Doe",
-					"zip_code": "Zip Code"
+					"zip_code": "Zip Code",
+					"select": "Select"
 				}
 			},
 			"credit_card": {
 				"valid_thru": "valid thru",
 				"your_name": "YOUR NAME HERE"
+			},
+			"errors": {
+				"card_number": "Enter a full credit card number.",
+				"name": "Enter the name printed on the credit card.",
+				"exp_month": "Enter the credit card expiry month.",
+				"exp_year": "Enter the credit card expiry year.",
+				"cvv": "Enter the PIN on the back of the credit card.",
+				"billingZip": "Enter your billing zip code."
 			}
 		},
 		"success_submission": {
@@ -47,14 +56,23 @@
 				"card_number": "Numéro de carte",
 				"name_on_card": "Nom sur la carte de crédit",
 				"cvv": "CVV",
-				"billingZip": "Code postal de facturation",
+				"billingZip": "Code postal",
 				"submit": "Soumettre",
 				"exp_month": "Mois d'expiration",
 				"exp_year": "Année d'expiration ",
 				"p_holders": {
 					"name": "John Doe",
-					"zip_code": "Code postal"
+					"zip_code": "Code postal",
+					"select": "Sélectionner"
 				}
+			},
+			"errors": {
+				"card_number": "Entrez un numéro de carte de crédit complet.",
+				"name": "Entrez le nom imprimé sur la carte de crédit.",
+				"exp_month": "Entrez le mois d'expiration de la carte de crédit.",
+				"exp_year": "Saisissez l'année d'expiration de la carte de crédit.",
+				"cvv": "Entrez le code PIN au dos de la carte de crédit.",
+				"billingZip": "Entrez votre code postal de facturation."
 			},
 			"credit_card": {
 				"valid_thru": "valide à travers",
@@ -87,18 +105,27 @@
 				"card_number": "Kartennummer",
 				"name_on_card": "Name auf der Kreditkarte",
 				"cvv": "CVV",
-				"billingZip": "Postleitzahl der Abrechnung",
+				"billingZip": "PLZ",
 				"submit": "Senden",
 				"exp_month": "Ablaufmonat",
 				"exp_year": "Ablaufjahr ",
 				"p_holders": {
 					"name": "John Doe",
-					"zip_code": "PLZ"
+					"zip_code": "PLZ",
+					"select": "Wählen"
 				}
 			},
 			"credit_card": {
 				"valid_thru": "Gültig bis",
 				"your_name": "DEINEN NAMEN HIER"
+			},
+			"errors": {
+				"card_number": "Geben Sie eine vollständige Kreditkartennummer ein.",
+				"name": "Geben Sie den auf der Kreditkarte angegebenen Namen ein.",
+				"exp_month": "Geben Sie den Ablaufmonat der Kreditkarte ein.",
+				"exp_year": "Geben Sie das Ablaufdatum der Kreditkarte ein.",
+				"cvv": "Geben Sie die PIN auf der Rückseite der Kreditkarte ein.",
+				"billingZip": "Geben Sie Ihre Postleitzahl ein."
 			}
 		},
 		"success_submission": {

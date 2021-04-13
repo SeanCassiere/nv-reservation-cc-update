@@ -4,7 +4,6 @@ import { Card, Form, Row, Col, Button } from "react-bootstrap";
 import DynamicCreditCard from "./DynamicCreditCard";
 
 const currentYearNum = new Date().getFullYear().toString().substr(-2);
-const nextYearNum = parseInt(currentYearNum) + 1;
 
 function range(start, end) {
 	var ans = [];
@@ -14,10 +13,11 @@ function range(start, end) {
 	return ans;
 }
 
-let numsOfYears = range(currentYearNum, 58);
-let numsOfMonths = range(1, 12);
+let numOfYears = range(currentYearNum, 58);
+let numOfMonths = range(1, 12);
 
 const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate }) => {
+	const [validated, setValidated] = useState(false);
 	const [focus, setFocus] = useState("");
 	const [cardMaxLength, setCardMaxLength] = useState(16);
 
@@ -36,6 +36,18 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 	function setCardType(i) {
 		const e = { target: { name: "ccType", value: i } };
 		handleChange(e);
+	}
+
+	function handleLocalFormSubmit(e) {
+		const form = e.currentTarget;
+		if (form.checkValidity() === false) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+		setValidated(true);
+		if (form.checkValidity() === true) {
+			handleSubmit(e);
+		}
 	}
 
 	return (
@@ -59,7 +71,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 						/>
 					</div>
 					<div>
-						<Form onSubmit={handleSubmit}>
+						<Form noValidate validated={validated} onSubmit={handleLocalFormSubmit}>
 							<Row>
 								<Col>
 									<Form.Group controlId='numberInput'>
@@ -71,10 +83,14 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											onChange={handleChange}
 											onFocus={handleFocus}
 											onBlur={handleBlur}
+											pattern={`[0-9]{16,${cardMaxLength}}`}
 											required
-											type='number'
+											type='text'
 											maxLength={cardMaxLength}
 										/>
+										<Form.Control.Feedback type='invalid'>
+											{translate[lang].form.errors.card_number}
+										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
@@ -93,6 +109,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											type='text'
 											autoComplete='off'
 										/>
+										<Form.Control.Feedback type='invalid'>{translate[lang].form.errors.name}</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
@@ -102,19 +119,22 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 										<Form.Label>{translate[lang].form.labels.exp_month}</Form.Label>
 										<Form.Control
 											name='monthExpiry'
-											defaultValue={ccData.monthExpiry}
 											onChange={handleChange}
 											onFocus={handleFocus}
 											onBlur={handleBlur}
 											as='select'
 											required
 										>
-											{numsOfMonths.map((val) => (
+											<option value=''>{translate[lang].form.labels.p_holders.select}</option>
+											{numOfMonths.map((val) => (
 												<option value={val.toString().length === 1 ? `0${val}` : val} key={val}>
 													{val.toString().length === 1 ? `0${val}` : val}
 												</option>
 											))}
 										</Form.Control>
+										<Form.Control.Feedback type='invalid'>
+											{translate[lang].form.errors.exp_month}
+										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 								<Col>
@@ -122,19 +142,20 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 										<Form.Label>{translate[lang].form.labels.exp_year}</Form.Label>
 										<Form.Control
 											name='yearExpiry'
-											defaultValue={nextYearNum}
 											onChange={handleChange}
 											onFocus={handleFocus}
 											onBlur={handleBlur}
 											as='select'
 											required
 										>
-											{numsOfYears.map((val) => (
+											<option value=''>{translate[lang].form.labels.p_holders.select}</option>
+											{numOfYears.map((val) => (
 												<option value={val} key={val}>
 													20{val}
 												</option>
 											))}
 										</Form.Control>
+										<Form.Control.Feedback type='invalid'>{translate[lang].form.errors.exp_year}</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
@@ -154,6 +175,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											type='number'
 											maxLength='4'
 										/>
+										<Form.Control.Feedback type='invalid'>{translate[lang].form.errors.cvv}</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 								<Col>
@@ -168,6 +190,9 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											type='text'
 											autoComplete='off'
 										/>
+										<Form.Control.Feedback type='invalid'>
+											{translate[lang].form.errors.billingZip}
+										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
