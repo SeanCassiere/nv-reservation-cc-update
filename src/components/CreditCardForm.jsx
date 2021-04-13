@@ -17,6 +17,7 @@ let numsOfYears = range(currentYearNum, 58);
 let numsOfMonths = range(1, 12);
 
 const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate }) => {
+	const [validated, setValidated] = useState(false);
 	const [focus, setFocus] = useState("");
 	const [cardMaxLength, setCardMaxLength] = useState(16);
 
@@ -35,6 +36,18 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 	function setCardType(i) {
 		const e = { target: { name: "ccType", value: i } };
 		handleChange(e);
+	}
+
+	function handleLocalFormSubmit(e) {
+		const form = e.currentTarget;
+		if (form.checkValidity() === false) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+		setValidated(true);
+		if (form.checkValidity() === true) {
+			handleSubmit(e);
+		}
 	}
 
 	return (
@@ -58,7 +71,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 						/>
 					</div>
 					<div>
-						<Form onSubmit={handleSubmit}>
+						<Form noValidate validated={validated} onSubmit={handleLocalFormSubmit}>
 							<Row>
 								<Col>
 									<Form.Group controlId='numberInput'>
@@ -70,10 +83,12 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											onChange={handleChange}
 											onFocus={handleFocus}
 											onBlur={handleBlur}
+											pattern={`[0-9]{16,${cardMaxLength}}`}
 											required
-											type='number'
+											type='text'
 											maxLength={cardMaxLength}
 										/>
+										<Form.Control.Feedback type='invalid'>Enter a full credit card number.</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
@@ -92,6 +107,9 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											type='text'
 											autoComplete='off'
 										/>
+										<Form.Control.Feedback type='invalid'>
+											Enter the name printed on the credit card.
+										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
@@ -114,6 +132,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 												</option>
 											))}
 										</Form.Control>
+										<Form.Control.Feedback type='invalid'>Enter the credit card expiry month.</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 								<Col>
@@ -134,6 +153,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 												</option>
 											))}
 										</Form.Control>
+										<Form.Control.Feedback type='invalid'>Enter the credit card expiry year.</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
@@ -153,6 +173,9 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											type='number'
 											maxLength='4'
 										/>
+										<Form.Control.Feedback type='invalid'>
+											Enter the PIN on the back of the credit card.
+										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 								<Col>
@@ -167,6 +190,7 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 											type='text'
 											autoComplete='off'
 										/>
+										<Form.Control.Feedback type='invalid'>Enter your billing zip code.</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
 							</Row>
