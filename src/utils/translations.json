@@ -13,7 +13,8 @@
 				"exp_year": "Expiry Year",
 				"p_holders": {
 					"name": "John Doe",
-					"zip_code": "Zip Code"
+					"zip_code": "Zip Code",
+					"select": "Select"
 				}
 			},
 			"credit_card": {
@@ -47,13 +48,14 @@
 				"card_number": "Numéro de carte",
 				"name_on_card": "Nom sur la carte de crédit",
 				"cvv": "CVV",
-				"billingZip": "Code postal de facturation",
+				"billingZip": "Code postal",
 				"submit": "Soumettre",
 				"exp_month": "Mois d'expiration",
 				"exp_year": "Année d'expiration ",
 				"p_holders": {
 					"name": "John Doe",
-					"zip_code": "Code postal"
+					"zip_code": "Code postal",
+					"select": "Sélectionner"
 				}
 			},
 			"credit_card": {
@@ -87,13 +89,14 @@
 				"card_number": "Kartennummer",
 				"name_on_card": "Name auf der Kreditkarte",
 				"cvv": "CVV",
-				"billingZip": "Postleitzahl der Abrechnung",
+				"billingZip": "PLZ",
 				"submit": "Senden",
 				"exp_month": "Ablaufmonat",
 				"exp_year": "Ablaufjahr ",
 				"p_holders": {
 					"name": "John Doe",
-					"zip_code": "PLZ"
+					"zip_code": "PLZ",
+					"select": "Wählen"
 				}
 			},
 			"credit_card": {

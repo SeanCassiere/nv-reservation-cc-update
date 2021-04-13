@@ -7,17 +7,12 @@ import ErrorSubmission from "./ErrorSubmission";
 import SuccessSubmission from "./SuccessSubmission";
 import LoadingSubmission from "./LoadingSubmission";
 
-const currentYearNum = new Date().getFullYear().toString().substr(-2);
-const currentMonthNum = new Date().getMonth().toString();
-
-const initStateMonth = currentMonthNum.length === 1 ? `0${currentMonthNum}` : currentMonthNum;
-
 const initialCreditCardInfo = {
 	ccType: "",
 	name: "",
 	number: "",
-	monthExpiry: initStateMonth,
-	yearExpiry: parseInt(currentYearNum) + 1,
+	monthExpiry: "",
+	yearExpiry: "",
 	cvc: "",
 	billingZip: "",
 };

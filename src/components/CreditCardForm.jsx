@@ -4,7 +4,6 @@ import { Card, Form, Row, Col, Button } from "react-bootstrap";
 import DynamicCreditCard from "./DynamicCreditCard";
 
 const currentYearNum = new Date().getFullYear().toString().substr(-2);
-const nextYearNum = parseInt(currentYearNum) + 1;
 
 function range(start, end) {
 	var ans = [];
@@ -102,13 +101,13 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 										<Form.Label>{translate[lang].form.labels.exp_month}</Form.Label>
 										<Form.Control
 											name='monthExpiry'
-											defaultValue={ccData.monthExpiry}
 											onChange={handleChange}
 											onFocus={handleFocus}
 											onBlur={handleBlur}
 											as='select'
 											required
 										>
+											<option value=''>{translate[lang].form.labels.p_holders.select}</option>
 											{numsOfMonths.map((val) => (
 												<option value={val.toString().length === 1 ? `0${val}` : val} key={val}>
 													{val.toString().length === 1 ? `0${val}` : val}
@@ -122,13 +121,13 @@ const CreditCardForm = ({ ccData, handleChange, handleSubmit, lang, translate })
 										<Form.Label>{translate[lang].form.labels.exp_year}</Form.Label>
 										<Form.Control
 											name='yearExpiry'
-											defaultValue={nextYearNum}
 											onChange={handleChange}
 											onFocus={handleFocus}
 											onBlur={handleBlur}
 											as='select'
 											required
 										>
+											<option value=''>{translate[lang].form.labels.p_holders.select}</option>
 											{numsOfYears.map((val) => (
 												<option value={val} key={val}>
 													20{val}
