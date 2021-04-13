@@ -47,6 +47,7 @@ const UserApplicationForm = ({ clientId, reservationId }) => {
 
 	function handleSubmit(e) {
 		e.preventDefault();
+		if (ccData.number.length < 16) return;
 		dispatch({ type: "SUBMITTING_FORM_LOADING" });
 		updateCreditCardByCustomerId(clientId, reservationId, ccData)
 			.then(() => dispatch({ type: "SUBMITTING_FORM_SUCCESS" }))

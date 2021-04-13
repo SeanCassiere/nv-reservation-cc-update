@@ -11,7 +11,7 @@ const App = () => {
 	return (
 		<Container>
 			<Row className='justify-content-lg-center' style={{ paddingTop: "1rem" }}>
-				<Col xs={12} sm={12} md={4} lg={4}>
+				<Col xs={12} sm={12} md={12} lg={6}>
 					<div style={{ margin: "0 auto" }}>
 						{queryClientId !== null &&
 						queryReservationId !== null &&
