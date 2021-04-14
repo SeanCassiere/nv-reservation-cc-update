@@ -8,7 +8,8 @@ import translate from "./utils/translations.json";
 const queryReservationId = new URLSearchParams(window.location.search).get("reservationId");
 const queryClientId = new URLSearchParams(window.location.search).get("clientId");
 
-let queryLang = new URLSearchParams(window.location.search).get("lang") || "en";
+const URL_LANG = new URLSearchParams(window.location.search).get("lang") || "en";
+let queryLang = URL_LANG.toLowerCase();
 if (translate[queryLang] === undefined) queryLang = "en";
 
 const App = () => {
