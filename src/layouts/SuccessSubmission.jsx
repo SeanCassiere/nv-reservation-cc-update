@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "react-bootstrap";
 
 import translate from "../utils/translations.json";
@@ -6,6 +6,10 @@ import translate from "../utils/translations.json";
 import SuccessImg from "../assets/undraw_make_it_rain_iwk4.svg";
 
 const SuccessSubmission = ({ lang }) => {
+	useEffect(() => {
+		window.history.pushState({}, "Successfully submitted Credit Card information", "/success");
+	}, []);
+
 	return (
 		<Card border='success' style={{ width: "100%", padding: "2rem 0.5rem" }}>
 			<Card.Img variant='top' alt='Success' src={SuccessImg} />
