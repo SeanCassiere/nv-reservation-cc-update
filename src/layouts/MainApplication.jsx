@@ -4,7 +4,7 @@ import { updateCreditCardByCustomerId } from "../api/apiFunctions";
 import { reducer, initialState } from "../utils/reducerLogic";
 import { SUBMITTING_FORM_LOADING, SUBMITTING_FORM_SUCCESS, SUBMITTING_FORM_ERROR } from "../utils/reducerConstants";
 
-import CreditCardForm from "../components/CreditCardForm";
+import UserCreditCardController from "./UserCreditCardController";
 import ErrorSubmission from "./ErrorSubmission";
 import SuccessSubmission from "./SuccessSubmission";
 import LoadingSubmission from "./LoadingSubmission";
@@ -48,7 +48,7 @@ const MainApplication = ({ clientId, reservationId, lang, translate }) => {
 			{globalState.loadingFormSubmit && <LoadingSubmission />}
 			{globalState.submitFormSuccess && <SuccessSubmission lang={lang} translate={translate} />}
 			{!globalState.loadingFormSubmit && !globalState.submitFormSuccess && !globalState.error && (
-				<CreditCardForm
+				<UserCreditCardController
 					ccData={ccData}
 					handleChange={handleChange}
 					handleSubmit={handleSubmit}
