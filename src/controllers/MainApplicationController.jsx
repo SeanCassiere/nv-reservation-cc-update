@@ -36,7 +36,6 @@ const MainApplicationController = ({ clientId, reservationId, lang, translate })
 	}
 
 	function handleChange(e) {
-		dispatch({ type: SUBMITTING_FORM_LOADING });
 		setCCData({
 			...ccData,
 			[e.target.name]: e.target.value,
