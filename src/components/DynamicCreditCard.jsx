@@ -29,7 +29,6 @@ const DynamicCreditCard = ({
 				setCardType(e.issuer);
 				setCardMaxLength(e.maxLength);
 			}}
-			size='200px'
 		/>
 	);
 };
