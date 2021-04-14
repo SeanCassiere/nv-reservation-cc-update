@@ -29,7 +29,7 @@ const App = () => {
 								translate={translate}
 							/>
 						) : (
-							<QueryStringNotPassed lang={queryLang} translate={translate} />
+							<QueryStringNotPassed lang={queryLang} />
 						)}
 					</div>
 				</Col>

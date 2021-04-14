@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 
+import translate from "../utils/translations.json";
+
 import CreditCardDetailsForm from "../components/CreditCardDetailsForm";
 import DynamicCreditCard from "../components/DynamicCreditCard";
 
-const UserCreditCardController = ({ ccData, handleChange, handleSubmit, lang, translate }) => {
+const UserCreditCardController = ({ ccData, setCCData, handleSubmit, lang }) => {
 	const [focus, setFocus] = useState("");
 	const [cardMaxLength, setCardMaxLength] = useState(16);
+
+	function handleChange(e) {
+		setCCData({
+			...ccData,
+			[e.target.name]: e.target.value,
+		});
+	}
 
 	function handleFocus(e) {
 		if (e.target.name === "monthExpiry" || e.target.name === "yearExpiry") {
@@ -53,7 +62,6 @@ const UserCreditCardController = ({ ccData, handleChange, handleSubmit, lang, tr
 						ccData={ccData}
 						cardMaxLength={cardMaxLength}
 						lang={lang}
-						translate={translate}
 					/>
 				</div>
 			</Card.Body>

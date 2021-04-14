@@ -1,9 +1,11 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
+import translate from "../utils/translations.json";
+
 import NotFoundImg from "../assets/undraw_page_not_found_su7k.svg";
 
-const QueryStringNotPassed = ({ lang, translate }) => {
+const QueryStringNotPassed = ({ lang }) => {
 	return (
 		<Card border='light' style={{ width: "100%", padding: "2rem 1rem" }}>
 			<Card.Img variant='top' alt='Not Found' src={NotFoundImg} />

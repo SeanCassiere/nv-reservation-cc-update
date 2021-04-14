@@ -1,5 +1,7 @@
 import React, { useState, useReducer } from "react";
 
+import translate from "../utils/translations.json";
+
 import { updateCreditCardByCustomerId } from "../api/apiFunctions";
 import { reducer, initialState } from "../utils/reducerLogic";
 import { SUBMITTING_FORM_LOADING, SUBMITTING_FORM_SUCCESS, SUBMITTING_FORM_ERROR } from "../utils/reducerConstants";
@@ -19,7 +21,7 @@ const initialCreditCardInfo = {
 	billingZip: "",
 };
 
-const MainApplicationController = ({ clientId, reservationId, lang, translate }) => {
+const MainApplicationController = ({ clientId, reservationId, lang }) => {
 	const [globalState, dispatch] = useReducer(reducer, initialState);
 	const [ccData, setCCData] = useState(initialCreditCardInfo);
 
@@ -35,26 +37,13 @@ const MainApplicationController = ({ clientId, reservationId, lang, translate })
 			});
 	}
 
-	function handleChange(e) {
-		setCCData({
-			...ccData,
-			[e.target.name]: e.target.value,
-		});
-	}
-
 	return (
 		<>
-			{globalState.error && <ErrorSubmission lang={lang} translate={translate} />}
+			{globalState.error && <ErrorSubmission lang={lang} />}
 			{globalState.loadingFormSubmit && <LoadingSubmission title={translate[lang].form.submitting_msg} />}
-			{globalState.submitFormSuccess && <SuccessSubmission lang={lang} translate={translate} />}
+			{globalState.submitFormSuccess && <SuccessSubmission lang={lang} />}
 			{!globalState.loadingFormSubmit && !globalState.submitFormSuccess && !globalState.error && (
-				<UserCreditCardController
-					ccData={ccData}
-					handleChange={handleChange}
-					handleSubmit={handleSubmit}
-					lang={lang}
-					translate={translate}
-				/>
+				<UserCreditCardController ccData={ccData} setCCData={setCCData} handleSubmit={handleSubmit} lang={lang} />
 			)}
 		</>
 	);

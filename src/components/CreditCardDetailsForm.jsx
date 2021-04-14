@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 
+import translate from "../utils/translations.json";
+
 import { range, currentYearNum } from "../utils/functions";
 
 let numOfYears = range(currentYearNum, 58);
@@ -14,7 +16,6 @@ const CreditCardDetailsForm = ({
 	ccData,
 	cardMaxLength,
 	lang,
-	translate,
 }) => {
 	const [validated, setValidated] = useState(false);
 
