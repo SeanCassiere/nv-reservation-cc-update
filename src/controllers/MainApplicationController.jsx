@@ -5,9 +5,9 @@ import { reducer, initialState } from "../utils/reducerLogic";
 import { SUBMITTING_FORM_LOADING, SUBMITTING_FORM_SUCCESS, SUBMITTING_FORM_ERROR } from "../utils/reducerConstants";
 
 import UserCreditCardController from "./UserCreditCardController";
-import ErrorSubmission from "./ErrorSubmission";
-import SuccessSubmission from "./SuccessSubmission";
-import LoadingSubmission from "./LoadingSubmission";
+import ErrorSubmission from "../layouts/ErrorSubmission";
+import SuccessSubmission from "../layouts/SuccessSubmission";
+import LoadingSubmission from "../layouts/LoadingSubmission";
 
 const initialCreditCardInfo = {
 	ccType: "",
@@ -19,7 +19,7 @@ const initialCreditCardInfo = {
 	billingZip: "",
 };
 
-const MainApplication = ({ clientId, reservationId, lang, translate }) => {
+const MainApplicationController = ({ clientId, reservationId, lang, translate }) => {
 	const [globalState, dispatch] = useReducer(reducer, initialState);
 	const [ccData, setCCData] = useState(initialCreditCardInfo);
 
@@ -60,4 +60,4 @@ const MainApplication = ({ clientId, reservationId, lang, translate }) => {
 	);
 };
 
-export default MainApplication;
+export default MainApplicationController;

@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-import QueryStringNotPassed from "./layouts/QueryStringNotPasses";
-import MainApplication from "./layouts/MainApplication";
+import QueryStringNotPassed from "./layouts/QueryStringNotPassed";
+import MainApplicationController from "./controllers/MainApplicationController";
 import translate from "./utils/translations.json";
 
 const queryReservationId = new URLSearchParams(window.location.search).get("reservationId");
@@ -21,7 +21,7 @@ const App = () => {
 						queryReservationId !== null &&
 						queryClientId.length !== 0 &&
 						queryReservationId.length !== 0 ? (
-							<MainApplication
+							<MainApplicationController
 								clientId={queryClientId}
 								reservationId={queryReservationId}
 								lang={queryLang}
