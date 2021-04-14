@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = "https://app.navotar.com/api";
 
-export async function updateCreditCardByCustomerId(clientId, reservationId, ccInfo) {
+export const updateCreditCardByCustomerId = async (clientId, reservationId, ccInfo) => {
 	const API_BODY = { ClientId: clientId, ConsumerType: "Admin,Basic" };
 	let token = "";
 	let customerId = "";
@@ -73,4 +73,4 @@ export async function updateCreditCardByCustomerId(clientId, reservationId, ccIn
 		// console.log(`Credit Card Insert Error: ${error}`);
 		throw new Error("Error inserting the credit card details.");
 	}
-}
+};

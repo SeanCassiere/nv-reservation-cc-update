@@ -10,29 +10,27 @@ const UserCreditCardController = ({ ccData, setCCData, handleSubmit, lang }) => 
 	const [focus, setFocus] = useState("");
 	const [cardMaxLength, setCardMaxLength] = useState(16);
 
-	function handleChange(e) {
+	const handleChange = (e) => {
 		setCCData({
 			...ccData,
 			[e.target.name]: e.target.value,
 		});
-	}
+	};
 
-	function handleFocus(e) {
+	const handleFocus = (e) => {
 		if (e.target.name === "monthExpiry" || e.target.name === "yearExpiry") {
 			setFocus("expiry");
 		} else {
 			setFocus(e.target.name);
 		}
-	}
+	};
 
-	function handleBlur() {
-		setFocus("");
-	}
+	const handleBlur = () => setFocus("");
 
-	function setCardType(i) {
+	const setCardType = (i) => {
 		const e = { target: { name: "ccType", value: i } };
 		handleChange(e);
-	}
+	};
 
 	return (
 		<Card border='light' style={{ width: "100%" }}>

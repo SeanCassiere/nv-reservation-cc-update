@@ -25,9 +25,11 @@ const MainApplicationController = ({ clientId, reservationId, lang }) => {
 	const [globalState, dispatch] = useReducer(reducer, initialState);
 	const [ccData, setCCData] = useState(initialCreditCardInfo);
 
-	function handleSubmit(e) {
+	const handleSubmit = (e) => {
 		e.preventDefault();
+
 		if (ccData.number.length < 16) return;
+
 		dispatch({ type: SUBMITTING_FORM_LOADING });
 		updateCreditCardByCustomerId(clientId, reservationId, ccData)
 			.then(() => dispatch({ type: SUBMITTING_FORM_SUCCESS }))
@@ -35,7 +37,7 @@ const MainApplicationController = ({ clientId, reservationId, lang }) => {
 				console.log(err);
 				dispatch({ type: SUBMITTING_FORM_ERROR });
 			});
-	}
+	};
 
 	return (
 		<>

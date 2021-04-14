@@ -19,17 +19,17 @@ const CreditCardDetailsForm = ({
 }) => {
 	const [validated, setValidated] = useState(false);
 
-	function handleLocalFormSubmit(e) {
+	const handleLocalFormSubmit = (e) => {
 		const form = e.currentTarget;
+
 		if (form.checkValidity() === false) {
 			e.preventDefault();
 			e.stopPropagation();
 		}
+
 		setValidated(true);
-		if (form.checkValidity() === true) {
-			handleSubmit(e);
-		}
-	}
+		if (form.checkValidity() === true) handleSubmit(e);
+	};
 
 	return (
 		<Form noValidate validated={validated} onSubmit={handleLocalFormSubmit}>
