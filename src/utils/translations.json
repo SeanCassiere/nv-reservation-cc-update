@@ -28,7 +28,8 @@
 				"exp_year": "Enter the credit card expiry year.",
 				"cvv": "Enter the PIN on the back of the credit card.",
 				"billingZip": "Enter your billing zip code."
-			}
+			},
+			"submitting_msg": "Submitting Credit Card Information"
 		},
 		"success_submission": {
 			"title": "Success!",
@@ -66,6 +67,10 @@
 					"select": "Sélectionner"
 				}
 			},
+			"credit_card": {
+				"valid_thru": "valide à travers",
+				"your_name": "VOTRE NOM ICI"
+			},
 			"errors": {
 				"card_number": "Entrez un numéro de carte de crédit complet.",
 				"name": "Entrez le nom imprimé sur la carte de crédit.",
@@ -74,10 +79,7 @@
 				"cvv": "Entrez le code PIN au dos de la carte de crédit.",
 				"billingZip": "Entrez votre code postal de facturation."
 			},
-			"credit_card": {
-				"valid_thru": "valide à travers",
-				"your_name": "VOTRE NOM ICI"
-			}
+			"submitting_msg": "Soumission des informations de carte de crédit"
 		},
 		"success_submission": {
 			"title": "Succès!",
@@ -126,7 +128,8 @@
 				"exp_year": "Geben Sie das Ablaufdatum der Kreditkarte ein.",
 				"cvv": "Geben Sie die PIN auf der Rückseite der Kreditkarte ein.",
 				"billingZip": "Geben Sie Ihre Postleitzahl ein."
-			}
+			},
+			"submitting_msg": "Übermitteln von Kreditkarteninformationen"
 		},
 		"success_submission": {
 			"title": "Erfolg!",

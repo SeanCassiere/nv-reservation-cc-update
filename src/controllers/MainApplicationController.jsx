@@ -36,6 +36,7 @@ const MainApplicationController = ({ clientId, reservationId, lang, translate })
 	}
 
 	function handleChange(e) {
+		dispatch({ type: SUBMITTING_FORM_LOADING });
 		setCCData({
 			...ccData,
 			[e.target.name]: e.target.value,
@@ -45,7 +46,7 @@ const MainApplicationController = ({ clientId, reservationId, lang, translate })
 	return (
 		<>
 			{globalState.error && <ErrorSubmission lang={lang} translate={translate} />}
-			{globalState.loadingFormSubmit && <LoadingSubmission />}
+			{globalState.loadingFormSubmit && <LoadingSubmission title={translate[lang].form.submitting_msg} />}
 			{globalState.submitFormSuccess && <SuccessSubmission lang={lang} translate={translate} />}
 			{!globalState.loadingFormSubmit && !globalState.submitFormSuccess && !globalState.error && (
 				<UserCreditCardController
