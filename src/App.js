@@ -1,14 +1,15 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-import QueryStringNotPassed from "./layouts/QueryStringNotPasses";
-import UserApplicationForm from "./layouts/UserApplicationForm";
+import QueryStringNotPassed from "./layouts/QueryStringNotPassed";
+import MainApplicationController from "./controllers/MainApplicationController";
 import translate from "./utils/translations.json";
 
 const queryReservationId = new URLSearchParams(window.location.search).get("reservationId");
 const queryClientId = new URLSearchParams(window.location.search).get("clientId");
 
-let queryLang = new URLSearchParams(window.location.search).get("lang") || "en";
+const URL_LANG = new URLSearchParams(window.location.search).get("lang") || "en";
+let queryLang = URL_LANG.toLowerCase();
 if (translate[queryLang] === undefined) queryLang = "en";
 
 const App = () => {
@@ -21,7 +22,7 @@ const App = () => {
 						queryReservationId !== null &&
 						queryClientId.length !== 0 &&
 						queryReservationId.length !== 0 ? (
-							<UserApplicationForm
+							<MainApplicationController
 								clientId={queryClientId}
 								reservationId={queryReservationId}
 								lang={queryLang}

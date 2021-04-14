@@ -28,7 +28,8 @@
 				"exp_year": "Enter the credit card expiry year.",
 				"cvv": "Enter the PIN on the back of the credit card.",
 				"billingZip": "Enter your billing zip code."
-			}
+			},
+			"submitting_msg": "Submitting Credit Card Information"
 		},
 		"success_submission": {
 			"title": "Success!",
@@ -66,6 +67,10 @@
 					"select": "Sélectionner"
 				}
 			},
+			"credit_card": {
+				"valid_thru": "valide à travers",
+				"your_name": "VOTRE NOM ICI"
+			},
 			"errors": {
 				"card_number": "Entrez un numéro de carte de crédit complet.",
 				"name": "Entrez le nom imprimé sur la carte de crédit.",
@@ -74,10 +79,7 @@
 				"cvv": "Entrez le code PIN au dos de la carte de crédit.",
 				"billingZip": "Entrez votre code postal de facturation."
 			},
-			"credit_card": {
-				"valid_thru": "valide à travers",
-				"your_name": "VOTRE NOM ICI"
-			}
+			"submitting_msg": "Soumission des informations de carte de crédit"
 		},
 		"success_submission": {
 			"title": "Succès!",
@@ -126,7 +128,8 @@
 				"exp_year": "Geben Sie das Ablaufdatum der Kreditkarte ein.",
 				"cvv": "Geben Sie die PIN auf der Rückseite der Kreditkarte ein.",
 				"billingZip": "Geben Sie Ihre Postleitzahl ein."
-			}
+			},
+			"submitting_msg": "Übermitteln von Kreditkarteninformationen"
 		},
 		"success_submission": {
 			"title": "Erfolg!",
@@ -144,6 +147,57 @@
 		},
 		"footer": {
 			"powered_by": "Unterstützt von"
+		}
+	},
+	"es": {
+		"form": {
+			"title": "Información de la tarjeta de crédito",
+			"message": "Los huéspedes deberán introducir la información de su tarjeta de crédito que desea utilizar para la reserva.",
+			"labels": {
+				"card_number": "Número de tarjeta",
+				"name_on_card": "Nombre en la tarjeta de crédito",
+				"cvv": "CVV",
+				"billingZip": "Código postal",
+				"submit": "Enviar",
+				"exp_month": "Mes de caducidad",
+				"exp_year": "Año de caducidad",
+				"p_holders": {
+					"name": "Juan Doe",
+					"zip_code": "Código postal",
+					"select": "escoger"
+				}
+			},
+			"credit_card": {
+				"valid_thru": "válido a través de",
+				"your_name": "SU NOMBRE AQUÍ"
+			},
+			"errors": {
+				"card_number": "Introduzca un número completo de tarjeta de crédito.",
+				"name": "Introduzca el nombre impreso en la tarjeta de crédito.",
+				"exp_month": "Introduzca el mes de vencimiento de la tarjeta de crédito.",
+				"exp_year": "Introduzca el año de caducidad de la tarjeta de crédito.",
+				"cvv": "Introduzca el PIN en la parte posterior de la tarjeta de crédito.",
+				"billingZip": "Introduce tu código postal de facturación."
+			},
+
+			"submitting_msg": "Presentación de información de tarjetas de crédito"
+		},
+		"success_submission": {
+			"title": "¡éxito!",
+			"message": "Gracias por enviar la información de su tarjeta de crédito a su reserva."
+		},
+		"bad_submission": {
+			"title": "Uh Oh",
+			"message": "Me encontré con un error al intentar enviar su información.",
+			"report": "Por favor, preséntese a"
+		},
+		"query_missing": {
+			"title": "Uh Oh",
+			"message": "Parece que no toda la información necesaria fue enviada.",
+			"report": "Por favor, preséntese a"
+		},
+		"footer": {
+			"powered_by": "Funciona con"
 		}
 	}
 }
