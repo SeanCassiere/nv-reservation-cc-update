@@ -1,10 +1,17 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 
 import translate from "../utils/translations.json";
 
-import { updateCreditCardByCustomerId } from "../api/apiFunctions";
+import { getReservationDetailsByReservationId, insertCreditCardDetailsByCustomerId } from "../api/apiFunctions";
 import { reducer, initialState } from "../utils/reducerLogic";
-import { SUBMITTING_FORM_LOADING, SUBMITTING_FORM_SUCCESS, SUBMITTING_FORM_ERROR } from "../utils/reducerConstants";
+import {
+	SUBMITTING_FORM_LOADING,
+	SUBMITTING_FORM_SUCCESS,
+	SUBMITTING_FORM_ERROR,
+	AUTH_RESERVATION_LOADING,
+	AUTH_RESERVATION_SUCCESS,
+	AUTH_RESERVATION_ERROR,
+} from "../utils/reducerConstants";
 
 import UserCreditCardController from "./UserCreditCardController";
 import ErrorSubmission from "../layouts/ErrorSubmission";
@@ -12,8 +19,8 @@ import SuccessSubmission from "../layouts/SuccessSubmission";
 import LoadingSubmission from "../layouts/LoadingSubmission";
 
 const initialCreditCardInfo = {
-	ccType: "",
 	name: "",
+	ccType: "",
 	number: "",
 	monthExpiry: "",
 	yearExpiry: "",
@@ -25,28 +32,58 @@ const MainApplicationController = ({ clientId, reservationId, lang }) => {
 	const [globalState, dispatch] = useReducer(reducer, initialState);
 	const [ccData, setCCData] = useState(initialCreditCardInfo);
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
+	const {
+		loadingReservationAuthentication,
+		errorSubmitting,
+		submitFormSuccess,
+		loadingFormSubmit,
+		errorAuthenticating,
+	} = globalState;
+	const { token, reservationInfo } = globalState;
 
+	useEffect(() => {
+		dispatch({ type: AUTH_RESERVATION_LOADING });
+		getReservationDetailsByReservationId(clientId, reservationId)
+			.then((res) => {
+				dispatch({ type: AUTH_RESERVATION_SUCCESS, payload: res });
+			})
+			.catch((err) => {
+				console.log(err);
+				dispatch({ type: AUTH_RESERVATION_ERROR });
+			});
+	}, [dispatch, clientId, reservationId]);
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 		if (ccData.number.length < 16) return;
 
 		dispatch({ type: SUBMITTING_FORM_LOADING });
-		updateCreditCardByCustomerId(clientId, reservationId, ccData)
-			.then(() => dispatch({ type: SUBMITTING_FORM_SUCCESS }))
-			.catch((err) => {
-				console.log(err);
-				dispatch({ type: SUBMITTING_FORM_ERROR });
-			});
+		try {
+			await insertCreditCardDetailsByCustomerId(token, reservationInfo.customerId, ccData);
+
+			dispatch({ type: SUBMITTING_FORM_SUCCESS });
+		} catch (err) {
+			console.log(err);
+			dispatch({ type: SUBMITTING_FORM_ERROR });
+		}
 	};
 
 	return (
 		<>
-			{globalState.error && <ErrorSubmission lang={lang} />}
-			{globalState.loadingFormSubmit && <LoadingSubmission title={translate[lang].form.submitting_msg} />}
-			{globalState.submitFormSuccess && <SuccessSubmission lang={lang} />}
-			{!globalState.loadingFormSubmit && !globalState.submitFormSuccess && !globalState.error && (
-				<UserCreditCardController ccData={ccData} setCCData={setCCData} handleSubmit={handleSubmit} lang={lang} />
+			{loadingReservationAuthentication && (
+				<LoadingSubmission title={translate[lang].authentication_submission.title} />
 			)}
+			{errorAuthenticating && <ErrorSubmission lang={lang} msg={translate[lang].authentication_submission.message} />}
+			{errorSubmitting && <ErrorSubmission lang={lang} msg={translate[lang].bad_submission.message} />}
+			{loadingFormSubmit && <LoadingSubmission title={translate[lang].form.submitting_msg} />}
+			{submitFormSuccess && <SuccessSubmission lang={lang} />}
+			{!loadingFormSubmit &&
+				!submitFormSuccess &&
+				!errorSubmitting &&
+				!loadingReservationAuthentication &&
+				!errorAuthenticating && (
+					<UserCreditCardController ccData={ccData} setCCData={setCCData} handleSubmit={handleSubmit} lang={lang} />
+				)}
 		</>
 	);
 };
