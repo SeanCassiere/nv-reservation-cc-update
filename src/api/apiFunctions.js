@@ -94,16 +94,30 @@ export const insertCreditCardDetailsByCustomerId = async (token, customerId, cre
 	}
 };
 
-export const sendConfirmationEmail = async (customerEmail, reservationNo) => {
+export const sendConfirmationEmail = async (customerEmail, reservationNo, locationEmail) => {
 	try {
 		await axios.get(`/api/sendConfirmationEmail`, {
 			params: {
 				customerEmail,
 				reservationNo,
+				locationEmail,
 			},
 		});
 	} catch (error) {
 		// console.log(`Error sending confirmation email: ${error}`);
 		throw new Error("Error sending confirmation email.");
+	}
+};
+
+export const getLocationEmail = async (token, locationId) => {
+	const globalConfig = { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } };
+
+	try {
+		const { data } = await axios.get(`${BASE_URL}/Location/GetLocation?id=${locationId}`, globalConfig);
+
+		return { locationEmail: data.contactEmail };
+	} catch (error) {
+		// console.log(`Error fetching the location: ${error}`);
+		throw new Error("Error fetching the location email.");
 	}
 };

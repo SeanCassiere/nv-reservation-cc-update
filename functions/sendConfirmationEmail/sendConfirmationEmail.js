@@ -6,13 +6,13 @@ const { SG_API_KEY, SG_FROM_EMAIL, SG_TEMPLATE_ID } = process.env;
 sgMail.setApiKey(SG_API_KEY);
 
 const handler = async (event) => {
-	const { customerEmail, reservationNo } = event.queryStringParameters;
+	const { customerEmail, reservationNo, locationEmail } = event.queryStringParameters;
 
 	const msg = {
-		to: `${customerEmail}`, // Change to your recipient,
-		from: SG_FROM_EMAIL, // Change to your verified sender
+		to: customerEmail,
+		cc: locationEmail,
+		from: SG_FROM_EMAIL,
 		subject: `Credit Card added to your reservation (${reservationNo})`,
-		html: `<strong>Card added to your reservation (${reservationNo})</strong>`,
 		templateId: SG_TEMPLATE_ID,
 		dynamic_template_data: {
 			reservationNo,

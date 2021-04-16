@@ -6,6 +6,7 @@ import {
 	getReservationDetailsByReservationId,
 	insertCreditCardDetailsByCustomerId,
 	sendConfirmationEmail,
+	getLocationEmail,
 } from "../api/apiFunctions";
 import { reducer, initialState } from "../utils/reducerLogic";
 import {
@@ -64,7 +65,9 @@ const MainApplicationController = ({ clientId, reservationId, lang }) => {
 		dispatch({ type: SUBMITTING_FORM_LOADING });
 		try {
 			await insertCreditCardDetailsByCustomerId(token, reservationInfo.customerId, ccData);
-			await sendConfirmationEmail(reservationInfo.customerEmail, reservationInfo.reservationNo);
+			const { locationEmail } = await getLocationEmail(token, reservationInfo.locationId);
+
+			await sendConfirmationEmail(reservationInfo.customerEmail, reservationInfo.reservationNo, locationEmail);
 
 			dispatch({ type: SUBMITTING_FORM_SUCCESS });
 		} catch (err) {

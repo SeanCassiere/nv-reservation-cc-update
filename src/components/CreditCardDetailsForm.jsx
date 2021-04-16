@@ -44,7 +44,7 @@ const CreditCardDetailsForm = ({
 							onChange={handleChange}
 							onFocus={handleFocus}
 							onBlur={handleBlur}
-							pattern={`[0-9]{16,${cardMaxLength}}`}
+							pattern={`[0-9]{13,${cardMaxLength}}`}
 							required
 							type='text'
 							maxLength={cardMaxLength}
