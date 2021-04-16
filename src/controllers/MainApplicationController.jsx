@@ -2,7 +2,11 @@ import React, { useState, useReducer, useEffect } from "react";
 
 import translate from "../utils/translations.json";
 
-import { getReservationDetailsByReservationId, insertCreditCardDetailsByCustomerId } from "../api/apiFunctions";
+import {
+	getReservationDetailsByReservationId,
+	insertCreditCardDetailsByCustomerId,
+	sendConfirmationEmail,
+} from "../api/apiFunctions";
 import { reducer, initialState } from "../utils/reducerLogic";
 import {
 	SUBMITTING_FORM_LOADING,
@@ -60,6 +64,7 @@ const MainApplicationController = ({ clientId, reservationId, lang }) => {
 		dispatch({ type: SUBMITTING_FORM_LOADING });
 		try {
 			await insertCreditCardDetailsByCustomerId(token, reservationInfo.customerId, ccData);
+			await sendConfirmationEmail(reservationInfo.customerEmail, reservationInfo.reservationNo);
 
 			dispatch({ type: SUBMITTING_FORM_SUCCESS });
 		} catch (err) {

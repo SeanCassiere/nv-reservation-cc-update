@@ -93,3 +93,17 @@ export const insertCreditCardDetailsByCustomerId = async (token, customerId, cre
 		throw new Error("Error inserting the credit card details.");
 	}
 };
+
+export const sendConfirmationEmail = async (customerEmail, reservationNo) => {
+	try {
+		await axios.get(`/api/sendConfirmationEmail`, {
+			params: {
+				customerEmail,
+				reservationNo,
+			},
+		});
+	} catch (error) {
+		// console.log(`Error sending confirmation email: ${error}`);
+		throw new Error("Error sending confirmation email.");
+	}
+};
