@@ -35,6 +35,10 @@
 			"title": "Success!",
 			"message": "Thank you for submitting your credit card information towards your reservation."
 		},
+		"authentication_submission": {
+			"title": "Authenticating",
+			"message": "We had trouble authenticating this connection."
+		},
 		"bad_submission": {
 			"title": "Uh Oh",
 			"message": "I encountered an error when trying to submit your information.",
@@ -84,6 +88,10 @@
 		"success_submission": {
 			"title": "Succès!",
 			"message": "Merci d'avoir soumis les informations de votre carte de crédit pour votre réservation."
+		},
+		"authentication_submission": {
+			"title": "Authentification",
+			"message": "Nous avons eu du mal à authentifier cette connexion."
 		},
 		"bad_submission": {
 			"title": "Uh Oh",
@@ -135,6 +143,10 @@
 			"title": "Erfolg!",
 			"message": "Vielen Dank, dass Sie Ihre Kreditkarteninformationen für Ihre Reservierung übermittelt haben."
 		},
+		"authentication_submission": {
+			"title": "Authentifizierung",
+			"message": "Wir hatten Probleme, diese Verbindung zu authentifizieren."
+		},
 		"bad_submission": {
 			"title": "Oh oh",
 			"message": "Beim Versuch, Ihre Informationen zu übermitteln, ist ein Fehler aufgetreten.",
@@ -185,6 +197,10 @@
 		"success_submission": {
 			"title": "¡éxito!",
 			"message": "Gracias por enviar la información de su tarjeta de crédito a su reserva."
+		},
+		"authentication_submission": {
+			"title": "Autenticando",
+			"message": "Tuvimos problemas para autenticar esta conexión."
 		},
 		"bad_submission": {
 			"title": "Uh Oh",

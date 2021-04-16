@@ -2,10 +2,10 @@ import axios from "axios";
 
 const BASE_URL = "https://app.navotar.com/api";
 
-export const updateCreditCardByCustomerId = async (clientId, reservationId, ccInfo) => {
+export const getReservationDetailsByReservationId = async (clientId, reservationId) => {
 	const API_BODY = { ClientId: clientId, ConsumerType: "Admin,Basic" };
 	let token = "";
-	let customerId = "";
+	let reservationInfo = {};
 
 	// Getting Auth Token
 	try {
@@ -14,7 +14,6 @@ export const updateCreditCardByCustomerId = async (clientId, reservationId, ccIn
 
 		token = data.apiToken.access_token;
 	} catch (error) {
-		// console.log(`Auth Error: \n${error}`);
 		throw new Error("Auth Failed");
 	}
 
@@ -22,28 +21,48 @@ export const updateCreditCardByCustomerId = async (clientId, reservationId, ccIn
 
 	const globalConfig = { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } };
 
-	// Getting Customer Id by Reservation Id
+	// Getting Reservation Details by Reservation Id
 	try {
 		const { data } = await axios.get(
 			`${BASE_URL}/Reservation/GetReservationById?reservationId=${reservationId}`,
 			globalConfig
 		);
 
-		customerId = data.reservationview.customerId;
+		const {
+			startLocationId: locationId,
+			customerId,
+			customerMail: customerEmail,
+			reservationNumber: reservationNo,
+		} = data.reservationview;
+
+		reservationInfo = {
+			locationId,
+			customerId,
+			customerEmail,
+			reservationNo,
+		};
+
+		return { token, reservationInfo };
 	} catch (error) {
 		// console.log(`Finding Reservation Error: ${error}`);
 		throw new Error("Could not find the reservation.");
 	}
+};
 
+export const insertCreditCardDetailsByCustomerId = async (token, customerId, creditCardDetails) => {
 	// Formatting for Credit Card Input
-	const { name, number, monthExpiry, yearExpiry, cvc, billingZip, ccType } = ccInfo;
+
+	const { name, number, monthExpiry, yearExpiry, cvc, billingZip, ccType } = creditCardDetails;
+
 	const currentDate = new Date();
 	const currentISODate = currentDate.toISOString();
 
 	const newCCExpiryDate = new Date(`20${yearExpiry}-${monthExpiry}-20`);
 	const newCCExpiryISODate = newCCExpiryDate.toISOString();
 
-	const ccPostBody = {
+	const globalConfig = { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } };
+
+	const postBody = {
 		creditCardId: 0,
 		customerId: customerId,
 		creditCardType: ccType,
@@ -66,11 +85,39 @@ export const updateCreditCardByCustomerId = async (clientId, reservationId, ccIn
 		isActive: true,
 	};
 
-	// Insert the Credit Card Info by Customer Id
+	// Inserting credit card details to customer profile by Customer Id
 	try {
-		await axios.post(`${BASE_URL}/Customer/InsertCreditCard`, ccPostBody, globalConfig);
+		await axios.post(`${BASE_URL}/Customer/InsertCreditCard`, postBody, globalConfig);
 	} catch (error) {
 		// console.log(`Credit Card Insert Error: ${error}`);
 		throw new Error("Error inserting the credit card details.");
+	}
+};
+
+export const sendConfirmationEmail = async (customerEmail, reservationNo, locationEmail) => {
+	try {
+		await axios.get(`/api/sendConfirmationEmail`, {
+			params: {
+				customerEmail,
+				reservationNo,
+				locationEmail,
+			},
+		});
+	} catch (error) {
+		// console.log(`Error sending confirmation email: ${error}`);
+		throw new Error("Error sending confirmation email.");
+	}
+};
+
+export const getLocationEmail = async (token, locationId) => {
+	const globalConfig = { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } };
+
+	try {
+		const { data } = await axios.get(`${BASE_URL}/Location/GetLocation?id=${locationId}`, globalConfig);
+
+		return { locationEmail: data.contactEmail };
+	} catch (error) {
+		// console.log(`Error fetching the location: ${error}`);
+		throw new Error("Error fetching the location email.");
 	}
 };
