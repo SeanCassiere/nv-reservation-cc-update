@@ -1,18 +1,22 @@
 // Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
 const sgMail = require("@sendgrid/mail");
 
-const { SENDGRID_API_KEY } = process.env;
+const { SG_API_KEY, SG_FROM_EMAIL, SG_TEMPLATE_ID } = process.env;
 
-sgMail.setApiKey(SENDGRID_API_KEY);
+sgMail.setApiKey(SG_API_KEY);
 
 const handler = async (event) => {
-	const { email } = event.queryStringParameters;
+	const { email, reservationNo } = event.queryStringParameters;
 
 	const msg = {
 		to: `${email}`, // Change to your recipient,
-		from: "sean@navotar.com", // Change to your verified sender
+		from: SG_FROM_EMAIL, // Change to your verified sender
 		subject: "Sending with SendGrid is Fun",
 		html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+		templateId: SG_TEMPLATE_ID,
+		dynamic_template_data: {
+			reservationNo,
+		},
 	};
 
 	try {
@@ -21,10 +25,7 @@ const handler = async (event) => {
 
 		return {
 			statusCode: 200,
-			body: JSON.stringify({ message: msg }),
-			// // more keys you can return:
-			// headers: { "headerName": "headerValue", ... },
-			// isBase64Encoded: true,
+			body: JSON.stringify({ message: "success", toEmail: email, fromEmail: SG_FROM_EMAIL }),
 		};
 	} catch (error) {
 		return { statusCode: 500, body: error.toString() };
