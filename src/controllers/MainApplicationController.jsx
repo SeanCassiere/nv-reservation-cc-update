@@ -6,7 +6,6 @@ import {
 	getReservationDetailsByReservationId,
 	insertCreditCardDetailsByCustomerId,
 	sendConfirmationEmail,
-	getLocationEmail,
 } from "../api/apiFunctions";
 import { reducer, initialState } from "../utils/reducerLogic";
 import {
@@ -33,7 +32,7 @@ const initialCreditCardInfo = {
 	billingZip: "",
 };
 
-const MainApplicationController = ({ clientId, reservationId, lang }) => {
+const MainApplicationController = ({ clientId, reservationId, lang, emailTemplateId }) => {
 	const [globalState, dispatch] = useReducer(reducer, initialState);
 	const [ccData, setCCData] = useState(initialCreditCardInfo);
 
@@ -65,9 +64,8 @@ const MainApplicationController = ({ clientId, reservationId, lang }) => {
 		dispatch({ type: SUBMITTING_FORM_LOADING });
 		try {
 			await insertCreditCardDetailsByCustomerId(token, reservationInfo.customerId, ccData);
-			const { locationEmail } = await getLocationEmail(token, reservationInfo.locationId);
 
-			await sendConfirmationEmail(reservationInfo.customerEmail, reservationInfo.reservationNo, locationEmail);
+			await sendConfirmationEmail(token, reservationId, clientId, emailTemplateId);
 
 			dispatch({ type: SUBMITTING_FORM_SUCCESS });
 		} catch (err) {

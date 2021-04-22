@@ -9,10 +9,11 @@ const URL_APP_CONFIG = new URLSearchParams(window.location.search).get("config")
 const URL_RESERVATION_ID = new URLSearchParams(window.location.search).get("reservationId");
 const URL_LANG = new URLSearchParams(window.location.search).get("lang") || "en";
 
-let CONFIG_JSON = { clientId: null };
+let CONFIG_JSON = { clientId: null, emailTemplateId: null };
 if (URL_APP_CONFIG !== null) CONFIG_JSON = JSON.parse(Buffer.from(URL_APP_CONFIG, "base64").toString("ascii"));
 
 const queryClientId = CONFIG_JSON.clientId;
+const queryTemplateId = CONFIG_JSON.emailTemplateId;
 
 let queryLang = URL_LANG.toLowerCase();
 if (translate[queryLang] === undefined) queryLang = "en";
@@ -23,10 +24,14 @@ const App = () => {
 			<Row className='justify-content-lg-center' style={{ paddingTop: "1rem" }}>
 				<Col xs={12} sm={12} md={12} lg={6}>
 					<div style={{ margin: "0 auto" }}>
-						{queryClientId !== null && URL_RESERVATION_ID !== null && URL_RESERVATION_ID.length !== 0 ? (
+						{queryClientId !== null &&
+						queryTemplateId !== null &&
+						URL_RESERVATION_ID !== null &&
+						URL_RESERVATION_ID.length !== 0 ? (
 							<MainApplicationController
 								clientId={queryClientId}
 								reservationId={URL_RESERVATION_ID}
+								emailTemplateId={queryTemplateId}
 								lang={queryLang}
 								translate={translate}
 							/>

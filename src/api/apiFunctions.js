@@ -94,47 +94,20 @@ export const insertCreditCardDetailsByCustomerId = async (token, customerId, cre
 	}
 };
 
-export const sendConfirmationEmail = async (customerEmail, reservationNo, locationEmail) => {
-	try {
-		await axios.get(`/api/sendConfirmationEmail`, {
-			params: {
-				customerEmail,
-				reservationNo,
-				locationEmail,
-			},
-		});
-	} catch (error) {
-		// console.log(`Error sending confirmation email: ${error}`);
-		throw new Error("Error sending confirmation email.");
-	}
-};
-
-export const getLocationEmail = async (token, locationId) => {
-	const globalConfig = { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } };
-
-	try {
-		const { data } = await axios.get(`${BASE_URL}/Location/GetLocation?id=${locationId}`, globalConfig);
-
-		return { locationEmail: data.contactEmail };
-	} catch (error) {
-		// console.log(`Error fetching the location: ${error}`);
-		throw new Error("Error fetching the location email.");
-	}
-};
-
-export const sendConfirmationEmailWithNavotar = async (token, reservationId, clientId, emailTemplateId) => {
+export const sendConfirmationEmail = async (token, reservationId, clientId, emailTemplateId) => {
 	try {
 		const globalConfig = { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } };
 
 		const postBody = {
-			clientID: clientId,
+			clientID: parseInt(clientId),
 			templateTypeId: 2,
-			purposeId: reservationId,
+			purposeId: parseInt(reservationId),
 			agreementId: 0,
-			reservationId: reservationId,
+			reservationId: parseInt(reservationId),
+			TemplateId: parseInt(emailTemplateId),
 		};
 
-		await axios.post(`${BASE_URL}/api/Email/SendEmail`, postBody, globalConfig);
+		await axios.post(`${BASE_URL}/Email/SendEmail`, postBody, globalConfig);
 	} catch (error) {
 		// console.log(`Error sending confirmation email through Navotar: ${error}`);
 		throw new Error("Error sending confirmation email through Navotar.");
