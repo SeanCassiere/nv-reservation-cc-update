@@ -121,3 +121,22 @@ export const getLocationEmail = async (token, locationId) => {
 		throw new Error("Error fetching the location email.");
 	}
 };
+
+export const sendConfirmationEmailWithNavotar = async (token, reservationId, clientId, emailTemplateId) => {
+	try {
+		const globalConfig = { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } };
+
+		const postBody = {
+			clientID: clientId,
+			templateTypeId: 2,
+			purposeId: reservationId,
+			agreementId: 0,
+			reservationId: reservationId,
+		};
+
+		await axios.post(`${BASE_URL}/api/Email/SendEmail`, postBody, globalConfig);
+	} catch (error) {
+		// console.log(`Error sending confirmation email through Navotar: ${error}`);
+		throw new Error("Error sending confirmation email through Navotar.");
+	}
+};
