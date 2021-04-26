@@ -10,7 +10,9 @@ const URL_RESERVATION_ID = new URLSearchParams(window.location.search).get("rese
 const URL_LANG = new URLSearchParams(window.location.search).get("lang") || "en";
 
 let CONFIG_JSON = { clientId: null, emailTemplateId: null };
-if (URL_APP_CONFIG !== null) CONFIG_JSON = JSON.parse(Buffer.from(URL_APP_CONFIG, "base64").toString("ascii"));
+if (URL_APP_CONFIG !== null && URL_APP_CONFIG !== "") {
+	CONFIG_JSON = JSON.parse(Buffer.from(URL_APP_CONFIG, "base64").toString("ascii"));
+}
 
 const queryClientId = CONFIG_JSON.clientId;
 const queryTemplateId = CONFIG_JSON.emailTemplateId;
@@ -33,7 +35,6 @@ const App = () => {
 								reservationId={URL_RESERVATION_ID}
 								emailTemplateId={queryTemplateId}
 								lang={queryLang}
-								translate={translate}
 							/>
 						) : (
 							<QueryStringNotPassed lang={queryLang} />

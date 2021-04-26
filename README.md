@@ -20,15 +20,17 @@ When creating the base64 encoded JSON string, add in the following into the stri
 
 ```
 {
-"clientId": 1013
+	"clientId": 1013,
+	"emailTemplateId": 7388
 }
 
-// Example Base64 --> ewoiY2xpZW50SWQiOiAxMDEzCn0=
+// Example Base64 --> ewoJImNsaWVudElkIjogMTAxMywKCSJlbWFpbFRlbXBsYXRlSWQiOiA3Mzg4Cn0=
 ```
 
-| Param    | Value                         |
-| -------- | ----------------------------- |
-| clientId | Navotar Client ID of the User |
+| Param           | Value                                                                                               |
+| --------------- | --------------------------------------------------------------------------------------------------- |
+| clientId        | Navotar Client ID of the User                                                                       |
+| emailTemplateId | Navotar Client Custom Email Template ID of the User in the Reservation Confirmation Emails section. |
 
 ## Language Support
 
@@ -39,16 +41,3 @@ Languages currently supported
 | French | fr |
 | German | de |
 | Spanish | es |
-
-# Deprecating following Netlify Cloud Function
-
-## Confirmation Emails
-
-I've set up a Netlify Serverless function to handle the sending of confirmation emails after the Credit Card details have been inserted.
-
-The Endpoint (GET) is `/api/sendConfirmationEmail` with the following params.
-| Param | Value |
-| --- | ---|
-| customerEmail | The email address of the customer |
-| reservationNo | The reservation number through which the credit card details were entered |
-| locationEmail | The email address associated with the checkout location |

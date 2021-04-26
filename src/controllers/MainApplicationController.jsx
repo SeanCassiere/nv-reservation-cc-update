@@ -59,7 +59,6 @@ const MainApplicationController = ({ clientId, reservationId, lang, emailTemplat
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (ccData.number.length < 16) return;
 
 		dispatch({ type: SUBMITTING_FORM_LOADING });
 		try {
