@@ -104,7 +104,7 @@ export const sendConfirmationEmail = async (token, reservationId, clientId, emai
 			purposeId: parseInt(reservationId),
 			agreementId: 0,
 			reservationId: parseInt(reservationId),
-			TemplateId: parseInt(emailTemplateId),
+			templateId: parseInt(emailTemplateId),
 		};
 
 		await axios.post(`${BASE_URL}/Email/SendEmail`, postBody, globalConfig);
