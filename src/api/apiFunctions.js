@@ -94,30 +94,22 @@ export const insertCreditCardDetailsByCustomerId = async (token, customerId, cre
 	}
 };
 
-export const sendConfirmationEmail = async (customerEmail, reservationNo, locationEmail) => {
+export const sendConfirmationEmail = async (token, reservationId, clientId, emailTemplateId) => {
 	try {
-		await axios.get(`/api/sendConfirmationEmail`, {
-			params: {
-				customerEmail,
-				reservationNo,
-				locationEmail,
-			},
-		});
+		const globalConfig = { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } };
+
+		const postBody = {
+			clientID: parseInt(clientId),
+			templateTypeId: 2,
+			purposeId: parseInt(reservationId),
+			agreementId: 0,
+			reservationId: parseInt(reservationId),
+			templateId: parseInt(emailTemplateId),
+		};
+
+		await axios.post(`${BASE_URL}/Email/SendEmail`, postBody, globalConfig);
 	} catch (error) {
-		// console.log(`Error sending confirmation email: ${error}`);
-		throw new Error("Error sending confirmation email.");
-	}
-};
-
-export const getLocationEmail = async (token, locationId) => {
-	const globalConfig = { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } };
-
-	try {
-		const { data } = await axios.get(`${BASE_URL}/Location/GetLocation?id=${locationId}`, globalConfig);
-
-		return { locationEmail: data.contactEmail };
-	} catch (error) {
-		// console.log(`Error fetching the location: ${error}`);
-		throw new Error("Error fetching the location email.");
+		// console.log(`Error sending confirmation email through Navotar: ${error}`);
+		throw new Error("Error sending confirmation email through Navotar.");
 	}
 };

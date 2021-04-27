@@ -2,22 +2,35 @@
 
 To be able to add card details to a reservation.
 
-URL Params
+## URL Params
 
 ```
-?reservationId=xxxxx&clientId=xxxx&lang=en
+?reservationId=xxxxx&config=xxxx&lang=en
 ```
 
-## Confirmation Emails
+| Param         | Value                                                                                        |
+| ------------- | -------------------------------------------------------------------------------------------- |
+| reservationId | This can be inserted using the Navotar email template.                                       |
+| lang          | Supported languages codes, listed down below.                                                |
+| config        | base64 encoding of a JSON string with certain bits of application configuration information. |
 
-I've set up a Netlify Serverless function to handle the sending of confirmation emails after the Credit Card details have been inserted.
+## Config params
 
-The Endpoint (GET) is `/api/sendConfirmationEmail` with the following params.
-| Param | Value |
-| --- | ---|
-| customerEmail | The email address of the customer |
-| reservationNo | The reservation number through which the credit card details were entered |
-| locationEmail | The email address associated with the checkout location |
+When creating the base64 encoded JSON string, add in the following into the string.
+
+```
+{
+	"clientId": 1013,
+	"emailTemplateId": 7388
+}
+
+// Example Base64 --> ewoJImNsaWVudElkIjogMTAxMywKCSJlbWFpbFRlbXBsYXRlSWQiOiA3Mzg4Cn0=
+```
+
+| Param           | Value                                                                                               |
+| --------------- | --------------------------------------------------------------------------------------------------- |
+| clientId        | Navotar Client ID of the User                                                                       |
+| emailTemplateId | Navotar Client Custom Email Template ID of the User in the Reservation Confirmation Emails section. |
 
 ## Language Support
 

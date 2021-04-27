@@ -5,9 +5,17 @@ import QueryStringNotPassed from "./layouts/QueryStringNotPassed";
 import MainApplicationController from "./controllers/MainApplicationController";
 import translate from "./utils/translations.json";
 
+const URL_APP_CONFIG = new URLSearchParams(window.location.search).get("config");
 const URL_RESERVATION_ID = new URLSearchParams(window.location.search).get("reservationId");
-const URL_CLIENT_ID = new URLSearchParams(window.location.search).get("clientId");
 const URL_LANG = new URLSearchParams(window.location.search).get("lang") || "en";
+
+let CONFIG_JSON = { clientId: null, emailTemplateId: null };
+if (URL_APP_CONFIG !== null && URL_APP_CONFIG !== "") {
+	CONFIG_JSON = JSON.parse(Buffer.from(URL_APP_CONFIG, "base64").toString("ascii"));
+}
+
+const queryClientId = CONFIG_JSON.clientId;
+const queryTemplateId = CONFIG_JSON.emailTemplateId;
 
 let queryLang = URL_LANG.toLowerCase();
 if (translate[queryLang] === undefined) queryLang = "en";
@@ -18,15 +26,15 @@ const App = () => {
 			<Row className='justify-content-lg-center' style={{ paddingTop: "1rem" }}>
 				<Col xs={12} sm={12} md={12} lg={6}>
 					<div style={{ margin: "0 auto" }}>
-						{URL_CLIENT_ID !== null &&
+						{queryClientId !== null &&
+						queryTemplateId !== null &&
 						URL_RESERVATION_ID !== null &&
-						URL_CLIENT_ID.length !== 0 &&
 						URL_RESERVATION_ID.length !== 0 ? (
 							<MainApplicationController
-								clientId={URL_CLIENT_ID}
+								clientId={queryClientId}
 								reservationId={URL_RESERVATION_ID}
+								emailTemplateId={queryTemplateId}
 								lang={queryLang}
-								translate={translate}
 							/>
 						) : (
 							<QueryStringNotPassed lang={queryLang} />

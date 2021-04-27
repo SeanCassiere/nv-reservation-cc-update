@@ -25,10 +25,11 @@ const CreditCardDetailsForm = ({
 		if (form.checkValidity() === false) {
 			e.preventDefault();
 			e.stopPropagation();
+		} else {
+			handleSubmit(e);
 		}
 
 		setValidated(true);
-		if (form.checkValidity() === true) handleSubmit(e);
 	};
 
 	return (
@@ -44,10 +45,10 @@ const CreditCardDetailsForm = ({
 							onChange={handleChange}
 							onFocus={handleFocus}
 							onBlur={handleBlur}
-							pattern={`[0-9]{13,${cardMaxLength}}`}
+							pattern={`[0-9]{${ccData.ccType === "AMEX".toLowerCase() ? 13 : 15},${cardMaxLength + 1}}`}
 							required
 							type='text'
-							maxLength={cardMaxLength}
+							maxLength={cardMaxLength + 1}
 						/>
 						<Form.Control.Feedback type='invalid'>{translate[lang].form.errors.card_number}</Form.Control.Feedback>
 					</Form.Group>
