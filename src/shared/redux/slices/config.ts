@@ -9,11 +9,11 @@ const supportedLanguages = ["en", "de", "fr", "es"] as const;
 
 // type Controllers = typeof allControllerFlows[number];
 type AppState = typeof appStates[number];
-type SupportedLanguages = typeof supportedLanguages[number];
+export type SupportedLanguages = typeof supportedLanguages[number];
 export type LangFile = typeof translations.en;
 
 export interface ConfigSliceState {
-	lang: SupportedLanguages;
+	lang: string;
 	status: AppState;
 	translations: LangFile;
 	clientId: string | null;
@@ -36,10 +36,10 @@ const configSlice = createSlice({
 	name: "config",
 	initialState,
 	reducers: {
-		setLang: (state, action: PayloadAction<{ lang: SupportedLanguages }>) => {
-			if (supportedLanguages.includes(action.payload.lang)) {
+		setLang: (state, action: PayloadAction<{ lang: string | null }>) => {
+			if (action.payload.lang && supportedLanguages.includes(action.payload.lang as any)) {
 				state.lang = action.payload.lang;
-				state.translations = translations[action.payload.lang];
+				state.translations = translations[action.payload.lang as SupportedLanguages];
 			}
 		},
 		setAccessToken: (state, action: PayloadAction<{ token: string }>) => {

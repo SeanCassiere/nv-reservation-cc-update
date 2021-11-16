@@ -21,11 +21,13 @@ const ApplicationController = () => {
 	// initial app boot
 	useEffect(() => {
 		const query = new URLSearchParams(window.location.search);
-		const reservationId = query.get("reservationId");
-
-		if (!reservationId) return navigate("/not-available");
 
 		const lang = query.get("lang");
+		dispatch(setLang({ lang: lang as any }));
+
+		const reservationId = query.get("reservationId");
+		if (!reservationId) return navigate("/not-available");
+
 		const configQuery = query.get("config");
 
 		let config: { clientId: string | null; emailTemplateId: string | null; flow: string[] } = {
@@ -39,7 +41,6 @@ const ApplicationController = () => {
 
 		if (!config.clientId || !config.emailTemplateId) return navigate("/not-available");
 
-		dispatch(setLang({ lang: lang as any }));
 		dispatch(
 			setConfigValues({ clientId: config.clientId, responseTemplateId: config.emailTemplateId, flow: config.flow })
 		);
