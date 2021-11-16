@@ -56,7 +56,7 @@ const DefaultCreditCardController = ({
 		} catch (error: any) {
 			const err = error as yup.ValidationError;
 			const formErrors = yupFormatSchemaErrors(err);
-			console.log(formErrors);
+			if (process.env.NODE_ENV !== "production") console.log(formErrors);
 			setSchemaErrors(formErrors);
 		}
 	};
@@ -87,8 +87,6 @@ const DefaultCreditCardController = ({
 		}
 	}, []);
 	const handleBlur = useCallback(() => setCurrentFocus(""), []);
-
-	console.log("prevPageAvailable", isPrevPageAvailable());
 
 	return (
 		<Card border='light'>
