@@ -15,9 +15,16 @@ import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/Defa
 interface IProps {
 	handleSubmit: () => void;
 	isNextAvailable: () => boolean;
+	handlePrevious: () => void;
+	isPrevPageAvailable: () => boolean;
 }
 
-const DefaultCreditCardController = ({ handleSubmit, isNextAvailable }: IProps) => {
+const DefaultCreditCardController = ({
+	handleSubmit,
+	isNextAvailable,
+	handlePrevious,
+	isPrevPageAvailable,
+}: IProps) => {
 	const dispatch = useDispatch();
 	const t = useSelector(selectTranslations);
 	const { data: initialFormData } = useSelector(selectCreditCardForm);
@@ -81,12 +88,14 @@ const DefaultCreditCardController = ({ handleSubmit, isNextAvailable }: IProps) 
 	}, []);
 	const handleBlur = useCallback(() => setCurrentFocus(""), []);
 
+	console.log("prevPageAvailable", isPrevPageAvailable());
+
 	return (
 		<Card border='light'>
 			<Card.Body>
 				<Card.Title>{t.form.title}</Card.Title>
 				<Card.Subtitle>{t.form.message}</Card.Subtitle>
-				<div className='mt-4 d-grid gap-2'>
+				<div className='mt-4 d-grid'>
 					<Row>
 						<Col md={12}>
 							<DefaultCreditCard
@@ -109,7 +118,14 @@ const DefaultCreditCardController = ({ handleSubmit, isNextAvailable }: IProps) 
 						</Col>
 					</Row>
 					<Row className='mt-3'>
-						<Col md={12}>
+						{isPrevPageAvailable() && (
+							<Col xs={2} className='pr-0'>
+								<Button variant='warning' size='lg' style={{ width: "100%" }} onClick={handlePrevious}>
+									&#8592;
+								</Button>
+							</Col>
+						)}
+						<Col xs={isPrevPageAvailable() ? 10 : 12} className={isPrevPageAvailable() ? "pl-2" : ""}>
 							<Button variant='primary' size='lg' style={{ width: "100%" }} onClick={handleNextState}>
 								{isNextAvailable() ? t.form.labels.next : t.form.labels.submit}
 							</Button>

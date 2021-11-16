@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+
 import ErrorSubmission from "../../pages/ErrorSubmission/ErrorSubmission";
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 import { setConfigValues, setLang } from "../../redux/slices/config";
@@ -27,10 +28,10 @@ const ApplicationController = () => {
 		const lang = query.get("lang");
 		const configQuery = query.get("config");
 
-		let config: { clientId: string | null; emailTemplateId: string | null; flows: string[] } = {
+		let config: { clientId: string | null; emailTemplateId: string | null; flow: string[] } = {
 			clientId: null,
 			emailTemplateId: null,
-			flows: [],
+			flow: [],
 		};
 		if (configQuery) {
 			config = JSON.parse(Buffer.from(configQuery, "base64").toString("ascii"));
@@ -40,7 +41,7 @@ const ApplicationController = () => {
 
 		dispatch(setLang({ lang: lang as any }));
 		dispatch(
-			setConfigValues({ clientId: config.clientId, responseTemplateId: config.emailTemplateId, flows: config.flows })
+			setConfigValues({ clientId: config.clientId, responseTemplateId: config.emailTemplateId, flow: config.flow })
 		);
 		dispatch(setReservationId(reservationId));
 		dispatch(authenticateAppThunk());
@@ -49,25 +50,42 @@ const ApplicationController = () => {
 	/*
 	 ** Application Controller management
 	 */
+	const [previousControllers, setPreviousControllers] = useState<string[]>([]);
+	const [activeController, setActiveController] = useState<string | null>(null);
 	const [remainingFlowControllers, setRemainingFlowControllers] = useState<string[]>([]);
-	const [currentController, setCurrentController] = useState<string | null>(null);
+
+	const isPrevPageAvailable = useCallback(() => previousControllers.length > 0, [previousControllers]);
+	const handlePrevious = useCallback(() => {
+		if (previousControllers.length <= 0) return;
+
+		const currentPrevScreens = previousControllers;
+		const currentScreen = activeController!;
+
+		const newActiveScreen = currentPrevScreens.pop() || appConfig.flow[0];
+
+		setActiveController(newActiveScreen);
+		setPreviousControllers(currentPrevScreens.filter((screen) => screen !== newActiveScreen));
+		setRemainingFlowControllers([currentScreen, ...remainingFlowControllers]);
+	}, [activeController, appConfig.flow, previousControllers, remainingFlowControllers]);
 
 	const isNextPageAvailable = useCallback(() => remainingFlowControllers.length > 0, [remainingFlowControllers]);
-
 	const handleSubmit = useCallback(() => {
-		const nextPage = remainingFlowControllers[0];
-
-		let remainingElements = remainingFlowControllers.filter((elem) => elem !== currentController);
-		remainingElements = remainingElements.filter((elem) => elem !== nextPage);
-
-		setRemainingFlowControllers(remainingElements);
-		setCurrentController(nextPage);
-
-		if (remainingFlowControllers.length === 0) {
+		if (remainingFlowControllers.length <= 0) {
 			// navigate to a protected page with a submission controller
 			return navigate("/submit-details");
+		} else {
+			const currentScreen = activeController!;
+			const nextScreen = remainingFlowControllers[0];
+
+			const newPreviousControllersList = [...previousControllers, currentScreen]; //correct
+
+			const newFutureControllersList = remainingFlowControllers.filter((e) => e !== nextScreen);
+
+			setPreviousControllers(newPreviousControllersList);
+			setRemainingFlowControllers(newFutureControllersList);
+			setActiveController(nextScreen);
 		}
-	}, [navigate, currentController, remainingFlowControllers]);
+	}, [activeController, remainingFlowControllers, previousControllers, navigate]);
 
 	useEffect(() => {
 		const startingController = appConfig.flow[0];
@@ -75,7 +93,7 @@ const ApplicationController = () => {
 		const startingControllers = appConfig.flow.filter((elem) => elem !== startingController);
 
 		setRemainingFlowControllers(startingControllers);
-		setCurrentController(startingController);
+		setActiveController(startingController);
 	}, [appConfig.flow]);
 
 	return (
@@ -83,11 +101,15 @@ const ApplicationController = () => {
 			{appConfig.status === "authenticating" && <LoadingSubmission title={t.authentication_submission.title} />}
 			{appConfig.status === "authentication_error" && <ErrorSubmission msg={t.authentication_submission.message} />}
 			{appConfig.status === "loaded" && (
-				<DisplayCurrentController
-					selectedController={currentController}
-					handleNext={handleSubmit}
-					isNextPageAvailable={isNextPageAvailable}
-				/>
+				<>
+					<DisplayCurrentController
+						selectedController={activeController}
+						handleNext={handleSubmit}
+						handlePrevious={handlePrevious}
+						isPrevPageAvailable={isPrevPageAvailable}
+						isNextPageAvailable={isNextPageAvailable}
+					/>
+				</>
 			)}
 		</>
 	);

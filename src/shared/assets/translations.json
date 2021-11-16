@@ -34,7 +34,7 @@
 		},
 		"success_submission": {
 			"title": "Success!",
-			"message": "Thank you for submitting your credit card information towards your reservation."
+			"message": "Thank you for submitting your information towards the reservation."
 		},
 		"authentication_submission": {
 			"title": "Authenticating",

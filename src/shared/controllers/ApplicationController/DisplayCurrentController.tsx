@@ -6,13 +6,26 @@ interface IProps {
 	selectedController: string | null;
 	handleNext: () => void;
 	isNextPageAvailable: () => boolean;
+	handlePrevious: () => void;
+	isPrevPageAvailable: () => boolean;
 }
 
-const DisplayCurrentController = ({ selectedController, handleNext, isNextPageAvailable }: IProps) => {
+const DisplayCurrentController = ({
+	selectedController,
+	handleNext,
+	isNextPageAvailable,
+	handlePrevious,
+	isPrevPageAvailable,
+}: IProps) => {
 	return (
 		<>
 			{selectedController === "Default/CreditCardForm" && (
-				<DefaultCreditCardController handleSubmit={handleNext} isNextAvailable={isNextPageAvailable} />
+				<DefaultCreditCardController
+					handleSubmit={handleNext}
+					isNextAvailable={isNextPageAvailable}
+					handlePrevious={handlePrevious}
+					isPrevPageAvailable={isPrevPageAvailable}
+				/>
 			)}
 			{selectedController === "Default/Positive" && (
 				<div>
