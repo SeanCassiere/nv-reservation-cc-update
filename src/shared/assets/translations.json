@@ -9,6 +9,7 @@
 				"cvv": "CVV",
 				"billingZip": "Billing Zip Code",
 				"submit": "Submit",
+				"next": "Next",
 				"exp_month": "Expiry Month",
 				"exp_year": "Expiry Year",
 				"p_holders": {
@@ -63,6 +64,7 @@
 				"cvv": "CVV",
 				"billingZip": "Code postal",
 				"submit": "Soumettre",
+				"next": "Prochaine",
 				"exp_month": "Mois d'expiration",
 				"exp_year": "Année d'expiration ",
 				"p_holders": {
@@ -117,6 +119,7 @@
 				"cvv": "CVV",
 				"billingZip": "PLZ",
 				"submit": "Senden",
+				"next": "Nächste",
 				"exp_month": "Ablaufmonat",
 				"exp_year": "Ablaufjahr ",
 				"p_holders": {
@@ -171,6 +174,7 @@
 				"cvv": "CVV",
 				"billingZip": "Código postal",
 				"submit": "Enviar",
+				"next": "Próxima",
 				"exp_month": "Mes de caducidad",
 				"exp_year": "Año de caducidad",
 				"p_holders": {

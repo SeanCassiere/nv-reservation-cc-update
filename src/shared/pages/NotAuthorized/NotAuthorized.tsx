@@ -2,8 +2,8 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
-import { selectTranslations } from "../../shared/redux/store";
-import NotFoundImg from "../../shared/assets/undraw_page_not_found_su7k.svg";
+import { selectTranslations } from "../../redux/store";
+import NotFoundImg from "../../assets/undraw_page_not_found_su7k.svg";
 
 const NotAuthorized = () => {
 	const t = useSelector(selectTranslations);

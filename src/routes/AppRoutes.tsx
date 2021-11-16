@@ -1,20 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import RequireAuth from "./RequireAuth";
-import NotAuthorized from "../views/NotAuthorized/NotAuthorized";
-import ControllerCreditCardForm from "../views/CreditCardForm/ControllerCreditCardForm";
+// import RequireAuth from "./RequireAuth";
+import NotAuthorized from "../shared/pages/NotAuthorized/NotAuthorized";
+import ApplicationController from "../shared/controllers/ApplicationController/ApplicationController";
+import DefaultSubmitDetailsController from "../shared/controllers/SubmitDetailsController/DefaultSubmitDetailsController";
 
 const AppRoutes = () => {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route index element={<ControllerCreditCardForm />} />
+				<Route index element={<ApplicationController />} />
 				<Route
-					path='/authorized'
+					path='/submit-details'
 					element={
-						<RequireAuth>
-							<ControllerCreditCardForm />
-						</RequireAuth>
+						// <RequireAuth>
+						<DefaultSubmitDetailsController />
+						// </RequireAuth>
 					}
 				/>
 				<Route path='/not-authorized' element={<NotAuthorized />} />

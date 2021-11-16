@@ -34,7 +34,12 @@ const configSlice = createSlice({
 				state.translations = translations[action.payload.lang];
 			}
 		},
+		setAccessToken: (state, action: PayloadAction<{ token: string }>) => {
+			state.token = action.payload.token;
+		},
 	},
 });
+
+export const { setAccessToken, setLang } = configSlice.actions;
 
 export default configSlice;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setAccessToken } from "../redux/slices/config";
 import store from "../redux/store";
 
 const baseURL = process.env.API_BASE_URL || "https://app.navotar.com/api";
@@ -18,6 +19,8 @@ client.interceptors.request.use(
 		const originalRequest = err.config;
 		const clientId = store.getState().config.clientId;
 
+		if (!clientId) return Promise.reject(err);
+
 		if (err.response.status === 401 && !originalRequest._retry && clientId !== null) {
 			originalRequest._retry = true;
 			try {
@@ -27,6 +30,7 @@ client.interceptors.request.use(
 				});
 
 				const { data } = res.data as { data: { apiToken: { access_token: string } } };
+				store.dispatch(setAccessToken({ token: data.apiToken.access_token }));
 
 				originalRequest.headers.Authorization = `Bearer ${data.apiToken.access_token}`;
 				return client(originalRequest);
