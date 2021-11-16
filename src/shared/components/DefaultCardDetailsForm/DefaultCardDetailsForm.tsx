@@ -7,7 +7,7 @@ import { selectTranslations } from "../../redux/store";
 import { currentYearNum, range } from "../../utils/common";
 import { YupErrorsFormatted } from "../../utils/yupSchemaErrors";
 
-let numOfYears = range(currentYearNum, 58);
+let numOfYears = range(currentYearNum, 40);
 let numOfMonths = range(1, 12);
 
 interface IProps {

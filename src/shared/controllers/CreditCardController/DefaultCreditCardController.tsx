@@ -1,15 +1,13 @@
 import React, { useCallback, useState } from "react";
-import Card from "react-bootstrap/esm/Card";
-import Button from "react-bootstrap/esm/Button";
-import Col from "react-bootstrap/esm/Col";
-import Row from "react-bootstrap/esm/Row";
+import { Card, Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
+import valid from "card-validator";
 
 import { selectCreditCardForm, selectTranslations } from "../../redux/store";
-import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
-import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
 import { setCreditCardFormData } from "../../redux/slices/forms";
+import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
+import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
 import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
 
 interface IProps {
@@ -40,11 +38,18 @@ const DefaultCreditCardController = ({
 		type: yup.string().required(),
 		number: yup
 			.string()
-			.min(formValues.type.toLowerCase() === "AMEX".toLowerCase() ? 13 : 15, t.form.errors.card_number)
+			.test("test-number", t.form.errors.card_number, (value) => valid.number(value).isValid)
+			// .min(formValues.type.toLowerCase() === "AMEX".toLowerCase() ? 13 : 15, t.form.errors.card_number)
 			.required(t.form.errors.card_number),
 		cvv: yup.string().required(t.form.errors.cvv),
-		monthExpiry: yup.number().required(t.form.errors.exp_month),
-		yearExpiry: yup.number().required(t.form.errors.exp_year),
+		monthExpiry: yup
+			.number()
+			.test("test-number", t.form.errors.exp_month, (value) => valid.expirationMonth(value).isValidForThisYear)
+			.required(t.form.errors.exp_month),
+		yearExpiry: yup
+			.number()
+			.test("test-number", t.form.errors.exp_year, (value) => valid.expirationYear(value).isValid)
+			.required(t.form.errors.exp_year),
 		billingZip: yup.string().required(t.form.errors.billingZip),
 	});
 
