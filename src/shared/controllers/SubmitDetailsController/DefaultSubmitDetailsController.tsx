@@ -18,11 +18,11 @@ const DefaultSubmitDetailsController = () => {
 	}, [dispatch]);
 
 	if (state === "submitting_details_success") {
-		navigate("/success");
+		navigate("/success", { replace: true });
 	}
 
 	if (state === "submitting_details_error") {
-		navigate("/error");
+		navigate("/error", { replace: true });
 	}
 	return <LoadingSubmission title={t.form.submitting_msg} />;
 };
