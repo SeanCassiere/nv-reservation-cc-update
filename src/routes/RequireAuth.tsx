@@ -8,7 +8,7 @@ function RequireAuth({ children }: { children: JSX.Element }) {
 	const { token } = useSelector(selectConfigState);
 
 	if (!token) {
-		return <Navigate to='/not-authorized' state={{ from: location }} />;
+		return <Navigate to='/not-available' state={{ from: location }} />;
 	}
 
 	return children;

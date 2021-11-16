@@ -127,7 +127,7 @@ const DefaultCardDetailsForm = ({
 					</Form.Group>
 				</Col>
 			</Row>
-			<Row>
+			<Row className='mt-3'>
 				<Col>
 					<Form.Group controlId='cvvInput'>
 						<Form.Label>{t.form.labels.cvv}</Form.Label>

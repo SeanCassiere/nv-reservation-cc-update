@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const submissionStates = [
+	"submitting_details_pending",
+	"submitting_details_error",
+	"submitting_details_success",
+] as const;
+type SubmissionState = typeof submissionStates[number];
 export interface ICreditCardFormData {
 	name: string;
 	type: string;
@@ -11,6 +17,9 @@ export interface ICreditCardFormData {
 }
 
 interface IFormsSliceState {
+	submission: {
+		state: SubmissionState;
+	};
 	creditCardForm: {
 		isReadyToSubmit: boolean;
 		data: ICreditCardFormData;
@@ -18,6 +27,9 @@ interface IFormsSliceState {
 }
 
 const initialState: IFormsSliceState = {
+	submission: {
+		state: "submitting_details_pending",
+	},
 	creditCardForm: {
 		isReadyToSubmit: false,
 		data: {
@@ -40,9 +52,12 @@ const formsSlice = createSlice({
 			state.creditCardForm.data = action.payload;
 			state.creditCardForm.isReadyToSubmit = true;
 		},
+		setSubmissionState: (state, action: PayloadAction<SubmissionState>) => {
+			state.submission.state = action.payload;
+		},
 	},
 });
 
-export const { setCreditCardFormData } = formsSlice.actions;
+export const { setCreditCardFormData, setSubmissionState } = formsSlice.actions;
 
 export default formsSlice;

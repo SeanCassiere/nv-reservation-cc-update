@@ -26,7 +26,7 @@ client.interceptors.request.use(
 			try {
 				const res = await client.post("/Login/GetClientSecretToken", {
 					ClientId: clientId,
-					ConsumerType: "Admin/Basic",
+					ConsumerType: "Admin,Basic",
 				});
 
 				const { data } = res.data as { data: { apiToken: { access_token: string } } };
