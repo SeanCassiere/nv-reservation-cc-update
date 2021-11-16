@@ -18,19 +18,27 @@ To be able to add card details to a reservation.
 
 When creating the base64 encoded JSON string, add in the following into the string.
 
-```
+```json
 {
 	"clientId": 1013,
-	"emailTemplateId": 7388
+	"emailTemplateId": 7388,
+	"flow": ["Default/CreditCardForm"]
 }
 
-// Example Base64 --> ewoJImNsaWVudElkIjogMTAxMywKCSJlbWFpbFRlbXBsYXRlSWQiOiA3Mzg4Cn0=
+// Example Base64 --> eyJjbGllbnRJZCI6IDEwMTMsImVtYWlsVGVtcGxhdGVJZCI6IDczODgsImZsb3ciOiBbIkRlZmF1bHQvQ3JlZGl0Q2FyZEZvcm0iXX0=
 ```
 
-| Param           | Value                                                                                               |
-| --------------- | --------------------------------------------------------------------------------------------------- |
-| clientId        | Navotar Client ID of the User                                                                       |
-| emailTemplateId | Navotar Client Custom Email Template ID of the User in the Reservation Confirmation Emails section. |
+| Param           | Value                                                                                                                                                                                     |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| clientId        | Navotar Client ID of the User.                                                                                                                                                            |
+| emailTemplateId | Navotar Client Custom Email Template ID of the User in the Reservation Confirmation Emails section.                                                                                       |
+| flow            | Ordered array of the screens/views to be gone through. <br /><br /> This is an optional field. If not given in the config, only the **Default/CreditCardForm** will be shown to the user. |
+
+## Available screens/views
+
+| Key                    | Description                  |
+| ---------------------- | ---------------------------- |
+| Default/CreditCardForm | The default credit card form |
 
 ## Language Support
 
