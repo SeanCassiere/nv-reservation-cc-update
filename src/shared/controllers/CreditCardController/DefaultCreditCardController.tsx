@@ -9,6 +9,7 @@ import { setCreditCardFormData } from "../../redux/slices/forms";
 import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
 import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
 import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
+import { creditCardTypeFormat } from "../../utils/creditCardTypeFormat";
 
 interface IProps {
 	handleSubmit: () => void;
@@ -38,17 +39,17 @@ const DefaultCreditCardController = ({
 		type: yup.string().required(),
 		number: yup
 			.string()
-			.test("test-number", t.form.errors.card_number, (value) => valid.number(value).isValid)
 			// .min(formValues.type.toLowerCase() === "AMEX".toLowerCase() ? 13 : 15, t.form.errors.card_number)
+			.test("test-number", t.form.errors.card_number, (value) => valid.number(`${value}`).isValid)
 			.required(t.form.errors.card_number),
 		cvv: yup.string().required(t.form.errors.cvv),
 		monthExpiry: yup
 			.number()
-			.test("test-number", t.form.errors.exp_month, (value) => valid.expirationMonth(value).isValidForThisYear)
+			.test("test-number", t.form.errors.exp_month, (value) => valid.expirationMonth(`${value}`).isValid)
 			.required(t.form.errors.exp_month),
 		yearExpiry: yup
 			.number()
-			.test("test-number", t.form.errors.exp_year, (value) => valid.expirationYear(value).isValid)
+			.test("test-number", t.form.errors.exp_year, (value) => valid.expirationYear(`${value}`).isValid)
 			.required(t.form.errors.exp_year),
 		billingZip: yup.string().required(t.form.errors.billingZip),
 	});
@@ -68,9 +69,10 @@ const DefaultCreditCardController = ({
 
 	const handleCardIdentifier = useCallback(
 		(type: string, maxLength: number) => {
+			const formattedType = creditCardTypeFormat(type);
 			setFormValues({
 				...formValues,
-				type,
+				type: formattedType,
 			});
 			setCardMaxLength(maxLength);
 		},
