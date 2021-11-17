@@ -54,7 +54,8 @@ const DefaultCreditCardController = ({
 		billingZip: yup.string().required(t.form.errors.billingZip),
 	});
 
-	const handleNextState = async () => {
+	// validate the form data against the schema
+	const handleNextState = useCallback(async () => {
 		try {
 			await schema.validate(formValues, { abortEarly: false });
 			dispatch(setCreditCardFormData(formValues));
@@ -65,8 +66,9 @@ const DefaultCreditCardController = ({
 			if (process.env.NODE_ENV !== "production") console.log(formErrors);
 			setSchemaErrors(formErrors);
 		}
-	};
+	}, [dispatch, formValues, handleSubmit, schema]);
 
+	// Form element handlers
 	const handleCardIdentifier = useCallback(
 		(type: string, maxLength: number) => {
 			const formattedType = creditCardTypeFormat(type);
@@ -78,12 +80,15 @@ const DefaultCreditCardController = ({
 		},
 		[formValues]
 	);
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setFormValues({
-			...formValues,
-			[e.target.name]: e.target.value,
-		});
-	};
+	const handleChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			setFormValues({
+				...formValues,
+				[e.target.name]: e.target.value,
+			});
+		},
+		[formValues]
+	);
 	const handleFocus = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.name === "monthExpiry" || e.target.name === "yearExpiry") {
 			setCurrentFocus("expiry");
