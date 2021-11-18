@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 
 import { selectConfigState } from "../shared/redux/store";
 
-function RequireAuth({ children }: { children: JSX.Element }) {
+const RequireAuth = ({ children }: { children: JSX.Element }) => {
 	let location = useLocation();
 	const { token } = useSelector(selectConfigState);
 
@@ -12,6 +12,6 @@ function RequireAuth({ children }: { children: JSX.Element }) {
 	}
 
 	return children;
-}
+};
 
 export default RequireAuth;
