@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Card, Row, Col, Button, Modal, Accordion, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,12 +24,12 @@ const DefaultLicenseUploadController = ({
 	const [key, setKey] = useState<string | undefined>("front");
 
 	const [frontImageFile, setFrontImageFile] = useState<File | null>(null);
-	const [frontImageBase64, setFrontImageBase64] = useState<string | null>(null);
 	const [displayNoFrontImageError, setDisplayNoFrontImageError] = useState(false);
 
-	const selectFrontImage = useCallback((file: File) => {
+	const selectFrontImage = useCallback(async (file: File) => {
 		setDisplayNoFrontImageError(false);
 		setFrontImageFile(file);
+
 		setTimeout(() => {
 			setKey("back");
 		}, 500);
@@ -37,21 +37,9 @@ const DefaultLicenseUploadController = ({
 
 	const clearFrontImage = useCallback(() => {
 		setFrontImageFile(null);
-		setFrontImageBase64(null);
 	}, []);
 
-	useEffect(() => {
-		if (frontImageFile) {
-			const reader = new FileReader();
-			reader.readAsDataURL(frontImageFile);
-			reader.onloadend = () => {
-				setFrontImageBase64(reader.result as string);
-			};
-		}
-	}, [frontImageFile]);
-
 	const [backImageFile, setBackImageFile] = useState<File | null>(null);
-	const [backImageBase64, setBackImageBase64] = useState<string | null>(null);
 	const [displayNoBackImageError, setDisplayNoBackImageError] = useState(false);
 
 	const selectBackImage = useCallback((file: File) => {
@@ -61,30 +49,20 @@ const DefaultLicenseUploadController = ({
 			setKey(undefined);
 		}, 500);
 	}, []);
+
 	const clearBackImage = useCallback(() => {
 		setBackImageFile(null);
-		setBackImageBase64(null);
 	}, []);
-
-	useEffect(() => {
-		if (backImageFile) {
-			const reader = new FileReader();
-			reader.readAsDataURL(backImageFile);
-			reader.onloadend = () => {
-				setBackImageBase64(reader.result as string);
-			};
-		}
-	}, [backImageFile]);
 
 	// General component state
 	const [returnModalOpen, setReturnModalOpen] = useState(false);
 	const handleNextState = useCallback(() => {
-		if (!frontImageBase64 || !frontImageFile) {
+		if (!frontImageFile) {
 			setKey("front");
 			setDisplayNoFrontImageError(true);
 			return;
 		}
-		if (!backImageBase64 || !backImageFile) {
+		if (!backImageFile) {
 			setKey("back");
 			setDisplayNoBackImageError(true);
 			return;
@@ -92,14 +70,14 @@ const DefaultLicenseUploadController = ({
 
 		dispatch(
 			setLicenseUploadFormData({
-				frontImageBase64,
-				backImageBase64,
+				frontImageUrl: URL.createObjectURL(frontImageFile),
+				backImageUrl: URL.createObjectURL(backImageFile),
 				frontImageName: frontImageFile.name,
 				backImageName: backImageFile.name,
 			})
 		);
 		handleSubmit();
-	}, [backImageBase64, backImageFile, dispatch, frontImageBase64, frontImageFile, handleSubmit]);
+	}, [backImageFile, dispatch, frontImageFile, handleSubmit]);
 
 	const handleOpenModalConfirmation = useCallback(() => {
 		setReturnModalOpen(true);

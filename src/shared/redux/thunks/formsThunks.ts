@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import client from "../../api/client";
+import { urlBlobToBase64 } from "../../utils/blobUtils";
 
 import { bodyInsertCard } from "../../utils/bodyInsertCard";
 import { bodySendEmail } from "../../utils/bodySendEmail";
@@ -30,7 +31,11 @@ export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async
 		}
 
 		if (formState.licenseUploadForm.isReadyToSubmit) {
+			const frontLicenseBase64 = await urlBlobToBase64(formState.licenseUploadForm.data.frontImageUrl!);
+			const backLicenseBase64 = await urlBlobToBase64(formState.licenseUploadForm.data.backImageUrl!);
 			console.log("license upload submission api request yet to be implemented");
+			console.log("\nreduxThunk: Front License Base64\n", frontLicenseBase64);
+			console.log("\nreduxThunk: Back License Base64\n", backLicenseBase64);
 		}
 
 		// send the confirmation email

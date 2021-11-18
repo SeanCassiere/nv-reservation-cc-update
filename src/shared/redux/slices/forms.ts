@@ -27,9 +27,9 @@ interface IFormsSliceState {
 	licenseUploadForm: {
 		isReadyToSubmit: boolean;
 		data: {
-			frontImageBase64: string | null;
+			frontImageUrl: string | null;
 			frontImageName: string | null;
-			backImageBase64: string | null;
+			backImageUrl: string | null;
 			backImageName: string | null;
 		};
 	};
@@ -54,9 +54,9 @@ const initialState: IFormsSliceState = {
 	licenseUploadForm: {
 		isReadyToSubmit: false,
 		data: {
-			frontImageBase64: null,
+			frontImageUrl: null,
 			frontImageName: null,
-			backImageBase64: null,
+			backImageUrl: null,
 			backImageName: null,
 		},
 	},
@@ -73,15 +73,15 @@ const formsSlice = createSlice({
 		setLicenseUploadFormData: (
 			state,
 			action: PayloadAction<{
-				frontImageBase64: string | null;
-				frontImageName: string | null;
-				backImageBase64: string | null;
-				backImageName: string | null;
+				frontImageUrl: string;
+				frontImageName: string;
+				backImageUrl: string;
+				backImageName: string;
 			}>
 		) => {
-			state.licenseUploadForm.data.frontImageBase64 = action.payload.frontImageBase64;
+			state.licenseUploadForm.data.frontImageUrl = action.payload.frontImageUrl;
 			state.licenseUploadForm.data.frontImageName = action.payload.frontImageName;
-			state.licenseUploadForm.data.backImageBase64 = action.payload.backImageBase64;
+			state.licenseUploadForm.data.backImageUrl = action.payload.backImageUrl;
 			state.licenseUploadForm.data.backImageName = action.payload.backImageName;
 			state.licenseUploadForm.isReadyToSubmit = true;
 		},

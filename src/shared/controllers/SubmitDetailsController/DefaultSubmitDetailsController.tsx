@@ -14,16 +14,15 @@ const DefaultSubmitDetailsController = () => {
 	const { state } = useSelector(selectSubmissionState);
 
 	useEffect(() => {
+		if (state === "submitting_details_success") {
+			return navigate("/success", { replace: true });
+		}
+		if (state === "submitting_details_error") {
+			return navigate("/error", { replace: true });
+		}
 		dispatch(submitFormThunk());
-	}, [dispatch]);
+	}, [dispatch, navigate, state]);
 
-	if (state === "submitting_details_success") {
-		navigate("/success", { replace: true });
-	}
-
-	if (state === "submitting_details_error") {
-		navigate("/error", { replace: true });
-	}
 	return <LoadingSubmission title={t.form.submitting_msg} />;
 };
 
