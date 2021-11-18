@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Card, Row, Col, Button, Modal, Accordion, Alert } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { selectTranslations } from "../../redux/store";
 import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
+import { setLicenseUploadFormData } from "../../redux/slices/forms";
 
 interface IProps {
 	handleSubmit: () => void;
@@ -18,43 +19,74 @@ const DefaultLicenseUploadController = ({
 	isNextAvailable,
 	isPrevPageAvailable,
 }: IProps) => {
+	const dispatch = useDispatch();
 	const t = useSelector(selectTranslations);
 	const [key, setKey] = useState("front");
 
-	const [frontImage, setFrontImage] = useState<File | null>(null);
+	const [frontImageFile, setFrontImageFile] = useState<File | null>(null);
+	const [frontImageBase64, setFrontImageBase64] = useState<string | null>(null);
 	const [displayNoFrontImageError, setDisplayNoFrontImageError] = useState(false);
-	const [backImage, setBackImage] = useState<File | null>(null);
-	const [displayNoBackImageError, setDisplayNoBackImageError] = useState(false);
-
 	const selectFrontImage = useCallback((file: File) => {
 		setDisplayNoFrontImageError(false);
-		setFrontImage(file);
+		setFrontImageFile(file);
 		setTimeout(() => {
 			setKey("back");
 		}, 500);
 	}, []);
 
+	useEffect(() => {
+		if (frontImageFile) {
+			const reader = new FileReader();
+			reader.readAsDataURL(frontImageFile);
+			reader.onloadend = () => {
+				setFrontImageBase64(reader.result as string);
+			};
+		}
+	}, [frontImageFile]);
+
+	const [backImageFile, setBackImageFile] = useState<File | null>(null);
+	const [backImageBase64, setBackImageBase64] = useState<string | null>(null);
+	const [displayNoBackImageError, setDisplayNoBackImageError] = useState(false);
+
+	useEffect(() => {
+		if (backImageFile) {
+			const reader = new FileReader();
+			reader.readAsDataURL(backImageFile);
+			reader.onloadend = () => {
+				setBackImageBase64(reader.result as string);
+			};
+		}
+	}, [backImageFile]);
+
 	const selectBackImage = useCallback((file: File) => {
 		setDisplayNoBackImageError(false);
-		setBackImage(file);
+		setBackImageFile(file);
 	}, []);
 
 	// General component state
 	const [returnModalOpen, setReturnModalOpen] = useState(false);
 	const handleNextState = useCallback(() => {
-		if (!frontImage) {
+		if (!frontImageBase64 || !frontImageFile) {
 			setKey("front");
 			setDisplayNoFrontImageError(true);
 			return;
 		}
-		if (!backImage) {
+		if (!backImageBase64 || !backImageFile) {
 			setKey("back");
 			setDisplayNoBackImageError(true);
 			return;
 		}
 
+		dispatch(
+			setLicenseUploadFormData({
+				frontImageBase64,
+				backImageBase64,
+				frontImageName: frontImageFile.name,
+				backImageName: backImageFile.name,
+			})
+		);
 		handleSubmit();
-	}, [backImage, frontImage, handleSubmit]);
+	}, [backImageBase64, backImageFile, dispatch, frontImageBase64, frontImageFile, handleSubmit]);
 
 	const handleOpenModalConfirmation = useCallback(() => {
 		setReturnModalOpen(true);

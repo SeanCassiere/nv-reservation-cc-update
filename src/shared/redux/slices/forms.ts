@@ -24,6 +24,15 @@ interface IFormsSliceState {
 		isReadyToSubmit: boolean;
 		data: ICreditCardFormData;
 	};
+	licenseUploadForm: {
+		isReadyToSubmit: boolean;
+		data: {
+			frontImageBase64: string | null;
+			frontImageName: string | null;
+			backImageBase64: string | null;
+			backImageName: string | null;
+		};
+	};
 }
 
 const initialState: IFormsSliceState = {
@@ -42,6 +51,15 @@ const initialState: IFormsSliceState = {
 			yearExpiry: "",
 		},
 	},
+	licenseUploadForm: {
+		isReadyToSubmit: false,
+		data: {
+			frontImageBase64: null,
+			frontImageName: null,
+			backImageBase64: null,
+			backImageName: null,
+		},
+	},
 };
 
 const formsSlice = createSlice({
@@ -52,12 +70,28 @@ const formsSlice = createSlice({
 			state.creditCardForm.data = action.payload;
 			state.creditCardForm.isReadyToSubmit = true;
 		},
+		setLicenseUploadFormData: (
+			state,
+			action: PayloadAction<{
+				frontImageBase64: string | null;
+				frontImageName: string | null;
+				backImageBase64: string | null;
+				backImageName: string | null;
+			}>
+		) => {
+			state.licenseUploadForm.data.frontImageBase64 = action.payload.frontImageBase64;
+			state.licenseUploadForm.data.frontImageName = action.payload.frontImageName;
+			state.licenseUploadForm.data.backImageBase64 = action.payload.backImageBase64;
+			state.licenseUploadForm.data.backImageName = action.payload.backImageName;
+			state.licenseUploadForm.isReadyToSubmit = true;
+		},
+
 		setSubmissionState: (state, action: PayloadAction<SubmissionState>) => {
 			state.submission.state = action.payload;
 		},
 	},
 });
 
-export const { setCreditCardFormData, setSubmissionState } = formsSlice.actions;
+export const { setCreditCardFormData, setSubmissionState, setLicenseUploadFormData } = formsSlice.actions;
 
 export default formsSlice;

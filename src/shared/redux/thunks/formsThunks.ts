@@ -29,6 +29,10 @@ export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async
 			);
 		}
 
+		if (formState.licenseUploadForm.isReadyToSubmit) {
+			console.log("license upload submission api request yet to be implemented");
+		}
+
 		// send the confirmation email
 		await client.post(
 			"/Email/SendEmail",
