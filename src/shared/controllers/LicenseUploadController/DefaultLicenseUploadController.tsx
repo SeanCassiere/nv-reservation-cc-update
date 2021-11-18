@@ -114,7 +114,7 @@ const DefaultLicenseUploadController = ({
 	}, []);
 	return (
 		<>
-			<Modal show={returnModalOpen} onHide={handleModalDenyReturn} keyboard={true}>
+			<Modal show={returnModalOpen} onHide={handleModalDenyReturn} keyboard={true} centered>
 				<Modal.Header>{t.license_upload.go_back.title}</Modal.Header>
 				<Modal.Body>{t.license_upload.go_back.message}</Modal.Body>
 				<Modal.Footer>
