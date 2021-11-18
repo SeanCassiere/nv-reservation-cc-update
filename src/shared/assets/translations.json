@@ -32,6 +32,34 @@
 			},
 			"submitting_msg": "Submitting Credit Card Information"
 		},
+		"license_upload": {
+			"title": "Driver's License",
+			"message": "Upload front and back images of your driver's license.",
+			"go_back": {
+				"title": "Are you sure?",
+				"message": "Going back will discard the added files.",
+				"cancel": "Cancel",
+				"submit": "I Understand"
+			},
+			"front_image": {
+				"title": "Front Image",
+				"drag": "Drag and drop the front image here",
+				"select": "Select the front image",
+				"clear": "Clear the front image",
+				"not_selected": "You must select the front image."
+			},
+			"back_image": {
+				"title": "Back Image",
+				"drag": "Drag and drop the back image here",
+				"select": "Select the back image",
+				"clear": "Clear the back image",
+				"not_selected": "You must select the back image."
+			}
+		},
+		"error_boundary": {
+			"title": "Uh Oh",
+			"message": "There was a fatal error in the application."
+		},
 		"success_submission": {
 			"title": "Success!",
 			"message": "Thank you for submitting your information towards the reservation."
@@ -86,6 +114,34 @@
 				"billingZip": "Entrez votre code postal de facturation."
 			},
 			"submitting_msg": "Soumission des informations de carte de crédit"
+		},
+		"license_upload": {
+			"title": "Le permis de conduire",
+			"message": "Téléchargez des images recto et verso de votre permis de conduire.",
+			"go_back": {
+				"title": "Es-tu sûr?",
+				"message": "Revenir en arrière supprimera les fichiers ajoutés.",
+				"cancel": "Annuler",
+				"submit": "Je comprends"
+			},
+			"front_image": {
+				"title": "Image de face",
+				"drag": "Faites glisser et déposez l'image de devant ici",
+				"select": "Sélectionnez l'image de face",
+				"clear": "Effacer l'image avant",
+				"not_selected": "Vous devez sélectionner l'image de face."
+			},
+			"back_image": {
+				"title": "Retour Image",
+				"drag": "Faites glisser et déposez l'image arrière ici",
+				"select": "Sélectionnez l'image arrière",
+				"clear": "Effacer l'image arrière",
+				"not_selected": "Vous devez sélectionner l'image arrière."
+			}
+		},
+		"error_boundary": {
+			"title": "Uh Oh",
+			"message": "Il y a eu une erreur fatale dans l'application."
 		},
 		"success_submission": {
 			"title": "Succès!",
@@ -142,6 +198,34 @@
 			},
 			"submitting_msg": "Übermitteln von Kreditkarteninformationen"
 		},
+		"license_upload": {
+			"title": "Führerschein",
+			"message": "Laden Sie Vorder- und Rückseitenbilder Ihres Führerscheins hoch.",
+			"go_back": {
+				"title": "Bist du sicher?",
+				"message": "Beim Zurückgehen werden die hinzugefügten Dateien verworfen.",
+				"cancel": "Abbrechen",
+				"submit": "Ich verstehe"
+			},
+			"front_image": {
+				"title": "Vorderes Bild",
+				"drag": "Ziehen Sie das Titelbild hierher und legen Sie es dort ab",
+				"select": "Wählen Sie das Frontbild aus",
+				"clear": "Löschen Sie das vordere Bild",
+				"not_selected": "Sie müssen das Frontbild auswählen."
+			},
+			"back_image": {
+				"title": "Zurück Bild",
+				"drag": "Drag and drop the back image here",
+				"select": "Wählen Sie das Rückbild aus",
+				"clear": "Löschen Sie das Rückbild",
+				"not_selected": "Sie müssen das Rückbild auswählen."
+			}
+		},
+		"error_boundary": {
+			"title": "Uh Oh",
+			"message": "In der Anwendung ist ein schwerwiegender Fehler aufgetreten"
+		},
 		"success_submission": {
 			"title": "Erfolg!",
 			"message": "Vielen Dank, dass Sie Ihre Kreditkarteninformationen für Ihre Reservierung übermittelt haben."
@@ -195,8 +279,35 @@
 				"cvv": "Introduzca el PIN en la parte posterior de la tarjeta de crédito.",
 				"billingZip": "Introduce tu código postal de facturación."
 			},
-
 			"submitting_msg": "Presentación de información de tarjetas de crédito"
+		},
+		"license_upload": {
+			"title": "Licencia de conducir",
+			"message": "Sube imágenes de anverso y reverso de tu licencia de conducir.",
+			"go_back": {
+				"title": "Estas segura",
+				"message": "Regresar descartará los archivos agregados.",
+				"cancel": "Cancelar",
+				"submit": "Entiendo"
+			},
+			"front_image": {
+				"title": "Imagen frontal",
+				"drag": "Arrastra y suelta la imagen frontal aquí.",
+				"select": "Seleccione la imagen frontal",
+				"clear": "Limpiar la imagen frontal",
+				"not_selected": "Debes seleccionar la imagen frontal."
+			},
+			"back_image": {
+				"title": "Imagen trasera",
+				"drag": "Arrastra y suelta la imagen de atrás aquí",
+				"select": "Seleccione la imagen trasera",
+				"clear": "Limpiar la imagen trasera",
+				"not_selected": "Debes seleccionar la imagen trasera."
+			}
+		},
+		"error_boundary": {
+			"title": "Uh Oh",
+			"message": "Hubo un error fatal en la aplicación."
 		},
 		"success_submission": {
 			"title": "¡éxito!",

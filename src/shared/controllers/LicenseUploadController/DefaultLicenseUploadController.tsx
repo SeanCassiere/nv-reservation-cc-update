@@ -106,21 +106,21 @@ const DefaultLicenseUploadController = ({
 	return (
 		<>
 			<Modal show={returnModalOpen} onHide={handleModalDenyReturn} keyboard={true}>
-				<Modal.Header>Are you sure?</Modal.Header>
-				<Modal.Body>Going back will discard the added files.</Modal.Body>
+				<Modal.Header>{t.license_upload.go_back.title}</Modal.Header>
+				<Modal.Body>{t.license_upload.go_back.message}</Modal.Body>
 				<Modal.Footer>
 					<Button variant='secondary' onClick={handleModalDenyReturn}>
-						Cancel
+						{t.license_upload.go_back.cancel}
 					</Button>
 					<Button variant='warning' onClick={handleModalAcceptReturn}>
-						I Understand
+						{t.license_upload.go_back.submit}
 					</Button>
 				</Modal.Footer>
 			</Modal>
 			<Card border='light'>
 				<Card.Body>
-					<Card.Title>Driver's License</Card.Title>
-					<Card.Subtitle>Upload front and back images of your driver's license.</Card.Subtitle>
+					<Card.Title>{t.license_upload.title}</Card.Title>
+					<Card.Subtitle>{t.license_upload.message}</Card.Subtitle>
 					<div className='mt-3 d-grid'>
 						<Row>
 							<Col md={12}>
@@ -133,26 +133,30 @@ const DefaultLicenseUploadController = ({
 								>
 									<Accordion.Item eventKey='front' className='border-light' style={{ background: "none" }}>
 										<Accordion.Header className='border-light' style={{ padding: "0px !important" }}>
-											Front Image
+											{t.license_upload.front_image.title}
 										</Accordion.Header>
 										<Accordion.Body>
-											{displayNoFrontImageError && <Alert variant='light'>You must select the front image.</Alert>}
+											{displayNoFrontImageError && (
+												<Alert variant='light'>{t.license_upload.front_image.not_selected}</Alert>
+											)}
 											<DefaultImageDropzoneWithPreview
-												dragDisplayText='Drag and drop the front image here'
-												selectButtonText='Select the front image'
-												clearButtonText='Clear the front image'
+												dragDisplayText={t.license_upload.front_image.drag}
+												selectButtonText={t.license_upload.front_image.select}
+												clearButtonText={t.license_upload.front_image.clear}
 												onSelectFile={selectFrontImage}
 											/>
 										</Accordion.Body>
 									</Accordion.Item>
 									<Accordion.Item eventKey='back' className='border-light'>
-										<Accordion.Header className='border-light'>Back Image</Accordion.Header>
+										<Accordion.Header className='border-light'>{t.license_upload.back_image.title}</Accordion.Header>
 										<Accordion.Body>
-											{displayNoBackImageError && <Alert variant='light'>You must select the back image.</Alert>}
+											{displayNoBackImageError && (
+												<Alert variant='light'>{t.license_upload.back_image.not_selected}</Alert>
+											)}
 											<DefaultImageDropzoneWithPreview
-												dragDisplayText='Drag and drop the back image here'
-												selectButtonText='Select the back image'
-												clearButtonText='Clear the back image'
+												dragDisplayText={t.license_upload.back_image.drag}
+												selectButtonText={t.license_upload.back_image.select}
+												clearButtonText={t.license_upload.back_image.clear}
 												onSelectFile={selectBackImage}
 											/>
 										</Accordion.Body>
