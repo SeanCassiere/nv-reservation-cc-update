@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 
@@ -31,4 +31,4 @@ const DefaultCreditCard = ({ currentFocus, formData, handleCardIdentifier }: IPr
 	);
 };
 
-export default DefaultCreditCard;
+export default memo(DefaultCreditCard);

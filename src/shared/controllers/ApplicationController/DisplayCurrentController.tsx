@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import DefaultCreditCardController from "../CreditCardController/DefaultCreditCardController";
 import DefaultLicenseUploadController from "../LicenseUploadController/DefaultLicenseUploadController";
@@ -70,4 +70,4 @@ const DisplayCurrentController = ({
 	);
 };
 
-export default DisplayCurrentController;
+export default memo(DisplayCurrentController);
