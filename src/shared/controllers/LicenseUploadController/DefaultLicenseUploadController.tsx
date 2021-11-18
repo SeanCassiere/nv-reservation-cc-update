@@ -35,6 +35,11 @@ const DefaultLicenseUploadController = ({
 		}, 500);
 	}, []);
 
+	const clearFrontImage = useCallback(() => {
+		setFrontImageFile(null);
+		setFrontImageBase64(null);
+	}, []);
+
 	useEffect(() => {
 		if (frontImageFile) {
 			const reader = new FileReader();
@@ -49,6 +54,18 @@ const DefaultLicenseUploadController = ({
 	const [backImageBase64, setBackImageBase64] = useState<string | null>(null);
 	const [displayNoBackImageError, setDisplayNoBackImageError] = useState(false);
 
+	const selectBackImage = useCallback((file: File) => {
+		setDisplayNoBackImageError(false);
+		setBackImageFile(file);
+		setTimeout(() => {
+			setKey(undefined);
+		}, 500);
+	}, []);
+	const clearBackImage = useCallback(() => {
+		setBackImageFile(null);
+		setBackImageBase64(null);
+	}, []);
+
 	useEffect(() => {
 		if (backImageFile) {
 			const reader = new FileReader();
@@ -58,14 +75,6 @@ const DefaultLicenseUploadController = ({
 			};
 		}
 	}, [backImageFile]);
-
-	const selectBackImage = useCallback((file: File) => {
-		setDisplayNoBackImageError(false);
-		setBackImageFile(file);
-		setTimeout(() => {
-			setKey(undefined);
-		}, 500);
-	}, []);
 
 	// General component state
 	const [returnModalOpen, setReturnModalOpen] = useState(false);
@@ -144,6 +153,7 @@ const DefaultLicenseUploadController = ({
 												selectButtonText={t.license_upload.front_image.select}
 												clearButtonText={t.license_upload.front_image.clear}
 												onSelectFile={selectFrontImage}
+												onClearFile={clearFrontImage}
 											/>
 										</Accordion.Body>
 									</Accordion.Item>
@@ -158,6 +168,7 @@ const DefaultLicenseUploadController = ({
 												selectButtonText={t.license_upload.back_image.select}
 												clearButtonText={t.license_upload.back_image.clear}
 												onSelectFile={selectBackImage}
+												onClearFile={clearBackImage}
 											/>
 										</Accordion.Body>
 									</Accordion.Item>

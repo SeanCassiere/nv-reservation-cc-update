@@ -37,6 +37,7 @@ interface IProps {
 	selectButtonText: string;
 	clearButtonText: string;
 	onSelectFile?: (file: File) => void;
+	onClearFile?: () => void;
 }
 
 const DefaultImageDropzoneWithPreview = ({
@@ -44,6 +45,7 @@ const DefaultImageDropzoneWithPreview = ({
 	clearButtonText,
 	selectButtonText,
 	onSelectFile,
+	onClearFile,
 }: IProps) => {
 	const [previewImage, setPreviewImage] = useState<{ fileName: string; url: string } | null>(null);
 
@@ -63,7 +65,8 @@ const DefaultImageDropzoneWithPreview = ({
 
 	const handleClearImage = useCallback(() => {
 		setPreviewImage(null);
-	}, []);
+		if (onClearFile) onClearFile();
+	}, [onClearFile]);
 
 	const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
 		accept: "image/*",
