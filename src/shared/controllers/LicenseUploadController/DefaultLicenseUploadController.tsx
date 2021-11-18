@@ -21,11 +21,12 @@ const DefaultLicenseUploadController = ({
 }: IProps) => {
 	const dispatch = useDispatch();
 	const t = useSelector(selectTranslations);
-	const [key, setKey] = useState("front");
+	const [key, setKey] = useState<string | undefined>("front");
 
 	const [frontImageFile, setFrontImageFile] = useState<File | null>(null);
 	const [frontImageBase64, setFrontImageBase64] = useState<string | null>(null);
 	const [displayNoFrontImageError, setDisplayNoFrontImageError] = useState(false);
+
 	const selectFrontImage = useCallback((file: File) => {
 		setDisplayNoFrontImageError(false);
 		setFrontImageFile(file);
@@ -61,6 +62,9 @@ const DefaultLicenseUploadController = ({
 	const selectBackImage = useCallback((file: File) => {
 		setDisplayNoBackImageError(false);
 		setBackImageFile(file);
+		setTimeout(() => {
+			setKey(undefined);
+		}, 500);
 	}, []);
 
 	// General component state
@@ -121,7 +125,6 @@ const DefaultLicenseUploadController = ({
 						<Row>
 							<Col md={12}>
 								<Accordion
-									// defaultActiveKey='front'
 									activeKey={key}
 									onSelect={(k) => {
 										if (k) setKey(k);
