@@ -32,7 +32,8 @@ const App = () => {
 };
 
 const ErrorFallback = () => {
-	return <ErrorSubmission msg={"The application encountered a fatal error."} />;
+	const t = useSelector(selectTranslations);
+	return <ErrorSubmission msg={t.error_boundary.message} />;
 };
 
 export default App;
