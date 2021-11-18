@@ -85,14 +85,14 @@ const DefaultCardDetailsForm = ({
 				<Col>
 					<Form.Group controlId='monthInput'>
 						<Form.Label>{t.form.labels.exp_month}</Form.Label>
-						<Form.Control
+						<Form.Select
 							name='monthExpiry'
-							onChange={handleChange}
+							onChange={handleChange as any}
 							onFocus={handleFocus as any}
 							onBlur={handleBlur}
-							as='select'
 							required
 							isInvalid={isFieldInvalid("monthExpiry")}
+							className='form-control'
 						>
 							<option value=''>{t.form.labels.p_holders.select}</option>
 							{numOfMonths.map((val) => (
@@ -100,21 +100,21 @@ const DefaultCardDetailsForm = ({
 									{val.toString().length === 1 ? `0${val}` : val}
 								</option>
 							))}
-						</Form.Control>
+						</Form.Select>
 						<Form.Control.Feedback type='invalid'>{t.form.errors.exp_month}</Form.Control.Feedback>
 					</Form.Group>
 				</Col>
 				<Col>
 					<Form.Group controlId='yearInput'>
 						<Form.Label>{t.form.labels.exp_year}</Form.Label>
-						<Form.Control
+						<Form.Select
 							name='yearExpiry'
-							onChange={handleChange}
+							onChange={handleChange as any}
 							onFocus={handleFocus as any}
 							onBlur={handleBlur}
-							as='select'
 							required
 							isInvalid={isFieldInvalid("yearExpiry")}
+							className='form-control'
 						>
 							<option value=''>{t.form.labels.p_holders.select}</option>
 							{numOfYears.map((val) => (
@@ -122,7 +122,7 @@ const DefaultCardDetailsForm = ({
 									20{val}
 								</option>
 							))}
-						</Form.Control>
+						</Form.Select>
 						<Form.Control.Feedback type='invalid'>{t.form.errors.exp_year}</Form.Control.Feedback>
 					</Form.Group>
 				</Col>
