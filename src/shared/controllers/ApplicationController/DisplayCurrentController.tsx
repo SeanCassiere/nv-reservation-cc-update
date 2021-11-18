@@ -1,6 +1,7 @@
 import React from "react";
 
 import DefaultCreditCardController from "../CreditCardController/DefaultCreditCardController";
+import DefaultLicenseUploadController from "../LicenseUploadController/DefaultLicenseUploadController";
 
 interface IProps {
 	selectedController: string | null;
@@ -27,10 +28,23 @@ const DisplayCurrentController = ({
 					isPrevPageAvailable={isPrevPageAvailable}
 				/>
 			)}
+			{selectedController === "Default/LicenseUploadForm" && (
+				<DefaultLicenseUploadController
+					handleSubmit={handleNext}
+					isNextAvailable={isNextPageAvailable}
+					handlePrevious={handlePrevious}
+					isPrevPageAvailable={isPrevPageAvailable}
+				/>
+			)}
 			{selectedController === "Default/Positive" && (
 				<div>
 					<h5>positive</h5>
 					<p>
+						{isPrevPageAvailable() && (
+							<button type='button' onClick={handlePrevious}>
+								&#8592;
+							</button>
+						)}
 						<button type='button' onClick={handleNext}>
 							{isNextPageAvailable() ? "next" : "submit"}
 						</button>
@@ -41,6 +55,11 @@ const DisplayCurrentController = ({
 				<div>
 					<h5>negative</h5>
 					<p>
+						{isPrevPageAvailable() && (
+							<button type='button' onClick={handlePrevious}>
+								&#8592;
+							</button>
+						)}
 						<button type='button' onClick={handleNext}>
 							{isNextPageAvailable() ? "next" : "submit"}
 						</button>
