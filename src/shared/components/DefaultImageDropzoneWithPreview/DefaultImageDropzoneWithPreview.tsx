@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { memo, useCallback, useMemo, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Figure from "react-bootstrap/esm/Figure";
 import { useDropzone } from "react-dropzone";
@@ -113,4 +113,4 @@ const DefaultImageDropzoneWithPreview = ({
 	);
 };
 
-export default DefaultImageDropzoneWithPreview;
+export default memo(DefaultImageDropzoneWithPreview);

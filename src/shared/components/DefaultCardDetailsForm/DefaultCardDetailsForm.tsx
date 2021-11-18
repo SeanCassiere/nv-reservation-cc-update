@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
@@ -169,4 +169,4 @@ const DefaultCardDetailsForm = ({
 	);
 };
 
-export default DefaultCardDetailsForm;
+export default memo(DefaultCardDetailsForm);
