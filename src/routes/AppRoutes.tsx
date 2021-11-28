@@ -31,7 +31,7 @@ const AppRoutes = () => {
 						</RequireAuth>
 					}
 				/>
-				<Route path='/error' element={<ErrorSubmission msg={t.bad_submission.message} />} />
+				<Route path='/error' element={<ErrorSubmission msg={t.bad_submission.message} tryAgainButton />} />
 				<Route path='/not-available' element={<NotAuthorized />} />
 				<Route path='*' element={<Navigate to='/not-available' />} />
 			</Routes>

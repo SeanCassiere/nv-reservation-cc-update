@@ -2,7 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import configSlice from "./slices/config";
 import formsSlice from "./slices/forms";
-import reservationSlice from "./slices/reservation";
+import reservationSlice from "./slices/retrievedDetails";
 
 const batchedReducers = combineReducers({
 	[configSlice.name]: configSlice.reducer,
@@ -23,6 +23,6 @@ export const selectSubmissionState = (state: RootState) => state.forms.submissio
 export const selectTranslations = (state: RootState) => state.config.translations;
 
 export const selectCreditCardForm = (state: RootState) => state.forms.creditCardForm;
-export const selectReservationDetails = (state: RootState) => state.reservation;
+export const selectRetrievedDetails = (state: RootState) => state.retrievedDetails;
 
 export default store;

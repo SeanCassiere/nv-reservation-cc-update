@@ -19,6 +19,7 @@ export interface ConfigSliceState {
 	clientId: string | null;
 	responseTemplateId: string | null;
 	flow: string[];
+	rawConfig: string;
 	token: string | null;
 }
 
@@ -29,6 +30,7 @@ const initialState: ConfigSliceState = {
 	clientId: null,
 	responseTemplateId: null,
 	flow: ["Default/CreditCardForm"],
+	rawConfig: "",
 	token: null,
 };
 
@@ -41,6 +43,9 @@ const configSlice = createSlice({
 				state.lang = action.payload.lang;
 				state.translations = translations[action.payload.lang as SupportedLanguages];
 			}
+		},
+		setRawConfig: (state, action: PayloadAction<{ rawConfig: string }>) => {
+			state.rawConfig = action.payload.rawConfig;
 		},
 		setAccessToken: (state, action: PayloadAction<{ token: string }>) => {
 			state.token = action.payload.token;
@@ -72,6 +77,6 @@ const configSlice = createSlice({
 	},
 });
 
-export const { setAccessToken, setLang, setConfigValues, setAppStatus } = configSlice.actions;
+export const { setAccessToken, setLang, setConfigValues, setAppStatus, setRawConfig } = configSlice.actions;
 
 export default configSlice;

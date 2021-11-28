@@ -19,6 +19,7 @@ export interface ICreditCardFormData {
 interface IFormsSliceState {
 	submission: {
 		state: SubmissionState;
+		isSubmissionAttempted: boolean;
 	};
 	creditCardForm: {
 		isReadyToSubmit: boolean;
@@ -38,6 +39,7 @@ interface IFormsSliceState {
 const initialState: IFormsSliceState = {
 	submission: {
 		state: "submitting_details_pending",
+		isSubmissionAttempted: false,
 	},
 	creditCardForm: {
 		isReadyToSubmit: false,
@@ -85,13 +87,17 @@ const formsSlice = createSlice({
 			state.licenseUploadForm.data.backImageName = action.payload.backImageName;
 			state.licenseUploadForm.isReadyToSubmit = true;
 		},
-
 		setSubmissionState: (state, action: PayloadAction<SubmissionState>) => {
 			state.submission.state = action.payload;
+		},
+		setSubmissionErrorState: (state, action: PayloadAction<SubmissionState>) => {
+			state.submission.state = action.payload;
+			state.submission.isSubmissionAttempted = true;
 		},
 	},
 });
 
-export const { setCreditCardFormData, setSubmissionState, setLicenseUploadFormData } = formsSlice.actions;
+export const { setCreditCardFormData, setSubmissionState, setLicenseUploadFormData, setSubmissionErrorState } =
+	formsSlice.actions;
 
 export default formsSlice;

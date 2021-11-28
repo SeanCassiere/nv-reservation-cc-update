@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 
 import ErrorSubmission from "../../pages/ErrorSubmission/ErrorSubmission";
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
-import { setConfigValues, setLang } from "../../redux/slices/config";
-import { setReservationId } from "../../redux/slices/reservation";
+import { setConfigValues, setLang, setRawConfig } from "../../redux/slices/config";
+import { setReservationId } from "../../redux/slices/retrievedDetails";
 import { selectConfigState, selectTranslations } from "../../redux/store";
 import { authenticateAppThunk } from "../../redux/thunks/configThunks";
 
@@ -36,6 +36,7 @@ const ApplicationController = () => {
 			flow: [],
 		};
 		if (configQuery) {
+			dispatch(setRawConfig({ rawConfig: configQuery }));
 			config = JSON.parse(Buffer.from(configQuery, "base64").toString("ascii"));
 		}
 

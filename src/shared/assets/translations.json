@@ -71,7 +71,8 @@
 		"bad_submission": {
 			"title": "Uh Oh",
 			"message": "I encountered an error when trying to submit your information.",
-			"report": "Please report to"
+			"report": "Please report to",
+			"retry_submission": "Retry submission"
 		},
 		"query_missing": {
 			"title": "Uh Oh",
@@ -154,7 +155,8 @@
 		"bad_submission": {
 			"title": "Uh Oh",
 			"message": "J'ai rencontré une erreur en essayant de soumettre vos informations.",
-			"report": "Veuillez signaler à"
+			"report": "Veuillez signaler à",
+			"retry_submission": "Réessayer la soumission"
 		},
 		"query_missing": {
 			"title": "Uh Oh",
@@ -237,7 +239,8 @@
 		"bad_submission": {
 			"title": "Oh oh",
 			"message": "Beim Versuch, Ihre Informationen zu übermitteln, ist ein Fehler aufgetreten.",
-			"report": "Bitte melden Sie sich bei"
+			"report": "Bitte melden Sie sich bei",
+			"retry_submission": "Übermittlung wiederholen"
 		},
 		"query_missing": {
 			"title": "Oh oh",
@@ -320,7 +323,8 @@
 		"bad_submission": {
 			"title": "Uh Oh",
 			"message": "Me encontré con un error al intentar enviar su información.",
-			"report": "Por favor, preséntese a"
+			"report": "Por favor, preséntese a",
+			"retry_submission": "Reintentar envío"
 		},
 		"query_missing": {
 			"title": "Uh Oh",

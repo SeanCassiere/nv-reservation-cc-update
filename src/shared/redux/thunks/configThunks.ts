@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../../api/client";
 
 import { setAccessToken } from "../slices/config";
-import { setReservationDetails } from "../slices/reservation";
+import { setReservationDetails } from "../slices/retrievedDetails";
 import { RootState } from "../store";
 
 export const authenticateAppThunk = createAsyncThunk(
@@ -22,7 +22,7 @@ export const authenticateAppThunk = createAsyncThunk(
 			} = auth.data as { apiToken: { access_token: string } };
 			dispatch(setAccessToken({ token: access_token }));
 
-			const { reservationId } = state.reservation;
+			const { reservationId } = state.retrievedDetails;
 			try {
 				const res = await client.get(`/Reservation/GetReservationById?reservationId=${reservationId}`, {
 					headers: { Authorization: `Bearer ${access_token}` },

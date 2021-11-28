@@ -17,7 +17,7 @@ const initialState: IReservationSliceState = {
 };
 
 const reservationSlice = createSlice({
-	name: "reservation",
+	name: "retrievedDetails",
 	initialState,
 	reducers: {
 		setReservationId: (state, action: PayloadAction<number | string>) => {
