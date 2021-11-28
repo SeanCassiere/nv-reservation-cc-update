@@ -3,6 +3,8 @@ import Button from "react-bootstrap/esm/Button";
 import Figure from "react-bootstrap/esm/Figure";
 import { useDropzone } from "react-dropzone";
 
+type MimeType = string | string[] | undefined;
+
 const baseStyle = {
 	flex: 1,
 	display: "flex",
@@ -38,6 +40,7 @@ interface IProps {
 	clearButtonText: string;
 	onSelectFile?: (file: File) => void;
 	onClearFile?: () => void;
+	acceptOnly?: MimeType;
 }
 
 const DefaultImageDropzoneWithPreview = ({
@@ -46,12 +49,15 @@ const DefaultImageDropzoneWithPreview = ({
 	selectButtonText,
 	onSelectFile,
 	onClearFile,
+	acceptOnly = undefined,
 }: IProps) => {
 	const [previewImage, setPreviewImage] = useState<{ fileName: string; url: string } | null>(null);
 
 	const onDrop = useCallback(
 		(acceptedFiles: File[]) => {
 			const file = acceptedFiles[0];
+			if (!file) return;
+
 			const objectUrl = URL.createObjectURL(file);
 			setPreviewImage({ fileName: file.name, url: objectUrl });
 
@@ -64,12 +70,15 @@ const DefaultImageDropzoneWithPreview = ({
 	);
 
 	const handleClearImage = useCallback(() => {
-		setPreviewImage(null);
+		if (previewImage) {
+			setPreviewImage(null);
+			URL.revokeObjectURL(previewImage?.url);
+		}
 		if (onClearFile) onClearFile();
-	}, [onClearFile]);
+	}, [onClearFile, previewImage]);
 
 	const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
-		accept: "image/*",
+		accept: acceptOnly,
 		noClick: true,
 		noKeyboard: true,
 		maxFiles: 1,

@@ -132,6 +132,7 @@ const DefaultLicenseUploadController = ({
 												clearButtonText={t.license_upload.front_image.clear}
 												onSelectFile={selectFrontImage}
 												onClearFile={clearFrontImage}
+												acceptOnly={["image/jpeg", "image/jpg", "image/png"]}
 											/>
 										</Accordion.Body>
 									</Accordion.Item>
@@ -147,6 +148,7 @@ const DefaultLicenseUploadController = ({
 												clearButtonText={t.license_upload.back_image.clear}
 												onSelectFile={selectBackImage}
 												onClearFile={clearBackImage}
+												acceptOnly={["image/jpeg", "image/jpg", "image/png"]}
 											/>
 										</Accordion.Body>
 									</Accordion.Item>
