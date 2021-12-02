@@ -2,7 +2,7 @@ import axios from "axios";
 import { setAccessToken } from "../redux/slices/config";
 import store from "../redux/store";
 
-const baseURL = process.env.API_BASE_URL || "https://app.navotar.com/api";
+const baseURL = process.env.REACT_APP_API_BASE_URL || "https://app.navotar.com/api";
 
 const client = axios.create({
 	baseURL,
