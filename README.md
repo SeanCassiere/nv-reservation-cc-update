@@ -1,6 +1,8 @@
-# Navotar Adding Credit Card Details for a Reservation
+# Navotar Reservation Details Update
 
-To be able to add card details to a reservation.
+This application is used to add additional details to their reservation.
+
+View the Navotar Public [API Documentation](https://app.navotar.com/api).
 
 ## URL Params
 
