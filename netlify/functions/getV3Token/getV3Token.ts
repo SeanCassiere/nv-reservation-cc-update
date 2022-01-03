@@ -17,7 +17,7 @@ export const handler: Handler = async (event, context) => {
 		console.log(error);
 		return {
 			statusCode: 500,
-			body: JSON.stringify({ error: "Failed fetching data" }),
+			body: JSON.stringify({ error: error }),
 		};
 	}
 };
