@@ -56,10 +56,26 @@ export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async
 				imageBase64: backLicenseBase64,
 			});
 
-			const submitFront = clientV3.post(`/Customers/${reservationState.customerId}/Documents`, frontImagePayload);
-			const submitBack = clientV3.post(`/Customers/${reservationState.customerId}/Documents`, backImagePayload);
+			const submitFrontImagePromise = clientV3.post(
+				`/Customers/${reservationState.customerId}/Documents`,
+				frontImagePayload,
+				{
+					headers: {
+						Authorization: `Bearer ${configState.tokenV3}`,
+					},
+				}
+			);
+			const submitBackImagePromise = clientV3.post(
+				`/Customers/${reservationState.customerId}/Documents`,
+				backImagePayload,
+				{
+					headers: {
+						Authorization: `Bearer ${configState.tokenV3}`,
+					},
+				}
+			);
 
-			await Promise.all([submitFront, submitBack]);
+			await Promise.all([submitFrontImagePromise, submitBackImagePromise]);
 		}
 	} catch (error) {
 		console.info(error);
