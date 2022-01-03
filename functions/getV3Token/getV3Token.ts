@@ -1,5 +1,5 @@
 import { Handler } from "@netlify/functions";
-import fetch from "node-fetch";
+import axios from "axios";
 
 export const handler: Handler = async (event, context) => {
 	try {
@@ -8,12 +8,9 @@ export const handler: Handler = async (event, context) => {
 		v3Params.append("client_id", process.env.REACT_APP_V3_CLIENT_ID);
 		v3Params.append("client_secret", process.env.REACT_APP_V3_CLIENT_SECRET);
 		v3Params.append("scope", "Api");
-		const response = await fetch(process.env.REACT_APP_V3_AUTH_URL, {
-			method: "POST",
-			body: v3Params,
+		const { data } = await axios.post(process.env.REACT_APP_V3_AUTH_URL, v3Params, {
 			headers: { "Content-Type": "application/x-www-form-urlencoded" },
 		});
-		const data = await response.json();
 		return { statusCode: 200, body: JSON.stringify(data) };
 	} catch (error) {
 		console.log(error);
