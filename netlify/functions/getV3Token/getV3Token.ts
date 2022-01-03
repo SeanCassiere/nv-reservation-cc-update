@@ -12,7 +12,7 @@ export const handler: Handler = async (event, context) => {
 			headers: { "Content-Type": "application/x-www-form-urlencoded" },
 		});
 
-		return { statusCode: 200, body: data };
+		return { statusCode: 200, body: JSON.stringify(data) };
 	} catch (error) {
 		console.log(error);
 		return {
