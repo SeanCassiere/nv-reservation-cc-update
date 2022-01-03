@@ -3,6 +3,7 @@ import { setAccessToken } from "../redux/slices/config";
 import store from "../redux/store";
 
 const baseURL = process.env.REACT_APP_API_BASE_URL || "https://app.navotar.com/api";
+const baseUrlV3 = process.env.REACT_APP_API_BASE_URL_V3 || "https://api.appnavotar.com/api/v3";
 
 const client = axios.create({
 	baseURL,
@@ -43,3 +44,10 @@ client.interceptors.request.use(
 );
 
 export default client;
+
+export const clientV3 = axios.create({
+	baseURL: baseUrlV3,
+	headers: {
+		"Content-Type": "application/json",
+	},
+});

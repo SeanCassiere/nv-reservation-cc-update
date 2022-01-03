@@ -1,9 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import client from "../../api/client";
+import client, { clientV3 } from "../../api/client";
 import { urlBlobToBase64 } from "../../utils/blobUtils";
 
 import { bodyInsertCard } from "../../utils/bodyInsertCard";
+import { v3UploadLicenseImage } from "../../utils/bodyUploadLicenseImage";
 import { bodySendEmail } from "../../utils/bodySendEmail";
 import { setSubmissionState, setSubmissionErrorState } from "../slices/forms";
 import { RootState } from "../store";
@@ -41,9 +42,24 @@ export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async
 		if (formState.licenseUploadForm.isReadyToSubmit) {
 			const frontLicenseBase64 = await urlBlobToBase64(formState.licenseUploadForm.data.frontImageUrl!);
 			const backLicenseBase64 = await urlBlobToBase64(formState.licenseUploadForm.data.backImageUrl!);
-			console.log("license upload submission api request yet to be implemented");
-			console.log("\nreduxThunk: Front License Base64\n", frontLicenseBase64);
-			console.log("\nreduxThunk: Back License Base64\n", backLicenseBase64);
+
+			const frontPayload = v3UploadLicenseImage({
+				config: configState,
+				side: "Front",
+				imageName: formState.licenseUploadForm!.data!.frontImageName!,
+				imageBase64: frontLicenseBase64,
+			});
+			const postFront = clientV3.post(`/Customer/${reservationState.customerId}/Documents`, frontPayload);
+
+			const backPayload = v3UploadLicenseImage({
+				config: configState,
+				side: "Back",
+				imageName: formState.licenseUploadForm!.data!.backImageName!,
+				imageBase64: backLicenseBase64,
+			});
+			const postBack = clientV3.post(`/Customer/${reservationState.customerId}/Documents`, backPayload);
+
+			await Promise.all([postFront, postBack]);
 		}
 	} catch (error) {
 		console.info(error);
