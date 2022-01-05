@@ -30,6 +30,11 @@
 				"cvv": "Enter the PIN on the back of the credit card.",
 				"billingZip": "Enter your billing zip code."
 			},
+			"submitting_msgs": {
+				"credit_card": "Submitting your credit card information",
+				"license_images_bundle": "Submitting your driving license images",
+				"confirmation_email": "Sending confirmation email"
+			},
 			"submitting_msg": "Submitting Credit Card Information"
 		},
 		"license_upload": {
@@ -113,6 +118,11 @@
 				"exp_year": "Saisissez l'année d'expiration de la carte de crédit.",
 				"cvv": "Entrez le code PIN au dos de la carte de crédit.",
 				"billingZip": "Entrez votre code postal de facturation."
+			},
+			"submitting_msgs": {
+				"credit_card": "Soumission des informations de carte de crédit",
+				"license_images_bundle": "Soumettre vos images de permis de conduire",
+				"confirmation_email": "Envoi d'email de confirmation"
 			},
 			"submitting_msg": "Soumission des informations de carte de crédit"
 		},
@@ -198,6 +208,11 @@
 				"cvv": "Geben Sie die PIN auf der Rückseite der Kreditkarte ein.",
 				"billingZip": "Geben Sie Ihre Postleitzahl ein."
 			},
+			"submitting_msgs": {
+				"credit_card": "Übermitteln von Kreditkarteninformationen",
+				"license_images_bundle": "Einreichen Ihrer Führerscheinbilder",
+				"confirmation_email": "Bestätigungs-E-Mail senden"
+			},
 			"submitting_msg": "Übermitteln von Kreditkarteninformationen"
 		},
 		"license_upload": {
@@ -281,6 +296,11 @@
 				"exp_year": "Introduzca el año de caducidad de la tarjeta de crédito.",
 				"cvv": "Introduzca el PIN en la parte posterior de la tarjeta de crédito.",
 				"billingZip": "Introduce tu código postal de facturación."
+			},
+			"submitting_msgs": {
+				"credit_card": "Übermitteln von Kreditkarteninformationen",
+				"license_images_bundle": "Envío de imágenes de su licencia de conducir",
+				"confirmation_email": "Envío de correo electrónico de confirmación"
 			},
 			"submitting_msg": "Presentación de información de tarjetas de crédito"
 		},

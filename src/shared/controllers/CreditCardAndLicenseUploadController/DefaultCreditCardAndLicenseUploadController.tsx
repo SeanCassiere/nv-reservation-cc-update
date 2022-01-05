@@ -122,6 +122,7 @@ const DefaultCreditCardAndLicenseUploadController = ({
 
 	// validate the form data against the schema
 	const handleNextState = useCallback(async () => {
+		setSchemaErrors([]);
 		try {
 			await schema.validate(formValues, { abortEarly: false });
 			if (!frontImageFile) {

@@ -3,14 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
-import { selectSubmissionState, selectTranslations } from "../../redux/store";
+import { selectSubmissionState } from "../../redux/store";
 import { submitFormThunk } from "../../redux/thunks/formsThunks";
 
 const DefaultSubmitDetailsController = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
-	const t = useSelector(selectTranslations);
+
+	const { current_submission_message } = useSelector(selectSubmissionState);
 
 	const { state } = useSelector(selectSubmissionState);
 
@@ -24,7 +25,7 @@ const DefaultSubmitDetailsController = () => {
 		dispatch(submitFormThunk());
 	}, [dispatch, navigate, location, state]);
 
-	return <LoadingSubmission title={t.form.submitting_msg} />;
+	return <LoadingSubmission title={current_submission_message} />;
 };
 
 export default DefaultSubmitDetailsController;
