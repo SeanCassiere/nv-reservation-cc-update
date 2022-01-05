@@ -4,7 +4,13 @@ import { authenticateAppThunk } from "../thunks/configThunks";
 
 // import { allControllerFlows } from "../../utils/controllerFlows";
 
-const appStates = ["authenticating", "loaded", "authentication_error", "submission_loading"] as const;
+const appStates = [
+	"authenticating",
+	"loaded",
+	"authentication_error",
+	"reservation_fetch_failed",
+	"submission_loading",
+] as const;
 const supportedLanguages = ["en", "de", "fr", "es"] as const;
 
 // type Controllers = typeof allControllerFlows[number];
@@ -72,12 +78,6 @@ const configSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(authenticateAppThunk.pending, (state) => {
 			state.status = "authenticating";
-		});
-		builder.addCase(authenticateAppThunk.fulfilled, (state) => {
-			state.status = "loaded";
-		});
-		builder.addCase(authenticateAppThunk.rejected, (state) => {
-			state.status = "authentication_error";
 		});
 	},
 });

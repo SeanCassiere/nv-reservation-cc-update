@@ -102,6 +102,9 @@ const ApplicationController = () => {
 		<>
 			{appConfig.status === "authenticating" && <LoadingSubmission title={t.authentication_submission.title} />}
 			{appConfig.status === "authentication_error" && <ErrorSubmission msg={t.authentication_submission.message} />}
+			{appConfig.status === "reservation_fetch_failed" && (
+				<ErrorSubmission msg={t.reservation_fetch_error.message} tryAgainButton />
+			)}
 			{appConfig.status === "loaded" && (
 				<>
 					<DisplayCurrentController
