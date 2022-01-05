@@ -38,10 +38,11 @@ When creating the base64 encoded JSON string, add in the following into the stri
 
 ## Available screens/views
 
-| Key                       | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| Default/CreditCardForm    | The default credit card form                           |
-| Default/LicenseUploadForm | The default form for uploading driver's license images |
+| Key                                                | Description                                                                                |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Default/CreditCardForm                             | The default credit card form                                                               |
+| Default/LicenseUploadForm                          | The default form for uploading driver's license images                                     |
+| Default/DefaulCreditCardAndLicenseUploadController | The a combination of both the `Default/CreditCardForm` and the `Default/LicenseUploadForm` |
 
 ## Language Support
 
