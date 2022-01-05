@@ -4,9 +4,10 @@ import { IReservationSliceState } from "../redux/slices/retrievedDetails";
 interface Props {
 	config: ConfigSliceState;
 	reservationDetails: IReservationSliceState;
+	emailBody?: string;
 }
 
-export function bodyEmailTemplate({ reservationDetails, config }: Props) {
+export function bodyEmailTemplate({ reservationDetails, config, emailBody = "" }: Props) {
 	const currentDate = new Date();
 	const currentISODate = currentDate.toISOString();
 
@@ -21,7 +22,7 @@ export function bodyEmailTemplate({ reservationDetails, config }: Props) {
 		depositId: 0,
 		depositType: "",
 		docListForAttach: [],
-		emailBody: "",
+		emailBody: emailBody,
 		fromEmail: reservationDetails.locationEmail,
 		isUpdate: false,
 		reservationId: reservationDetails.reservationId,

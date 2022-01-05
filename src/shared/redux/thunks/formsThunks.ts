@@ -1,11 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import client from "../../api/client";
 import clientV3 from "../../api/clientV3";
 import { urlBlobToBase64 } from "../../utils/blobUtils";
+import { bodyEmailTemplate } from "../../utils/bodyEmailTemplate";
 
 import { bodyInsertV3Card } from "../../utils/bodyInsertCard";
-import { bodySendEmail } from "../../utils/bodySendEmail";
 import { v3UploadLicenseImage } from "../../utils/bodyUploadLicenseImage";
 import { setSubmissionState, setSubmissionErrorState, setSubmissionMessage } from "../slices/forms";
 import { RootState } from "../store";
@@ -19,6 +18,8 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	const formState = state.forms;
 	const reservationState = state.retrievedDetails;
 
+	console.groupCollapsed("forms/submitAllAvailable");
+
 	// Post card details
 	try {
 		if (formState.creditCardForm.isReadyToSubmit) {
@@ -29,7 +30,8 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 			);
 		}
 	} catch (error) {
-		console.info(error);
+		console.error("post credit card details error", error);
+		console.groupEnd();
 		dispatch(setSubmissionErrorState("submitting_details_error"));
 		return;
 	}
@@ -66,7 +68,8 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 			await Promise.all([submitFrontImagePromise, submitBackImagePromise]);
 		}
 	} catch (error) {
-		console.info(error);
+		console.error("license images upload error", error);
+		console.groupEnd();
 		dispatch(setSubmissionErrorState("submitting_details_error"));
 		return;
 	}
@@ -75,26 +78,23 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	if (reservationState.responseTemplateBlobUrl !== "") {
 		try {
 			dispatch(setSubmissionMessage(t.form.submitting_msgs.confirmation_email));
-			await client.post(
-				"/Email/SendEmail",
-				bodySendEmail({ reservationDetails: reservationState, config: configState })
+			const html = await fetch(reservationState.responseTemplateBlobUrl).then((res) => res.text());
+
+			await clientV3.post(
+				"/Emails",
+				bodyEmailTemplate({ reservationDetails: reservationState, config: configState, emailBody: html })
 			);
 			URL.revokeObjectURL(reservationState.responseTemplateBlobUrl);
 		} catch (error) {
-			console.info(error);
+			console.error("confirmation email sending error", error);
+			console.groupEnd();
 			dispatch(setSubmissionErrorState("submitting_details_error"));
 			return;
 		}
 	}
-	// try {
-	// 	dispatch(setSubmissionMessage(t.form.submitting_msgs.confirmation_email));
-	// 	await client.post("/Email/SendEmail", bodySendEmail({ reservationDetails: reservationState, config: configState }));
-	// 	URL.revokeObjectURL(reservationState.responseTemplateBlobUrl);
-	// } catch (error) {
-	// 	console.info(error);
-	// 	dispatch(setSubmissionErrorState("submitting_details_error"));
-	// 	return;
-	// }
+
+	console.log("completed form submission operation");
+	console.groupEnd();
 
 	dispatch(setSubmissionState("submitting_details_success"));
 	return true;

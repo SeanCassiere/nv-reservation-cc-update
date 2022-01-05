@@ -5,10 +5,10 @@ import { selectConfigState, selectSubmissionState } from "../shared/redux/store"
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
 	let location = useLocation();
-	const { token } = useSelector(selectConfigState);
+	const { tokenV3 } = useSelector(selectConfigState);
 	const { state, isSubmissionAttempted } = useSelector(selectSubmissionState);
 
-	if (!token) {
+	if (!tokenV3) {
 		return <Navigate to='/not-available' replace state={{ from: location }} />;
 	}
 

@@ -1,11 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import client from "../../api/client";
 import clientV3 from "../../api/clientV3";
-import { bodyEmailTemplate } from "../../utils/bodyEmailPreviewTemplate";
+import { bodyEmailTemplate } from "../../utils/bodyEmailTemplate";
 
-import { setAccessToken, setAccessTokenV3, setAppStatus } from "../slices/config";
+import { setAccessTokenV3, setAppStatus } from "../slices/config";
 import {
 	setCcEmails,
 	setEmailTemplateDetails,
@@ -29,19 +28,18 @@ export const authenticateAppThunk = createAsyncThunk(
 		const { clientId, responseTemplateId } = state.config;
 		const { reservationId } = state.retrievedDetails;
 		console.groupCollapsed("config/authenticateApp");
-		console.log("responseTemplateId", responseTemplateId);
 
 		// authenticate app
 		try {
 			const authV3 = await axios.get(AUTH_URL);
 			dispatch(setAccessTokenV3({ token: authV3.data.access_token }));
 
-			const auth = await client.post("/Login/GetClientSecretToken", {
-				ClientId: clientId,
-				ConsumerType: "Admin,Basic",
-			});
+			// const auth = await client.post("/Login/GetClientSecretToken", {
+			// 	ClientId: clientId,
+			// 	ConsumerType: "Admin,Basic",
+			// });
 
-			dispatch(setAccessToken({ token: auth.data.apiToken.access_token }));
+			// dispatch(setAccessToken({ token: auth.data.apiToken.access_token }));
 		} catch (error) {
 			console.error("get authentication tokens", error);
 			console.groupEnd();
