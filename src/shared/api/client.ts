@@ -12,8 +12,14 @@ const client = axios.create({
 });
 
 client.interceptors.request.use(
-	(res) => {
-		return res;
+	(config) => {
+		const token = store.getState().config.token;
+
+		if (config && config.headers) {
+			config.headers["Authorization"] = "Bearer " + token;
+		}
+
+		return config;
 	},
 	async (err) => {
 		const originalRequest = err.config;

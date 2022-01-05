@@ -10,7 +10,7 @@ import { v3UploadLicenseImage } from "../../utils/bodyUploadLicenseImage";
 import { setSubmissionState, setSubmissionErrorState, setSubmissionMessage } from "../slices/forms";
 import { RootState } from "../store";
 
-export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async (_, { getState, dispatch }) => {
+export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", async (_, { getState, dispatch }) => {
 	dispatch(setSubmissionState("submitting_details_pending"));
 
 	const state = getState() as RootState;
@@ -25,12 +25,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async
 			dispatch(setSubmissionMessage(t.form.submitting_msgs.credit_card));
 			await client.post(
 				"/Customer/InsertCreditCard",
-				bodyInsertCard({ creditCardDetails: formState.creditCardForm.data, reservationDetails: reservationState }),
-				{
-					headers: {
-						Authorization: `Bearer ${configState.token}`,
-					},
-				}
+				bodyInsertCard({ creditCardDetails: formState.creditCardForm.data, reservationDetails: reservationState })
 			);
 		}
 	} catch (error) {
@@ -61,21 +56,11 @@ export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async
 
 			const submitFrontImagePromise = clientV3.post(
 				`/Customers/${reservationState.customerId}/Documents`,
-				frontImagePayload,
-				{
-					headers: {
-						Authorization: `Bearer ${configState.tokenV3}`,
-					},
-				}
+				frontImagePayload
 			);
 			const submitBackImagePromise = clientV3.post(
 				`/Customers/${reservationState.customerId}/Documents`,
-				backImagePayload,
-				{
-					headers: {
-						Authorization: `Bearer ${configState.tokenV3}`,
-					},
-				}
+				backImagePayload
 			);
 
 			await Promise.all([submitFrontImagePromise, submitBackImagePromise]);
@@ -89,11 +74,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async
 	// Post confirmation email using responseTemplateID
 	try {
 		dispatch(setSubmissionMessage(t.form.submitting_msgs.confirmation_email));
-		await client.post(
-			"/Email/SendEmail",
-			bodySendEmail({ reservationDetails: reservationState, config: configState }),
-			{ headers: { Authorization: `Bearer ${configState.token}` } }
-		);
+		await client.post("/Email/SendEmail", bodySendEmail({ reservationDetails: reservationState, config: configState }));
 	} catch (error) {
 		console.info(error);
 		dispatch(setSubmissionErrorState("submitting_details_error"));

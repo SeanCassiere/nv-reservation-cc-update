@@ -3,7 +3,7 @@ import { setAccessTokenV3 } from "../redux/slices/config";
 import store from "../redux/store";
 
 const baseURL = process.env.REACT_APP_API_BASE_URL_V3 || "https://api.navotar.com/api/v3";
-const AUTH_URL = process.env.REACT_APP_V3_AUTH_URL ?? "/.netlify/functions/getV3Token";
+const AUTH_URL = process.env.REACT_APP_V3_AUTH_URL ?? "/.netlify/functions/GetTokenV3";
 
 const clientV3 = axios.create({
 	baseURL,
@@ -13,8 +13,14 @@ const clientV3 = axios.create({
 });
 
 clientV3.interceptors.request.use(
-	(res) => {
-		return res;
+	(config) => {
+		const token = store.getState().config.tokenV3;
+
+		if (config && config.headers) {
+			config.headers["Authorization"] = "Bearer " + token;
+		}
+
+		return config;
 	},
 	async (err) => {
 		const originalRequest = err.config;

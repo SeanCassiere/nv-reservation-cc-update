@@ -31,19 +31,7 @@ export const authenticateAppThunk = createAsyncThunk(
 
 			const { reservationId } = state.retrievedDetails;
 			try {
-				// const res = await client.get(`/Reservation/GetReservationById?reservationId=${reservationId}`, {
-				// 	headers: { Authorization: `Bearer ${access_token}` },
-				// });
-
-				// const {
-				// 	startLocationId: locationId,
-				// 	customerId,
-				// 	customerMail: customerEmail,
-				// 	reservationNumber: reservationNo,
-				// } = res.data.reservationview;
-				const res = await clientV3.get(`/Reservations/${reservationId}?ClientId=${clientId}`, {
-					headers: { Authorization: `Bearer ${v3Data.access_token}` },
-				});
+				const res = await clientV3.get(`/Reservations/${reservationId}?ClientId=${clientId}`);
 
 				const {
 					startLocationId: locationId,
