@@ -72,14 +72,29 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	}
 
 	// Post confirmation email using responseTemplateID
-	try {
-		dispatch(setSubmissionMessage(t.form.submitting_msgs.confirmation_email));
-		await client.post("/Email/SendEmail", bodySendEmail({ reservationDetails: reservationState, config: configState }));
-	} catch (error) {
-		console.info(error);
-		dispatch(setSubmissionErrorState("submitting_details_error"));
-		return;
+	if (reservationState.responseTemplateBlobUrl !== "") {
+		try {
+			dispatch(setSubmissionMessage(t.form.submitting_msgs.confirmation_email));
+			await client.post(
+				"/Email/SendEmail",
+				bodySendEmail({ reservationDetails: reservationState, config: configState })
+			);
+			URL.revokeObjectURL(reservationState.responseTemplateBlobUrl);
+		} catch (error) {
+			console.info(error);
+			dispatch(setSubmissionErrorState("submitting_details_error"));
+			return;
+		}
 	}
+	// try {
+	// 	dispatch(setSubmissionMessage(t.form.submitting_msgs.confirmation_email));
+	// 	await client.post("/Email/SendEmail", bodySendEmail({ reservationDetails: reservationState, config: configState }));
+	// 	URL.revokeObjectURL(reservationState.responseTemplateBlobUrl);
+	// } catch (error) {
+	// 	console.info(error);
+	// 	dispatch(setSubmissionErrorState("submitting_details_error"));
+	// 	return;
+	// }
 
 	dispatch(setSubmissionState("submitting_details_success"));
 	return true;
