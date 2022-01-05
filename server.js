@@ -14,7 +14,7 @@ const app = express();
 
 app.use(cors());
 
-app.get("/api/GetV3Token", async (req, res) => {
+app.get("/api/GetTokenV3", async (req, res) => {
 	try {
 		const params = new URLSearchParams();
 		params.append("grant_type", "client_credentials");
