@@ -4,7 +4,13 @@ import { authenticateAppThunk } from "../thunks/configThunks";
 
 // import { allControllerFlows } from "../../utils/controllerFlows";
 
-const appStates = ["authenticating", "loaded", "authentication_error", "submission_loading"] as const;
+const appStates = [
+	"authenticating",
+	"loaded",
+	"authentication_error",
+	"reservation_fetch_failed",
+	"submission_loading",
+] as const;
 const supportedLanguages = ["en", "de", "fr", "es"] as const;
 
 // type Controllers = typeof allControllerFlows[number];
@@ -20,7 +26,7 @@ export interface ConfigSliceState {
 	responseTemplateId: string | null;
 	flow: string[];
 	rawConfig: string;
-	token: string | null;
+	// token: string | null;
 	tokenV3: string | null;
 }
 
@@ -32,7 +38,7 @@ const initialState: ConfigSliceState = {
 	responseTemplateId: null,
 	flow: ["Default/CreditCardForm"],
 	rawConfig: "",
-	token: null,
+	// token: null,
 	tokenV3: null,
 };
 
@@ -49,9 +55,9 @@ const configSlice = createSlice({
 		setRawConfig: (state, action: PayloadAction<{ rawConfig: string }>) => {
 			state.rawConfig = action.payload.rawConfig;
 		},
-		setAccessToken: (state, action: PayloadAction<{ token: string }>) => {
-			state.token = action.payload.token;
-		},
+		// setAccessToken: (state, action: PayloadAction<{ token: string }>) => {
+		// 	state.token = action.payload.token;
+		// },
 		setAccessTokenV3: (state, action: PayloadAction<{ token: string }>) => {
 			state.tokenV3 = action.payload.token;
 		},
@@ -73,16 +79,9 @@ const configSlice = createSlice({
 		builder.addCase(authenticateAppThunk.pending, (state) => {
 			state.status = "authenticating";
 		});
-		builder.addCase(authenticateAppThunk.fulfilled, (state) => {
-			state.status = "loaded";
-		});
-		builder.addCase(authenticateAppThunk.rejected, (state) => {
-			state.status = "authentication_error";
-		});
 	},
 });
 
-export const { setAccessToken, setAccessTokenV3, setLang, setConfigValues, setAppStatus, setRawConfig } =
-	configSlice.actions;
+export const { setAccessTokenV3, setLang, setConfigValues, setAppStatus, setRawConfig } = configSlice.actions;
 
 export default configSlice;

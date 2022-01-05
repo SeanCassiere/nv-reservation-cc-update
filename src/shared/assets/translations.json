@@ -73,6 +73,10 @@
 			"title": "Authenticating",
 			"message": "We had trouble authenticating this connection."
 		},
+		"reservation_fetch_error": {
+			"title": "Reservation Fetch Error",
+			"message": "We could not locate the reservation."
+		},
 		"bad_submission": {
 			"title": "Uh Oh",
 			"message": "I encountered an error when trying to submit your information.",
@@ -161,6 +165,10 @@
 		"authentication_submission": {
 			"title": "Authentification",
 			"message": "Nous avons eu du mal à authentifier cette connexion."
+		},
+		"reservation_fetch_error": {
+			"title": "Reservation Fetch Error",
+			"message": "We could not locate the reservation."
 		},
 		"bad_submission": {
 			"title": "Uh Oh",
@@ -251,6 +259,10 @@
 			"title": "Authentifizierung",
 			"message": "Wir hatten Probleme, diese Verbindung zu authentifizieren."
 		},
+		"reservation_fetch_error": {
+			"title": "Reservation Fetch Error",
+			"message": "We could not locate the reservation."
+		},
 		"bad_submission": {
 			"title": "Oh oh",
 			"message": "Beim Versuch, Ihre Informationen zu übermitteln, ist ein Fehler aufgetreten.",
@@ -339,6 +351,10 @@
 		"authentication_submission": {
 			"title": "Autenticando",
 			"message": "Tuvimos problemas para autenticar esta conexión."
+		},
+		"reservation_fetch_error": {
+			"title": "Reservation Fetch Error",
+			"message": "We could not locate the reservation."
 		},
 		"bad_submission": {
 			"title": "Uh Oh",

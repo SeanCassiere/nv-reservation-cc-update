@@ -6,7 +6,7 @@ Install `concurrently` globally before running `yarn dev`.
 
 `npm install -g concurrently`
 
-View the Navotar Public [API Documentation](https://app.navotar.com/api).
+View the Navotar API V3 Documentation [API Documentation](https://api.appnavotar.com/api).
 
 ## URL Params
 

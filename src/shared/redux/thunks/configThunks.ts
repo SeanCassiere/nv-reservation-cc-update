@@ -1,12 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import client from "../../api/client";
 import clientV3 from "../../api/clientV3";
+import { bodyEmailTemplate } from "../../utils/bodyEmailTemplate";
 
-import { setAccessToken, setAccessTokenV3 } from "../slices/config";
-import { setReservationDetails } from "../slices/retrievedDetails";
+import { setAccessTokenV3, setAppStatus } from "../slices/config";
+import {
+	setCcEmails,
+	setEmailTemplateDetails,
+	setPreviewHtmlBlobUrl,
+	setReservationDetails,
+} from "../slices/retrievedDetails";
 import { RootState } from "../store";
+
+interface User {
+	isReservationEmail: boolean;
+	email: string;
+	isActive: boolean;
+}
 
 const AUTH_URL = process.env.REACT_APP_V3_AUTH_URL ?? "/.netlify/functions/GetTokenV3";
 
@@ -14,58 +25,105 @@ export const authenticateAppThunk = createAsyncThunk(
 	"config/authenticateApp",
 	async (_, { dispatch, getState, rejectWithValue }) => {
 		const state = getState() as RootState;
-		const { clientId } = state.config;
-		try {
-			const { data: v3Data } = await axios.get(AUTH_URL);
-			dispatch(setAccessTokenV3({ token: v3Data.access_token }));
+		const { clientId, responseTemplateId } = state.config;
+		const { reservationId } = state.retrievedDetails;
+		console.groupCollapsed("config/authenticateApp");
 
-			const auth = await client.post("/Login/GetClientSecretToken", {
-				ClientId: clientId,
-				ConsumerType: "Admin,Basic",
-			});
+		// authenticate app
+		try {
+			const authV3 = await axios.get(AUTH_URL);
+			dispatch(setAccessTokenV3({ token: authV3.data.access_token }));
+
+			// const auth = await client.post("/Login/GetClientSecretToken", {
+			// 	ClientId: clientId,
+			// 	ConsumerType: "Admin,Basic",
+			// });
+
+			// dispatch(setAccessToken({ token: auth.data.apiToken.access_token }));
+		} catch (error) {
+			console.error("get authentication tokens", error);
+			console.groupEnd();
+			return dispatch(setAppStatus({ status: "authentication_error" }));
+		}
+
+		// get reservation details
+		try {
+			const res = await clientV3.get(`/Reservations/${reservationId}?ClientId=${clientId}`);
 
 			const {
-				apiToken: { access_token },
-			} = auth.data as { apiToken: { access_token: string } };
-			dispatch(setAccessToken({ token: access_token }));
+				startLocationId: locationId,
+				customerId,
+				email: customerEmail,
+				reservationNumber: reservationNo,
+				locationEmail,
+			} = res.data.reservationview;
 
-			const { reservationId } = state.retrievedDetails;
-			try {
-				// const res = await client.get(`/Reservation/GetReservationById?reservationId=${reservationId}`, {
-				// 	headers: { Authorization: `Bearer ${access_token}` },
-				// });
+			const reservationInfo = {
+				locationId,
+				customerId,
+				customerEmail,
+				reservationNo,
+				locationEmail,
+			};
 
-				// const {
-				// 	startLocationId: locationId,
-				// 	customerId,
-				// 	customerMail: customerEmail,
-				// 	reservationNumber: reservationNo,
-				// } = res.data.reservationview;
-				const res = await clientV3.get(`/Reservations/${reservationId}?ClientId=${clientId}`, {
-					headers: { Authorization: `Bearer ${v3Data.access_token}` },
-				});
+			dispatch(setReservationDetails(reservationInfo));
+		} catch (error) {
+			console.error("get reservation emails", error);
+			console.groupEnd();
+			return dispatch(setAppStatus({ status: "reservation_fetch_failed" }));
+		}
 
-				const {
-					startLocationId: locationId,
-					customerId,
-					email: customerEmail,
-					reservationNumber: reservationNo,
-				} = res.data.reservationview;
+		// get cc emails
+		try {
+			const res = await clientV3.get(`/Users?clientId=${clientId}`);
+			const reservationEmailUsers: User[] = res.data
+				.filter((u: User) => u.isReservationEmail)
+				.filter((u: User) => u.email && u.email.trim() !== "")
+				.filter((u: User) => u.isActive);
+			const emailsToCC = reservationEmailUsers.map((u: User) => u.email);
 
-				const reservationInfo = {
-					locationId,
-					customerId,
-					customerEmail,
-					reservationNo,
-				};
+			dispatch(setCcEmails(emailsToCC));
+		} catch (error) {
+			console.error("get cc emails", error);
+			console.groupEnd();
+			return dispatch(setAppStatus({ status: "authentication_error" }));
+		}
 
-				dispatch(setReservationDetails(reservationInfo));
-				return true;
-			} catch (error) {
-				return rejectWithValue(error);
+		// get email template
+		try {
+			const res = await clientV3.get(`/Emails/${responseTemplateId}/EmailTemplate?clientId=${clientId}`);
+			const { templateTypeId, subjectLine } = res.data;
+
+			dispatch(setEmailTemplateDetails({ templateTypeId, subjectLine }));
+		} catch (error) {
+			console.error("get email template details", error);
+			console.groupEnd();
+			// failing to fetch the email template details should not fail the app
+			// return dispatch(setAppStatus({ status: "authentication_error" }));
+		}
+
+		// get email preview html and turn into a blob url
+		try {
+			const { retrievedDetails, config: configDetails } = getState() as RootState;
+			if (retrievedDetails.responseTemplateTypeId !== 0) {
+				const res = await clientV3.post(
+					"/Emails/PreviewTemplate",
+					bodyEmailTemplate({ reservationDetails: retrievedDetails, config: configDetails })
+				);
+
+				const blob = new Blob([res.data], { type: "text/html" });
+				const url = URL.createObjectURL(blob);
+
+				dispatch(setPreviewHtmlBlobUrl(url));
 			}
 		} catch (error) {
-			return rejectWithValue(new Error("Authentication failed"));
+			console.error("get email template html", error);
+			console.groupEnd();
+			// failing to fetch the email template html should not fail the app
+			// return dispatch(setAppStatus({ status: "authentication_error" }));
 		}
+
+		console.groupEnd();
+		return dispatch(setAppStatus({ status: "loaded" }));
 	}
 );
