@@ -4,7 +4,7 @@ import client from "../../api/client";
 import clientV3 from "../../api/clientV3";
 import { urlBlobToBase64 } from "../../utils/blobUtils";
 
-import { bodyInsertCard } from "../../utils/bodyInsertCard";
+import { bodyInsertV3Card } from "../../utils/bodyInsertCard";
 import { bodySendEmail } from "../../utils/bodySendEmail";
 import { v3UploadLicenseImage } from "../../utils/bodyUploadLicenseImage";
 import { setSubmissionState, setSubmissionErrorState, setSubmissionMessage } from "../slices/forms";
@@ -23,9 +23,9 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	try {
 		if (formState.creditCardForm.isReadyToSubmit) {
 			dispatch(setSubmissionMessage(t.form.submitting_msgs.credit_card));
-			await client.post(
-				"/Customer/InsertCreditCard",
-				bodyInsertCard({ creditCardDetails: formState.creditCardForm.data, reservationDetails: reservationState })
+			await clientV3.post(
+				`/Customers/${reservationState.customerId}/CreditCards`,
+				bodyInsertV3Card(formState.creditCardForm.data)
 			);
 		}
 	} catch (error) {

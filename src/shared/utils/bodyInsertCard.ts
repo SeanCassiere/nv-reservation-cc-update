@@ -38,3 +38,18 @@ export function bodyInsertCard({ creditCardDetails, reservationDetails }: Props)
 
 	return postBody;
 }
+
+export function bodyInsertV3Card(creditCardDetails: ICreditCardFormData) {
+	return {
+		creditCardType: creditCardDetails.type,
+		creditCardNumber: creditCardDetails.number,
+		creditCardExpiryMonth: parseInt(creditCardDetails.monthExpiry),
+		creditCardExpiryYear: parseInt(`20${creditCardDetails.yearExpiry}`),
+		creditCardCVSNumber: creditCardDetails.cvv,
+		nameOnCard: creditCardDetails.name,
+		creditCardBillingZipCode: creditCardDetails.billingZip,
+		gatewayMandateID: null,
+		gatewayRedirectFlow: null,
+		gatewayCustomerID: null,
+	};
+}
