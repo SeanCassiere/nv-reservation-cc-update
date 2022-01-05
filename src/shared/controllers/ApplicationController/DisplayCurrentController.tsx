@@ -2,6 +2,7 @@ import React, { memo } from "react";
 
 import DefaultCreditCardController from "../CreditCardController/DefaultCreditCardController";
 import DefaultLicenseUploadController from "../LicenseUploadController/DefaultLicenseUploadController";
+import DefaulCreditCardAndLicenseUploadController from "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController";
 
 interface IProps {
 	selectedController: string | null;
@@ -30,6 +31,14 @@ const DisplayCurrentController = ({
 			)}
 			{selectedController === "Default/LicenseUploadForm" && (
 				<DefaultLicenseUploadController
+					handleSubmit={handleNext}
+					isNextAvailable={isNextPageAvailable}
+					handlePrevious={handlePrevious}
+					isPrevPageAvailable={isPrevPageAvailable}
+				/>
+			)}
+			{selectedController === "Default/CreditCardAndLicenseUploadController" && (
+				<DefaulCreditCardAndLicenseUploadController
 					handleSubmit={handleNext}
 					isNextAvailable={isNextPageAvailable}
 					handlePrevious={handlePrevious}

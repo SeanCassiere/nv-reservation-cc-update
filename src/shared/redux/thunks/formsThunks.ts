@@ -7,7 +7,7 @@ import { urlBlobToBase64 } from "../../utils/blobUtils";
 import { bodyInsertCard } from "../../utils/bodyInsertCard";
 import { bodySendEmail } from "../../utils/bodySendEmail";
 import { v3UploadLicenseImage } from "../../utils/bodyUploadLicenseImage";
-import { setSubmissionState, setSubmissionErrorState } from "../slices/forms";
+import { setSubmissionState, setSubmissionErrorState, setSubmissionMessage } from "../slices/forms";
 import { RootState } from "../store";
 
 export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async (_, { getState, dispatch }) => {
@@ -15,12 +15,14 @@ export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async
 
 	const state = getState() as RootState;
 	const configState = state.config;
+	const t = state.config.translations;
 	const formState = state.forms;
 	const reservationState = state.retrievedDetails;
 
 	// Post card details
 	try {
 		if (formState.creditCardForm.isReadyToSubmit) {
+			dispatch(setSubmissionMessage(t.form.submitting_msgs.credit_card));
 			await client.post(
 				"/Customer/InsertCreditCard",
 				bodyInsertCard({ creditCardDetails: formState.creditCardForm.data, reservationDetails: reservationState }),
@@ -40,6 +42,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async
 	// Upload driver's license images
 	try {
 		if (formState.licenseUploadForm.isReadyToSubmit) {
+			dispatch(setSubmissionMessage(t.form.submitting_msgs.license_images_bundle));
 			const frontLicenseBase64 = await urlBlobToBase64(formState.licenseUploadForm.data.frontImageUrl!);
 			const backLicenseBase64 = await urlBlobToBase64(formState.licenseUploadForm.data.backImageUrl!);
 
@@ -85,6 +88,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAlAvailable", async
 
 	// Post confirmation email using responseTemplateID
 	try {
+		dispatch(setSubmissionMessage(t.form.submitting_msgs.confirmation_email));
 		await client.post(
 			"/Email/SendEmail",
 			bodySendEmail({ reservationDetails: reservationState, config: configState }),
