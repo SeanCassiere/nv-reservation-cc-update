@@ -2,6 +2,10 @@
 
 This application is used to add additional details to their reservation.
 
+Install `concurrently` globally before running `yarn dev`.
+
+`npm install -g concurrently`
+
 View the Navotar Public [API Documentation](https://app.navotar.com/api).
 
 ## URL Params
