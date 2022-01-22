@@ -2,7 +2,7 @@ import React, { memo } from "react";
 
 import DefaultCreditCardController from "../CreditCardController/DefaultCreditCardController";
 import DefaultLicenseUploadController from "../LicenseUploadController/DefaultLicenseUploadController";
-import DefaulCreditCardAndLicenseUploadController from "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController";
+import DefaultCreditCardAndLicenseUploadController from "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController";
 
 interface IProps {
 	selectedController: string | null;
@@ -37,14 +37,15 @@ const DisplayCurrentController = ({
 					isPrevPageAvailable={isPrevPageAvailable}
 				/>
 			)}
-			{selectedController === "Default/CreditCardAndLicenseUploadController" && (
-				<DefaulCreditCardAndLicenseUploadController
+			{selectedController === "Default/CreditCardAndLicenseUploadController" ||
+			selectedController === "Default/CreditCardAndLicenseUploadForm" ? (
+				<DefaultCreditCardAndLicenseUploadController
 					handleSubmit={handleNext}
 					isNextAvailable={isNextPageAvailable}
 					handlePrevious={handlePrevious}
 					isPrevPageAvailable={isPrevPageAvailable}
 				/>
-			)}
+			) : null}
 			{selectedController === "Default/Positive" && (
 				<div>
 					<h5>positive</h5>
