@@ -5,7 +5,7 @@ import { selectConfigState, selectSubmissionState } from "../shared/redux/store"
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
 	let location = useLocation();
-	const { tokenV3 } = useSelector(selectConfigState);
+	const { token: tokenV3 } = useSelector(selectConfigState);
 	const { state, isSubmissionAttempted } = useSelector(selectSubmissionState);
 
 	if (!tokenV3) {

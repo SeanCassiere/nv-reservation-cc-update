@@ -27,7 +27,8 @@ export interface ConfigSliceState {
 	flow: string[];
 	rawConfig: string;
 	// token: string | null;
-	tokenV3: string | null;
+	token: string | null;
+	tokenType: string;
 }
 
 const initialState: ConfigSliceState = {
@@ -38,8 +39,8 @@ const initialState: ConfigSliceState = {
 	responseTemplateId: null,
 	flow: ["Default/CreditCardForm"],
 	rawConfig: "",
-	// token: null,
-	tokenV3: null,
+	token: null,
+	tokenType: "Bearer",
 };
 
 const configSlice = createSlice({
@@ -55,11 +56,9 @@ const configSlice = createSlice({
 		setRawConfig: (state, action: PayloadAction<{ rawConfig: string }>) => {
 			state.rawConfig = action.payload.rawConfig;
 		},
-		// setAccessToken: (state, action: PayloadAction<{ token: string }>) => {
-		// 	state.token = action.payload.token;
-		// },
-		setAccessTokenV3: (state, action: PayloadAction<{ token: string }>) => {
-			state.tokenV3 = action.payload.token;
+		setAccessToken: (state, action: PayloadAction<{ token: string; tokenType: string }>) => {
+			state.token = action.payload.token;
+			state.tokenType = action.payload.tokenType;
 		},
 		setAppStatus: (state, action: PayloadAction<{ status: AppState }>) => {
 			state.status = action.payload.status;
@@ -82,6 +81,6 @@ const configSlice = createSlice({
 	},
 });
 
-export const { setAccessTokenV3, setLang, setConfigValues, setAppStatus, setRawConfig } = configSlice.actions;
+export const { setAccessToken, setLang, setConfigValues, setAppStatus, setRawConfig } = configSlice.actions;
 
 export default configSlice;

@@ -4,7 +4,7 @@ import axios from "axios";
 import clientV3 from "../../api/clientV3";
 import { bodyEmailTemplate } from "../../utils/bodyEmailTemplate";
 
-import { setAccessTokenV3, setAppStatus } from "../slices/config";
+import { setAccessToken, setAppStatus } from "../slices/config";
 import {
 	setCcEmails,
 	setEmailTemplateDetails,
@@ -32,7 +32,7 @@ export const authenticateAppThunk = createAsyncThunk(
 		// authenticate app
 		try {
 			const authV3 = await axios.get(AUTH_URL);
-			dispatch(setAccessTokenV3({ token: authV3.data.access_token }));
+			dispatch(setAccessToken({ token: authV3.data.access_token, tokenType: authV3.data.token_type }));
 
 			// const auth = await client.post("/Login/GetClientSecretToken", {
 			// 	ClientId: clientId,
