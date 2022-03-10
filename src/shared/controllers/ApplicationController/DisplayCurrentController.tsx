@@ -1,15 +1,30 @@
-import React, { memo } from "react";
+import React, { memo, Suspense, lazy } from "react";
 
-import DefaultCreditCardController from "../CreditCardController/DefaultCreditCardController";
-import DefaultLicenseUploadController from "../LicenseUploadController/DefaultLicenseUploadController";
-import DefaultCreditCardAndLicenseUploadController from "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController";
+import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
+
+const DefaultCreditCardController = lazy(
+	() =>
+		import(/* webpackChunkName: 'DefaultCreditCardController' */ "../CreditCardController/DefaultCreditCardController")
+);
+const DefaultLicenseUploadController = lazy(
+	() =>
+		import(
+			/* webpackChunkName: 'DefaultLicenseUploadController' */ "../LicenseUploadController/DefaultLicenseUploadController"
+		)
+);
+const DefaultCreditCardAndLicenseUploadController = lazy(
+	() =>
+		import(
+			/* webpackChunkName: 'DefaultCreditCardAndLicenseUploadController' */ "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController"
+		)
+);
 
 interface IProps {
 	selectedController: string | null;
 	handleNext: () => void;
-	isNextPageAvailable: () => boolean;
 	handlePrevious: () => void;
-	isPrevPageAvailable: () => boolean;
+	isNextPageAvailable: boolean;
+	isPrevPageAvailable: boolean;
 }
 
 const DisplayCurrentController = ({
@@ -20,7 +35,7 @@ const DisplayCurrentController = ({
 	isPrevPageAvailable,
 }: IProps) => {
 	return (
-		<>
+		<Suspense fallback={<LoadingSubmission title='Loading' />}>
 			{selectedController === "Default/CreditCardForm" && (
 				<DefaultCreditCardController
 					handleSubmit={handleNext}
@@ -50,13 +65,13 @@ const DisplayCurrentController = ({
 				<div>
 					<h5>positive</h5>
 					<p>
-						{isPrevPageAvailable() && (
+						{isPrevPageAvailable && (
 							<button type='button' onClick={handlePrevious}>
 								&#8592;
 							</button>
 						)}
 						<button type='button' onClick={handleNext}>
-							{isNextPageAvailable() ? "next" : "submit"}
+							{isNextPageAvailable ? "next" : "submit"}
 						</button>
 					</p>
 				</div>
@@ -65,18 +80,18 @@ const DisplayCurrentController = ({
 				<div>
 					<h5>negative</h5>
 					<p>
-						{isPrevPageAvailable() && (
+						{isPrevPageAvailable && (
 							<button type='button' onClick={handlePrevious}>
 								&#8592;
 							</button>
 						)}
 						<button type='button' onClick={handleNext}>
-							{isNextPageAvailable() ? "next" : "submit"}
+							{isNextPageAvailable ? "next" : "submit"}
 						</button>
 					</p>
 				</div>
 			)}
-		</>
+		</Suspense>
 	);
 };
 

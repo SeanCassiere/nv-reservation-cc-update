@@ -1,5 +1,5 @@
-import { ICreditCardFormData } from "../redux/slices/forms";
-import { IReservationSliceState } from "../redux/slices/retrievedDetails";
+import { ICreditCardFormData } from "../redux/slices/forms/slice";
+import { IReservationSliceState } from "../redux/slices/retrievedDetails/slice";
 
 interface Props {
 	creditCardDetails: ICreditCardFormData;

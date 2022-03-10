@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
-import { ICreditCardFormData } from "../../redux/slices/forms";
+import { ICreditCardFormData } from "../../redux/slices/forms/slice";
 import { selectTranslations } from "../../redux/store";
 import { currentYearNum, range } from "../../utils/common";
 import { YupErrorsFormatted } from "../../utils/yupSchemaErrors";

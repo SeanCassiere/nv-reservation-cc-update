@@ -31,8 +31,12 @@ const ErrorSubmission = ({ msg, tryAgainButton }: Props) => {
 					{msg}
 					<br />
 					{t.bad_submission.report}&nbsp;
-					<a href='mailto:support@navotar.com' target='_blank' rel='noreferrer'>
-						support@navotar.com
+					<a
+						href={config.fromRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
+						target='_blank'
+						rel='noreferrer'
+					>
+						{config.fromRentall ? "support@rentallsoftware.com" : "support@navotar.com"}
 					</a>
 					.
 					{tryAgainButton && (

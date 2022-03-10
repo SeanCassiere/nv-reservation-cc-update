@@ -1,17 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import clientV3 from "../../api/clientV3";
-import { bodyEmailTemplate } from "../../utils/bodyEmailTemplate";
+import clientV3 from "../../../api/clientV3";
+import { bodyEmailTemplate } from "../../../utils/bodyEmailTemplate";
 
-import { setAccessToken, setAppStatus } from "../slices/config";
+import { setAppStatus } from "./slice";
+import { setAccessToken } from "../auth/slice";
 import {
 	setCcEmails,
 	setEmailTemplateDetails,
 	setPreviewHtmlBlobUrl,
 	setReservationDetails,
-} from "../slices/retrievedDetails";
-import { RootState } from "../store";
+} from "../retrievedDetails/slice";
+import { RootState } from "../../store";
 
 interface User {
 	isReservationEmail: boolean;
@@ -32,7 +33,7 @@ export const authenticateAppThunk = createAsyncThunk(
 		// authenticate app
 		try {
 			const authV3 = await axios.get(AUTH_URL);
-			dispatch(setAccessToken({ token: authV3.data.access_token, tokenType: authV3.data.token_type }));
+			dispatch(setAccessToken({ access_token: authV3.data.access_token, token_type: authV3.data.token_type }));
 
 			// const auth = await client.post("/Login/GetClientSecretToken", {
 			// 	ClientId: clientId,

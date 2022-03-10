@@ -1,5 +1,5 @@
-import { ConfigSliceState } from "../redux/slices/config";
-import { IReservationSliceState } from "../redux/slices/retrievedDetails";
+import { ConfigSliceState } from "../redux/slices/config/slice";
+import { IReservationSliceState } from "../redux/slices/retrievedDetails/slice";
 
 interface Props {
 	config: ConfigSliceState;

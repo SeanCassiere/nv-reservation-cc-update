@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import clientV3 from "../../api/clientV3";
-import { urlBlobToBase64 } from "../../utils/blobUtils";
-import { bodyEmailTemplate } from "../../utils/bodyEmailTemplate";
+import clientV3 from "../../../api/clientV3";
+import { urlBlobToBase64 } from "../../../utils/blobUtils";
+import { bodyEmailTemplate } from "../../../utils/bodyEmailTemplate";
 
-import { bodyInsertV3Card } from "../../utils/bodyInsertCard";
-import { v3UploadLicenseImage } from "../../utils/bodyUploadLicenseImage";
-import { setSubmissionState, setSubmissionErrorState, setSubmissionMessage } from "../slices/forms";
-import { RootState } from "../store";
+import { bodyInsertV3Card } from "../../../utils/bodyInsertCard";
+import { v3UploadLicenseImage } from "../../../utils/bodyUploadLicenseImage";
+import { setSubmissionState, setSubmissionErrorState, setSubmissionMessage } from "./slice";
+import { RootState } from "../../store";
 
 export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", async (_, { getState, dispatch }) => {
 	dispatch(setSubmissionState("submitting_details_pending"));

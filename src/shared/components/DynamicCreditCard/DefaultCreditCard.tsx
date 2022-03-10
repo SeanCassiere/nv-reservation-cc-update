@@ -3,7 +3,7 @@ import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 
 import { useSelector } from "react-redux";
-import { ICreditCardFormData } from "../../redux/slices/forms";
+import { ICreditCardFormData } from "../../redux/slices/forms/slice";
 import { selectTranslations } from "../../redux/store";
 
 interface IProps {

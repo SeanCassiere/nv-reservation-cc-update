@@ -1,4 +1,4 @@
-import { ConfigSliceState } from "../redux/slices/config";
+import { ConfigSliceState } from "../redux/slices/config/slice";
 
 interface V3UploadProps {
 	config: ConfigSliceState;

@@ -1,13 +1,14 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 import ErrorSubmission from "../../pages/ErrorSubmission/ErrorSubmission";
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
-import { setConfigValues, setLang, setRawConfig } from "../../redux/slices/config";
-import { setReservationId } from "../../redux/slices/retrievedDetails";
+
+import { setConfigValues, setLang, setRawConfig } from "../../redux/slices/config/slice";
+import { setReservationId } from "../../redux/slices/retrievedDetails/slice";
 import { selectConfigState, selectTranslations } from "../../redux/store";
-import { authenticateAppThunk } from "../../redux/thunks/configThunks";
+import { authenticateAppThunk } from "../../redux/slices/config/thunks";
 
 import DisplayCurrentController from "./DisplayCurrentController";
 
@@ -30,20 +31,27 @@ const ApplicationController = () => {
 
 		const configQuery = query.get("config");
 
-		let config: { clientId: string | null; emailTemplateId: string | null; flow: string[] } = {
+		let config: { clientId: string | null; emailTemplateId: string | null; flow: string[]; fromRentall: boolean } = {
 			clientId: null,
 			emailTemplateId: null,
 			flow: [],
+			fromRentall: true,
 		};
 		if (configQuery) {
 			dispatch(setRawConfig({ rawConfig: configQuery }));
-			config = JSON.parse(Buffer.from(configQuery, "base64").toString("ascii"));
+			const readConfig = JSON.parse(Buffer.from(configQuery, "base64").toString("ascii"));
+			config = { ...config, ...readConfig };
 		}
 
 		if (!config.clientId || !config.emailTemplateId) return navigate("/not-available");
 
 		dispatch(
-			setConfigValues({ clientId: config.clientId, responseTemplateId: config.emailTemplateId, flow: config.flow })
+			setConfigValues({
+				clientId: config.clientId,
+				responseTemplateId: config.emailTemplateId,
+				flow: config.flow,
+				fromRentall: config.fromRentall,
+			})
 		);
 		dispatch(setReservationId(reservationId));
 		dispatch(authenticateAppThunk());
@@ -56,7 +64,7 @@ const ApplicationController = () => {
 	const [activeController, setActiveController] = useState<string | null>(null);
 	const [remainingFlowControllers, setRemainingFlowControllers] = useState<string[]>([]);
 
-	const isPrevPageAvailable = useCallback(() => previousControllers.length > 0, [previousControllers]);
+	const isPrevPageAvailable = useMemo(() => previousControllers.length > 0, [previousControllers]);
 	const handlePrevious = useCallback(() => {
 		if (previousControllers.length <= 0) return;
 
@@ -70,7 +78,7 @@ const ApplicationController = () => {
 		setRemainingFlowControllers([currentScreen, ...remainingFlowControllers]);
 	}, [activeController, appConfig.flow, previousControllers, remainingFlowControllers]);
 
-	const isNextPageAvailable = useCallback(() => remainingFlowControllers.length > 0, [remainingFlowControllers]);
+	const isNextPageAvailable = useMemo(() => remainingFlowControllers.length > 0, [remainingFlowControllers]);
 	const handleSubmit = useCallback(() => {
 		if (remainingFlowControllers.length <= 0) {
 			// navigate to a protected page with a submission controller
@@ -101,7 +109,9 @@ const ApplicationController = () => {
 	return (
 		<>
 			{appConfig.status === "authenticating" && <LoadingSubmission title={t.authentication_submission.title} />}
-			{appConfig.status === "authentication_error" && <ErrorSubmission msg={t.authentication_submission.message} />}
+			{appConfig.status === "authentication_error" && (
+				<ErrorSubmission msg={t.authentication_submission.message} tryAgainButton />
+			)}
 			{appConfig.status === "reservation_fetch_failed" && (
 				<ErrorSubmission msg={t.reservation_fetch_error.message} tryAgainButton />
 			)}

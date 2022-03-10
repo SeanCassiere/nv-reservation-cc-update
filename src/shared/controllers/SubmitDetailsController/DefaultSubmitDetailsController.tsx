@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 import { selectSubmissionState } from "../../redux/store";
-import { submitFormThunk } from "../../redux/thunks/formsThunks";
+import { submitFormThunk } from "../../redux/slices/forms/thunks";
 
 const DefaultSubmitDetailsController = () => {
 	const dispatch = useDispatch();

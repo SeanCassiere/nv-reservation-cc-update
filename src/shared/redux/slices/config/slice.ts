@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import translations from "../../assets/translations.json";
-import { authenticateAppThunk } from "../thunks/configThunks";
+import translations from "../../../assets/translations.json";
+import { authenticateAppThunk } from "./thunks";
 
 // import { allControllerFlows } from "../../utils/controllerFlows";
 
@@ -26,9 +26,7 @@ export interface ConfigSliceState {
 	responseTemplateId: string | null;
 	flow: string[];
 	rawConfig: string;
-	// token: string | null;
-	token: string | null;
-	tokenType: string;
+	fromRentall: boolean;
 }
 
 const initialState: ConfigSliceState = {
@@ -39,8 +37,7 @@ const initialState: ConfigSliceState = {
 	responseTemplateId: null,
 	flow: ["Default/CreditCardForm"],
 	rawConfig: "",
-	token: null,
-	tokenType: "Bearer",
+	fromRentall: true,
 };
 
 const configSlice = createSlice({
@@ -56,16 +53,12 @@ const configSlice = createSlice({
 		setRawConfig: (state, action: PayloadAction<{ rawConfig: string }>) => {
 			state.rawConfig = action.payload.rawConfig;
 		},
-		setAccessToken: (state, action: PayloadAction<{ token: string; tokenType: string }>) => {
-			state.token = action.payload.token;
-			state.tokenType = action.payload.tokenType;
-		},
 		setAppStatus: (state, action: PayloadAction<{ status: AppState }>) => {
 			state.status = action.payload.status;
 		},
 		setConfigValues: (
 			state,
-			action: PayloadAction<{ clientId: string; responseTemplateId: string; flow: string[] }>
+			action: PayloadAction<{ clientId: string; responseTemplateId: string; flow: string[]; fromRentall: boolean }>
 		) => {
 			state.responseTemplateId = action.payload.responseTemplateId;
 			state.clientId = action.payload.clientId;
@@ -81,6 +74,6 @@ const configSlice = createSlice({
 	},
 });
 
-export const { setAccessToken, setLang, setConfigValues, setAppStatus, setRawConfig } = configSlice.actions;
+export const { setLang, setConfigValues, setAppStatus, setRawConfig } = configSlice.actions;
 
 export default configSlice;

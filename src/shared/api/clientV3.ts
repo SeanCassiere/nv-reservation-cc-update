@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setAccessToken } from "../redux/slices/config";
+import { setAccessToken } from "../redux/slices/auth/slice";
 import store from "../redux/store";
 
 const baseURL = process.env.REACT_APP_API_BASE_URL_V3 || "https://api.navotar.com/api/v3";
@@ -14,10 +14,10 @@ const clientV3 = axios.create({
 
 clientV3.interceptors.request.use(
 	(config) => {
-		const authConfig = store.getState().config;
+		const authConfig = store.getState().auth;
 
 		if (config && config.headers) {
-			config.headers["Authorization"] = `${authConfig.tokenType} ${authConfig.token}`;
+			config.headers["Authorization"] = `${authConfig.token_type} ${authConfig.access_token}`;
 		}
 
 		return config;
@@ -34,7 +34,7 @@ clientV3.interceptors.request.use(
 				const res = await clientV3.get(AUTH_URL);
 
 				const { data } = res.data as { data: { access_token: string; token_type: string } };
-				store.dispatch(setAccessToken({ token: data.access_token, tokenType: data.token_type }));
+				store.dispatch(setAccessToken({ access_token: data.access_token, token_type: data.token_type }));
 
 				originalRequest.headers.Authorization = `${data.token_type} ${data.access_token}`;
 				return clientV3(originalRequest);
