@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 
 import { selectCreditCardForm, selectTranslations } from "../../redux/store";
-import { setCreditCardFormData } from "../../redux/slices/forms";
+import { setCreditCardFormData } from "../../redux/slices/forms/slice";
 import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
 import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
 import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
@@ -14,9 +14,9 @@ import useCreditCardSchema from "../../hooks/useCreditCardSchema";
 
 interface IProps {
 	handleSubmit: () => void;
-	isNextAvailable: () => boolean;
 	handlePrevious: () => void;
-	isPrevPageAvailable: () => boolean;
+	isNextAvailable: boolean;
+	isPrevPageAvailable: boolean;
 }
 
 const DefaultCreditCardController = ({
@@ -111,16 +111,16 @@ const DefaultCreditCardController = ({
 						</Col>
 					</Row>
 					<Row className='mt-3'>
-						{isPrevPageAvailable() && (
+						{isPrevPageAvailable && (
 							<Col xs={2} className='pr-0'>
 								<Button variant='warning' size='lg' style={{ width: "100%" }} onClick={handlePrevious}>
 									&#8592;
 								</Button>
 							</Col>
 						)}
-						<Col xs={isPrevPageAvailable() ? 10 : 12} className={isPrevPageAvailable() ? "pl-2" : ""}>
+						<Col xs={isPrevPageAvailable ? 10 : 12} className={isPrevPageAvailable ? "pl-2" : ""}>
 							<Button variant='primary' size='lg' style={{ width: "100%" }} onClick={handleNextState}>
-								{isNextAvailable() ? t.form.labels.next : t.form.labels.submit}
+								{isNextAvailable ? t.form.labels.next : t.form.labels.submit}
 							</Button>
 						</Col>
 					</Row>

@@ -34,11 +34,12 @@ When creating the base64 encoded JSON string, add in the following into the stri
 // Example Base64 --> eyJjbGllbnRJZCI6IDEwMTMsImVtYWlsVGVtcGxhdGVJZCI6IDczODgsImZsb3ciOiBbIkRlZmF1bHQvQ3JlZGl0Q2FyZEZvcm0iXX0=
 ```
 
-| Param           | Value                                                                                                                                                                                     |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| clientId        | Navotar Client ID of the User.                                                                                                                                                            |
-| emailTemplateId | Navotar Client Custom Email Template ID of the User in the Reservation Confirmation Emails section.                                                                                       |
-| flow            | Ordered array of the screens/views to be gone through. <br /><br /> This is an optional field. If not given in the config, only the **Default/CreditCardForm** will be shown to the user. |
+| Param           | Value                                                                                                                                                                                       |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| clientId        | Navotar Client ID of the User.                                                                                                                                                              |
+| emailTemplateId | Navotar Client Custom Email Template ID of the User in the Reservation Confirmation Emails section.                                                                                         |
+| flow            | Ordered array of the screens/views to be gone through. <br /><br /> This is an optional field. If not given in the config, only the **Default/CreditCardForm** will be shown to the user.   |
+| fromRentall     | Boolean value indicating if this user's primary account is RENTALL or Navotar. <br /><br /> Based on this the link at the bottom of the page will be changed, along with the support email. |
 
 ## Available screens/views
 
