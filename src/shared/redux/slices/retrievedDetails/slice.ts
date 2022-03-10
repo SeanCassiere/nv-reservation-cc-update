@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface IReservationSliceState {
+export interface IRetrievedDetailsSliceState {
 	locationId: number;
 	locationEmail: string;
 	customerId: number;
@@ -13,7 +13,7 @@ export interface IReservationSliceState {
 	responseTemplateSubject: string;
 }
 
-const initialState: IReservationSliceState = {
+const initialState: IRetrievedDetailsSliceState = {
 	locationId: 0,
 	locationEmail: "",
 	customerId: 0,
@@ -26,7 +26,7 @@ const initialState: IReservationSliceState = {
 	responseTemplateSubject: "",
 };
 
-const reservationSlice = createSlice({
+const retrievedDetailsSlice = createSlice({
 	name: "retrievedDetails",
 	initialState,
 	reducers: {
@@ -55,6 +55,6 @@ const reservationSlice = createSlice({
 });
 
 export const { setReservationId, setReservationDetails, setCcEmails, setEmailTemplateDetails, setPreviewHtmlBlobUrl } =
-	reservationSlice.actions;
+	retrievedDetailsSlice.actions;
 
-export default reservationSlice;
+export default retrievedDetailsSlice;
