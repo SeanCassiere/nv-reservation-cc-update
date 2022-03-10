@@ -1,9 +1,9 @@
 import { ConfigSliceState } from "../redux/slices/config/slice";
-import { IReservationSliceState } from "../redux/slices/retrievedDetails/slice";
+import { IRetrievedDetailsSliceState } from "../redux/slices/retrievedDetails/slice";
 
 interface Props {
 	config: ConfigSliceState;
-	reservationDetails: IReservationSliceState;
+	reservationDetails: IRetrievedDetailsSliceState;
 	emailBody?: string;
 }
 
