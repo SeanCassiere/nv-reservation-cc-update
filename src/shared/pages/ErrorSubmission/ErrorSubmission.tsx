@@ -18,9 +18,9 @@ const ErrorSubmission = ({ msg, tryAgainButton }: Props) => {
 
 	const originUrl = useMemo(() => {
 		const url = new URL(window.location.href);
-		const returnUrl = `${url.origin}/?reservationId=${reservationData.reservationId}&lang=${config.lang}&config=${config.rawConfig}`;
+		const returnUrl = `${url.origin}/?reservationId=${reservationData.reservationNo}&lang=${config.lang}&config=${config.rawConfig}`;
 		return returnUrl;
-	}, [config.lang, config.rawConfig, reservationData.reservationId]);
+	}, [config.lang, config.rawConfig, reservationData.reservationNo]);
 
 	return (
 		<Card border='danger' style={{ width: "100%", padding: "2rem 0.5rem" }}>

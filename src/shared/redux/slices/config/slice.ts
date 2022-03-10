@@ -60,11 +60,12 @@ const configSlice = createSlice({
 			state,
 			action: PayloadAction<{ clientId: string; responseTemplateId: string; flow: string[]; fromRentall: boolean }>
 		) => {
-			state.responseTemplateId = action.payload.responseTemplateId;
 			state.clientId = action.payload.clientId;
+			state.responseTemplateId = action.payload.responseTemplateId;
 			if (action.payload?.flow?.length > 0) {
 				state.flow = action.payload.flow;
 			}
+			state.fromRentall = action.payload.fromRentall;
 		},
 	},
 	extraReducers: (builder) => {
