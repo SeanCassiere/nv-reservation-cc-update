@@ -32,6 +32,7 @@ const reservationSlice = createSlice({
 	reducers: {
 		setReservationId: (state, action: PayloadAction<number | string>) => {
 			state.reservationId = typeof action.payload === "string" ? parseInt(action.payload) : action.payload;
+			state.reservationNo = `${action.payload}`;
 		},
 		setCcEmails: (state, action: PayloadAction<string[]>) => {
 			state.ccEmails = action.payload;
