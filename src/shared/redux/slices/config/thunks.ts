@@ -33,6 +33,11 @@ export const authenticateAppThunk = createAsyncThunk(
 		// authenticate app
 		try {
 			const authV3 = await axios.get(AUTH_URL);
+
+			if (authV3.status !== 200 || !authV3.data.access_token || !authV3.data.token_type) {
+				throw new Error("Authentication failed");
+			}
+
 			dispatch(setAccessToken({ access_token: authV3.data.access_token, token_type: authV3.data.token_type }));
 
 			// const auth = await client.post("/Login/GetClientSecretToken", {
@@ -55,7 +60,11 @@ export const authenticateAppThunk = createAsyncThunk(
 
 			// get reservation details by id
 			try {
-				const res = await clientV3.get(`/Reservations/${reservationId}?ClientId=${clientId}`);
+				const res = await clientV3.get(`/Reservations/${reservationId}`, {
+					params: {
+						ClientId: clientId,
+					},
+				});
 
 				const {
 					startLocationId: locationId,
@@ -114,7 +123,11 @@ export const authenticateAppThunk = createAsyncThunk(
 
 		// get cc emails
 		try {
-			const res = await clientV3.get(`/Users?clientId=${clientId}`);
+			const res = await clientV3.get(`/Users`, {
+				params: {
+					clientId: clientId,
+				},
+			});
 			const reservationEmailUsers: User[] = res.data
 				.filter((u: User) => u.isReservationEmail)
 				.filter((u: User) => u.email && u.email.trim() !== "")
@@ -130,7 +143,9 @@ export const authenticateAppThunk = createAsyncThunk(
 
 		// get email template
 		try {
-			const res = await clientV3.get(`/Emails/${responseTemplateId}/EmailTemplate?clientId=${clientId}`);
+			const res = await clientV3.get(`/Emails/${responseTemplateId}/EmailTemplate`, {
+				params: { clientId: clientId },
+			});
 			const { templateTypeId, subjectLine } = res.data;
 
 			dispatch(setEmailTemplateDetails({ templateTypeId, subjectLine }));
