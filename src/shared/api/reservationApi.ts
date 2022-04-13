@@ -2,12 +2,12 @@
 
 import clientV3 from "./clientV3";
 
-type ReservationSourcedDetails = {
+export type ReservationSourcedDetails = {
 	locationId: number;
 	customerId: number;
-	reservationId: number;
+	referenceId: number;
 	customerEmail: string;
-	reservationNo: string;
+	referenceNo: string;
 	locationEmail: string;
 };
 
@@ -34,8 +34,8 @@ export const getReservationByIdOrNumber = async (
 				customerId: res.data.reservationview.customerId,
 				customerEmail: res.data.reservationview.email,
 				locationEmail: res.data.reservationview.locationEmail,
-				reservationNo: res.data.reservationview.reservationNumber,
-				reservationId: Number(res.data.reservationview.reserveId),
+				referenceNo: res.data.reservationview.reservationNumber,
+				referenceId: Number(res.data.reservationview.reserveId),
 			};
 
 			// dispatch(setReservationDetails(reservationInfo));

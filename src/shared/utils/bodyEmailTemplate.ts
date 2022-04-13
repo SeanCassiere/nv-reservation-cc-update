@@ -11,12 +11,14 @@ export function bodyEmailTemplate({ reservationDetails, config, emailBody = "" }
 	const currentDate = new Date();
 	const currentISODate = currentDate.toISOString();
 
+	console.log({ m: "hello world", r: reservationDetails.referenceId });
+
 	return {
 		subject: reservationDetails.responseTemplateSubject,
 		clientId: config.clientId,
 		userId: 1,
-		agreementId: config.referenceType === "Reservation" ? null : reservationDetails.referenceId,
-		reservationId: config.referenceType === "Agreement" ? null : reservationDetails.referenceId,
+		agreementId: config.referenceType === "Agreement" ? reservationDetails.referenceId : null,
+		reservationId: config.referenceType === "Reservation" ? reservationDetails.referenceId : null,
 		fromEmail: reservationDetails.locationEmail,
 		to: [reservationDetails.customerEmail],
 		cc: [...reservationDetails.ccEmails],

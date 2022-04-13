@@ -45,7 +45,7 @@ const retrievedDetailsSlice = createSlice({
 			state.responseTemplateBlobUrl = action.payload;
 		},
 		setRetrievedRentalDetails: (state, action) => {
-			state.referenceNo = action.payload.reservationNo;
+			state.referenceNo = action.payload.referenceNo;
 			state.referenceId = action.payload.referenceId;
 			state.customerId = action.payload.customerId;
 			state.locationId = action.payload.locationId;
