@@ -9,9 +9,10 @@ import SuccessSubmission from "../shared/pages/SuccessSubmission/SuccessSubmissi
 import ErrorSubmission from "../shared/pages/ErrorSubmission/ErrorSubmission";
 import NavigateToNotAvailable from "./NavigateToNotAvailable";
 
-import { selectTranslations } from "../shared/redux/store";
+import { selectConfigState, selectTranslations } from "../shared/redux/store";
 
 const AppRoutes = () => {
+	const appConfig = useSelector(selectConfigState);
 	const t = useSelector(selectTranslations);
 
 	return (
@@ -30,7 +31,7 @@ const AppRoutes = () => {
 					path='/success'
 					element={
 						<RequireAuth>
-							<SuccessSubmission />
+							<SuccessSubmission referenceType={appConfig.referenceType} />
 						</RequireAuth>
 					}
 				/>

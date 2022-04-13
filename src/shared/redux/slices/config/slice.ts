@@ -18,6 +18,7 @@ type AppState = typeof appStates[number];
 export type SupportedLanguages = typeof supportedLanguages[number];
 export type LangFile = typeof translations.en;
 
+type ReferenceType = "Reservation" | "Agreement";
 export interface ConfigSliceState {
 	lang: string;
 	status: AppState;
@@ -27,6 +28,7 @@ export interface ConfigSliceState {
 	flow: string[];
 	rawConfig: string;
 	fromRentall: boolean;
+	referenceType: ReferenceType;
 }
 
 const initialState: ConfigSliceState = {
@@ -38,6 +40,7 @@ const initialState: ConfigSliceState = {
 	flow: ["Default/CreditCardForm"],
 	rawConfig: "",
 	fromRentall: true,
+	referenceType: "Reservation",
 };
 
 const configSlice = createSlice({
@@ -67,6 +70,9 @@ const configSlice = createSlice({
 			}
 			state.fromRentall = action.payload.fromRentall;
 		},
+		setReferenceType: (state, action: PayloadAction<{ referenceType: ReferenceType }>) => {
+			state.referenceType = action.payload.referenceType;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(authenticateAppThunk.pending, (state) => {
@@ -75,6 +81,6 @@ const configSlice = createSlice({
 	},
 });
 
-export const { setLang, setConfigValues, setAppStatus, setRawConfig } = configSlice.actions;
+export const { setLang, setConfigValues, setAppStatus, setRawConfig, setReferenceType } = configSlice.actions;
 
 export default configSlice;

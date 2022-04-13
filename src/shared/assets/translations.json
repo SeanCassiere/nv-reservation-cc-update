@@ -67,7 +67,7 @@
 		},
 		"success_submission": {
 			"title": "Success!",
-			"message": "Thank you for submitting your information towards the reservation."
+			"message": "Thank you for submitting your information towards the"
 		},
 		"authentication_submission": {
 			"title": "Authenticating",
@@ -75,7 +75,7 @@
 		},
 		"reservation_fetch_error": {
 			"title": "Reservation Fetch Error",
-			"message": "We could not locate the reservation."
+			"message": "We could not locate the"
 		},
 		"bad_submission": {
 			"title": "Uh Oh",
@@ -90,6 +90,10 @@
 		},
 		"footer": {
 			"powered_by": "Powered by"
+		},
+		"reference_type": {
+			"reservation": "reservation",
+			"agreement": "agreement"
 		}
 	},
 	"fr": {
@@ -183,6 +187,10 @@
 		},
 		"footer": {
 			"powered_by": "Alimenté par"
+		},
+		"reference_type": {
+			"reservation": "reservation",
+			"agreement": "agreement"
 		}
 	},
 	"de": {
@@ -276,6 +284,10 @@
 		},
 		"footer": {
 			"powered_by": "Unterstützt von"
+		},
+		"reference_type": {
+			"reservation": "reservation",
+			"agreement": "agreement"
 		}
 	},
 	"es": {
@@ -369,6 +381,10 @@
 		},
 		"footer": {
 			"powered_by": "Funciona con"
+		},
+		"reference_type": {
+			"reservation": "reservation",
+			"agreement": "agreement"
 		}
 	}
 }

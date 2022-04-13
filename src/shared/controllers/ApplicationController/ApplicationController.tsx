@@ -5,12 +5,19 @@ import { useNavigate } from "react-router";
 import ErrorSubmission from "../../pages/ErrorSubmission/ErrorSubmission";
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 
-import { setConfigValues, setLang, setRawConfig } from "../../redux/slices/config/slice";
-import { setReservationId } from "../../redux/slices/retrievedDetails/slice";
+import { setConfigValues, setLang, setRawConfig, setReferenceType } from "../../redux/slices/config/slice";
+import { setInitialReferenceId } from "../../redux/slices/retrievedDetails/slice";
 import { selectConfigState, selectTranslations } from "../../redux/store";
 import { authenticateAppThunk } from "../../redux/slices/config/thunks";
 
 import DisplayCurrentController from "./DisplayCurrentController";
+
+type ConfigState = {
+	clientId: string | null;
+	emailTemplateId: string | null;
+	flow: string[];
+	fromRentall: boolean;
+};
 
 const ApplicationController = () => {
 	const dispatch = useDispatch();
@@ -26,12 +33,19 @@ const ApplicationController = () => {
 		const lang = query.get("lang");
 		dispatch(setLang({ lang: lang as any }));
 
-		const reservationId = query.get("reservationId");
-		if (!reservationId) return navigate("/not-available");
+		let findingRefsMissing = false;
+
+		let reservationId = query.get("reservationId");
+		let agreementId = query.get("agreementId");
+
+		findingRefsMissing = Boolean(reservationId || agreementId);
+		if (!findingRefsMissing) {
+			return navigate("/not-available");
+		}
 
 		const configQuery = query.get("config");
 
-		let config: { clientId: string | null; emailTemplateId: string | null; flow: string[]; fromRentall: boolean } = {
+		let config: ConfigState = {
 			clientId: null,
 			emailTemplateId: null,
 			flow: [],
@@ -53,7 +67,15 @@ const ApplicationController = () => {
 				fromRentall: config.fromRentall,
 			})
 		);
-		dispatch(setReservationId(reservationId));
+
+		if (reservationId) {
+			dispatch(setReferenceType({ referenceType: "Reservation" }));
+			dispatch(setInitialReferenceId(reservationId));
+		} else if (agreementId) {
+			dispatch(setReferenceType({ referenceType: "Agreement" }));
+			dispatch(setInitialReferenceId(agreementId));
+		}
+
 		dispatch(authenticateAppThunk());
 	}, [dispatch, navigate]);
 
@@ -113,7 +135,12 @@ const ApplicationController = () => {
 				<ErrorSubmission msg={t.authentication_submission.message} tryAgainButton />
 			)}
 			{appConfig.status === "reservation_fetch_failed" && (
-				<ErrorSubmission msg={t.reservation_fetch_error.message} tryAgainButton />
+				<ErrorSubmission
+					msg={`${t.reservation_fetch_error.message} ${
+						appConfig.referenceType === "Agreement" ? t.reference_type.agreement : t.reference_type.reservation
+					}.`}
+					tryAgainButton
+				/>
 			)}
 			{appConfig.status === "loaded" && (
 				<>

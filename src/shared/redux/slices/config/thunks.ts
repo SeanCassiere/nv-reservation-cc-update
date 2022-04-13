@@ -10,10 +10,10 @@ import {
 	setCcEmails,
 	setEmailTemplateDetails,
 	setPreviewHtmlBlobUrl,
-	setReservationDetails,
-	setReservationId,
+	setRetrievedRentalDetails,
 } from "../retrievedDetails/slice";
 import { RootState } from "../../store";
+import { getReservationByIdOrNumber } from "../../../api/reservationApi";
 
 interface User {
 	isReservationEmail: boolean;
@@ -22,6 +22,12 @@ interface User {
 }
 
 const AUTH_URL = process.env.REACT_APP_V3_AUTH_URL ?? "/.netlify/functions/GetTokenV3";
+
+// const auth = await client.post("/Login/GetClientSecretToken", {
+// 	ClientId: clientId,
+// 	ConsumerType: "Admin,Basic",
+// });
+// dispatch(setAccessToken({ token: auth.data.apiToken.access_token }));
 
 export const authenticateAppThunk = createAsyncThunk(
 	"config/authenticateApp",
@@ -39,86 +45,29 @@ export const authenticateAppThunk = createAsyncThunk(
 			}
 
 			dispatch(setAccessToken({ access_token: authV3.data.access_token, token_type: authV3.data.token_type }));
-
-			// const auth = await client.post("/Login/GetClientSecretToken", {
-			// 	ClientId: clientId,
-			// 	ConsumerType: "Admin,Basic",
-			// });
-
-			// dispatch(setAccessToken({ token: auth.data.apiToken.access_token }));
 		} catch (error) {
 			console.error("get authentication tokens", error);
 			console.groupEnd();
 			return dispatch(setAppStatus({ status: "authentication_error" }));
 		}
 
-		let searchingForReservation = true;
+		if (state.config.referenceType === "Reservation") {
+			const reservationResponse = await getReservationByIdOrNumber(
+				clientId,
+				state.retrievedDetails.referenceNo,
+				state.retrievedDetails.referenceId
+			);
 
-		while (searchingForReservation) {
-			const whileState = getState() as RootState;
-			const { reservationId, reservationNo } = whileState.retrievedDetails;
-
-			// get reservation details by id
-			try {
-				const res = await clientV3.get(`/Reservations/${reservationId}`, {
-					params: {
-						ClientId: clientId,
-					},
-				});
-
-				const {
-					startLocationId: locationId,
-					customerId,
-					email: customerEmail,
-					reservationNumber: reservationNo,
-					locationEmail,
-				} = res.data.reservationview;
-
-				const reservationInfo = {
-					locationId,
-					customerId,
-					customerEmail,
-					reservationNo,
-					locationEmail,
-				};
-
-				dispatch(setReservationDetails(reservationInfo));
-				console.log("found reservation");
-				searchingForReservation = false;
-			} catch (error) {
-				console.error("could not find from GET /reservations/:id", error);
+			if (!reservationResponse) {
+				console.error("NOT ABLE TO FIND RESERVATION");
 				console.groupEnd();
-			}
-
-			if (!searchingForReservation) break;
-
-			// find the reservation by reservation number
-			try {
-				const res = await clientV3(`/Reservations`, {
-					params: { ReservationNumber: reservationNo, clientId: clientId, userId: 0 },
-				});
-				const list = res.data;
-				const findReservation = list.find(
-					(r: { ReserveId: number; ReservationNumber: string }) => r.ReservationNumber === reservationNo
-				);
-
-				if (!findReservation) {
-					console.error("could not find from GET /reservations?ReservationNumber=XXX");
-					console.groupEnd();
-					searchingForReservation = false;
-					return dispatch(setAppStatus({ status: "reservation_fetch_failed" }));
-				} else {
-					searchingForReservation = true;
-					dispatch(setReservationId(findReservation.ReserveId));
-				}
-			} catch (error) {
-				console.error("could not find from GET /reservations?ReservationNumber=XXX", error);
-				console.groupEnd();
-				searchingForReservation = false;
 				return dispatch(setAppStatus({ status: "reservation_fetch_failed" }));
 			}
 
-			if (!searchingForReservation) break;
+			dispatch(setRetrievedRentalDetails(reservationResponse));
+		} else if (state.config.referenceType === "Agreement") {
+			// code not implemented
+			return dispatch(setAppStatus({ status: "reservation_fetch_failed" }));
 		}
 
 		// get cc emails
