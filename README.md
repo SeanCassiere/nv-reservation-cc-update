@@ -6,7 +6,7 @@ Install `concurrently` globally before running `yarn dev`.
 
 `npm install -g concurrently`
 
-View the Navotar API V3 Documentation [API Documentation](https://api.appnavotar.com/api).
+View the Navotar API V3 Documentation [API Documentation](https://api.appnavotar.com/docs).
 
 ## URL Params
 
@@ -16,9 +16,12 @@ View the Navotar API V3 Documentation [API Documentation](https://api.appnavotar
 
 | Param         | Value                                                                                        |
 | ------------- | -------------------------------------------------------------------------------------------- |
-| reservationId | This can be inserted using the Navotar email template.                                       |
+| reservationId | (optional) Reservation number or ID.                                                         |
+| agreementId   | (optional) Agreement number or ID.                                                           |
 | lang          | Supported languages codes, listed down below.                                                |
 | config        | base64 encoding of a JSON string with certain bits of application configuration information. |
+
+**NOTE:** Preference will be given to the reservation details first. Therefore, if the url includes both the `reservationId` and `agreementId` query params, the app will pursue the **reservation** flow.
 
 ## Config params
 
