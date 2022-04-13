@@ -11,26 +11,29 @@ export function bodyEmailTemplate({ reservationDetails, config, emailBody = "" }
 	const currentDate = new Date();
 	const currentISODate = currentDate.toISOString();
 
+	console.log({ m: "hello world", r: reservationDetails.referenceId });
+
 	return {
-		agreementId: null,
+		subject: reservationDetails.responseTemplateSubject,
+		clientId: config.clientId,
+		userId: 1,
+		agreementId: config.referenceType === "Agreement" ? reservationDetails.referenceId : null,
+		reservationId: config.referenceType === "Reservation" ? reservationDetails.referenceId : null,
+		fromEmail: reservationDetails.locationEmail,
+		to: [reservationDetails.customerEmail],
+		cc: [...reservationDetails.ccEmails],
+		emailBody: emailBody,
+		sentDate: currentISODate,
+		templateTypeId: reservationDetails.responseTemplateTypeId,
+		templateId: config.responseTemplateId,
+		//
 		agreementTemplates: [],
 		attachmentPath: "",
 		attachments: [],
-		cc: [...reservationDetails.ccEmails],
-		clientId: config.clientId,
 		creditNoteId: null,
 		depositId: 0,
 		depositType: "",
 		docListForAttach: [],
-		emailBody: emailBody,
-		fromEmail: reservationDetails.locationEmail,
 		isUpdate: false,
-		reservationId: reservationDetails.reservationId,
-		sentDate: currentISODate,
-		subject: reservationDetails.responseTemplateSubject,
-		templateId: config.responseTemplateId,
-		templateTypeId: reservationDetails.responseTemplateTypeId,
-		to: [reservationDetails.customerEmail],
-		userId: 1,
 	};
 }
