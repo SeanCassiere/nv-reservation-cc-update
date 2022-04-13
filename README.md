@@ -54,10 +54,12 @@ When creating the base64 encoded JSON string, add in the following into the stri
 
 ## Language Support
 
-Languages currently supported
+Languages supported
 | Language | Code |
 | --- | --- |
 | English | en |
-| French | fr |
-| German | de |
-| Spanish | es |
+| French | fr **(broken)** |
+| German | de **(broken)** |
+| Spanish | es **(broken)** |
+
+Broken languages will be resolved after migrating the app to `i18next` - [Issue 41 - adding i18next support ](https://github.com/SeanCassiere/nv-reservation-cc-update/issues/41).
