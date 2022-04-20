@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IRetrievedDetailsSliceState {
+	userId: number;
 	locationId: number;
 	locationEmail: string;
 	customerId: number;
@@ -14,6 +15,7 @@ export interface IRetrievedDetailsSliceState {
 }
 
 const initialState: IRetrievedDetailsSliceState = {
+	userId: 0,
 	locationId: 0,
 	locationEmail: "",
 	customerId: 0,
@@ -33,6 +35,9 @@ const retrievedDetailsSlice = createSlice({
 		setInitialReferenceId: (state, action: PayloadAction<number | string>) => {
 			state.referenceId = typeof action.payload === "string" ? parseInt(action.payload) : action.payload;
 			state.referenceNo = `${action.payload}`;
+		},
+		setSystemUserId: (state, action: PayloadAction<number>) => {
+			state.userId = action.payload;
 		},
 		setCcEmails: (state, action: PayloadAction<string[]>) => {
 			state.ccEmails = action.payload;
@@ -61,6 +66,7 @@ export const {
 	setEmailTemplateDetails,
 	setPreviewHtmlBlobUrl,
 	setInitialReferenceId,
+	setSystemUserId,
 } = retrievedDetailsSlice.actions;
 
 export default retrievedDetailsSlice;
