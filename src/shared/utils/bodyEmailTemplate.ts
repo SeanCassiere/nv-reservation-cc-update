@@ -1,5 +1,6 @@
 import { ConfigSliceState } from "../redux/slices/config/slice";
 import { IRetrievedDetailsSliceState } from "../redux/slices/retrievedDetails/slice";
+import { APP_CONSTANTS } from "./constants";
 
 interface Props {
 	config: ConfigSliceState;
@@ -15,8 +16,8 @@ export function bodyEmailTemplate({ reservationDetails, config, emailBody = "" }
 		subject: reservationDetails.responseTemplateSubject,
 		clientId: config.clientId,
 		userId: reservationDetails.userId > 0 ? reservationDetails.userId : 1,
-		agreementId: config.referenceType === "Agreement" ? reservationDetails.referenceId : null,
-		reservationId: config.referenceType === "Reservation" ? reservationDetails.referenceId : null,
+		agreementId: config.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? reservationDetails.referenceId : null,
+		reservationId: config.referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION ? reservationDetails.referenceId : null,
 		fromEmail: reservationDetails.locationEmail,
 		to: [reservationDetails.customerEmail],
 		cc: [...reservationDetails.ccEmails],

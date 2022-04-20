@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 import ErrorImg from "../../assets/undraw_warning_cyit.svg";
 import { selectConfigState, selectRetrievedDetails, selectTranslations } from "../../redux/store";
+import { APP_CONSTANTS } from "../../utils/constants";
 
 interface Props {
 	msg: string | ReactNode;
@@ -18,9 +19,9 @@ const ErrorSubmission = ({ msg, tryAgainButton }: Props) => {
 
 	const originUrl = useMemo(() => {
 		const url = new URL(window.location.href);
-		const returnUrl = `${url.origin}/?${config.referenceType === "Agreement" ? "agreementId" : "reservationId"}=${
-			reservationData.referenceNo
-		}&lang=${config.lang}&config=${config.rawConfig}`;
+		const returnUrl = `${url.origin}/?${
+			config.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreementId" : "reservationId"
+		}=${reservationData.referenceNo}&lang=${config.lang}&config=${config.rawConfig}`;
 		return returnUrl;
 	}, [config.lang, config.rawConfig, config.referenceType, reservationData.referenceNo]);
 

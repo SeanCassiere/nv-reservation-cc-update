@@ -16,6 +16,7 @@ import {
 import { RootState } from "../../store";
 import { getReservationByIdOrNumber } from "../../../api/reservationApi";
 import { getAgreementByIdOrNumber } from "../../../api/agreementApi";
+import { APP_CONSTANTS } from "../../../utils/constants";
 
 interface User {
 	userID: number;
@@ -84,8 +85,8 @@ export const authenticateAppThunk = createAsyncThunk(
 			return dispatch(setAppStatus({ status: "authentication_error" }));
 		}
 
-		// Fetch the customer details based on the Reference Type = "Reservation" | "Agreement"
-		if (state.config.referenceType === "Reservation") {
+		// Fetch the customer details based on the Reference Type = Reservation | Agreement
+		if (state.config.referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION) {
 			const reservationResponse = await getReservationByIdOrNumber(
 				clientId,
 				state.retrievedDetails.referenceNo,
@@ -99,7 +100,7 @@ export const authenticateAppThunk = createAsyncThunk(
 			}
 
 			dispatch(setRetrievedRentalDetails(reservationResponse));
-		} else if (state.config.referenceType === "Agreement") {
+		} else if (state.config.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT) {
 			const agreementResponse = await getAgreementByIdOrNumber(
 				clientId,
 				state.retrievedDetails.referenceNo,
