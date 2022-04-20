@@ -1,6 +1,6 @@
 import clientV3 from "./clientV3";
 
-export type AgreementSourcedDetails = {
+type AgreementSourcedDetails = {
 	locationId: number;
 	customerId: number;
 	referenceId: number;
