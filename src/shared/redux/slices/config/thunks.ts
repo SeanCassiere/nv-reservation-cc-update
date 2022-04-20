@@ -11,14 +11,19 @@ import {
 	setEmailTemplateDetails,
 	setPreviewHtmlBlobUrl,
 	setRetrievedRentalDetails,
+	setSystemUserId,
 } from "../retrievedDetails/slice";
 import { RootState } from "../../store";
 import { getReservationByIdOrNumber } from "../../../api/reservationApi";
+import { getAgreementByIdOrNumber } from "../../../api/agreementApi";
+import { APP_CONSTANTS } from "../../../utils/constants";
 
 interface User {
+	userID: number;
 	isReservationEmail: boolean;
 	email: string;
 	isActive: boolean;
+	userRoleID: number;
 }
 
 const AUTH_URL = process.env.REACT_APP_V3_AUTH_URL ?? "/.netlify/functions/GetTokenV3";
@@ -32,6 +37,8 @@ const AUTH_URL = process.env.REACT_APP_V3_AUTH_URL ?? "/.netlify/functions/GetTo
 export const authenticateAppThunk = createAsyncThunk(
 	"config/authenticateApp",
 	async (_, { dispatch, getState, rejectWithValue }) => {
+		let systemUserId = 0;
+
 		const state = getState() as RootState;
 		const { clientId, responseTemplateId } = state.config;
 		console.groupCollapsed("config/authenticateApp");
@@ -51,25 +58,6 @@ export const authenticateAppThunk = createAsyncThunk(
 			return dispatch(setAppStatus({ status: "authentication_error" }));
 		}
 
-		if (state.config.referenceType === "Reservation") {
-			const reservationResponse = await getReservationByIdOrNumber(
-				clientId,
-				state.retrievedDetails.referenceNo,
-				state.retrievedDetails.referenceId
-			);
-
-			if (!reservationResponse) {
-				console.error("NOT ABLE TO FIND RESERVATION");
-				console.groupEnd();
-				return dispatch(setAppStatus({ status: "reservation_fetch_failed" }));
-			}
-
-			dispatch(setRetrievedRentalDetails(reservationResponse));
-		} else if (state.config.referenceType === "Agreement") {
-			// code not implemented
-			return dispatch(setAppStatus({ status: "reservation_fetch_failed" }));
-		}
-
 		// get cc emails
 		try {
 			const res = await clientV3.get(`/Users`, {
@@ -84,10 +72,49 @@ export const authenticateAppThunk = createAsyncThunk(
 			const emailsToCC = reservationEmailUsers.map((u: User) => u.email);
 
 			dispatch(setCcEmails(emailsToCC));
+
+			const adminUserIdToUse = res.data.filter((u: User) => u.userRoleID === 1);
+			console.log({ users: adminUserIdToUse });
+			if (adminUserIdToUse.length > 0) {
+				dispatch(setSystemUserId(adminUserIdToUse[0].userID));
+				systemUserId = adminUserIdToUse[0].userID;
+			}
 		} catch (error) {
 			console.error("get cc emails", error);
 			console.groupEnd();
 			return dispatch(setAppStatus({ status: "authentication_error" }));
+		}
+
+		// Fetch the customer details based on the Reference Type = Reservation | Agreement
+		if (state.config.referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION) {
+			const reservationResponse = await getReservationByIdOrNumber(
+				clientId,
+				state.retrievedDetails.referenceNo,
+				state.retrievedDetails.referenceId
+			);
+
+			if (!reservationResponse) {
+				console.error("NOT ABLE TO FIND RESERVATION");
+				console.groupEnd();
+				return dispatch(setAppStatus({ status: "reservation_fetch_failed" }));
+			}
+
+			dispatch(setRetrievedRentalDetails(reservationResponse));
+		} else if (state.config.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT) {
+			const agreementResponse = await getAgreementByIdOrNumber(
+				clientId,
+				state.retrievedDetails.referenceNo,
+				state.retrievedDetails.referenceId,
+				systemUserId
+			);
+
+			if (!agreementResponse) {
+				console.error("NOT ABLE TO FIND AGREEMENT");
+				console.groupEnd();
+				return dispatch(setAppStatus({ status: "reservation_fetch_failed" }));
+			}
+
+			dispatch(setRetrievedRentalDetails(agreementResponse));
 		}
 
 		// get email template

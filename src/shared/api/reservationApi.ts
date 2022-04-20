@@ -1,8 +1,6 @@
-// import store, { RootState } from "../redux/store";
-
 import clientV3 from "./clientV3";
 
-export type ReservationSourcedDetails = {
+type ReservationSourcedDetails = {
 	locationId: number;
 	customerId: number;
 	referenceId: number;

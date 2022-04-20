@@ -18,7 +18,6 @@ type AppState = typeof appStates[number];
 export type SupportedLanguages = typeof supportedLanguages[number];
 export type LangFile = typeof translations.en;
 
-type ReferenceType = "Reservation" | "Agreement";
 export interface ConfigSliceState {
 	lang: string;
 	status: AppState;
@@ -28,7 +27,7 @@ export interface ConfigSliceState {
 	flow: string[];
 	rawConfig: string;
 	fromRentall: boolean;
-	referenceType: ReferenceType;
+	referenceType: string;
 }
 
 const initialState: ConfigSliceState = {
@@ -70,7 +69,7 @@ const configSlice = createSlice({
 			}
 			state.fromRentall = action.payload.fromRentall;
 		},
-		setReferenceType: (state, action: PayloadAction<{ referenceType: ReferenceType }>) => {
+		setReferenceType: (state, action: PayloadAction<{ referenceType: string }>) => {
 			state.referenceType = action.payload.referenceType;
 		},
 	},

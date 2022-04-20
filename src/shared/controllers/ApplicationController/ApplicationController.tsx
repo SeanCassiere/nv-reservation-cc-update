@@ -11,6 +11,7 @@ import { selectConfigState, selectTranslations } from "../../redux/store";
 import { authenticateAppThunk } from "../../redux/slices/config/thunks";
 
 import DisplayCurrentController from "./DisplayCurrentController";
+import { APP_CONSTANTS } from "../../utils/constants";
 
 type ConfigState = {
 	clientId: string | null;
@@ -69,10 +70,10 @@ const ApplicationController = () => {
 		);
 
 		if (reservationId) {
-			dispatch(setReferenceType({ referenceType: "Reservation" }));
+			dispatch(setReferenceType({ referenceType: APP_CONSTANTS.REF_TYPE_RESERVATION }));
 			dispatch(setInitialReferenceId(reservationId));
 		} else if (agreementId) {
-			dispatch(setReferenceType({ referenceType: "Agreement" }));
+			dispatch(setReferenceType({ referenceType: APP_CONSTANTS.REF_TYPE_AGREEMENT }));
 			dispatch(setInitialReferenceId(agreementId));
 		}
 
@@ -137,7 +138,9 @@ const ApplicationController = () => {
 			{appConfig.status === "reservation_fetch_failed" && (
 				<ErrorSubmission
 					msg={`${t.reservation_fetch_error.message} ${
-						appConfig.referenceType === "Agreement" ? t.reference_type.agreement : t.reference_type.reservation
+						appConfig.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT
+							? t.reference_type.agreement
+							: t.reference_type.reservation
 					}.`}
 					tryAgainButton
 				/>
