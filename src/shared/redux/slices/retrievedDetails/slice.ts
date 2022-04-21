@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ReturnComposeEmailDetails } from "../../../api/emailsApi";
 
 export interface IRetrievedDetailsSliceState {
 	userId: number;
@@ -57,6 +58,10 @@ const retrievedDetailsSlice = createSlice({
 			state.customerEmail = action.payload.customerEmail;
 			state.locationEmail = action.payload.locationEmail;
 		},
+		setGetComposeEmailDetails: (state, action: PayloadAction<ReturnComposeEmailDetails>) => {
+			state.locationEmail = action.payload.fromAddress;
+			state.responseTemplateSubject = action.payload.selectedTemplate?.subjectLine || state.responseTemplateSubject;
+		},
 	},
 });
 
@@ -67,6 +72,7 @@ export const {
 	setPreviewHtmlBlobUrl,
 	setInitialReferenceId,
 	setSystemUserId,
+	setGetComposeEmailDetails,
 } = retrievedDetailsSlice.actions;
 
 export default retrievedDetailsSlice;
