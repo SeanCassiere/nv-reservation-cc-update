@@ -1,0 +1,97 @@
+{
+	"form": {
+		"title": "Credit Card Information",
+		"message": "Please enter in your credit card information to be used for your reservation.",
+		"labels": {
+			"card_number": "Card Number",
+			"name_on_card": "Name on the Credit Card",
+			"cvv": "CVV",
+			"billingZip": "Billing Zip Code",
+			"submit": "Submit",
+			"next": "Next",
+			"exp_month": "Expiry Month",
+			"exp_year": "Expiry Year",
+			"p_holders": {
+				"name": "John Doe",
+				"zip_code": "Zip Code",
+				"select": "Select"
+			}
+		},
+		"credit_card": {
+			"valid_thru": "valid thru",
+			"your_name": "YOUR NAME HERE"
+		},
+		"errors": {
+			"card_number": "Enter a full credit card number.",
+			"name": "Enter the name printed on the credit card.",
+			"exp_month": "Enter the credit card expiry month.",
+			"exp_year": "Enter the credit card expiry year.",
+			"cvv": "Enter the PIN on the back of the credit card.",
+			"billingZip": "Enter your billing zip code."
+		},
+		"submitting_msgs": {
+			"credit_card": "Submitting your credit card information",
+			"license_images_bundle": "Submitting your driving license images",
+			"confirmation_email": "Sending confirmation email"
+		},
+		"submitting_msg": "Submitting your details"
+	},
+	"license_upload": {
+		"title": "Driver's License",
+		"message": "Upload front and back images of your driver's license.",
+		"go_back": {
+			"title": "Are you sure?",
+			"message": "Going back will discard the added files.",
+			"cancel": "Cancel",
+			"submit": "I Understand"
+		},
+		"front_image": {
+			"title": "Front Image",
+			"drag": "Drag and drop the front image here",
+			"select": "Select the front image",
+			"clear": "Clear the front image",
+			"not_selected": "You must select the front image."
+		},
+		"back_image": {
+			"title": "Back Image",
+			"drag": "Drag and drop the back image here",
+			"select": "Select the back image",
+			"clear": "Clear the back image",
+			"not_selected": "You must select the back image."
+		}
+	},
+	"error_boundary": {
+		"title": "Uh Oh",
+		"message": "There was a fatal error in the application."
+	},
+	"success_submission": {
+		"title": "Success!",
+		"message": "Thank you for submitting your information towards the"
+	},
+	"authentication_submission": {
+		"title": "Authenticating",
+		"message": "We had trouble authenticating this connection."
+	},
+	"reservation_fetch_error": {
+		"title": "Reservation Fetch Error",
+		"message": "We could not locate the"
+	},
+	"bad_submission": {
+		"title": "Uh Oh",
+		"message": "I encountered an error when trying to submit your information.",
+		"report": "Please report to",
+		"retry_submission": "Retry submission"
+	},
+	"query_missing": {
+		"title": "Uh Oh",
+		"message": "It looks like all not all the necessary information was sent.",
+		"report": "Please report to"
+	},
+	"footer": {
+		"powered_by": "Powered by"
+	},
+	"reference_type": {
+		"reservation": "reservation",
+		"agreement": "agreement"
+	}
+}

@@ -1,13 +1,14 @@
 import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import ErrorSubmission from "../../pages/ErrorSubmission/ErrorSubmission";
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 
 import { setConfigValues, setLang, setRawConfig, setReferenceType } from "../../redux/slices/config/slice";
 import { setInitialReferenceId } from "../../redux/slices/retrievedDetails/slice";
-import { selectConfigState, selectTranslations } from "../../redux/store";
+import { selectConfigState } from "../../redux/store";
 import { authenticateAppThunk } from "../../redux/slices/config/thunks";
 
 import DisplayCurrentController from "./DisplayCurrentController";
@@ -25,7 +26,7 @@ const ApplicationController = () => {
 	const navigate = useNavigate();
 
 	const appConfig = useSelector(selectConfigState);
-	const t = useSelector(selectTranslations);
+	const { t } = useTranslation();
 
 	// initial app boot
 	useEffect(() => {
@@ -131,16 +132,16 @@ const ApplicationController = () => {
 
 	return (
 		<>
-			{appConfig.status === "authenticating" && <LoadingSubmission title={t.authentication_submission.title} />}
+			{appConfig.status === "authenticating" && <LoadingSubmission title={t("authentication_submission.title")} />}
 			{appConfig.status === "authentication_error" && (
-				<ErrorSubmission msg={t.authentication_submission.message} tryAgainButton />
+				<ErrorSubmission msg={t("authentication_submission.message")} tryAgainButton />
 			)}
 			{appConfig.status === "reservation_fetch_failed" && (
 				<ErrorSubmission
-					msg={`${t.reservation_fetch_error.message} ${
+					msg={`${t("reservation_fetch_error.message")} ${
 						appConfig.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT
-							? t.reference_type.agreement
-							: t.reference_type.reservation
+							? t("reference_type.agreement")
+							: t("reference_type.reservation")
 					}.`}
 					tryAgainButton
 				/>

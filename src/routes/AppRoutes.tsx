@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import RequireAuth from "./RequireAuth";
 import NotAuthorized from "../shared/pages/NotAuthorized/NotAuthorized";
@@ -9,11 +10,11 @@ import SuccessSubmission from "../shared/pages/SuccessSubmission/SuccessSubmissi
 import ErrorSubmission from "../shared/pages/ErrorSubmission/ErrorSubmission";
 import NavigateToNotAvailable from "./NavigateToNotAvailable";
 
-import { selectConfigState, selectTranslations } from "../shared/redux/store";
+import { selectConfigState } from "../shared/redux/store";
 
 const AppRoutes = () => {
 	const appConfig = useSelector(selectConfigState);
-	const t = useSelector(selectTranslations);
+	const { t } = useTranslation();
 
 	return (
 		<BrowserRouter>
@@ -35,7 +36,7 @@ const AppRoutes = () => {
 						</RequireAuth>
 					}
 				/>
-				<Route path='/error' element={<ErrorSubmission msg={t.bad_submission.message} tryAgainButton />} />
+				<Route path='/error' element={<ErrorSubmission msg={t("bad_submission.message")} tryAgainButton />} />
 				<Route path='/not-available' element={<NotAuthorized />} />
 				<Route path='*' element={<NavigateToNotAvailable />} />
 			</Routes>
