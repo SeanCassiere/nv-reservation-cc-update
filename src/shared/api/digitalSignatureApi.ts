@@ -12,8 +12,8 @@ export const uploadRentalDigitalSignatureFromUrl = async (
 ) => {
 	const imageBase64 = await urlBlobToBase64(imageUrl);
 
-	const date = new Date().toISOString().substring(0, 19).replace("T", " ").replaceAll(":", "-");
-	const imageType = imageBase64.split(";")[0].split(":")[1].split("/")[1];
+	const date = new Date().toISOString().substring(0, 19).replace("T", " (").replaceAll(":", "-");
+	const imageType = `.${imageBase64.split(";")[0].split(":")[1].split("/")[1]}`;
 	const imageName = `${date}) ${referenceType} Signature`;
 
 	const body = {
