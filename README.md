@@ -58,8 +58,6 @@ Languages supported
 | Language | Code |
 | --- | --- |
 | English | en |
-| French | fr **(broken)** |
-| German | de **(broken)** |
-| Spanish | es **(broken)** |
-
-Broken languages will be resolved after migrating the app to `i18next` - [Issue 41 - adding i18next support ](https://github.com/SeanCassiere/nv-reservation-cc-update/issues/41).
+| French | fr |
+| German | de |
+| Spanish | es |
