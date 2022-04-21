@@ -51,6 +51,7 @@ When creating the base64 encoded JSON string, add in the following into the stri
 | Default/CreditCardForm                 | The default credit card form                                                               |
 | Default/LicenseUploadForm              | The default form for uploading driver's license images                                     |
 | Default/CreditCardAndLicenseUploadForm | The a combination of both the `Default/CreditCardForm` and the `Default/LicenseUploadForm` |
+| Default/RentalSignatureForm            | **(IN-DEVELOPMENT)** - The default canvas to capture the customer's signature.             |
 
 ## Language Support
 

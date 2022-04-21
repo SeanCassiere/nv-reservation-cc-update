@@ -61,6 +61,13 @@
 			"not_selected": "You must select the back image."
 		}
 	},
+	"rental_signature": {
+		"agreement_title": "Contract Signature",
+		"reservation_title": "Booking Signature",
+		"agreement_message": "Draw your signature below and submit it towards your rental contract.",
+		"reservation_message": "Draw your signature below and submit it towards your booking.",
+		"clear_input": "Clear the signature"
+	},
 	"error_boundary": {
 		"title": "Uh Oh",
 		"message": "There was a fatal error in the application."
