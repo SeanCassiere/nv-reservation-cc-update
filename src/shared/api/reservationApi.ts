@@ -7,6 +7,8 @@ type ReservationSourcedDetails = {
 	customerEmail: string;
 	referenceNo: string;
 	locationEmail: string;
+	driverId: number;
+	driverName: string;
 };
 
 export const getReservationByIdOrNumber = async (
@@ -34,6 +36,8 @@ export const getReservationByIdOrNumber = async (
 				locationEmail: res.data.reservationview.locationEmail,
 				referenceNo: res.data.reservationview.reservationNumber,
 				referenceId: Number(res.data.reservationview.reserveId),
+				driverId: Number(res.data.driverList[0].driverId),
+				driverName: `${res.data.customerDetails?.firstName ?? ""} ${res.data.customerDetails?.lastName ?? ""}`,
 			};
 
 			// dispatch(setReservationDetails(reservationInfo));

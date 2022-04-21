@@ -1,8 +1,11 @@
 import React from "react";
 import { Card, Row, Col, Button, Modal, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 import DefaultSignatureCanvas from "../../components/DefaultSignatureCanvas/DefaultSignatureCanvas";
+
+import { setRentalSignatureFormData } from "../../redux/slices/forms/slice";
 import { selectConfigState } from "../../redux/store";
 import { APP_CONSTANTS } from "../../utils/constants";
 
@@ -19,7 +22,9 @@ const DefaultRentalSignatureController = ({
 	isNextAvailable,
 	isPrevPageAvailable,
 }: IProps) => {
+	const dispatch = useDispatch();
 	const { t } = useTranslation();
+
 	const configState = useSelector(selectConfigState);
 	const [signatureUrl, setSignatureUrl] = React.useState("");
 
@@ -32,16 +37,19 @@ const DefaultRentalSignatureController = ({
 			return;
 		}
 
+		dispatch(setRentalSignatureFormData({ signatureUrl, isReadyToSubmit: true }));
+
 		handleSubmit();
-	}, [handleSubmit, signatureUrl]);
+	}, [dispatch, handleSubmit, signatureUrl]);
 
 	const handleOpenModalConfirmation = React.useCallback(() => {
 		setReturnModalOpen(true);
 	}, []);
 
 	const handleModalAcceptReturn = React.useCallback(() => {
+		dispatch(setRentalSignatureFormData({ signatureUrl: "", isReadyToSubmit: false }));
 		handlePrevious();
-	}, [handlePrevious]);
+	}, [dispatch, handlePrevious]);
 
 	const handleModalDenyReturn = React.useCallback(() => {
 		setReturnModalOpen(false);
@@ -53,10 +61,12 @@ const DefaultRentalSignatureController = ({
 		} else {
 			setShowRequiredMessage(false);
 			setSignatureUrl(url);
-			// window.open(url);
-			console.log(url);
 		}
 	}, []);
+
+	React.useEffect(() => {
+		dispatch(setRentalSignatureFormData({ signatureUrl: "", isReadyToSubmit: false }));
+	}, [dispatch]);
 	return (
 		<>
 			<Modal show={returnModalOpen} onHide={handleModalDenyReturn} keyboard={true} centered>

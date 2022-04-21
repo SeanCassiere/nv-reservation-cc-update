@@ -8,6 +8,7 @@ import { bodyEmailTemplate } from "../../../utils/bodyEmailTemplate";
 
 import { setSubmissionState, setSubmissionErrorState, setSubmissionMessage } from "./slice";
 import { RootState } from "../../store";
+import { uploadRentalDigitalSignatureFromUrl } from "../../../api/digitalSignatureApi";
 
 export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", async (_, { getState, dispatch }) => {
 	dispatch(setSubmissionState("submitting_details_pending"));
@@ -46,6 +47,19 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 				`${configState.clientId}`,
 				formState.licenseUploadForm.data.backImageUrl!,
 				formState.licenseUploadForm.data.backImageName ?? ""
+			)
+		);
+	}
+
+	// Add the rental signature to the array of submissions to run
+	if (formState.rentalSignatureForm.isReadyToSubmit) {
+		formPromisesToRun.push(
+			uploadRentalDigitalSignatureFromUrl(
+				formState.rentalSignatureForm.data.signatureUrl,
+				reservationState.driverId,
+				reservationState.customerName,
+				configState.referenceType,
+				reservationState.referenceId
 			)
 		);
 	}

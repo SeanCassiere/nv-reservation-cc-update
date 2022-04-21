@@ -2,24 +2,31 @@ import React from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 
 interface IProps {
-	minHeight?: number;
+	maxHeight?: number;
+	maxWidth?: number;
 	onSignature?: (signatureUrl: string) => void;
 	clearText?: string;
 	saveText?: string;
+	trimmed?: boolean;
 }
 
 const DefaultSignatureCanvas = ({
-	minHeight = 300,
+	maxHeight = 400,
+	maxWidth = 450,
 	onSignature = (url: string) => {
 		console.log("Signature URL: ", url);
 	},
 	clearText = undefined,
 	saveText = undefined,
+	trimmed = false,
 }: IProps) => {
 	const { t } = useTranslation();
 	const signaturePadRef = React.useRef<SignatureCanvas>(null);
+
+	const isPhone = useMediaQuery({ query: "(max-width: 400px)" });
 
 	const [isDisabled, setIsDisabled] = React.useState(false);
 
@@ -45,7 +52,8 @@ const DefaultSignatureCanvas = ({
 			return;
 		} else {
 			const mime = "image/png";
-			signaturePad.getTrimmedCanvas().toBlob((blob) => {
+			const canvas = trimmed ? signaturePad.getTrimmedCanvas() : signaturePad.getCanvas();
+			canvas.toBlob((blob) => {
 				setIsDisabled(true);
 
 				signaturePad.off();
@@ -57,15 +65,25 @@ const DefaultSignatureCanvas = ({
 				onSignature(url);
 			});
 		}
-	}, [onSignature]);
+	}, [onSignature, trimmed]);
 
 	return (
 		<>
-			<div style={{ border: `4px solid ${isDisabled ? "#333333" : "#325d88"}`, borderRadius: 5, padding: "0.1rem" }}>
-				<SignatureCanvas ref={signaturePadRef} dotSize={4} canvasProps={{ height: minHeight, width: "auto" }} />
+			<div
+				style={{
+					border: `4px solid ${isDisabled ? "#333333" : "#325d88"}`,
+					borderRadius: 5,
+					padding: "0.1rem",
+				}}
+			>
+				<SignatureCanvas
+					ref={signaturePadRef}
+					dotSize={4}
+					canvasProps={{ height: isPhone ? 360 : maxHeight, width: isPhone ? 310 : maxWidth }}
+				/>
 			</div>
 			<div className='mt-2 d-flex justify-content-center gap-2'>
-				<Button variant='danger' style={{ width: "60%" }} onClick={handleClear} disabled={!isDisabled}>
+				<Button variant='danger' style={{ width: "60%" }} onClick={handleClear}>
 					{clearText ?? t("rental_signature.clear_input")}
 				</Button>
 				<Button variant='primary' style={{ width: "30%" }} onClick={handleSave} disabled={isDisabled}>

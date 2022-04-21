@@ -7,6 +7,8 @@ type AgreementSourcedDetails = {
 	customerEmail: string;
 	referenceNo: string;
 	locationEmail: string;
+	driverId: number;
+	driverName: string;
 };
 
 export const getAgreementByIdOrNumber = async (
@@ -35,6 +37,8 @@ export const getAgreementByIdOrNumber = async (
 				locationEmail: res.data.checkoutLocationEmail,
 				referenceNo: res.data.agreementNumber,
 				referenceId: Number(res.data.agreementId),
+				driverId: Number(res.data.driverList[0].driverId),
+				driverName: `${res.data.firstName ?? ""} ${res.data.lastName ?? ""}`,
 			};
 
 			agreementSourcedDetails = agreementInfo;
