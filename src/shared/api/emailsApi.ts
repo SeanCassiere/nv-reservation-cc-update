@@ -1,9 +1,19 @@
 import clientV3 from "./clientV3";
 
 type ComposeTemplateArrayItem = {
-	templateId: number;
-	value: string;
+	clientId: number;
+	contentId: number | null;
+	description: string | null;
+	isCheckin: boolean;
+	isCheckOut: boolean;
+	isPdfAttached: boolean;
+	status: number;
 	subjectLine: string;
+	templateId: number;
+	templateName: string;
+	templateTypeName: string;
+	templateURL: string | null;
+	templateTypeId: number;
 };
 
 type GetComposeDetails = {
