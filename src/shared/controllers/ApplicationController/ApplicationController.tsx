@@ -54,7 +54,7 @@ const ApplicationController = () => {
 			fromRentall: true,
 		};
 		if (configQuery) {
-			dispatch(setRawConfig({ rawConfig: configQuery }));
+			dispatch(setRawConfig({ rawConfig: configQuery, rawQueryString: window.location.search }));
 			const readConfig = JSON.parse(Buffer.from(configQuery, "base64").toString("ascii"));
 			config = { ...config, ...readConfig };
 		}

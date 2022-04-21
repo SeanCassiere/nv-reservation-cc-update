@@ -1,4 +1,5 @@
 {
+	"loading": "Loading",
 	"form": {
 		"title": "Credit Card Information",
 		"message": "Please enter in your credit card information to be used for your reservation.",

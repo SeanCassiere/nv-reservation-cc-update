@@ -23,6 +23,7 @@ export interface ConfigSliceState {
 	responseTemplateId: string | null;
 	flow: string[];
 	rawConfig: string;
+	rawQueryString: string;
 	fromRentall: boolean;
 	referenceType: string;
 }
@@ -34,6 +35,7 @@ const initialState: ConfigSliceState = {
 	responseTemplateId: null,
 	flow: ["Default/CreditCardForm"],
 	rawConfig: "",
+	rawQueryString: "",
 	fromRentall: true,
 	referenceType: "Reservation",
 };
@@ -47,8 +49,9 @@ const configSlice = createSlice({
 				state.lang = action.payload.lang;
 			}
 		},
-		setRawConfig: (state, action: PayloadAction<{ rawConfig: string }>) => {
+		setRawConfig: (state, action: PayloadAction<{ rawConfig: string; rawQueryString: string }>) => {
 			state.rawConfig = action.payload.rawConfig;
+			state.rawQueryString = action.payload.rawQueryString;
 		},
 		setAppStatus: (state, action: PayloadAction<{ status: AppState }>) => {
 			state.status = action.payload.status;

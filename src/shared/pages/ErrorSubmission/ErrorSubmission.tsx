@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import ErrorImg from "../../assets/undraw_warning_cyit.svg";
-import { selectConfigState, selectRetrievedDetails } from "../../redux/store";
-import { APP_CONSTANTS } from "../../utils/constants";
+import { selectConfigState } from "../../redux/store";
 
 interface Props {
 	msg: string | ReactNode;
@@ -17,15 +16,12 @@ const ErrorSubmission = ({ msg, tryAgainButton }: Props) => {
 	const { t } = useTranslation();
 
 	const config = useSelector(selectConfigState);
-	const reservationData = useSelector(selectRetrievedDetails);
 
 	const originUrl = useMemo(() => {
 		const url = new URL(window.location.href);
-		const returnUrl = `${url.origin}/?${
-			config.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreementId" : "reservationId"
-		}=${reservationData.referenceNo}&lang=${config.lang}&config=${config.rawConfig}`;
+		const returnUrl = `${url.origin}/${config.rawQueryString}`;
 		return returnUrl;
-	}, [config.lang, config.rawConfig, config.referenceType, reservationData.referenceNo]);
+	}, [config.rawQueryString]);
 
 	return (
 		<Card border='danger' style={{ width: "100%", padding: "2rem 0.5rem" }}>
