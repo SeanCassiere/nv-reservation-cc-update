@@ -43,7 +43,7 @@ export const authenticateAppThunk = createAsyncThunk(
 
 		let state = getState() as RootState;
 		const { clientId, responseTemplateId } = state.config;
-		console.groupCollapsed("config/authenticateApp");
+		console.group("config/authenticateApp");
 
 		// authenticate app
 		try {
