@@ -22,7 +22,6 @@ export type RootState = ReturnType<typeof batchedReducers>;
 
 export const selectConfigState = (state: RootState) => state.config;
 export const selectSubmissionState = (state: RootState) => state.forms.submission;
-export const selectTranslations = (state: RootState) => state.config.translations;
 export const selectAuthState = (state: RootState) => state.auth;
 
 export const selectCreditCardForm = (state: RootState) => state.forms.creditCardForm;

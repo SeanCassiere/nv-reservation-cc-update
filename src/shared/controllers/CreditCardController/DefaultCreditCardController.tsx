@@ -2,8 +2,9 @@ import React, { useCallback, useState } from "react";
 import { Card, Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 
-import { selectCreditCardForm, selectTranslations } from "../../redux/store";
+import { selectCreditCardForm } from "../../redux/store";
 import { setCreditCardFormData } from "../../redux/slices/forms/slice";
 import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
 import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
@@ -26,7 +27,7 @@ const DefaultCreditCardController = ({
 	isPrevPageAvailable,
 }: IProps) => {
 	const dispatch = useDispatch();
-	const t = useSelector(selectTranslations);
+	const { t } = useTranslation();
 	const { data: initialFormData } = useSelector(selectCreditCardForm);
 
 	const [formValues, setFormValues] = useState(initialFormData);
@@ -86,8 +87,8 @@ const DefaultCreditCardController = ({
 	return (
 		<Card border='light'>
 			<Card.Body>
-				<Card.Title>{t.form.title}</Card.Title>
-				<Card.Subtitle>{t.form.message}</Card.Subtitle>
+				<Card.Title>{t("form.title")}</Card.Title>
+				<Card.Subtitle>{t("form.message")}</Card.Subtitle>
 				<div className='mt-4 d-grid'>
 					<Row>
 						<Col md={12}>
@@ -120,7 +121,7 @@ const DefaultCreditCardController = ({
 						)}
 						<Col xs={isPrevPageAvailable ? 10 : 12} className={isPrevPageAvailable ? "pl-2" : ""}>
 							<Button variant='primary' size='lg' style={{ width: "100%" }} onClick={handleNextState}>
-								{isNextAvailable ? t.form.labels.next : t.form.labels.submit}
+								{isNextAvailable ? t("form.labels.next") : t("form.labels.submit")}
 							</Button>
 						</Col>
 					</Row>

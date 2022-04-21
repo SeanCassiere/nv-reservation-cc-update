@@ -1,4 +1,5 @@
 import React, { memo, Suspense, lazy } from "react";
+import { useTranslation } from "react-i18next";
 
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 
@@ -34,8 +35,9 @@ const DisplayCurrentController = ({
 	handlePrevious,
 	isPrevPageAvailable,
 }: IProps) => {
+	const { t } = useTranslation();
 	return (
-		<Suspense fallback={<LoadingSubmission title='Loading' />}>
+		<Suspense fallback={<LoadingSubmission title={t("loading")} />}>
 			{selectedController === "Default/CreditCardForm" && (
 				<DefaultCreditCardController
 					handleSubmit={handleNext}

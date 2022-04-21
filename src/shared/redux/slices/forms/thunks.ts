@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import i18next from "i18next";
 
 import clientV3 from "../../../api/clientV3";
 import { insertCreditCardForCustomer, uploadDriverLicenseImageForCustomer } from "../../../api/customerApi";
@@ -10,10 +11,11 @@ import { RootState } from "../../store";
 
 export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", async (_, { getState, dispatch }) => {
 	dispatch(setSubmissionState("submitting_details_pending"));
+	const { t } = i18next;
 
 	const state = getState() as RootState;
+
 	const configState = state.config;
-	const t = state.config.translations;
 	const formState = state.forms;
 	const reservationState = state.retrievedDetails;
 
@@ -49,7 +51,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	}
 
 	// await saving all the form details
-	dispatch(setSubmissionMessage(t.form.submitting_msg));
+	dispatch(setSubmissionMessage(t("form.submitting_msg")));
 	const runPromises = await Promise.all(formPromisesToRun);
 	if (runPromises.includes(false)) {
 		console.groupEnd();
@@ -60,7 +62,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	// Post confirmation email using responseTemplateID
 	if (reservationState.responseTemplateBlobUrl !== "") {
 		try {
-			dispatch(setSubmissionMessage(t.form.submitting_msgs.confirmation_email));
+			dispatch(setSubmissionMessage(t("form.submitting_msgs.confirmation_email")));
 			const html = await fetch(reservationState.responseTemplateBlobUrl).then((res) => res.text());
 
 			await clientV3.post(

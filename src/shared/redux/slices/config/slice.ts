@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import translations from "../../../assets/translations.json";
 import { authenticateAppThunk } from "./thunks";
 
 // import { allControllerFlows } from "../../utils/controllerFlows";
@@ -11,21 +10,20 @@ const appStates = [
 	"reservation_fetch_failed",
 	"submission_loading",
 ] as const;
-const supportedLanguages = ["en", "de", "fr", "es"] as const;
+export const supportedLanguages = ["en", "de", "fr", "es"] as const;
 
 // type Controllers = typeof allControllerFlows[number];
 type AppState = typeof appStates[number];
 export type SupportedLanguages = typeof supportedLanguages[number];
-export type LangFile = typeof translations.en;
 
 export interface ConfigSliceState {
 	lang: string;
 	status: AppState;
-	translations: LangFile;
 	clientId: string | null;
 	responseTemplateId: string | null;
 	flow: string[];
 	rawConfig: string;
+	rawQueryString: string;
 	fromRentall: boolean;
 	referenceType: string;
 }
@@ -33,11 +31,11 @@ export interface ConfigSliceState {
 const initialState: ConfigSliceState = {
 	lang: "en",
 	status: "authenticating",
-	translations: translations.en,
 	clientId: null,
 	responseTemplateId: null,
 	flow: ["Default/CreditCardForm"],
 	rawConfig: "",
+	rawQueryString: "",
 	fromRentall: true,
 	referenceType: "Reservation",
 };
@@ -49,11 +47,11 @@ const configSlice = createSlice({
 		setLang: (state, action: PayloadAction<{ lang: string | null }>) => {
 			if (action.payload.lang && supportedLanguages.includes(action.payload.lang as any)) {
 				state.lang = action.payload.lang;
-				state.translations = translations[action.payload.lang as SupportedLanguages];
 			}
 		},
-		setRawConfig: (state, action: PayloadAction<{ rawConfig: string }>) => {
+		setRawConfig: (state, action: PayloadAction<{ rawConfig: string; rawQueryString: string }>) => {
 			state.rawConfig = action.payload.rawConfig;
+			state.rawQueryString = action.payload.rawQueryString;
 		},
 		setAppStatus: (state, action: PayloadAction<{ status: AppState }>) => {
 			state.status = action.payload.status;
