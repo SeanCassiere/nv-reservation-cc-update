@@ -2,6 +2,7 @@ import React, { memo, Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
+import { APP_CONSTANTS } from "../../utils/constants";
 
 const DefaultCreditCardController = lazy(
 	() =>
@@ -17,6 +18,13 @@ const DefaultCreditCardAndLicenseUploadController = lazy(
 	() =>
 		import(
 			/* webpackChunkName: 'DefaultCreditCardAndLicenseUploadController' */ "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController"
+		)
+);
+
+const DefaultRentalSignatureController = lazy(
+	() =>
+		import(
+			/* webpackChunkName: 'DefaultRentalSignatureController' */ "../RentalSignatureController/DefaultRentalSignatureController"
 		)
 );
 
@@ -38,7 +46,7 @@ const DisplayCurrentController = ({
 	const { t } = useTranslation();
 	return (
 		<Suspense fallback={<LoadingSubmission title={t("loading")} />}>
-			{selectedController === "Default/CreditCardForm" && (
+			{selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_FORM && (
 				<DefaultCreditCardController
 					handleSubmit={handleNext}
 					isNextAvailable={isNextPageAvailable}
@@ -46,7 +54,7 @@ const DisplayCurrentController = ({
 					isPrevPageAvailable={isPrevPageAvailable}
 				/>
 			)}
-			{selectedController === "Default/LicenseUploadForm" && (
+			{selectedController === APP_CONSTANTS.VIEW_DEFAULT_LICENSE_UPLOAD_FORM && (
 				<DefaultLicenseUploadController
 					handleSubmit={handleNext}
 					isNextAvailable={isNextPageAvailable}
@@ -54,8 +62,8 @@ const DisplayCurrentController = ({
 					isPrevPageAvailable={isPrevPageAvailable}
 				/>
 			)}
-			{selectedController === "Default/CreditCardAndLicenseUploadController" ||
-			selectedController === "Default/CreditCardAndLicenseUploadForm" ? (
+			{selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_CONTROLLER ||
+			selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM ? (
 				<DefaultCreditCardAndLicenseUploadController
 					handleSubmit={handleNext}
 					isNextAvailable={isNextPageAvailable}
@@ -63,6 +71,14 @@ const DisplayCurrentController = ({
 					isPrevPageAvailable={isPrevPageAvailable}
 				/>
 			) : null}
+			{selectedController === APP_CONSTANTS.VIEW_DEFAULT_RENTAL_SIGNATURE_FORM && (
+				<DefaultRentalSignatureController
+					handleSubmit={handleNext}
+					isNextAvailable={isNextPageAvailable}
+					handlePrevious={handlePrevious}
+					isPrevPageAvailable={isPrevPageAvailable}
+				/>
+			)}
 			{selectedController === "Default/Positive" && (
 				<div>
 					<h5>positive</h5>

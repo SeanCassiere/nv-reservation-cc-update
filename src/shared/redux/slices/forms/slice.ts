@@ -35,6 +35,12 @@ interface IFormsSliceState {
 			backImageName: string | null;
 		};
 	};
+	rentalSignatureForm: {
+		isReadyToSubmit: boolean;
+		data: {
+			signatureUrl: string;
+		};
+	};
 }
 
 const initialState: IFormsSliceState = {
@@ -64,6 +70,12 @@ const initialState: IFormsSliceState = {
 			backImageName: null,
 		},
 	},
+	rentalSignatureForm: {
+		isReadyToSubmit: false,
+		data: {
+			signatureUrl: "",
+		},
+	},
 };
 
 const formsSlice = createSlice({
@@ -89,6 +101,10 @@ const formsSlice = createSlice({
 			state.licenseUploadForm.data.backImageName = action.payload.backImageName;
 			state.licenseUploadForm.isReadyToSubmit = true;
 		},
+		setRentalSignatureFormData: (state, action: PayloadAction<{ signatureUrl: string; isReadyToSubmit: boolean }>) => {
+			state.rentalSignatureForm.isReadyToSubmit = action.payload.isReadyToSubmit;
+			state.rentalSignatureForm.data.signatureUrl = action.payload.signatureUrl;
+		},
 		setSubmissionState: (state, action: PayloadAction<SubmissionState>) => {
 			state.submission.state = action.payload;
 		},
@@ -106,6 +122,7 @@ export const {
 	setCreditCardFormData,
 	setSubmissionState,
 	setLicenseUploadFormData,
+	setRentalSignatureFormData,
 	setSubmissionErrorState,
 	setSubmissionMessage,
 } = formsSlice.actions;

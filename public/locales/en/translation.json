@@ -61,6 +61,22 @@
 			"not_selected": "You must select the back image."
 		}
 	},
+	"rental_signature": {
+		"agreement_title": "Contract Signature",
+		"reservation_title": "Booking Signature",
+		"agreement_message": "Draw your signature below and press the Save button.",
+		"reservation_message": "Draw your signature below and press the Save button.",
+		"clear_input": "Clear the signature",
+		"error_no_signature": "Please provide a signature.",
+		"save_input": "Sign",
+		"signature_required": "Add your signature and press the Save button before you continue.",
+		"go_back": {
+			"title": "Are you sure?",
+			"message": "Going back will discard the added signature.",
+			"cancel": "Cancel",
+			"submit": "I Understand"
+		}
+	},
 	"error_boundary": {
 		"title": "Uh Oh",
 		"message": "There was a fatal error in the application."
