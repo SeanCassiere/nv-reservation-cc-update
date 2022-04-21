@@ -64,9 +64,18 @@
 	"rental_signature": {
 		"agreement_title": "Contract Signature",
 		"reservation_title": "Booking Signature",
-		"agreement_message": "Draw your signature below and submit it towards your rental contract.",
-		"reservation_message": "Draw your signature below and submit it towards your booking.",
-		"clear_input": "Clear the signature"
+		"agreement_message": "Draw your signature below and press the Save button.",
+		"reservation_message": "Draw your signature below and press the Save button.",
+		"clear_input": "Clear the signature",
+		"error_no_signature": "Please provide a signature.",
+		"save_input": "Sign",
+		"signature_required": "Add your signature and press the Save button before you continue.",
+		"go_back": {
+			"title": "Are you sure?",
+			"message": "Going back will discard the added signature.",
+			"cancel": "Cancel",
+			"submit": "I Understand"
+		}
 	},
 	"error_boundary": {
 		"title": "Uh Oh",

@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, Row, Col, Button, Modal } from "react-bootstrap";
+import { Card, Row, Col, Button, Modal, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import DefaultSignatureCanvas from "../../components/DefaultSignatureCanvas/DefaultSignatureCanvas";
 import { selectConfigState } from "../../redux/store";
 import { APP_CONSTANTS } from "../../utils/constants";
 
@@ -20,12 +21,19 @@ const DefaultRentalSignatureController = ({
 }: IProps) => {
 	const { t } = useTranslation();
 	const configState = useSelector(selectConfigState);
+	const [signatureUrl, setSignatureUrl] = React.useState("");
 
 	const [returnModalOpen, setReturnModalOpen] = React.useState(false);
+	const [showRequiredMessage, setShowRequiredMessage] = React.useState(false);
 
 	const handleNextState = React.useCallback(() => {
+		if (signatureUrl === "") {
+			setShowRequiredMessage(true);
+			return;
+		}
+
 		handleSubmit();
-	}, [handleSubmit]);
+	}, [handleSubmit, signatureUrl]);
 
 	const handleOpenModalConfirmation = React.useCallback(() => {
 		setReturnModalOpen(true);
@@ -38,17 +46,28 @@ const DefaultRentalSignatureController = ({
 	const handleModalDenyReturn = React.useCallback(() => {
 		setReturnModalOpen(false);
 	}, []);
+
+	const handleSettingSignatureUrl = React.useCallback((url: string) => {
+		if (url === "") {
+			setSignatureUrl("");
+		} else {
+			setShowRequiredMessage(false);
+			setSignatureUrl(url);
+			// window.open(url);
+			console.log(url);
+		}
+	}, []);
 	return (
 		<>
 			<Modal show={returnModalOpen} onHide={handleModalDenyReturn} keyboard={true} centered>
-				<Modal.Header>{t("license_upload.go_back.title")}</Modal.Header>
-				<Modal.Body>{t("license_upload.go_back.message")}</Modal.Body>
+				<Modal.Header>{t("rental_signature.go_back.title")}</Modal.Header>
+				<Modal.Body>{t("rental_signature.go_back.message")}</Modal.Body>
 				<Modal.Footer>
 					<Button variant='secondary' onClick={handleModalDenyReturn}>
-						{t("license_upload.go_back.cancel")}
+						{t("rental_signature.go_back.cancel")}
 					</Button>
 					<Button variant='warning' onClick={handleModalAcceptReturn}>
-						{t("license_upload.go_back.submit")}
+						{t("rental_signature.go_back.submit")}
 					</Button>
 				</Modal.Footer>
 			</Modal>
@@ -65,18 +84,10 @@ const DefaultRentalSignatureController = ({
 							: t("rental_signature.reservation_message")}
 					</Card.Subtitle>
 					<div className='mt-3 d-grid'>
+						{showRequiredMessage && <Alert variant='light'>{t("rental_signature.signature_required")}</Alert>}
 						<Row>
 							<Col md={12}>
-								<div style={{ height: 300 }}>signature canvas</div>
-							</Col>
-						</Row>
-						<Row>
-							<Col xs={12}>
-								<div className='d-flex justify-content-center'>
-									<Button variant='danger' style={{ width: "90%" }}>
-										{t("rental_signature.clear_input")}
-									</Button>
-								</div>
+								<DefaultSignatureCanvas onSignature={handleSettingSignatureUrl} />
 							</Col>
 						</Row>
 						<Row className='mt-3'>
