@@ -1,11 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import clientV3 from "../../../api/clientV3";
-import { urlBlobToBase64 } from "../../../utils/blobUtils";
+import { insertCreditCardForCustomer, uploadDriverLicenseImageForCustomer } from "../../../api/customerApi";
+
 import { bodyEmailTemplate } from "../../../utils/bodyEmailTemplate";
 
-import { bodyInsertV3Card } from "../../../utils/bodyInsertCard";
-import { v3UploadLicenseImage } from "../../../utils/bodyUploadLicenseImage";
 import { setSubmissionState, setSubmissionErrorState, setSubmissionMessage } from "./slice";
 import { RootState } from "../../store";
 
@@ -18,57 +17,41 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	const formState = state.forms;
 	const reservationState = state.retrievedDetails;
 
-	console.groupCollapsed("forms/submitAllAvailable");
+	console.group("forms/submitAllAvailable");
 
-	// Post card details
-	try {
-		if (formState.creditCardForm.isReadyToSubmit) {
-			dispatch(setSubmissionMessage(t.form.submitting_msgs.credit_card));
-			await clientV3.post(
-				`/Customers/${reservationState.customerId}/CreditCards`,
-				bodyInsertV3Card(formState.creditCardForm.data)
-			);
-		}
-	} catch (error) {
-		console.error("post credit card details error", error);
-		console.groupEnd();
-		dispatch(setSubmissionErrorState("submitting_details_error"));
-		return;
+	const formPromisesToRun = [];
+
+	// Add Credit Card details to array of submissions to run
+	if (formState.creditCardForm.isReadyToSubmit) {
+		formPromisesToRun.push(
+			insertCreditCardForCustomer(`${reservationState.customerId}`, formState.creditCardForm.data)
+		);
 	}
 
-	// Upload driver's license images
-	try {
-		if (formState.licenseUploadForm.isReadyToSubmit) {
-			dispatch(setSubmissionMessage(t.form.submitting_msgs.license_images_bundle));
-			const frontLicenseBase64 = await urlBlobToBase64(formState.licenseUploadForm.data.frontImageUrl!);
-			const backLicenseBase64 = await urlBlobToBase64(formState.licenseUploadForm.data.backImageUrl!);
+	// Add driver's license images to array of submissions to run
+	if (formState.licenseUploadForm.isReadyToSubmit) {
+		formPromisesToRun.push(
+			uploadDriverLicenseImageForCustomer(
+				`${reservationState.customerId}`,
+				`${configState.clientId}`,
+				formState.licenseUploadForm.data.frontImageUrl!,
+				formState.licenseUploadForm.data.frontImageName ?? ""
+			)
+		);
+		formPromisesToRun.push(
+			uploadDriverLicenseImageForCustomer(
+				`${reservationState.customerId}`,
+				`${configState.clientId}`,
+				formState.licenseUploadForm.data.backImageUrl!,
+				formState.licenseUploadForm.data.backImageName ?? ""
+			)
+		);
+	}
 
-			const frontImagePayload = v3UploadLicenseImage({
-				config: configState,
-				side: "Front",
-				imageName: formState.licenseUploadForm.data.frontImageName!,
-				imageBase64: frontLicenseBase64,
-			});
-			const backImagePayload = v3UploadLicenseImage({
-				config: configState,
-				side: "Back",
-				imageName: formState.licenseUploadForm.data.backImageName!,
-				imageBase64: backLicenseBase64,
-			});
-
-			const submitFrontImagePromise = clientV3.post(
-				`/Customers/${reservationState.customerId}/Documents`,
-				frontImagePayload
-			);
-			const submitBackImagePromise = clientV3.post(
-				`/Customers/${reservationState.customerId}/Documents`,
-				backImagePayload
-			);
-
-			await Promise.all([submitFrontImagePromise, submitBackImagePromise]);
-		}
-	} catch (error) {
-		console.error("license images upload error", error);
+	// await saving all the form details
+	dispatch(setSubmissionMessage(t.form.submitting_msg));
+	const runPromises = await Promise.all(formPromisesToRun);
+	if (runPromises.includes(false)) {
 		console.groupEnd();
 		dispatch(setSubmissionErrorState("submitting_details_error"));
 		return;

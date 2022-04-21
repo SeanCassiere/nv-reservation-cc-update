@@ -12,11 +12,13 @@ import {
 	setPreviewHtmlBlobUrl,
 	setRetrievedRentalDetails,
 	setSystemUserId,
+	setGetComposeEmailDetails,
 } from "../retrievedDetails/slice";
 import { RootState } from "../../store";
 import { getReservationByIdOrNumber } from "../../../api/reservationApi";
 import { getAgreementByIdOrNumber } from "../../../api/agreementApi";
 import { APP_CONSTANTS } from "../../../utils/constants";
+import { getComposeEmailDetails } from "../../../api/emailsApi";
 
 interface User {
 	userID: number;
@@ -39,9 +41,9 @@ export const authenticateAppThunk = createAsyncThunk(
 	async (_, { dispatch, getState, rejectWithValue }) => {
 		let systemUserId = 0;
 
-		const state = getState() as RootState;
+		let state = getState() as RootState;
 		const { clientId, responseTemplateId } = state.config;
-		console.groupCollapsed("config/authenticateApp");
+		console.group("config/authenticateApp");
 
 		// authenticate app
 		try {
@@ -74,7 +76,7 @@ export const authenticateAppThunk = createAsyncThunk(
 			dispatch(setCcEmails(emailsToCC));
 
 			const adminUserIdToUse = res.data.filter((u: User) => u.userRoleID === 1);
-			console.log({ users: adminUserIdToUse });
+
 			if (adminUserIdToUse.length > 0) {
 				dispatch(setSystemUserId(adminUserIdToUse[0].userID));
 				systemUserId = adminUserIdToUse[0].userID;
@@ -130,6 +132,19 @@ export const authenticateAppThunk = createAsyncThunk(
 			console.groupEnd();
 			// failing to fetch the email template details should not fail the app
 			// return dispatch(setAppStatus({ status: "authentication_error" }));
+		}
+
+		// get compose email details
+		state = getState() as RootState;
+		const composeDetails = await getComposeEmailDetails(
+			clientId,
+			systemUserId,
+			state.config.referenceType,
+			state.retrievedDetails.referenceId,
+			state.config.responseTemplateId!
+		);
+		if (composeDetails) {
+			dispatch(setGetComposeEmailDetails(composeDetails));
 		}
 
 		// get email preview html and turn into a blob url
