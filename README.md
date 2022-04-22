@@ -8,6 +8,14 @@ Install `concurrently` globally before running `yarn dev`.
 
 View the RENTALL API V3 Documentation [API Documentation](https://api.apprentall.com/docs).
 
+## Create your own flow
+
+You can create your own config flow by using the built-in developer menu. This creator can be access using the following keyboard shortcut.
+
+Windows: `CTRL + SHIFT + K`
+
+Mac: `CMD + SHIFT + K`
+
 ## URL Params
 
 ```

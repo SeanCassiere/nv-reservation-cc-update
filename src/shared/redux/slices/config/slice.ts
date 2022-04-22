@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initializeAppThunk } from "./thunks";
 
-// import { allControllerFlows } from "../../utils/controllerFlows";
-
 const appStates = [
 	"authenticating",
 	"loaded",

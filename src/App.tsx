@@ -7,16 +7,33 @@ import { useTranslation } from "react-i18next";
 import AppRoutes from "./routes/AppRoutes";
 import ErrorSubmission from "./shared/pages/ErrorSubmission/ErrorSubmission";
 
+import DeveloperDebugDrawer from "./shared/components/DeveloperDebugDrawer/DeveloperDebugDrawer";
+
 import { selectConfigState } from "./shared/redux/store";
 
 const App = () => {
 	const { t } = useTranslation();
 	const { fromRentall } = useSelector(selectConfigState);
+
+	// developer menu
+	const [isDeveloperDrawerOpen, setIsDeveloperDrawerOpen] = React.useState(false);
+	const handleCloseDeveloperDrawer = () => setIsDeveloperDrawerOpen(false);
+	React.useEffect(() => {
+		function onKeyDown(evt: KeyboardEvent) {
+			if (evt.key === "k" && evt.shiftKey && (evt.metaKey || evt.ctrlKey)) {
+				setIsDeveloperDrawerOpen((v) => !v);
+			}
+		}
+		window.addEventListener("keydown", onKeyDown);
+		return () => window.removeEventListener("keydown", onKeyDown);
+	}, []);
+
 	return (
 		<Container>
 			<Row className='justify-content-lg-center' style={{ paddingTop: "1rem" }}>
 				<Col xs={12} sm={12} md={12} lg={6}>
 					<ErrorBoundary FallbackComponent={ErrorFallback}>
+						<DeveloperDebugDrawer open={isDeveloperDrawerOpen} handleClose={handleCloseDeveloperDrawer} />
 						<AppRoutes />
 					</ErrorBoundary>
 				</Col>
