@@ -26,6 +26,7 @@ export interface ConfigSliceState {
 	rawQueryString: string;
 	fromRentall: boolean;
 	referenceType: string;
+	qa: boolean;
 }
 
 const initialState: ConfigSliceState = {
@@ -38,6 +39,7 @@ const initialState: ConfigSliceState = {
 	rawQueryString: "",
 	fromRentall: true,
 	referenceType: "Reservation",
+	qa: false,
 };
 
 const configSlice = createSlice({
@@ -58,7 +60,13 @@ const configSlice = createSlice({
 		},
 		setConfigValues: (
 			state,
-			action: PayloadAction<{ clientId: string; responseTemplateId: string; flow: string[]; fromRentall: boolean }>
+			action: PayloadAction<{
+				clientId: string;
+				responseTemplateId: string;
+				flow: string[];
+				fromRentall: boolean;
+				qa: boolean;
+			}>
 		) => {
 			state.clientId = action.payload.clientId;
 			state.responseTemplateId = action.payload.responseTemplateId;
@@ -66,6 +74,7 @@ const configSlice = createSlice({
 				state.flow = action.payload.flow;
 			}
 			state.fromRentall = action.payload.fromRentall;
+			state.qa = action.payload.qa;
 		},
 		setReferenceType: (state, action: PayloadAction<{ referenceType: string }>) => {
 			state.referenceType = action.payload.referenceType;

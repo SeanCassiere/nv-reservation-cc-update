@@ -13,6 +13,7 @@ import { initializeAppThunk } from "../../redux/slices/config/thunks";
 
 import DisplayCurrentController from "./DisplayCurrentController";
 import { APP_CONSTANTS } from "../../utils/constants";
+import { isValueTrue } from "../../utils/common";
 
 type ConfigState = {
 	clientId: string | null;
@@ -46,6 +47,7 @@ const ApplicationController = () => {
 		}
 
 		const configQuery = query.get("config");
+		const qaQuery = query.get("qa");
 
 		let config: ConfigState = {
 			clientId: null,
@@ -67,6 +69,7 @@ const ApplicationController = () => {
 				responseTemplateId: config.emailTemplateId,
 				flow: config.flow,
 				fromRentall: config.fromRentall,
+				qa: isValueTrue(qaQuery) ? true : false,
 			})
 		);
 
