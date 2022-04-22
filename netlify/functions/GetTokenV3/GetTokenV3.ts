@@ -8,10 +8,10 @@ const isValueTrue = (value: string | undefined | null) => {
 export const handler: Handler = async (event, context) => {
 	const qaQuery = event.queryStringParameters.qa;
 
-	const isQa = isValueTrue(qaQuery);
+	const isQa = Boolean(isValueTrue(qaQuery));
 	const url = isQa ? process.env.QA_V3_AUTH_URL : process.env.V3_AUTH_URL;
-	const clientId = isQa ? process.env.QA_CLIENT_ID : process.env.CLIENT_ID;
-	const clientSecret = isQa ? process.env.QA_CLIENT_SECRET : process.env.CLIENT_SECRET;
+	const clientId = isQa ? process.env.QA_V3_CLIENT_ID : process.env.V3_CLIENT_ID;
+	const clientSecret = isQa ? process.env.QA_V3_CLIENT_SECRET : process.env.V3_CLIENT_SECRET;
 
 	try {
 		const params = new URLSearchParams();
