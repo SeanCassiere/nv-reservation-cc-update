@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import DefaultSignatureCanvas from "../../components/DefaultSignatureCanvas/DefaultSignatureCanvas";
 
-import { setRentalSignatureFormData } from "../../redux/slices/forms/slice";
+import { clearReduxFormState, setRentalSignatureFormData } from "../../redux/slices/forms/slice";
 import { selectConfigState } from "../../redux/store";
 import { APP_CONSTANTS } from "../../utils/constants";
 
@@ -47,7 +47,7 @@ const DefaultRentalSignatureController = ({
 	}, []);
 
 	const handleModalAcceptReturn = React.useCallback(() => {
-		dispatch(setRentalSignatureFormData({ signatureUrl: "", isReadyToSubmit: false }));
+		dispatch(clearReduxFormState("rentalSignatureForm"));
 		handlePrevious();
 	}, [dispatch, handlePrevious]);
 

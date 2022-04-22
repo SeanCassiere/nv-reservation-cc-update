@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Card, Button, Col, Row, Modal, Accordion, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 
-import { selectCreditCardForm } from "../../redux/store";
-import { setCreditCardFormData } from "../../redux/slices/forms/slice";
+import { selectCreditCardForm, selectLicenseUploadForm } from "../../redux/store";
+import { clearReduxFormState, setCreditCardFormData } from "../../redux/slices/forms/slice";
 import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
 import { creditCardTypeFormat } from "../../utils/creditCardTypeFormat";
 import { setLicenseUploadFormData } from "../../redux/slices/forms/slice";
@@ -14,6 +14,7 @@ import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzo
 import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
 import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
 import useCreditCardSchema from "../../hooks/useCreditCardSchema";
+import { urlToBlob } from "../../utils/blobUtils";
 
 interface IProps {
 	handleSubmit: () => void;
@@ -73,10 +74,24 @@ const DefaultCreditCardAndLicenseUploadController = ({
 	const handleBlur = useCallback(() => setCurrentFocus(""), []);
 
 	// license related handlers
+	const {
+		data: { frontImageName, frontImageUrl, backImageName, backImageUrl },
+	} = useSelector(selectLicenseUploadForm);
 	const [key, setKey] = useState<string | undefined>("front");
 
 	const [frontImageFile, setFrontImageFile] = useState<File | null>(null);
 	const [displayNoFrontImageError, setDisplayNoFrontImageError] = useState(false);
+
+	// if available in redux, setting the front image file
+	useEffect(() => {
+		if (frontImageUrl) {
+			(async () => {
+				const blob = await urlToBlob(frontImageUrl);
+				const file = new File([blob], frontImageName!);
+				setFrontImageFile(file);
+			})();
+		}
+	}, [frontImageName, frontImageUrl]);
 
 	const selectFrontImage = useCallback(async (file: File) => {
 		setDisplayNoFrontImageError(false);
@@ -93,6 +108,17 @@ const DefaultCreditCardAndLicenseUploadController = ({
 
 	const [backImageFile, setBackImageFile] = useState<File | null>(null);
 	const [displayNoBackImageError, setDisplayNoBackImageError] = useState(false);
+
+	// if available in redux, setting the back image file
+	useEffect(() => {
+		if (backImageUrl) {
+			(async () => {
+				const blob = await urlToBlob(backImageUrl);
+				const file = new File([blob], backImageName!);
+				setBackImageFile(file);
+			})();
+		}
+	}, [backImageName, backImageUrl]);
 
 	const selectBackImage = useCallback((file: File) => {
 		setDisplayNoBackImageError(false);
@@ -114,8 +140,9 @@ const DefaultCreditCardAndLicenseUploadController = ({
 	}, []);
 
 	const handleModalAcceptReturn = useCallback(() => {
+		dispatch(clearReduxFormState("licenseUploadForm"));
 		handlePrevious();
-	}, [handlePrevious]);
+	}, [dispatch, handlePrevious]);
 
 	const handleModalDenyReturn = useCallback(() => {
 		setReturnModalOpen(false);
@@ -226,6 +253,7 @@ const DefaultCreditCardAndLicenseUploadController = ({
 												onSelectFile={selectFrontImage}
 												onClearFile={clearFrontImage}
 												acceptOnly={["image/jpeg", "image/jpg", "image/png"]}
+												initialPreview={frontImageUrl ? { fileName: frontImageName!, url: frontImageUrl } : null}
 											/>
 										</Accordion.Body>
 									</Accordion.Item>
@@ -242,6 +270,7 @@ const DefaultCreditCardAndLicenseUploadController = ({
 												onSelectFile={selectBackImage}
 												onClearFile={clearBackImage}
 												acceptOnly={["image/jpeg", "image/jpg", "image/png"]}
+												initialPreview={backImageUrl ? { fileName: backImageName!, url: backImageUrl } : null}
 											/>
 										</Accordion.Body>
 									</Accordion.Item>

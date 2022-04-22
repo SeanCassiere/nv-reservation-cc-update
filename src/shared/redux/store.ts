@@ -25,6 +25,9 @@ export const selectSubmissionState = (state: RootState) => state.forms.submissio
 export const selectAuthState = (state: RootState) => state.auth;
 
 export const selectCreditCardForm = (state: RootState) => state.forms.creditCardForm;
+export const selectLicenseUploadForm = (state: RootState) => state.forms.licenseUploadForm;
+export const selectRentalSignatureForm = (state: RootState) => state.forms.rentalSignatureForm;
+
 export const selectRetrievedDetails = (state: RootState) => state.retrievedDetails;
 
 export default store;

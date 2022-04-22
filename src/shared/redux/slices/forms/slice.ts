@@ -115,6 +115,22 @@ const formsSlice = createSlice({
 			state.submission.state = action.payload;
 			state.submission.isSubmissionAttempted = true;
 		},
+		clearReduxFormState: (
+			state,
+			action: PayloadAction<"creditCardForm" | "licenseUploadForm" | "rentalSignatureForm">
+		) => {
+			switch (action.payload) {
+				case "creditCardForm":
+					state.creditCardForm = initialState.creditCardForm;
+					break;
+				case "licenseUploadForm":
+					state.licenseUploadForm = initialState.licenseUploadForm;
+					break;
+				case "rentalSignatureForm":
+					state.rentalSignatureForm = initialState.rentalSignatureForm;
+					break;
+			}
+		},
 	},
 });
 
@@ -125,6 +141,7 @@ export const {
 	setRentalSignatureFormData,
 	setSubmissionErrorState,
 	setSubmissionMessage,
+	clearReduxFormState,
 } = formsSlice.actions;
 
 export default formsSlice;

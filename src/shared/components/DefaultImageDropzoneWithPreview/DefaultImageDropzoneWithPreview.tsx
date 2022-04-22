@@ -41,6 +41,7 @@ interface IProps {
 	onSelectFile?: (file: File) => void;
 	onClearFile?: () => void;
 	acceptOnly?: MimeType;
+	initialPreview?: { fileName: string; url: string } | null | undefined;
 }
 
 const DefaultImageDropzoneWithPreview = ({
@@ -50,8 +51,9 @@ const DefaultImageDropzoneWithPreview = ({
 	onSelectFile,
 	onClearFile,
 	acceptOnly = undefined,
+	initialPreview = null,
 }: IProps) => {
-	const [previewImage, setPreviewImage] = useState<{ fileName: string; url: string } | null>(null);
+	const [previewImage, setPreviewImage] = useState<{ fileName: string; url: string } | null>(initialPreview);
 
 	const onDrop = useCallback(
 		(acceptedFiles: File[]) => {
