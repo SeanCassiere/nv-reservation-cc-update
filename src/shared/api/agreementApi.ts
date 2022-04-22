@@ -37,7 +37,7 @@ export const getAgreementByIdOrNumber = async (
 				locationEmail: res.data.checkoutLocationEmail,
 				referenceNo: res.data.agreementNumber,
 				referenceId: Number(res.data.agreementId),
-				driverId: Number(res.data.driverList[0].driverId),
+				driverId: Number(res.data.driverList[0]?.driverId) ?? res.data.customerId,
 				driverName: `${res.data.firstName ?? ""} ${res.data.lastName ?? ""}`,
 			};
 

@@ -36,14 +36,14 @@ const AUTH_URL = process.env.REACT_APP_V3_AUTH_URL ?? "/.netlify/functions/GetTo
 // });
 // dispatch(setAccessToken({ token: auth.data.apiToken.access_token }));
 
-export const authenticateAppThunk = createAsyncThunk(
-	"config/authenticateApp",
+export const initializeAppThunk = createAsyncThunk(
+	"config/initializeApp",
 	async (_, { dispatch, getState, rejectWithValue }) => {
 		let systemUserId = 0;
 
 		let state = getState() as RootState;
 		const { clientId, responseTemplateId } = state.config;
-		console.group("config/authenticateApp");
+		console.group("config/initializeApp");
 
 		// authenticate app
 		try {
@@ -67,13 +67,6 @@ export const authenticateAppThunk = createAsyncThunk(
 					clientId: clientId,
 				},
 			});
-			const reservationEmailUsers: User[] = res.data
-				.filter((u: User) => u.isReservationEmail)
-				.filter((u: User) => u.email && u.email.trim() !== "")
-				.filter((u: User) => u.isActive);
-			const emailsToCC = reservationEmailUsers.map((u: User) => u.email);
-
-			dispatch(setCcEmails(emailsToCC));
 
 			const adminUserIdToUse = res.data.filter((u: User) => u.userRoleID === 1);
 
@@ -81,6 +74,14 @@ export const authenticateAppThunk = createAsyncThunk(
 				dispatch(setSystemUserId(adminUserIdToUse[0].userID));
 				systemUserId = adminUserIdToUse[0].userID;
 			}
+
+			const reservationEmailUsers: User[] = res.data
+				.filter((u: User) => u.isReservationEmail)
+				.filter((u: User) => u.email && u.email.trim() !== "")
+				.filter((u: User) => u.isActive);
+			const emailsToCC = reservationEmailUsers.map((u: User) => u.email);
+
+			dispatch(setCcEmails(emailsToCC));
 		} catch (error) {
 			console.error("get cc emails", error);
 			console.groupEnd();

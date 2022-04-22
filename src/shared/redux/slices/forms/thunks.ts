@@ -27,7 +27,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	// Add Credit Card details to array of submissions to run
 	if (formState.creditCardForm.isReadyToSubmit) {
 		formPromisesToRun.push(
-			insertCreditCardForCustomer(`${reservationState.customerId}`, formState.creditCardForm.data)
+			insertCreditCardForCustomer(`${reservationState.data.customerId}`, formState.creditCardForm.data)
 		);
 	}
 
@@ -35,7 +35,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	if (formState.licenseUploadForm.isReadyToSubmit) {
 		formPromisesToRun.push(
 			uploadDriverLicenseImageForCustomer(
-				`${reservationState.customerId}`,
+				`${reservationState.data.customerId}`,
 				`${configState.clientId}`,
 				formState.licenseUploadForm.data.frontImageUrl!,
 				formState.licenseUploadForm.data.frontImageName ?? ""
@@ -43,7 +43,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 		);
 		formPromisesToRun.push(
 			uploadDriverLicenseImageForCustomer(
-				`${reservationState.customerId}`,
+				`${reservationState.data.customerId}`,
 				`${configState.clientId}`,
 				formState.licenseUploadForm.data.backImageUrl!,
 				formState.licenseUploadForm.data.backImageName ?? ""
@@ -56,8 +56,8 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 		formPromisesToRun.push(
 			uploadRentalDigitalSignatureFromUrl(
 				formState.rentalSignatureForm.data.signatureUrl,
-				reservationState.driverId,
-				reservationState.customerName,
+				reservationState.data.driverId,
+				reservationState.data.customerName,
 				configState.referenceType,
 				reservationState.referenceId
 			)

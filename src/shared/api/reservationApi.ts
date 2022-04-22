@@ -36,7 +36,7 @@ export const getReservationByIdOrNumber = async (
 				locationEmail: res.data.reservationview.locationEmail,
 				referenceNo: res.data.reservationview.reservationNumber,
 				referenceId: Number(res.data.reservationview.reserveId),
-				driverId: Number(res.data.driverList[0].driverId),
+				driverId: res.data.driverList[0]?.driverId ?? res.data.customerDetails?.customerId,
 				driverName: `${res.data.customerDetails?.firstName ?? ""} ${res.data.customerDetails?.lastName ?? ""}`,
 			};
 

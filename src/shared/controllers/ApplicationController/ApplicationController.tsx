@@ -9,7 +9,7 @@ import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 import { setConfigValues, setLang, setRawConfig, setReferenceType } from "../../redux/slices/config/slice";
 import { setInitialReferenceId } from "../../redux/slices/retrievedDetails/slice";
 import { selectConfigState } from "../../redux/store";
-import { authenticateAppThunk } from "../../redux/slices/config/thunks";
+import { initializeAppThunk } from "../../redux/slices/config/thunks";
 
 import DisplayCurrentController from "./DisplayCurrentController";
 import { APP_CONSTANTS } from "../../utils/constants";
@@ -78,7 +78,7 @@ const ApplicationController = () => {
 			dispatch(setInitialReferenceId(agreementId));
 		}
 
-		dispatch(authenticateAppThunk());
+		dispatch(initializeAppThunk());
 	}, [dispatch, navigate]);
 
 	/*
@@ -106,7 +106,7 @@ const ApplicationController = () => {
 	const handleSubmit = useCallback(() => {
 		if (remainingFlowControllers.length <= 0) {
 			// navigate to a protected page with a submission controller
-			return navigate("/submit-details");
+			return navigate("/submit-details", { replace: true });
 		} else {
 			const currentScreen = activeController!;
 			const nextScreen = remainingFlowControllers[0];

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { authenticateAppThunk } from "./thunks";
+import { initializeAppThunk } from "./thunks";
 
 // import { allControllerFlows } from "../../utils/controllerFlows";
 
@@ -72,7 +72,7 @@ const configSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(authenticateAppThunk.pending, (state) => {
+		builder.addCase(initializeAppThunk.pending, (state) => {
 			state.status = "authenticating";
 		});
 	},

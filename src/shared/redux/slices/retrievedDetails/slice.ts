@@ -2,32 +2,36 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ReturnComposeEmailDetails } from "../../../api/emailsApi";
 
 export interface IRetrievedDetailsSliceState {
-	userId: number;
-	locationId: number;
-	locationEmail: string;
-	customerId: number;
-	customerName: string;
-	driverId: number;
+	data: {
+		locationId: number;
+		locationEmail: string;
+		customerName: string;
+		customerId: number;
+		driverId: number;
+		customerEmail: string;
+	};
+	adminUserId: number;
 	referenceId: number;
 	referenceNo: string;
-	customerEmail: string;
-	ccEmails: string[];
+	responseEmailsToCc: string[];
 	responseTemplateTypeId: number;
 	responseTemplateBlobUrl: string;
 	responseTemplateSubject: string;
 }
 
 const initialState: IRetrievedDetailsSliceState = {
-	userId: 0,
-	locationId: 0,
-	locationEmail: "",
-	customerId: 0,
-	customerName: "",
-	driverId: 0,
+	data: {
+		locationId: 0,
+		locationEmail: "",
+		customerName: "",
+		customerId: 0,
+		driverId: 0,
+		customerEmail: "",
+	},
+	adminUserId: 0,
 	referenceId: 0,
 	referenceNo: "",
-	customerEmail: "",
-	ccEmails: [],
+	responseEmailsToCc: [],
 	responseTemplateTypeId: 0,
 	responseTemplateBlobUrl: "",
 	responseTemplateSubject: "",
@@ -42,10 +46,10 @@ const retrievedDetailsSlice = createSlice({
 			state.referenceNo = `${action.payload}`;
 		},
 		setSystemUserId: (state, action: PayloadAction<number>) => {
-			state.userId = action.payload;
+			state.adminUserId = action.payload;
 		},
 		setCcEmails: (state, action: PayloadAction<string[]>) => {
-			state.ccEmails = action.payload;
+			state.responseEmailsToCc = action.payload;
 		},
 		setEmailTemplateDetails: (state, action: PayloadAction<{ subjectLine: string; templateTypeId: number }>) => {
 			state.responseTemplateSubject = action.payload.subjectLine;
@@ -57,15 +61,15 @@ const retrievedDetailsSlice = createSlice({
 		setRetrievedRentalDetails: (state, action) => {
 			state.referenceNo = action.payload.referenceNo;
 			state.referenceId = action.payload.referenceId;
-			state.customerId = action.payload.customerId;
-			state.locationId = action.payload.locationId;
-			state.customerEmail = action.payload.customerEmail;
-			state.locationEmail = action.payload.locationEmail;
-			state.driverId = action.payload.driverId;
-			state.customerName = action.payload?.driverName ?? "";
+			state.data.customerId = action.payload.customerId;
+			state.data.locationId = action.payload.locationId;
+			state.data.customerEmail = action.payload.customerEmail;
+			state.data.locationEmail = action.payload.locationEmail;
+			state.data.driverId = action.payload.driverId ?? state.data.driverId;
+			state.data.customerName = action.payload?.driverName ?? state.data.customerName;
 		},
 		setGetComposeEmailDetails: (state, action: PayloadAction<ReturnComposeEmailDetails>) => {
-			state.locationEmail = action.payload.fromAddress;
+			state.data.locationEmail = action.payload.fromAddress;
 			state.responseTemplateSubject = action.payload.selectedTemplate?.subjectLine || state.responseTemplateSubject;
 		},
 	},
