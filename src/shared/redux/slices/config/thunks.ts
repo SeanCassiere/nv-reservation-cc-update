@@ -47,7 +47,11 @@ export const initializeAppThunk = createAsyncThunk(
 
 		// authenticate app
 		try {
-			const authV3 = await axios.get(AUTH_URL);
+			let auth_url = AUTH_URL;
+			if (state.config.qa) {
+				auth_url += "?qa=true";
+			}
+			const authV3 = await axios.get(auth_url);
 
 			if (authV3.status !== 200 || !authV3.data.access_token || !authV3.data.token_type) {
 				throw new Error("Authentication failed");
