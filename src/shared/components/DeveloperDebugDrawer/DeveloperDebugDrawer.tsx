@@ -31,7 +31,7 @@ const initialConfigState: ConfigObject = {
 	qa: false,
 	clientId: "0",
 	emailTemplateId: "0",
-	flow: ["Default/CreditCardForm"],
+	flow: [ALL_SCREEN_FLOWS[0].value],
 	fromRentall: true,
 };
 
@@ -106,8 +106,8 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 			qa: Boolean(isValueTrue(qa)),
 			clientId: `${readConfig.clientId}`,
 			emailTemplateId: `${readConfig.emailTemplateId}`,
-			flow: readConfig.flow,
-			fromRentall: readConfig.fromRentall !== undefined ? readConfig.fromRentall : true,
+			flow: readConfig.flow ?? initialConfigState.flow,
+			fromRentall: readConfig.fromRentall !== undefined ? readConfig.fromRentall : initialConfigState.flow,
 		};
 
 		setConfig(formObject);
