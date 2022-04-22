@@ -107,7 +107,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 			clientId: `${readConfig.clientId}`,
 			emailTemplateId: `${readConfig.emailTemplateId}`,
 			flow: readConfig.flow ?? initialConfigState.flow,
-			fromRentall: readConfig.fromRentall !== undefined ? readConfig.fromRentall : initialConfigState.flow,
+			fromRentall: readConfig.fromRentall !== undefined ? readConfig.fromRentall : initialConfigState.fromRentall,
 		};
 
 		setConfig(formObject);
@@ -162,7 +162,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 						<Form.Group className='mb-3' controlId='devForm.referenceId'>
 							<Form.Label>Reference ID</Form.Label>
 							<Form.Control
-								type='number'
+								type='text'
 								value={config.referenceId}
 								name='referenceId'
 								onChange={handleNormalInputChange}
