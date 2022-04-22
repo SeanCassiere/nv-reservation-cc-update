@@ -16,7 +16,7 @@ i18n
 			lookupQuerystring: "lang",
 		},
 		fallbackLng: "en",
-		debug: process.env.DEVELOPMENT ? true : false,
+		debug: process.env.REACT_APP_DEVELOPMENT ? true : false,
 		interpolation: {
 			escapeValue: false,
 		},
