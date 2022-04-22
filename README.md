@@ -1,4 +1,4 @@
-# Navotar Reservation Details Update
+# RENTALL - Customer Details Update
 
 This application is used to add additional details to their reservation.
 
@@ -6,7 +6,7 @@ Install `concurrently` globally before running `yarn dev`.
 
 `npm install -g concurrently`
 
-View the Navotar API V3 Documentation [API Documentation](https://api.appnavotar.com/docs).
+View the RENTALL API V3 Documentation [API Documentation](https://api.apprentall.com/docs).
 
 ## URL Params
 
