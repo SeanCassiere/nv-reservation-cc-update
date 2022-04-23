@@ -1,11 +1,13 @@
 import React from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { useTranslation } from "react-i18next";
 
 import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
-import Alert from "react-bootstrap/Alert";
 
 import { supportedLanguages } from "../../redux/slices/config/slice";
 import { ALL_SCREEN_FLOWS, APP_CONSTANTS } from "../../utils/constants";
@@ -16,19 +18,19 @@ type ConfigObject = {
 	referenceType: string;
 	lang: string;
 	qa: boolean;
+	dev: boolean;
 	clientId: string;
 	emailTemplateId: string;
 	flow: string[];
 	fromRentall: boolean;
 };
 
-const SELECT_MENU_DEFAULT_KEY = "Select";
-
 const initialConfigState: ConfigObject = {
 	referenceId: "0",
 	referenceType: "Reservation",
 	lang: "en",
 	qa: false,
+	dev: true,
 	clientId: "0",
 	emailTemplateId: "0",
 	flow: [ALL_SCREEN_FLOWS[0].value],
@@ -36,6 +38,9 @@ const initialConfigState: ConfigObject = {
 };
 
 const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClose: () => void }) => {
+	const { t } = useTranslation();
+	const SELECT_MENU_DEFAULT_KEY = t("developer.config_creator.form_select_value");
+
 	const [initialConfig, setInitialConfig] = React.useState<ConfigObject>(initialConfigState);
 	const [config, setConfig] = React.useState<ConfigObject>(initialConfigState);
 
@@ -76,14 +81,12 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 
 	const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const queryString = devConfigToQueryUrl(config);
-		const location = window.location.href.split("?")[0];
-		const newUrl = `${location}${queryString}`;
-		console.log(newUrl);
-		window.location.href = newUrl;
+		const queryStringUrl = devConfigToQueryUrl(config);
+		window.location.href = queryStringUrl;
 	};
 
-	const handleReset = () => {
+	const handleReset = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+		e.preventDefault();
 		setConfig(initialConfig);
 	};
 
@@ -91,6 +94,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 		const query = new URLSearchParams(window.location.search);
 		const lang = query.get("lang");
 		const qa = query.get("qa");
+		const dev = query.get("dev");
 		const agreementId = query.get("agreementId");
 		const reservationId = query.get("reservationId");
 
@@ -100,12 +104,15 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 		);
 
 		const formObject: ConfigObject = {
-			referenceId: agreementId ?? reservationId ?? "0",
+			referenceId: agreementId ?? reservationId ?? initialConfigState.clientId,
 			referenceType: agreementId ? APP_CONSTANTS.REF_TYPE_AGREEMENT : APP_CONSTANTS.REF_TYPE_RESERVATION,
-			lang: lang ?? "en",
+			lang: lang ?? initialConfigState.lang,
 			qa: Boolean(isValueTrue(qa)),
-			clientId: `${readConfig.clientId}`,
-			emailTemplateId: `${readConfig.emailTemplateId}`,
+			dev: Boolean(isValueTrue(dev)),
+			clientId: readConfig.clientId ? `${readConfig.clientId}` : initialConfigState.clientId,
+			emailTemplateId: readConfig.emailTemplateId
+				? `${readConfig.emailTemplateId}`
+				: initialConfigState.emailTemplateId,
 			flow: readConfig.flow ?? initialConfigState.flow,
 			fromRentall: readConfig.fromRentall !== undefined ? readConfig.fromRentall : initialConfigState.fromRentall,
 		};
@@ -118,28 +125,30 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 		<React.Fragment>
 			<Offcanvas show={open} onHide={handleClose} placement='end' name='Developer Menu'>
 				<Offcanvas.Header closeButton>
-					<Offcanvas.Title>Developer Menu</Offcanvas.Title>
+					<Offcanvas.Title>{t("developer.drawer_title")}</Offcanvas.Title>
 				</Offcanvas.Header>
-				<Offcanvas.Body>
-					<div
-						className='p-2 rounded w-100 bg-light'
-						style={{ overflowWrap: "anywhere", cursor: "pointer" }}
-						onClick={() => {
-							navigator.clipboard.writeText(devConfigToQueryUrl(config));
-							setShowCopiedMessage(true);
-							setTimeout(() => {
-								setShowCopiedMessage(false);
-							}, 2000);
-						}}
-					>
-						{devConfigToQueryUrl(config)}
+				<Offcanvas.Body className='mt-0 pt-0'>
+					<div className='p-2 rounded w-100 bg-light d-flex flex-column gap-1' style={{ overflowWrap: "anywhere" }}>
+						<p className='m-0'>{devConfigToQueryUrl(config)}</p>
+						<Button
+							size='sm'
+							onClick={() => {
+								navigator.clipboard.writeText(devConfigToQueryUrl(config));
+								setShowCopiedMessage(true);
+								setTimeout(() => {
+									setShowCopiedMessage(false);
+								}, 1250);
+							}}
+							variant='outline-secondary'
+						>
+							{showCopiedMessage
+								? t("developer.config_creator.btn_copied_to_clipboard")
+								: t("developer.config_creator.btn_copy")}
+						</Button>
 					</div>
-					<Alert className='mt-2' show={showCopiedMessage} variant='success'>
-						Copied to clipboard
-					</Alert>
 					<Form onSubmit={handleSubmit} className='mt-3'>
-						<Form.Group className='mb-3'>
-							<Form.Label>ReferenceType</Form.Label>
+						<Form.Group className='mb-3' controlId='devForm.referenceType'>
+							<Form.Label>{t("developer.config_creator.reference_type")}</Form.Label>
 							<Form.Check
 								type='radio'
 								name='referenceType'
@@ -160,7 +169,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							/>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId='devForm.referenceId'>
-							<Form.Label>Reference ID</Form.Label>
+							<Form.Label>{t("developer.config_creator.reference_id")}</Form.Label>
 							<Form.Control
 								type='text'
 								value={config.referenceId}
@@ -171,8 +180,14 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							/>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId='devForm.lang'>
-							<Form.Label>Language</Form.Label>
-							<Form.Select value={config.lang} name='lang' id='lang' required onChange={handleSelectInputChange}>
+							<Form.Label>{t("developer.config_creator.lang")}</Form.Label>
+							<Form.Select
+								value={config.lang}
+								name='lang'
+								id='devForm.lang'
+								required
+								onChange={handleSelectInputChange}
+							>
 								<option>{SELECT_MENU_DEFAULT_KEY}</option>
 								{supportedLanguages.map((langItem) => (
 									<option value={langItem} key={`language-${langItem}`}>
@@ -182,7 +197,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							</Form.Select>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId='devForm.clientId'>
-							<Form.Label>Client ID</Form.Label>
+							<Form.Label>{t("developer.config_creator.client_id")}</Form.Label>
 							<Form.Control
 								type='number'
 								value={config.clientId}
@@ -193,7 +208,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							/>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId='devForm.emailTemplateId'>
-							<Form.Label>Response Email Template ID</Form.Label>
+							<Form.Label>{t("developer.config_creator.response_template_id")}</Form.Label>
 							<Form.Control
 								type='number'
 								value={config.emailTemplateId}
@@ -204,8 +219,8 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							/>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId='devForm.flow'>
-							<Form.Label>Flows</Form.Label>
-							<Form.Select name='flow' id='flow' onChange={handleSelectFlowItem}>
+							<Form.Label>{t("developer.config_creator.application_flows")}</Form.Label>
+							<Form.Select name='flow' id='devForm.flow' onChange={handleSelectFlowItem}>
 								{ALL_SCREEN_FLOWS.map((flowItem) => (
 									<option value={flowItem.value} key={`select-flow-${flowItem.value}`}>
 										{flowItem.label}
@@ -215,7 +230,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							<ListGroup as='ol' className='mt-2' numbered>
 								{config.flow.map((flowItem, index) => (
 									<ListGroup.Item
-										key={`flow-item-${flowItem}`}
+										key={`flow-item-${flowItem}-${index}`}
 										as='li'
 										className='d-flex justify-content-between align-items-start'
 									>
@@ -229,35 +244,63 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 								))}
 							</ListGroup>
 						</Form.Group>
-						<Form.Group className='mb-3'>
-							<Form.Label>Branding</Form.Label>
-							<Form.Check
-								type='switch'
-								name='fromRentall'
-								className='ml-3'
-								label={config.fromRentall ? "RENTALL" : "Navotar"}
-								checked={config.fromRentall}
-								id='devForm.fromRentall'
-								onChange={handleNormalInputChange}
-							/>
-						</Form.Group>
-						<Form.Group className='mb-3'>
-							<Form.Label>Environment</Form.Label>
-							<Form.Check
-								type='switch'
-								name='qa'
-								className='ml-3'
-								label={config.qa ? "QA" : "Production"}
-								checked={config.qa}
-								id='devForm.qa'
-								onChange={handleNormalInputChange}
-							/>
-						</Form.Group>
+						<Row>
+							<Col md={6}>
+								<Form.Group className='mb-3'>
+									<Form.Label>{t("developer.config_creator.application_branding")}</Form.Label>
+									<Form.Check
+										type='switch'
+										name='fromRentall'
+										className='ml-3'
+										label={config.fromRentall ? "RENTALL" : "Navotar"}
+										checked={config.fromRentall}
+										id='devForm.fromRentall'
+										onChange={handleNormalInputChange}
+									/>
+								</Form.Group>
+							</Col>
+							<Col md={6}>
+								<Form.Group className='mb-3'>
+									<Form.Label>{t("developer.config_creator.application_environment")}</Form.Label>
+									<Form.Check
+										type='switch'
+										name='qa'
+										className='ml-3'
+										label={
+											config.qa
+												? t("developer.config_creator.environment_qa")
+												: t("developer.config_creator.environment_production")
+										}
+										checked={config.qa}
+										id='devForm.qa'
+										onChange={handleNormalInputChange}
+									/>
+								</Form.Group>
+							</Col>
+							<Col md={6}>
+								<Form.Group className='mb-3'>
+									<Form.Label>{t("developer.config_creator.opened_dev_menu")}</Form.Label>
+									<Form.Check
+										type='switch'
+										name='dev'
+										className='ml-3'
+										label={
+											config.dev
+												? t("developer.config_creator.dev_menu_opened")
+												: t("developer.config_creator.dev_menu_closed")
+										}
+										checked={config.dev}
+										id='devForm.dev'
+										onChange={handleNormalInputChange}
+									/>
+								</Form.Group>
+							</Col>
+						</Row>
 						<Form.Group className='mg-5'>
-							<ButtonGroup className='mb-2'>
-								<Button type='submit'>Run new config</Button>
-								<Button variant='warning' onClick={handleReset}>
-									Reset
+							<ButtonGroup className='mb-2 w-100'>
+								<Button type='submit'>{t("developer.config_creator.btn_save")}</Button>
+								<Button variant='outline-warning' onClick={handleReset}>
+									{t("developer.config_creator.btn_reset")}
 								</Button>
 							</ButtonGroup>
 						</Form.Group>
@@ -273,14 +316,22 @@ function devConfigToQueryUrl(config: ConfigObject) {
 
 	// use qa server
 	if (config.qa) {
-		queryString += "&qa=true&";
+		queryString += "qa=true";
+	}
+
+	// open dev menu by default
+	if (config.dev) {
+		if (config.qa) {
+			queryString += "&";
+		}
+		queryString += "dev=true";
 	}
 
 	// setting agreementId or reservationId
 	if (config.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT) {
-		queryString += `agreementId=${config.referenceId}`;
+		queryString += `&agreementId=${config.referenceId}`;
 	} else {
-		queryString += `reservationId=${config.referenceId}`;
+		queryString += `&reservationId=${config.referenceId}`;
 	}
 
 	// setting lang
@@ -288,16 +339,19 @@ function devConfigToQueryUrl(config: ConfigObject) {
 
 	// setting the config
 	const hashObj = {
-		clientId: parseInt(config.clientId) ?? 0,
-		emailTemplateId: Number(config.emailTemplateId) ?? 0,
-		flow: config.flow,
-		fromRentall: config.fromRentall,
+		clientId: Number(config.clientId) ?? Number(initialConfigState.clientId),
+		emailTemplateId: Number(config.emailTemplateId) ?? Number(initialConfigState.emailTemplateId),
+		flow: config.flow ?? initialConfigState.flow,
+		fromRentall: config.fromRentall !== undefined ? config.fromRentall : initialConfigState.fromRentall,
 	};
 	let objJsonStr = JSON.stringify(hashObj);
 	let objJsonB64 = btoa(objJsonStr);
 	queryString += "&config=" + objJsonB64;
 
-	return queryString;
+	const location = window.location.href.split("?")[0];
+	const newUrl = `${location}${queryString}`;
+
+	return newUrl;
 }
 
 export default DeveloperDebugDrawer;

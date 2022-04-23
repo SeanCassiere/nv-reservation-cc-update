@@ -6,6 +6,8 @@ export const APP_CONSTANTS = {
 	VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM: "Default/CreditCardAndLicenseUploadForm",
 	VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_CONTROLLER: "Default/CreditCardAndLicenseUploadController",
 	VIEW_DEFAULT_RENTAL_SIGNATURE_FORM: "Default/RentalSignatureForm",
+	VIEW_DEV_SCREEN_1: "Default/Positive",
+	VIEW_DEV_SCREEN_2: "Default/Negative",
 } as const;
 
 export const ALL_SCREEN_FLOWS = [
@@ -24,5 +26,13 @@ export const ALL_SCREEN_FLOWS = [
 	{
 		label: "Rental Signature Form",
 		value: APP_CONSTANTS.VIEW_DEFAULT_RENTAL_SIGNATURE_FORM,
+	},
+	{
+		label: "Dev Screen 01",
+		value: APP_CONSTANTS.VIEW_DEV_SCREEN_1,
+	},
+	{
+		label: "Dev Screen 02",
+		value: APP_CONSTANTS.VIEW_DEV_SCREEN_2,
 	},
 ];

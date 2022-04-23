@@ -1,5 +1,28 @@
 {
 	"loading": "Loading",
+	"developer": {
+		"drawer_title": "Developer Menu",
+		"config_creator": {
+			"form_select_value": "Select",
+			"btn_copy": "Copy",
+			"btn_copied_to_clipboard": "Copied to clipboard",
+			"btn_save": "Open new config",
+			"btn_reset": "Clear changes",
+			"reference_type": "Reference Type",
+			"reference_id": "Reference ID",
+			"client_id": "Client ID",
+			"lang": "Language",
+			"response_template_id": "Response Email Template ID",
+			"application_flows": "Flows",
+			"application_branding": "Branding?",
+			"application_environment": "Environment?",
+			"environment_qa": "Use QA",
+			"environment_production": "Use Production",
+			"opened_dev_menu": "Developer Menu Opened?",
+			"dev_menu_opened": "Open",
+			"dev_menu_closed": "Closed"
+		}
+	},
 	"form": {
 		"title": "Credit Card Information",
 		"message": "Please enter in your credit card information to be used for your reservation.",

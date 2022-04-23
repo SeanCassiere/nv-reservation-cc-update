@@ -10,6 +10,7 @@ import ErrorSubmission from "./shared/pages/ErrorSubmission/ErrorSubmission";
 import DeveloperDebugDrawer from "./shared/components/DeveloperDebugDrawer/DeveloperDebugDrawer";
 
 import { selectConfigState } from "./shared/redux/store";
+import { isValueTrue } from "./shared/utils/common";
 
 const App = () => {
 	const { t } = useTranslation();
@@ -26,6 +27,14 @@ const App = () => {
 		}
 		window.addEventListener("keydown", onKeyDown);
 		return () => window.removeEventListener("keydown", onKeyDown);
+	}, []);
+	React.useEffect(() => {
+		const query = new URLSearchParams(window.location.search);
+		const dev = query.get("dev");
+		const isDevOpen = Boolean(isValueTrue(dev));
+		if (isDevOpen) {
+			setIsDeveloperDrawerOpen(true);
+		}
 	}, []);
 
 	return (
