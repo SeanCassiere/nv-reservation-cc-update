@@ -1,5 +1,4 @@
 {
-	"loading": "Loading",
 	"developer": {
 		"drawer_title": "Developer Menu",
 		"config_creator": {
@@ -16,88 +15,92 @@
 			"application_flows": "Flows",
 			"application_branding": "Branding?",
 			"application_environment": "Environment?",
-			"environment_qa": "Use QA",
-			"environment_production": "Use Production",
+			"environment_qa": "Using QA",
+			"environment_production": "Using Production",
 			"opened_dev_menu": "Developer Menu Opened?",
 			"dev_menu_opened": "Open",
 			"dev_menu_closed": "Closed"
 		}
 	},
-	"form": {
-		"title": "Credit Card Information",
-		"message": "Please enter in your credit card information to be used for your reservation.",
-		"labels": {
-			"card_number": "Card Number",
-			"name_on_card": "Name on the Credit Card",
-			"cvv": "CVV",
-			"billingZip": "Billing Zip Code",
-			"submit": "Submit",
-			"next": "Next",
-			"exp_month": "Expiry Month",
-			"exp_year": "Expiry Year",
-			"p_holders": {
-				"name": "John Doe",
-				"zip_code": "Zip Code",
-				"select": "Select"
+	"app_status_messages": {
+		"loading": "Loading",
+		"sending_credit_card": "Submitting your credit card information",
+		"sending_license_images_bundle": "Submitting your driving license images",
+		"sending_confirmation_email": "Sending confirmation email",
+		"submitting_your_details_msg": "Submitting your details"
+	},
+	"forms": {
+		"nav_back": "Back",
+		"nav_next": "Next",
+		"nav_submit": "Submit",
+		"credit_card": {
+			"title": "Credit Card Information",
+			"message": "Please enter in your credit card information to be used for your reservation.",
+			"labels": {
+				"card_number": "Card Number",
+				"name_on_card": "Name on the Credit Card",
+				"cvv": "CVV",
+				"billingZip": "Billing Zip Code",
+				"exp_month": "Expiry Month",
+				"exp_year": "Expiry Year",
+				"p_holders": {
+					"name": "John Doe",
+					"zip_code": "Zip Code",
+					"select": "Select"
+				}
+			},
+			"credit_card_component": {
+				"valid_thru": "valid thru",
+				"your_name": "YOUR NAME HERE"
+			},
+			"errors": {
+				"card_number": "Enter a full credit card number.",
+				"name": "Enter the name printed on the credit card.",
+				"exp_month": "Enter the credit card expiry month.",
+				"exp_year": "Enter the credit card expiry year.",
+				"cvv": "Enter the PIN on the back of the credit card.",
+				"billingZip": "Enter your billing zip code."
 			}
 		},
-		"credit_card": {
-			"valid_thru": "valid thru",
-			"your_name": "YOUR NAME HERE"
+		"license_upload": {
+			"title": "Driver's License",
+			"message": "Upload front and back images of your driver's license.",
+			"go_back": {
+				"title": "Are you sure?",
+				"message": "Going back will discard the added files.",
+				"cancel": "Cancel",
+				"submit": "I Understand"
+			},
+			"front_image": {
+				"title": "Front Image",
+				"drag": "Drag and drop the front image here",
+				"select": "Select the front image",
+				"clear": "Clear the front image",
+				"not_selected": "You must select the front image."
+			},
+			"back_image": {
+				"title": "Back Image",
+				"drag": "Drag and drop the back image here",
+				"select": "Select the back image",
+				"clear": "Clear the back image",
+				"not_selected": "You must select the back image."
+			}
 		},
-		"errors": {
-			"card_number": "Enter a full credit card number.",
-			"name": "Enter the name printed on the credit card.",
-			"exp_month": "Enter the credit card expiry month.",
-			"exp_year": "Enter the credit card expiry year.",
-			"cvv": "Enter the PIN on the back of the credit card.",
-			"billingZip": "Enter your billing zip code."
-		},
-		"submitting_msgs": {
-			"credit_card": "Submitting your credit card information",
-			"license_images_bundle": "Submitting your driving license images",
-			"confirmation_email": "Sending confirmation email"
-		},
-		"submitting_msg": "Submitting your details"
-	},
-	"license_upload": {
-		"title": "Driver's License",
-		"message": "Upload front and back images of your driver's license.",
-		"go_back": {
-			"title": "Are you sure?",
-			"message": "Going back will discard the added files.",
-			"cancel": "Cancel",
-			"submit": "I Understand"
-		},
-		"front_image": {
-			"title": "Front Image",
-			"drag": "Drag and drop the front image here",
-			"select": "Select the front image",
-			"clear": "Clear the front image",
-			"not_selected": "You must select the front image."
-		},
-		"back_image": {
-			"title": "Back Image",
-			"drag": "Drag and drop the back image here",
-			"select": "Select the back image",
-			"clear": "Clear the back image",
-			"not_selected": "You must select the back image."
-		}
-	},
-	"rental_signature": {
-		"agreement_title": "Contract Signature",
-		"reservation_title": "Booking Signature",
-		"agreement_message": "Draw your signature below and press the Save button.",
-		"reservation_message": "Draw your signature below and press the Save button.",
-		"clear_input": "Clear the signature",
-		"error_no_signature": "Please provide a signature.",
-		"save_input": "Sign",
-		"signature_required": "Add your signature and press the Save button before you continue.",
-		"go_back": {
-			"title": "Are you sure?",
-			"message": "Going back will discard the added signature.",
-			"cancel": "Cancel",
-			"submit": "I Understand"
+		"rental_signature": {
+			"agreement_title": "Contract Signature",
+			"reservation_title": "Booking Signature",
+			"agreement_message": "Draw your signature below and press the Save button.",
+			"reservation_message": "Draw your signature below and press the Save button.",
+			"clear_input": "Clear the signature",
+			"error_no_signature": "Please provide a signature.",
+			"save_input": "Sign",
+			"signature_required": "Add your signature and press the Save button before you continue.",
+			"go_back": {
+				"title": "Are you sure?",
+				"message": "Going back will discard the added signature.",
+				"cancel": "Cancel",
+				"submit": "I Understand"
+			}
 		}
 	},
 	"error_boundary": {
