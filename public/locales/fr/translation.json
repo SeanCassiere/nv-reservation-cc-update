@@ -1,63 +1,66 @@
 {
-	"form": {
-		"title": "Informations de carte de crédit",
-		"message": "Veuillez saisir les informations de votre carte de crédit à utiliser pour votre réservation.",
-		"labels": {
-			"card_number": "Numéro de carte",
-			"name_on_card": "Nom sur la carte de crédit",
-			"cvv": "CVV",
-			"billingZip": "Code postal",
-			"submit": "Soumettre",
-			"next": "Prochaine",
-			"exp_month": "Mois d'expiration",
-			"exp_year": "Année d'expiration ",
-			"p_holders": {
-				"name": "John Doe",
-				"zip_code": "Code postal",
-				"select": "Sélectionner"
+	"app_status_messages": {
+		"loading": "le bourrage",
+		"sending_credit_card": "Soumission des informations de carte de crédit",
+		"sending_license_images_bundle": "Soumettre vos images de permis de conduire",
+		"sending_confirmation_email": "Envoi d'email de confirmation",
+		"submitting_your_details_msg": "Soumission des informations de carte de crédit"
+	},
+	"forms": {
+		"nav_next": "Prochaine",
+		"nav_submit": "Soumettre",
+		"credit_card": {
+			"title": "Informations de carte de crédit",
+			"message": "Veuillez saisir les informations de votre carte de crédit à utiliser pour votre réservation.",
+			"labels": {
+				"card_number": "Numéro de carte",
+				"name_on_card": "Nom sur la carte de crédit",
+				"cvv": "CVV",
+				"billingZip": "Code postal",
+				"exp_month": "Mois d'expiration",
+				"exp_year": "Année d'expiration ",
+				"p_holders": {
+					"name": "John Doe",
+					"zip_code": "Code postal",
+					"select": "Sélectionner"
+				}
+			},
+			"credit_card_component": {
+				"valid_thru": "valide à travers",
+				"your_name": "VOTRE NOM ICI"
+			},
+			"errors": {
+				"card_number": "Entrez un numéro de carte de crédit complet.",
+				"name": "Entrez le nom imprimé sur la carte de crédit.",
+				"exp_month": "Entrez le mois d'expiration de la carte de crédit.",
+				"exp_year": "Saisissez l'année d'expiration de la carte de crédit.",
+				"cvv": "Entrez le code PIN au dos de la carte de crédit.",
+				"billingZip": "Entrez votre code postal de facturation."
 			}
 		},
-		"credit_card": {
-			"valid_thru": "valide à travers",
-			"your_name": "VOTRE NOM ICI"
-		},
-		"errors": {
-			"card_number": "Entrez un numéro de carte de crédit complet.",
-			"name": "Entrez le nom imprimé sur la carte de crédit.",
-			"exp_month": "Entrez le mois d'expiration de la carte de crédit.",
-			"exp_year": "Saisissez l'année d'expiration de la carte de crédit.",
-			"cvv": "Entrez le code PIN au dos de la carte de crédit.",
-			"billingZip": "Entrez votre code postal de facturation."
-		},
-		"submitting_msgs": {
-			"credit_card": "Soumission des informations de carte de crédit",
-			"license_images_bundle": "Soumettre vos images de permis de conduire",
-			"confirmation_email": "Envoi d'email de confirmation"
-		},
-		"submitting_msg": "Soumission des informations de carte de crédit"
-	},
-	"license_upload": {
-		"title": "Le permis de conduire",
-		"message": "Téléchargez des images recto et verso de votre permis de conduire.",
-		"go_back": {
-			"title": "Es-tu sûr?",
-			"message": "Revenir en arrière supprimera les fichiers ajoutés.",
-			"cancel": "Annuler",
-			"submit": "Je comprends"
-		},
-		"front_image": {
-			"title": "Image de face",
-			"drag": "Faites glisser et déposez l'image de devant ici",
-			"select": "Sélectionnez l'image de face",
-			"clear": "Effacer l'image avant",
-			"not_selected": "Vous devez sélectionner l'image de face."
-		},
-		"back_image": {
-			"title": "Retour Image",
-			"drag": "Faites glisser et déposez l'image arrière ici",
-			"select": "Sélectionnez l'image arrière",
-			"clear": "Effacer l'image arrière",
-			"not_selected": "Vous devez sélectionner l'image arrière."
+		"license_upload": {
+			"title": "Le permis de conduire",
+			"message": "Téléchargez des images recto et verso de votre permis de conduire.",
+			"go_back": {
+				"title": "Es-tu sûr?",
+				"message": "Revenir en arrière supprimera les fichiers ajoutés.",
+				"cancel": "Annuler",
+				"submit": "Je comprends"
+			},
+			"front_image": {
+				"title": "Image de face",
+				"drag": "Faites glisser et déposez l'image de devant ici",
+				"select": "Sélectionnez l'image de face",
+				"clear": "Effacer l'image avant",
+				"not_selected": "Vous devez sélectionner l'image de face."
+			},
+			"back_image": {
+				"title": "Retour Image",
+				"drag": "Faites glisser et déposez l'image arrière ici",
+				"select": "Sélectionnez l'image arrière",
+				"clear": "Effacer l'image arrière",
+				"not_selected": "Vous devez sélectionner l'image arrière."
+			}
 		}
 	},
 	"error_boundary": {
