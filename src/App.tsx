@@ -48,7 +48,7 @@ const App = () => {
 				</Col>
 				<Col xs={12} sm={12} md={12} lg={12}>
 					<p style={{ padding: "1rem 0" }} className='text-center'>
-						{t("footer.powered_by")}&nbsp;
+						{t("footer.poweredBy")}&nbsp;
 						<a
 							href={fromRentall ? "https://rentallsoftware.com" : "https://navotar.com"}
 							target='_blank'
@@ -66,7 +66,7 @@ const App = () => {
 
 const ErrorFallback = () => {
 	const { t } = useTranslation();
-	return <ErrorSubmission msg={t("error_boundary.message")} />;
+	return <ErrorSubmission msg={t("errorBoundary.message")} />;
 };
 
 export default App;

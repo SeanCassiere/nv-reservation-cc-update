@@ -41,7 +41,7 @@ const DefaultCardDetailsForm = ({
 			<Row>
 				<Col>
 					<Form.Group controlId='numberInput'>
-						<Form.Label>{t("forms.credit_card.labels.card_number")}</Form.Label>
+						<Form.Label>{t("forms.creditCard.labels.cardNumber")}</Form.Label>
 						<Form.Control
 							placeholder='XXXX-XXXX-XXXX-XXXX'
 							name='number'
@@ -56,16 +56,16 @@ const DefaultCardDetailsForm = ({
 							autoComplete='off'
 							isInvalid={isFieldInvalid("number")}
 						/>
-						<Form.Control.Feedback type='invalid'>{t("forms.credit_card.errors.card_number")}</Form.Control.Feedback>
+						<Form.Control.Feedback type='invalid'>{t("forms.creditCard.errors.cardNumber")}</Form.Control.Feedback>
 					</Form.Group>
 				</Col>
 			</Row>
 			<Row className='mt-3'>
 				<Col>
 					<Form.Group controlId='nameInput'>
-						<Form.Label>{t("forms.credit_card.labels.name_on_card")}</Form.Label>
+						<Form.Label>{t("forms.creditCard.labels.nameOnCard")}</Form.Label>
 						<Form.Control
-							placeholder={t("forms.credit_card.labels.p_holders.name")}
+							placeholder={t("forms.creditCard.labels.placeholders.name")}
 							name='name'
 							value={formData.name}
 							onChange={handleChange}
@@ -76,14 +76,14 @@ const DefaultCardDetailsForm = ({
 							autoComplete='off'
 							isInvalid={isFieldInvalid("name")}
 						/>
-						<Form.Control.Feedback type='invalid'>{t("forms.credit_card.errors.name")}</Form.Control.Feedback>
+						<Form.Control.Feedback type='invalid'>{t("forms.creditCard.errors.name")}</Form.Control.Feedback>
 					</Form.Group>
 				</Col>
 			</Row>
 			<Row className='mt-3'>
 				<Col>
 					<Form.Group controlId='monthInput'>
-						<Form.Label>{t("forms.credit_card.labels.exp_month")}</Form.Label>
+						<Form.Label>{t("forms.creditCard.labels.expMonth")}</Form.Label>
 						<Form.Select
 							name='monthExpiry'
 							onChange={handleChange as any}
@@ -93,19 +93,19 @@ const DefaultCardDetailsForm = ({
 							isInvalid={isFieldInvalid("monthExpiry")}
 							className='form-control'
 						>
-							<option value=''>{t("forms.credit_card.labels.p_holders.select")}</option>
+							<option value=''>{t("forms.creditCard.labels.placeholders.select")}</option>
 							{numOfMonths.map((val) => (
 								<option value={val.toString().length === 1 ? `0${val}` : val} key={val}>
 									{val.toString().length === 1 ? `0${val}` : val}
 								</option>
 							))}
 						</Form.Select>
-						<Form.Control.Feedback type='invalid'>{t("forms.credit_card.errors.exp_month")}</Form.Control.Feedback>
+						<Form.Control.Feedback type='invalid'>{t("forms.creditCard.errors.expMonth")}</Form.Control.Feedback>
 					</Form.Group>
 				</Col>
 				<Col>
 					<Form.Group controlId='yearInput'>
-						<Form.Label>{t("forms.credit_card.labels.exp_year")}</Form.Label>
+						<Form.Label>{t("forms.creditCard.labels.expYear")}</Form.Label>
 						<Form.Select
 							name='yearExpiry'
 							onChange={handleChange as any}
@@ -115,21 +115,21 @@ const DefaultCardDetailsForm = ({
 							isInvalid={isFieldInvalid("yearExpiry")}
 							className='form-control'
 						>
-							<option value=''>{t("forms.credit_card.labels.p_holders.select")}</option>
+							<option value=''>{t("forms.creditCard.labels.placeholders.select")}</option>
 							{numOfYears.map((val) => (
 								<option value={val} key={val}>
 									20{val}
 								</option>
 							))}
 						</Form.Select>
-						<Form.Control.Feedback type='invalid'>{t("forms.credit_card.errors.exp_year")}</Form.Control.Feedback>
+						<Form.Control.Feedback type='invalid'>{t("forms.creditCard.errors.expYear")}</Form.Control.Feedback>
 					</Form.Group>
 				</Col>
 			</Row>
 			<Row className='mt-3'>
 				<Col>
 					<Form.Group controlId='cvvInput'>
-						<Form.Label>{t("forms.credit_card.labels.cvv")}</Form.Label>
+						<Form.Label>{t("forms.creditCard.labels.cvv")}</Form.Label>
 						<Form.Control
 							placeholder='***'
 							name='cvv'
@@ -144,14 +144,14 @@ const DefaultCardDetailsForm = ({
 							maxLength={4}
 							isInvalid={isFieldInvalid("cvv")}
 						/>
-						<Form.Control.Feedback type='invalid'>{t("forms.credit_card.errors.cvv")}</Form.Control.Feedback>
+						<Form.Control.Feedback type='invalid'>{t("forms.creditCard.errors.cvv")}</Form.Control.Feedback>
 					</Form.Group>
 				</Col>
 				<Col>
 					<Form.Group controlId='zipCodeInput'>
-						<Form.Label>{t("forms.credit_card.labels.billingZip")}</Form.Label>
+						<Form.Label>{t("forms.creditCard.labels.billingZip")}</Form.Label>
 						<Form.Control
-							placeholder={t("forms.credit_card.labels.p_holders.zip_code")}
+							placeholder={t("forms.creditCard.labels.placeholders.zipCode")}
 							name='billingZip'
 							value={formData.billingZip}
 							onChange={handleChange}
@@ -160,7 +160,7 @@ const DefaultCardDetailsForm = ({
 							autoComplete='off'
 							isInvalid={isFieldInvalid("billingZip")}
 						/>
-						<Form.Control.Feedback type='invalid'>{t("forms.credit_card.errors.billingZip")}</Form.Control.Feedback>
+						<Form.Control.Feedback type='invalid'>{t("forms.creditCard.errors.billingZip")}</Form.Control.Feedback>
 					</Form.Group>
 				</Col>
 			</Row>

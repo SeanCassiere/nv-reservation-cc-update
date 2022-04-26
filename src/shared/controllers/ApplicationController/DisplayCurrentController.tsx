@@ -46,7 +46,7 @@ const DisplayCurrentController = ({
 	const { t } = useTranslation();
 
 	return (
-		<Suspense fallback={<LoadingSubmission title={t("app_status_messages.loading")} />}>
+		<Suspense fallback={<LoadingSubmission title={t("appStatusMessages.loading")} />}>
 			{selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_FORM && (
 				<DefaultCreditCardController
 					handleSubmit={handleNext}
@@ -90,7 +90,7 @@ const DisplayCurrentController = ({
 							</button>
 						)}
 						<button type='button' onClick={handleNext}>
-							{isNextPageAvailable ? t("forms.nav_next") : t("forms.nav_submit")}
+							{isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
 						</button>
 					</p>
 				</div>
@@ -105,7 +105,7 @@ const DisplayCurrentController = ({
 							</button>
 						)}
 						<button type='button' onClick={handleNext}>
-							{isNextPageAvailable ? t("forms.nav_next") : t("forms.nav_submit")}
+							{isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
 						</button>
 					</p>
 				</div>

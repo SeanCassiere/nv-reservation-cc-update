@@ -135,17 +135,15 @@ const ApplicationController = () => {
 
 	return (
 		<>
-			{appConfig.status === "authenticating" && <LoadingSubmission title={t("authentication_submission.title")} />}
+			{appConfig.status === "authenticating" && <LoadingSubmission title={t("authenticationSubmission.title")} />}
 			{appConfig.status === "authentication_error" && (
-				<ErrorSubmission msg={t("authentication_submission.message")} tryAgainButton />
+				<ErrorSubmission msg={t("authenticationSubmission.message")} tryAgainButton />
 			)}
 			{appConfig.status === "reservation_fetch_failed" && (
 				<ErrorSubmission
-					msg={`${t("reservation_fetch_error.message")} ${
-						appConfig.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT
-							? t("reference_type.agreement")
-							: t("reference_type.reservation")
-					}.`}
+					msg={t("reservationFetchError.message", {
+						context: appConfig.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+					})}
 					tryAgainButton
 				/>
 			)}

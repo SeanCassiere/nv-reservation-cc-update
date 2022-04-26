@@ -70,31 +70,31 @@ const DefaultRentalSignatureController = ({
 	return (
 		<>
 			<Modal show={returnModalOpen} onHide={handleModalDenyReturn} keyboard={true} centered>
-				<Modal.Header>{t("forms.rental_signature.go_back.title")}</Modal.Header>
-				<Modal.Body>{t("forms.rental_signature.go_back.message")}</Modal.Body>
+				<Modal.Header>{t("forms.rentalSignature.goBack.title")}</Modal.Header>
+				<Modal.Body>{t("forms.rentalSignature.goBack.message")}</Modal.Body>
 				<Modal.Footer>
 					<Button variant='secondary' onClick={handleModalDenyReturn}>
-						{t("forms.rental_signature.go_back.cancel")}
+						{t("forms.rentalSignature.goBack.cancel")}
 					</Button>
 					<Button variant='warning' onClick={handleModalAcceptReturn}>
-						{t("forms.rental_signature.go_back.submit")}
+						{t("forms.rentalSignature.goBack.submit")}
 					</Button>
 				</Modal.Footer>
 			</Modal>
 			<Card border='light'>
 				<Card.Body>
 					<Card.Title>
-						{configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT
-							? t("forms.rental_signature.agreement_title")
-							: t("forms.rental_signature.reservation_title")}
+						{t("forms.rentalSignature.title", {
+							context: configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+						})}
 					</Card.Title>
 					<Card.Subtitle>
-						{configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT
-							? t("forms.rental_signature.agreement_message")
-							: t("forms.rental_signature.reservation_message")}
+						{t("forms.rentalSignature.message", {
+							context: configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+						})}
 					</Card.Subtitle>
 					<div className='mt-3 d-grid'>
-						{showRequiredMessage && <Alert variant='light'>{t("forms.rental_signature.signature_required")}</Alert>}
+						{showRequiredMessage && <Alert variant='light'>{t("forms.rentalSignature.signatureRequired")}</Alert>}
 						<Row>
 							<Col md={12}>
 								<DefaultSignatureCanvas onSignature={handleSettingSignatureUrl} />
@@ -110,7 +110,7 @@ const DefaultRentalSignatureController = ({
 							)}
 							<Col xs={isPrevPageAvailable ? 10 : 12} className={isPrevPageAvailable ? "pl-2" : ""}>
 								<Button variant='primary' size='lg' style={{ width: "100%" }} onClick={handleNextState}>
-									{isNextAvailable ? t("forms.nav_next") : t("forms.nav_submit")}
+									{isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
 								</Button>
 							</Col>
 						</Row>

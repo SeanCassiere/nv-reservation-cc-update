@@ -84,10 +84,10 @@ const DefaultSignatureCanvas = ({
 			</div>
 			<div className='mt-2 d-flex justify-content-center gap-2'>
 				<Button variant='danger' style={{ width: "60%" }} onClick={handleClear}>
-					{clearText ?? t("forms.rental_signature.clear_input")}
+					{clearText ?? t("forms.rentalSignature.clearInput")}
 				</Button>
 				<Button variant='primary' style={{ width: "30%" }} onClick={handleSave} disabled={isDisabled}>
-					{saveText ?? t("forms.rental_signature.save_input")}
+					{saveText ?? t("forms.rentalSignature.saveInput")}
 				</Button>
 			</div>
 		</>

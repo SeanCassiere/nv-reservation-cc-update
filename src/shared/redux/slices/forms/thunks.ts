@@ -65,7 +65,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	}
 
 	// await saving all the form details
-	dispatch(setSubmissionMessage(t("app_status_messages.submitting_your_details_msg")));
+	dispatch(setSubmissionMessage(t("appStatusMessages.submittingYourDetailsMsg")));
 	const runPromises = await Promise.all(formPromisesToRun);
 	if (runPromises.includes(false)) {
 		console.groupEnd();
@@ -76,7 +76,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	// Post confirmation email using responseTemplateID
 	if (reservationState.responseTemplateBlobUrl !== "") {
 		try {
-			dispatch(setSubmissionMessage(t("app_status_messages.sending_confirmation_email")));
+			dispatch(setSubmissionMessage(t("appStatusMessages.sendingConfirmationEmail")));
 			const html = await fetch(reservationState.responseTemplateBlobUrl).then((res) => res.text());
 
 			await clientV3.post(

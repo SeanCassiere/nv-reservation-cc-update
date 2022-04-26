@@ -1,100 +1,98 @@
 {
-	"app_status_messages": {
+	"appStatusMessages": {
 		"loading": "la sobreprima",
-		"sending_credit_card": "Übermitteln von Kreditkarteninformationen",
-		"sending_license_images_bundle": "Envío de imágenes de su licencia de conducir",
-		"sending_confirmation_email": "Envío de correo electrónico de confirmación",
-		"submitting_your_details_msg": "Presentación de información de tarjetas de crédito"
+		"sendingCreditCard": "Übermitteln von Kreditkarteninformationen",
+		"sendingLicenseImagesBundle": "Envío de imágenes de su licencia de conducir",
+		"sendingConfirmationEmail": "Envío de correo electrónico de confirmación",
+		"submittingYourDetailsMsg": "Presentación de información de tarjetas de crédito"
 	},
 	"forms": {
-		"nav_next": "Próxima",
-		"nav_submit": "Enviar",
-		"credit_card": {
+		"navNext": "Próxima",
+		"navSubmit": "Enviar",
+		"creditCard": {
 			"title": "Información de la tarjeta de crédito",
 			"message": "Los huéspedes deberán introducir la información de su tarjeta de crédito que desea utilizar para la reserva.",
 			"labels": {
-				"card_number": "Número de tarjeta",
-				"name_on_card": "Nombre en la tarjeta de crédito",
+				"cardNumber": "Número de tarjeta",
+				"nameOnCard": "Nombre en la tarjeta de crédito",
 				"cvv": "CVV",
 				"billingZip": "Código postal",
-				"exp_month": "Mes de caducidad",
-				"exp_year": "Año de caducidad",
-				"p_holders": {
+				"expMonth": "Mes de caducidad",
+				"expYear": "Año de caducidad",
+				"placeholders": {
 					"name": "Juan Doe",
-					"zip_code": "Código postal",
+					"zipCode": "Código postal",
 					"select": "escoger"
 				}
 			},
-			"credit_card_component": {
-				"valid_thru": "válido a través de",
-				"your_name": "SU NOMBRE AQUÍ"
+			"creditCardComponent": {
+				"validThru": "válido a través de",
+				"yourName": "SU NOMBRE AQUÍ"
 			},
 			"errors": {
-				"card_number": "Introduzca un número completo de tarjeta de crédito.",
+				"cardNumber": "Introduzca un número completo de tarjeta de crédito.",
 				"name": "Introduzca el nombre impreso en la tarjeta de crédito.",
-				"exp_month": "Introduzca el mes de vencimiento de la tarjeta de crédito.",
-				"exp_year": "Introduzca el año de caducidad de la tarjeta de crédito.",
+				"expMonth": "Introduzca el mes de vencimiento de la tarjeta de crédito.",
+				"expYear": "Introduzca el año de caducidad de la tarjeta de crédito.",
 				"cvv": "Introduzca el PIN en la parte posterior de la tarjeta de crédito.",
 				"billingZip": "Introduce tu código postal de facturación."
 			}
 		},
-		"license_upload": {
+		"licenseUpload": {
 			"title": "Licencia de conducir",
 			"message": "Sube imágenes de anverso y reverso de tu licencia de conducir.",
-			"go_back": {
+			"goBack": {
 				"title": "Estas segura",
 				"message": "Regresar descartará los archivos agregados.",
 				"cancel": "Cancelar",
 				"submit": "Entiendo"
 			},
-			"front_image": {
+			"frontImage": {
 				"title": "Imagen frontal",
 				"drag": "Arrastra y suelta la imagen frontal aquí.",
 				"select": "Seleccione la imagen frontal",
 				"clear": "Limpiar la imagen frontal",
-				"not_selected": "Debes seleccionar la imagen frontal."
+				"notSelected": "Debes seleccionar la imagen frontal."
 			},
-			"back_image": {
+			"backImage": {
 				"title": "Imagen trasera",
 				"drag": "Arrastra y suelta la imagen de atrás aquí",
 				"select": "Seleccione la imagen trasera",
 				"clear": "Limpiar la imagen trasera",
-				"not_selected": "Debes seleccionar la imagen trasera."
+				"notSelected": "Debes seleccionar la imagen trasera."
 			}
 		}
 	},
-	"error_boundary": {
+	"errorBoundary": {
 		"title": "Uh Oh",
 		"message": "Hubo un error fatal en la aplicación."
 	},
-	"success_submission": {
+	"successSubmission": {
 		"title": "¡éxito!",
-		"message": "Gracias por enviar la información de su tarjeta de crédito a su reserva."
+		"message": "Gracias por enviar la información de su tarjeta de crédito a su reserva.",
+		"message_agreement": "Gracias por enviar su información para el contrato de alquiler."
 	},
-	"authentication_submission": {
+	"authenticationSubmission": {
 		"title": "Autenticando",
 		"message": "Tuvimos problemas para autenticar esta conexión."
 	},
-	"reservation_fetch_error": {
+	"reservationFetchError": {
 		"title": "Reservation Fetch Error",
-		"message": "We could not locate the reservation."
+		"message": "No pudimos localizar la reserva.",
+		"message_agreement": "No hemos podido localizar el contrato de alquiler."
 	},
-	"bad_submission": {
+	"badSubmission": {
 		"title": "Uh Oh",
 		"message": "Me encontré con un error al intentar enviar su información.",
 		"report": "Por favor, preséntese a",
-		"retry_submission": "Reintentar envío"
+		"btnRetrySubmission": "Reintentar envío"
 	},
-	"query_missing": {
+	"queryMissing": {
 		"title": "Uh Oh",
 		"message": "Parece que no toda la información necesaria fue enviada.",
 		"report": "Por favor, preséntese a"
 	},
 	"footer": {
-		"powered_by": "Funciona con"
-	},
-	"reference_type": {
-		"reservation": "reservation",
-		"agreement": "agreement"
+		"poweredBy": "Funciona con"
 	}
 }

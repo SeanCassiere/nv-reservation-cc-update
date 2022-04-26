@@ -14,11 +14,11 @@ const NotAuthorized = () => {
 		<Card border='light' style={{ width: "100%", padding: "2rem 1rem" }}>
 			<Card.Img variant='top' alt='Not Found' src={NotFoundImg} />
 			<Card.Body>
-				<Card.Title>{t("query_missing.title")}</Card.Title>
+				<Card.Title>{t("queryMissing.title")}</Card.Title>
 				<Card.Text>
-					{t("query_missing.message")}
+					{t("queryMissing.message")}
 					<br />
-					{t("query_missing.report")}&nbsp;
+					{t("queryMissing.report")}&nbsp;
 					<a
 						href={config.fromRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
 						target='_blank'

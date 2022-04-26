@@ -42,7 +42,7 @@ const initialConfigState: ConfigObject = {
 const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClose: () => void }) => {
 	const { t } = useTranslation();
 	const isPhone = useMediaQuery({ query: "(max-width: 400px)" });
-	const SELECT_MENU_DEFAULT_KEY = t("developer.config_creator.form_select_value");
+	const SELECT_MENU_DEFAULT_KEY = t("developer.configCreator.formSelectValue");
 
 	const [initialConfig, setInitialConfig] = React.useState<ConfigObject>(initialConfigState);
 	const [config, setConfig] = React.useState<ConfigObject>(initialConfigState);
@@ -128,7 +128,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 		<React.Fragment>
 			<Offcanvas show={open} onHide={handleClose} placement='end' name='Developer Menu'>
 				<Offcanvas.Header closeButton>
-					<Offcanvas.Title>{t("developer.drawer_title")}</Offcanvas.Title>
+					<Offcanvas.Title>{t("developer.drawerTitle")}</Offcanvas.Title>
 				</Offcanvas.Header>
 				<Offcanvas.Body className='mt-0 pt-0'>
 					<div className='p-2 rounded w-100 bg-light d-flex flex-column gap-1' style={{ overflowWrap: "anywhere" }}>
@@ -145,13 +145,13 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							variant='outline-secondary'
 						>
 							{showCopiedMessage
-								? t("developer.config_creator.btn_copied_to_clipboard")
-								: t("developer.config_creator.btn_copy")}
+								? t("developer.configCreator.btnCopiedToClipboard")
+								: t("developer.configCreator.btnCopy")}
 						</Button>
 					</div>
 					<Form onSubmit={handleSubmit} className='mt-3'>
 						<Form.Group className='mb-3' controlId='devForm.referenceType'>
-							<Form.Label>{t("developer.config_creator.reference_type")}</Form.Label>
+							<Form.Label>{t("developer.configCreator.referenceType")}</Form.Label>
 							<Form.Check
 								type='radio'
 								name='referenceType'
@@ -172,7 +172,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							/>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId='devForm.referenceId'>
-							<Form.Label>{t("developer.config_creator.reference_id")}</Form.Label>
+							<Form.Label>{t("developer.configCreator.referenceId")}</Form.Label>
 							<Form.Control
 								type='text'
 								value={config.referenceId}
@@ -183,7 +183,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							/>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId='devForm.lang'>
-							<Form.Label>{t("developer.config_creator.lang")}</Form.Label>
+							<Form.Label>{t("developer.configCreator.lang")}</Form.Label>
 							<Form.Select
 								value={config.lang}
 								name='lang'
@@ -200,7 +200,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							</Form.Select>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId='devForm.clientId'>
-							<Form.Label>{t("developer.config_creator.client_id")}</Form.Label>
+							<Form.Label>{t("developer.configCreator.clientId")}</Form.Label>
 							<Form.Control
 								type='number'
 								value={config.clientId}
@@ -211,7 +211,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							/>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId='devForm.emailTemplateId'>
-							<Form.Label>{t("developer.config_creator.response_template_id")}</Form.Label>
+							<Form.Label>{t("developer.configCreator.responseTemplateId")}</Form.Label>
 							<Form.Control
 								type='number'
 								value={config.emailTemplateId}
@@ -222,7 +222,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							/>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId='devForm.flow'>
-							<Form.Label>{t("developer.config_creator.application_flows")}</Form.Label>
+							<Form.Label>{t("developer.configCreator.applicationFlows")}</Form.Label>
 							<Form.Select name='flow' id='devForm.flow' onChange={handleSelectFlowItem}>
 								{ALL_SCREEN_FLOWS.map((flowItem) => (
 									<option value={flowItem.value} key={`select-flow-${flowItem.value}`}>
@@ -250,7 +250,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 						<Row>
 							<Col md={6}>
 								<Form.Group className='mb-3'>
-									<Form.Label>{t("developer.config_creator.application_branding")}</Form.Label>
+									<Form.Label>{t("developer.configCreator.applicationBranding")}</Form.Label>
 									<Form.Check
 										type='switch'
 										name='fromRentall'
@@ -264,15 +264,15 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							</Col>
 							<Col md={6}>
 								<Form.Group className='mb-3'>
-									<Form.Label>{t("developer.config_creator.application_environment")}</Form.Label>
+									<Form.Label>{t("developer.configCreator.applicationEnvironment")}</Form.Label>
 									<Form.Check
 										type='switch'
 										name='qa'
 										className='ml-3'
 										label={
 											config.qa
-												? t("developer.config_creator.environment_qa")
-												: t("developer.config_creator.environment_production")
+												? t("developer.configCreator.environmentQa")
+												: t("developer.configCreator.environmentProduction")
 										}
 										checked={config.qa}
 										id='devForm.qa'
@@ -282,15 +282,15 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 							</Col>
 							<Col md={6}>
 								<Form.Group className='mb-3'>
-									<Form.Label>{t("developer.config_creator.opened_dev_menu")}</Form.Label>
+									<Form.Label>{t("developer.configCreator.openedDevMenu")}</Form.Label>
 									<Form.Check
 										type='switch'
 										name='dev'
 										className='ml-3'
 										label={
 											config.dev
-												? t("developer.config_creator.dev_menu_opened")
-												: t("developer.config_creator.dev_menu_closed")
+												? t("developer.configCreator.devMenuOpened")
+												: t("developer.configCreator.devMenuClosed")
 										}
 										checked={config.dev}
 										id='devForm.dev'
@@ -301,9 +301,9 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 						</Row>
 						<Form.Group className='mg-5'>
 							<ButtonGroup className='mb-2 w-100'>
-								<Button type='submit'>{t("developer.config_creator.btn_save")}</Button>
+								<Button type='submit'>{t("developer.configCreator.btnSave")}</Button>
 								<Button variant='outline-warning' onClick={handleReset}>
-									{t("developer.config_creator.btn_reset")}
+									{t("developer.configCreator.btnReset")}
 								</Button>
 							</ButtonGroup>
 						</Form.Group>

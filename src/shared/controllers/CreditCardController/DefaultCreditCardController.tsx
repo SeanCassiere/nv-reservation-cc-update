@@ -87,8 +87,8 @@ const DefaultCreditCardController = ({
 	return (
 		<Card border='light'>
 			<Card.Body>
-				<Card.Title>{t("forms.credit_card.title")}</Card.Title>
-				<Card.Subtitle>{t("forms.credit_card.message")}</Card.Subtitle>
+				<Card.Title>{t("forms.creditCard.title")}</Card.Title>
+				<Card.Subtitle>{t("forms.creditCard.message")}</Card.Subtitle>
 				<div className='mt-4 d-grid'>
 					<Row>
 						<Col md={12}>
@@ -121,7 +121,7 @@ const DefaultCreditCardController = ({
 						)}
 						<Col xs={isPrevPageAvailable ? 10 : 12} className={isPrevPageAvailable ? "pl-2" : ""}>
 							<Button variant='primary' size='lg' style={{ width: "100%" }} onClick={handleNextState}>
-								{isNextAvailable ? t("forms.nav_next") : t("forms.nav_submit")}
+								{isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
 							</Button>
 						</Col>
 					</Row>

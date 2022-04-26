@@ -1,101 +1,101 @@
 {
 	"developer": {
-		"drawer_title": "Developer Menu",
-		"config_creator": {
-			"form_select_value": "Select",
-			"btn_copy": "Copy",
-			"btn_copied_to_clipboard": "Copied to clipboard",
-			"btn_save": "Open new config",
-			"btn_reset": "Clear changes",
-			"reference_type": "Reference Type",
-			"reference_id": "Reference ID",
-			"client_id": "Client ID",
+		"drawerTitle": "Developer Menu",
+		"configCreator": {
+			"formSelectValue": "Select",
+			"btnCopy": "Copy",
+			"btnCopiedToClipboard": "Copied to clipboard",
+			"btnSave": "Open new config",
+			"btnReset": "Clear changes",
+			"referenceType": "Reference Type",
+			"referenceId": "Reference ID",
+			"clientId": "Client ID",
 			"lang": "Language",
-			"response_template_id": "Response Email Template ID",
-			"application_flows": "Flows",
-			"application_branding": "Branding?",
-			"application_environment": "Environment?",
-			"environment_qa": "Using QA",
-			"environment_production": "Using Production",
-			"opened_dev_menu": "Developer Menu Opened?",
-			"dev_menu_opened": "Open",
-			"dev_menu_closed": "Closed"
+			"responseTemplateId": "Response Email Template ID",
+			"applicationFlows": "Flows",
+			"applicationBranding": "Branding?",
+			"applicationEnvironment": "Environment?",
+			"environmentQa": "Using QA",
+			"environmentProduction": "Using Production",
+			"openedDevMenu": "Developer Menu Opened?",
+			"devMenuOpened": "Open",
+			"devMenuClosed": "Closed"
 		}
 	},
-	"app_status_messages": {
+	"appStatusMessages": {
 		"loading": "Loading",
-		"sending_credit_card": "Submitting your credit card information",
-		"sending_license_images_bundle": "Submitting your driving license images",
-		"sending_confirmation_email": "Sending confirmation email",
-		"submitting_your_details_msg": "Submitting your details"
+		"sendingCreditCard": "Submitting your credit card information",
+		"sendingLicenseImagesBundle": "Submitting your driving license images",
+		"sendingConfirmationEmail": "Sending confirmation email",
+		"submittingYourDetailsMsg": "Submitting your details"
 	},
 	"forms": {
-		"nav_back": "Back",
-		"nav_next": "Next",
-		"nav_submit": "Submit",
-		"credit_card": {
+		"navBack": "Back",
+		"navNext": "Next",
+		"navSubmit": "Submit",
+		"creditCard": {
 			"title": "Credit Card Information",
 			"message": "Please enter in your credit card information to be used for your reservation.",
 			"labels": {
-				"card_number": "Card Number",
-				"name_on_card": "Name on the Credit Card",
+				"cardNumber": "Card Number",
+				"nameOnCard": "Name on the Credit Card",
 				"cvv": "CVV",
 				"billingZip": "Billing Zip Code",
-				"exp_month": "Expiry Month",
-				"exp_year": "Expiry Year",
-				"p_holders": {
+				"expMonth": "Expiry Month",
+				"expYear": "Expiry Year",
+				"placeholders": {
 					"name": "John Doe",
-					"zip_code": "Zip Code",
+					"zipCode": "Zip Code",
 					"select": "Select"
 				}
 			},
-			"credit_card_component": {
-				"valid_thru": "valid thru",
-				"your_name": "YOUR NAME HERE"
+			"creditCardComponent": {
+				"validThru": "valid thru",
+				"yourName": "YOUR NAME HERE"
 			},
 			"errors": {
-				"card_number": "Enter a full credit card number.",
+				"cardNumber": "Enter a full credit card number.",
 				"name": "Enter the name printed on the credit card.",
-				"exp_month": "Enter the credit card expiry month.",
-				"exp_year": "Enter the credit card expiry year.",
+				"expMonth": "Enter the credit card expiry month.",
+				"expYear": "Enter the credit card expiry year.",
 				"cvv": "Enter the PIN on the back of the credit card.",
 				"billingZip": "Enter your billing zip code."
 			}
 		},
-		"license_upload": {
+		"licenseUpload": {
 			"title": "Driver's License",
 			"message": "Upload front and back images of your driver's license.",
-			"go_back": {
+			"goBack": {
 				"title": "Are you sure?",
 				"message": "Going back will discard the added files.",
 				"cancel": "Cancel",
 				"submit": "I Understand"
 			},
-			"front_image": {
+			"frontImage": {
 				"title": "Front Image",
 				"drag": "Drag and drop the front image here",
 				"select": "Select the front image",
 				"clear": "Clear the front image",
-				"not_selected": "You must select the front image."
+				"notSelected": "You must select the front image."
 			},
-			"back_image": {
+			"backImage": {
 				"title": "Back Image",
 				"drag": "Drag and drop the back image here",
 				"select": "Select the back image",
 				"clear": "Clear the back image",
-				"not_selected": "You must select the back image."
+				"notSelected": "You must select the back image."
 			}
 		},
-		"rental_signature": {
-			"agreement_title": "Contract Signature",
-			"reservation_title": "Booking Signature",
-			"agreement_message": "Draw your signature below and press the Save button.",
-			"reservation_message": "Draw your signature below and press the Save button.",
-			"clear_input": "Clear the signature",
-			"error_no_signature": "Please provide a signature.",
-			"save_input": "Sign",
-			"signature_required": "Add your signature and press the Save button before you continue.",
-			"go_back": {
+		"rentalSignature": {
+			"title": "Booking Signature",
+			"title_agreement": "Contract Signature",
+			"message": "Draw your signature below and press the Save button.",
+			"message_agreement": "Draw your signature below and press the Save button.",
+			"clearInput": "Clear the signature",
+			"errorNoSignature": "Please provide a signature.",
+			"saveInput": "Sign",
+			"signatureRequired": "Add your signature and press the Save button before you continue.",
+			"goBack": {
 				"title": "Are you sure?",
 				"message": "Going back will discard the added signature.",
 				"cancel": "Cancel",
@@ -103,38 +103,36 @@
 			}
 		}
 	},
-	"error_boundary": {
+	"errorBoundary": {
 		"title": "Uh Oh",
 		"message": "There was a fatal error in the application."
 	},
-	"success_submission": {
+	"successSubmission": {
 		"title": "Success!",
-		"message": "Thank you for submitting your information towards the"
+		"message": "Thank you for submitting your information towards the booking.",
+		"message_agreement": "Thank you for submitting your information towards the rental contract."
 	},
-	"authentication_submission": {
+	"authenticationSubmission": {
 		"title": "Authenticating",
 		"message": "We had trouble authenticating this connection."
 	},
-	"reservation_fetch_error": {
+	"reservationFetchError": {
 		"title": "Reservation Fetch Error",
-		"message": "We could not locate the"
+		"message": "We could not locate the reservation.",
+		"message_agreement": "We could not locate the rental contract."
 	},
-	"bad_submission": {
+	"badSubmission": {
 		"title": "Uh Oh",
 		"message": "I encountered an error when trying to submit your information.",
 		"report": "Please report to",
-		"retry_submission": "Retry submission"
+		"btnRetrySubmission": "Retry submission"
 	},
-	"query_missing": {
+	"queryMissing": {
 		"title": "Uh Oh",
 		"message": "It looks like all not all the necessary information was sent.",
 		"report": "Please report to"
 	},
 	"footer": {
-		"powered_by": "Powered by"
-	},
-	"reference_type": {
-		"reservation": "reservation",
-		"agreement": "agreement"
+		"poweredBy": "Powered by"
 	}
 }

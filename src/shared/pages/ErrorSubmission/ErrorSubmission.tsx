@@ -27,11 +27,11 @@ const ErrorSubmission = ({ msg, tryAgainButton }: Props) => {
 		<Card border='danger' style={{ width: "100%", padding: "2rem 0.5rem" }}>
 			<Card.Img variant='top' alt='Not Found' src={ErrorImg} />
 			<Card.Body>
-				<Card.Title>{t("bad_submission.title")}</Card.Title>
+				<Card.Title>{t("badSubmission.title")}</Card.Title>
 				<Card.Text>
 					{msg}
 					<br />
-					{t("bad_submission.report")}&nbsp;
+					{t("badSubmission.report")}&nbsp;
 					<a
 						href={config.fromRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
 						target='_blank'
@@ -45,7 +45,7 @@ const ErrorSubmission = ({ msg, tryAgainButton }: Props) => {
 							<br />
 							<span className='mt-3 d-block'>
 								<Button as='a' href={originUrl} size='lg' variant='outline-primary' style={{ width: "100%" }}>
-									{t("bad_submission.retry_submission")}
+									{t("badSubmission.btnRetrySubmission")}
 								</Button>
 							</span>
 						</>
