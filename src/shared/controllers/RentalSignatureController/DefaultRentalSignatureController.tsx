@@ -70,14 +70,14 @@ const DefaultRentalSignatureController = ({
 	return (
 		<>
 			<Modal show={returnModalOpen} onHide={handleModalDenyReturn} keyboard={true} centered>
-				<Modal.Header>{t("rental_signature.go_back.title")}</Modal.Header>
-				<Modal.Body>{t("rental_signature.go_back.message")}</Modal.Body>
+				<Modal.Header>{t("forms.rental_signature.go_back.title")}</Modal.Header>
+				<Modal.Body>{t("forms.rental_signature.go_back.message")}</Modal.Body>
 				<Modal.Footer>
 					<Button variant='secondary' onClick={handleModalDenyReturn}>
-						{t("rental_signature.go_back.cancel")}
+						{t("forms.rental_signature.go_back.cancel")}
 					</Button>
 					<Button variant='warning' onClick={handleModalAcceptReturn}>
-						{t("rental_signature.go_back.submit")}
+						{t("forms.rental_signature.go_back.submit")}
 					</Button>
 				</Modal.Footer>
 			</Modal>
@@ -85,16 +85,16 @@ const DefaultRentalSignatureController = ({
 				<Card.Body>
 					<Card.Title>
 						{configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT
-							? t("rental_signature.agreement_title")
-							: t("rental_signature.reservation_title")}
+							? t("forms.rental_signature.agreement_title")
+							: t("forms.rental_signature.reservation_title")}
 					</Card.Title>
 					<Card.Subtitle>
 						{configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT
-							? t("rental_signature.agreement_message")
-							: t("rental_signature.reservation_message")}
+							? t("forms.rental_signature.agreement_message")
+							: t("forms.rental_signature.reservation_message")}
 					</Card.Subtitle>
 					<div className='mt-3 d-grid'>
-						{showRequiredMessage && <Alert variant='light'>{t("rental_signature.signature_required")}</Alert>}
+						{showRequiredMessage && <Alert variant='light'>{t("forms.rental_signature.signature_required")}</Alert>}
 						<Row>
 							<Col md={12}>
 								<DefaultSignatureCanvas onSignature={handleSettingSignatureUrl} />
@@ -110,7 +110,7 @@ const DefaultRentalSignatureController = ({
 							)}
 							<Col xs={isPrevPageAvailable ? 10 : 12} className={isPrevPageAvailable ? "pl-2" : ""}>
 								<Button variant='primary' size='lg' style={{ width: "100%" }} onClick={handleNextState}>
-									{isNextAvailable ? t("form.labels.next") : t("form.labels.submit")}
+									{isNextAvailable ? t("forms.nav_next") : t("forms.nav_submit")}
 								</Button>
 							</Col>
 						</Row>

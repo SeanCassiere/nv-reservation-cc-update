@@ -185,8 +185,8 @@ const DefaultCreditCardAndLicenseUploadController = ({
 		<>
 			<Card border='light'>
 				<Card.Body>
-					<Card.Title>{t("form.title")}</Card.Title>
-					<Card.Subtitle>{t("form.message")}</Card.Subtitle>
+					<Card.Title>{t("forms.credit_card.title")}</Card.Title>
+					<Card.Subtitle>{t("forms.credit_card.message")}</Card.Subtitle>
 					<div className='mt-4 d-grid'>
 						<Row>
 							<Col md={12}>
@@ -213,21 +213,21 @@ const DefaultCreditCardAndLicenseUploadController = ({
 				</Card.Body>
 				{/* License Upload Modal */}
 				<Modal show={returnModalOpen} onHide={handleModalDenyReturn} keyboard={true} centered>
-					<Modal.Header>{t("license_upload.go_back.title")}</Modal.Header>
-					<Modal.Body>{t("license_upload.go_back.message")}</Modal.Body>
+					<Modal.Header>{t("forms.license_upload.go_back.title")}</Modal.Header>
+					<Modal.Body>{t("forms.license_upload.go_back.message")}</Modal.Body>
 					<Modal.Footer>
 						<Button variant='secondary' onClick={handleModalDenyReturn}>
-							{t("license_upload.go_back.cancel")}
+							{t("forms.license_upload.go_back.cancel")}
 						</Button>
 						<Button variant='warning' onClick={handleModalAcceptReturn}>
-							{t("license_upload.go_back.submit")}
+							{t("forms.license_upload.go_back.submit")}
 						</Button>
 					</Modal.Footer>
 				</Modal>
 				{/* License Upload Form */}
 				<Card.Body className='mt-4'>
-					<Card.Title>{t("license_upload.title")}</Card.Title>
-					<Card.Subtitle>{t("license_upload.message")}</Card.Subtitle>
+					<Card.Title>{t("forms.license_upload.title")}</Card.Title>
+					<Card.Subtitle>{t("forms.license_upload.message")}</Card.Subtitle>
 					<div className='mt-3 d-grid'>
 						<Row>
 							<Col md={12}>
@@ -240,16 +240,16 @@ const DefaultCreditCardAndLicenseUploadController = ({
 								>
 									<Accordion.Item eventKey='front' className='border-light' style={{ background: "none" }}>
 										<Accordion.Header className='border-light' style={{ padding: "0px !important" }}>
-											{t("license_upload.front_image.title")}
+											{t("forms.license_upload.front_image.title")}
 										</Accordion.Header>
 										<Accordion.Body>
 											{displayNoFrontImageError && (
-												<Alert variant='light'>{t("license_upload.front_image.not_selected")}</Alert>
+												<Alert variant='light'>{t("forms.license_upload.front_image.not_selected")}</Alert>
 											)}
 											<DefaultImageDropzoneWithPreview
-												dragDisplayText={t("license_upload.front_image.drag")}
-												selectButtonText={t("license_upload.front_image.select")}
-												clearButtonText={t("license_upload.front_image.clear")}
+												dragDisplayText={t("forms.license_upload.front_image.drag")}
+												selectButtonText={t("forms.license_upload.front_image.select")}
+												clearButtonText={t("forms.license_upload.front_image.clear")}
 												onSelectFile={selectFrontImage}
 												onClearFile={clearFrontImage}
 												acceptOnly={["image/jpeg", "image/jpg", "image/png"]}
@@ -258,15 +258,17 @@ const DefaultCreditCardAndLicenseUploadController = ({
 										</Accordion.Body>
 									</Accordion.Item>
 									<Accordion.Item eventKey='back' className='border-light'>
-										<Accordion.Header className='border-light'>{t("license_upload.back_image.title")}</Accordion.Header>
+										<Accordion.Header className='border-light'>
+											{t("forms.license_upload.back_image.title")}
+										</Accordion.Header>
 										<Accordion.Body>
 											{displayNoBackImageError && (
-												<Alert variant='light'>{t("license_upload.back_image.not_selected")}</Alert>
+												<Alert variant='light'>{t("forms.license_upload.back_image.not_selected")}</Alert>
 											)}
 											<DefaultImageDropzoneWithPreview
-												dragDisplayText={t("license_upload.back_image.drag")}
-												selectButtonText={t("license_upload.back_image.select")}
-												clearButtonText={t("license_upload.back_image.clear")}
+												dragDisplayText={t("forms.license_upload.back_image.drag")}
+												selectButtonText={t("forms.license_upload.back_image.select")}
+												clearButtonText={t("forms.license_upload.back_image.clear")}
 												onSelectFile={selectBackImage}
 												onClearFile={clearBackImage}
 												acceptOnly={["image/jpeg", "image/jpg", "image/png"]}
@@ -288,7 +290,7 @@ const DefaultCreditCardAndLicenseUploadController = ({
 							)}
 							<Col xs={isPrevPageAvailable ? 10 : 12} className={isPrevPageAvailable ? "pl-2" : ""}>
 								<Button variant='primary' size='lg' style={{ width: "100%" }} onClick={handleNextState}>
-									{isNextAvailable ? t("form.labels.next") : t("form.labels.submit")}
+									{isNextAvailable ? t("forms.nav_next") : t("forms.nav_submit")}
 								</Button>
 							</Col>
 						</Row>

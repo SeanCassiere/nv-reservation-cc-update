@@ -2,6 +2,8 @@ import React from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useTranslation } from "react-i18next";
 
+import { useMediaQuery } from "react-responsive";
+
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -39,6 +41,7 @@ const initialConfigState: ConfigObject = {
 
 const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClose: () => void }) => {
 	const { t } = useTranslation();
+	const isPhone = useMediaQuery({ query: "(max-width: 400px)" });
 	const SELECT_MENU_DEFAULT_KEY = t("developer.config_creator.form_select_value");
 
 	const [initialConfig, setInitialConfig] = React.useState<ConfigObject>(initialConfigState);
@@ -227,7 +230,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
 									</option>
 								))}
 							</Form.Select>
-							<ListGroup as='ol' className='mt-2' numbered>
+							<ListGroup as={isPhone ? "ul" : "ol"} className='mt-2' numbered={!isPhone}>
 								{config.flow.map((flowItem, index) => (
 									<ListGroup.Item
 										key={`flow-item-${flowItem}-${index}`}
@@ -327,11 +330,16 @@ function devConfigToQueryUrl(config: ConfigObject) {
 		queryString += "dev=true";
 	}
 
+	// based on qa or dev flags, append & into the query string
+	if (config.qa || config.dev) {
+		queryString += "&";
+	}
+
 	// setting agreementId or reservationId
 	if (config.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT) {
-		queryString += `&agreementId=${config.referenceId}`;
+		queryString += `agreementId=${config.referenceId}`;
 	} else {
-		queryString += `&reservationId=${config.referenceId}`;
+		queryString += `reservationId=${config.referenceId}`;
 	}
 
 	// setting lang

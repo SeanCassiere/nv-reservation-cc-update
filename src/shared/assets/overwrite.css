@@ -6,3 +6,8 @@
 .form-select {
 	color: #495057 !important;
 }
+
+.offcanvas-end {
+	width: 450px !important;
+	border-left: none !important;
+}

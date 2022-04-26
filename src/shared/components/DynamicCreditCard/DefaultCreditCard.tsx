@@ -20,8 +20,8 @@ const DefaultCreditCard = ({ currentFocus, formData, handleCardIdentifier }: IPr
 			name={formData.name}
 			cvc={formData.cvv}
 			expiry={expiry}
-			locale={{ valid: t("form.credit_card.valid_thru") }}
-			placeholders={{ name: t("form.credit_card.your_name") }}
+			locale={{ valid: t("forms.credit_card.credit_card_component.valid_thru") }}
+			placeholders={{ name: t("forms.credit_card.credit_card_component.your_name") }}
 			focused={currentFocus as any}
 			callback={(card) => {
 				handleCardIdentifier(card.issuer, card.maxLength);
