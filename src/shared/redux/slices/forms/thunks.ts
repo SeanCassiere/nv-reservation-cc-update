@@ -65,7 +65,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	}
 
 	// await saving all the form details
-	dispatch(setSubmissionMessage(t("app_status_messages.submitting_msg")));
+	dispatch(setSubmissionMessage(t("app_status_messages.submitting_your_details_msg")));
 	const runPromises = await Promise.all(formPromisesToRun);
 	if (runPromises.includes(false)) {
 		console.groupEnd();
