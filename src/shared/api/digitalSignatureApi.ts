@@ -16,8 +16,7 @@ export const uploadRentalDigitalSignatureFromUrl = async (
 	const imageType = `.${imageBase64.split(";")[0].split(":")[1].split("/")[1]}`;
 	const imageName = `${date}) ${referenceType} Signature`;
 
-	const body = {
-		additionalDriverId,
+	let body: any = {
 		agreementId: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? `${referenceId}` : 0,
 		reservationId: referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION ? `${referenceId}` : 0,
 		imageName,
@@ -28,6 +27,10 @@ export const uploadRentalDigitalSignatureFromUrl = async (
 		signatureImage: null,
 		signatureName: customerName,
 	};
+
+	if (additionalDriverId) {
+		body = { additionalDriverId, ...body };
+	}
 
 	try {
 		await clientV3.post(`/DigitalSignature/UploadSignature`, body);

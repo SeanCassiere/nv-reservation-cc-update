@@ -9,7 +9,10 @@ type AgreementSourcedDetails = {
 	locationEmail: string;
 	driverId: number;
 	driverName: string;
+	isCheckIn: boolean;
 };
+
+const checkInIds = [3, 5, 7];
 
 export const getAgreementByIdOrNumber = async (
 	clientId: any,
@@ -39,6 +42,7 @@ export const getAgreementByIdOrNumber = async (
 				referenceId: Number(res.data.agreementId),
 				driverId: Number(res.data.driverList[0]?.driverId) ?? res.data.customerId,
 				driverName: `${res.data.firstName ?? ""} ${res.data.lastName ?? ""}`,
+				isCheckIn: checkInIds.includes(res.data?.agreementStatusId ?? 0),
 			};
 
 			agreementSourcedDetails = agreementInfo;

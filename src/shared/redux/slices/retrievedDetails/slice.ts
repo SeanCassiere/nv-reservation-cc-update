@@ -9,6 +9,7 @@ export interface IRetrievedDetailsSliceState {
 		customerId: number;
 		driverId: number;
 		customerEmail: string;
+		isCheckIn: boolean;
 	};
 	adminUserId: number;
 	referenceId: number;
@@ -27,6 +28,7 @@ const initialState: IRetrievedDetailsSliceState = {
 		customerId: 0,
 		driverId: 0,
 		customerEmail: "",
+		isCheckIn: false,
 	},
 	adminUserId: 0,
 	referenceId: 0,
@@ -67,6 +69,7 @@ const retrievedDetailsSlice = createSlice({
 			state.data.locationEmail = action.payload.locationEmail;
 			state.data.driverId = action.payload.driverId ?? state.data.driverId;
 			state.data.customerName = action.payload?.driverName ?? state.data.customerName;
+			state.data.isCheckIn = action.payload?.isCheckIn ?? state.data.isCheckIn;
 		},
 		setGetComposeEmailDetails: (state, action: PayloadAction<ReturnComposeEmailDetails>) => {
 			state.data.locationEmail = action.payload.fromAddress;

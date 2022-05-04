@@ -18,7 +18,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 
 	const configState = state.config;
 	const formState = state.forms;
-	const reservationState = state.retrievedDetails;
+	const retrievedDetails = state.retrievedDetails;
 
 	console.group("forms/submitAllAvailable");
 
@@ -27,7 +27,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	// Add Credit Card details to array of submissions to run
 	if (formState.creditCardForm.isReadyToSubmit) {
 		formPromisesToRun.push(
-			insertCreditCardForCustomer(`${reservationState.data.customerId}`, formState.creditCardForm.data)
+			insertCreditCardForCustomer(`${retrievedDetails.data.customerId}`, formState.creditCardForm.data)
 		);
 	}
 
@@ -35,7 +35,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	if (formState.licenseUploadForm.isReadyToSubmit) {
 		formPromisesToRun.push(
 			uploadDriverLicenseImageForCustomer(
-				`${reservationState.data.customerId}`,
+				`${retrievedDetails.data.customerId}`,
 				`${configState.clientId}`,
 				formState.licenseUploadForm.data.frontImageUrl!,
 				formState.licenseUploadForm.data.frontImageName ?? ""
@@ -43,7 +43,7 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 		);
 		formPromisesToRun.push(
 			uploadDriverLicenseImageForCustomer(
-				`${reservationState.data.customerId}`,
+				`${retrievedDetails.data.customerId}`,
 				`${configState.clientId}`,
 				formState.licenseUploadForm.data.backImageUrl!,
 				formState.licenseUploadForm.data.backImageName ?? ""
@@ -56,10 +56,10 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 		formPromisesToRun.push(
 			uploadRentalDigitalSignatureFromUrl(
 				formState.rentalSignatureForm.data.signatureUrl,
-				reservationState.data.driverId,
-				reservationState.data.customerName,
+				retrievedDetails.data.driverId,
+				retrievedDetails.data.customerName,
 				configState.referenceType,
-				reservationState.referenceId
+				retrievedDetails.referenceId
 			)
 		);
 	}
@@ -74,16 +74,16 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
 	}
 
 	// Post confirmation email using responseTemplateID
-	if (reservationState.responseTemplateBlobUrl !== "") {
+	if (retrievedDetails.responseTemplateBlobUrl !== "") {
 		try {
 			dispatch(setSubmissionMessage(t("appStatusMessages.sendingConfirmationEmail")));
-			const html = await fetch(reservationState.responseTemplateBlobUrl).then((res) => res.text());
+			const html = await fetch(retrievedDetails.responseTemplateBlobUrl).then((res) => res.text());
 
 			await clientV3.post(
 				"/Emails",
-				bodyEmailTemplate({ reservationDetails: reservationState, config: configState, emailBody: html })
+				bodyEmailTemplate({ reservationDetails: retrievedDetails, config: configState, emailBody: html })
 			);
-			URL.revokeObjectURL(reservationState.responseTemplateBlobUrl);
+			URL.revokeObjectURL(retrievedDetails.responseTemplateBlobUrl);
 		} catch (error) {
 			console.error("confirmation email sending error", error);
 			console.groupEnd();
