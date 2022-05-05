@@ -116,8 +116,9 @@
 		"title": "Authenticating",
 		"message": "We had trouble authenticating this connection."
 	},
-	"reservationFetchError": {
-		"title": "Reservation Fetch Error",
+	"coreDetailsFetchError": {
+		"title": "Uh Oh",
+		"title_agreement": "Uh Oh",
 		"message": "We could not locate the reservation.",
 		"message_agreement": "We could not locate the rental contract."
 	},

@@ -76,8 +76,9 @@
 		"title": "Authentification",
 		"message": "Nous avons eu du mal à authentifier cette connexion."
 	},
-	"reservationFetchError": {
-		"title": "Reservation Fetch Error",
+	"coreDetailsFetchError": {
+		"title": "Uh Oh",
+		"title_agreement": "Uh Oh",
 		"message": "Nous n'avons pas pu localiser la réservation.",
 		"message_agreement": "Nous n'avons pas pu localiser le contrat de location."
 	},

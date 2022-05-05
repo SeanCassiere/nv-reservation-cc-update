@@ -139,9 +139,12 @@ const ApplicationController = () => {
 			{appConfig.status === "authentication_error" && (
 				<ErrorSubmission msg={t("authenticationSubmission.message")} tryAgainButton />
 			)}
-			{appConfig.status === "reservation_fetch_failed" && (
+			{appConfig.status === "core_details_fetch_failed" && (
 				<ErrorSubmission
-					msg={t("reservationFetchError.message", {
+					title={t("coreDetailsFetchError.title", {
+						context: appConfig.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+					})}
+					msg={t("coreDetailsFetchError.message", {
 						context: appConfig.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
 					})}
 					tryAgainButton

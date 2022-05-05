@@ -5,7 +5,7 @@ const appStates = [
 	"authenticating",
 	"loaded",
 	"authentication_error",
-	"reservation_fetch_failed",
+	"core_details_fetch_failed",
 	"submission_loading",
 ] as const;
 export const supportedLanguages = ["en", "de", "fr", "es"] as const;

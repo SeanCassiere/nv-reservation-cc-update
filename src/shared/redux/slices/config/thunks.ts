@@ -103,7 +103,7 @@ export const initializeAppThunk = createAsyncThunk(
 			if (!reservationResponse) {
 				console.error("NOT ABLE TO FIND RESERVATION");
 				console.groupEnd();
-				return dispatch(setAppStatus({ status: "reservation_fetch_failed" }));
+				return dispatch(setAppStatus({ status: "core_details_fetch_failed" }));
 			}
 
 			dispatch(setRetrievedRentalDetails(reservationResponse));
@@ -118,7 +118,7 @@ export const initializeAppThunk = createAsyncThunk(
 			if (!agreementResponse) {
 				console.error("NOT ABLE TO FIND AGREEMENT");
 				console.groupEnd();
-				return dispatch(setAppStatus({ status: "reservation_fetch_failed" }));
+				return dispatch(setAppStatus({ status: "core_details_fetch_failed" }));
 			}
 
 			dispatch(setRetrievedRentalDetails(agreementResponse));

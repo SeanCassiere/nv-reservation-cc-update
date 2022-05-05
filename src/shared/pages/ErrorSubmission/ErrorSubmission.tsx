@@ -8,11 +8,12 @@ import ErrorImg from "../../assets/undraw_warning_cyit.svg";
 import { selectConfigState } from "../../redux/store";
 
 interface Props {
+	title?: string;
 	msg: string | ReactNode;
 	tryAgainButton?: true | undefined;
 }
 
-const ErrorSubmission = ({ msg, tryAgainButton }: Props) => {
+const ErrorSubmission = (props: Props) => {
 	const { t } = useTranslation();
 
 	const config = useSelector(selectConfigState);
@@ -27,9 +28,9 @@ const ErrorSubmission = ({ msg, tryAgainButton }: Props) => {
 		<Card border='danger' style={{ width: "100%", padding: "2rem 0.5rem" }}>
 			<Card.Img variant='top' alt='Not Found' src={ErrorImg} />
 			<Card.Body>
-				<Card.Title>{t("badSubmission.title")}</Card.Title>
+				<Card.Title>{props.title ? props.title : t("badSubmission.title")}</Card.Title>
 				<Card.Text>
-					{msg}
+					{props.msg}
 					<br />
 					{t("badSubmission.report")}&nbsp;
 					<a
@@ -40,7 +41,7 @@ const ErrorSubmission = ({ msg, tryAgainButton }: Props) => {
 						{config.fromRentall ? "support@rentallsoftware.com" : "support@navotar.com"}
 					</a>
 					.
-					{tryAgainButton && (
+					{props.tryAgainButton && (
 						<>
 							<br />
 							<span className='mt-3 d-block'>
