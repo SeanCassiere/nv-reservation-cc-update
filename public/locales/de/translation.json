@@ -61,6 +61,22 @@
 				"clear": "Löschen Sie das Rückbild",
 				"notSelected": "Sie müssen das Rückbild auswählen."
 			}
+		},
+		"rentalSignature": {
+			"title": "Buchungsunterschrift",
+			"title_agreement": "Vertragsunterschrift",
+			"message": "Zeichnen Sie unten Ihre Unterschrift und drücken Sie die Schaltfläche Speichern.",
+			"message_agreement": "Zeichnen Sie unten Ihre Unterschrift und drücken Sie die Schaltfläche Speichern.",
+			"clearInput": "Löschen Sie die Signatur",
+			"errorNoSignature": "Bitte unterschreiben Sie.",
+			"saveInput": "Schild",
+			"signatureRequired": "Fügen Sie Ihre Signatur hinzu und klicken Sie auf die Schaltfläche Speichern, bevor Sie fortfahren.",
+			"goBack": {
+				"title": "Bist du dir sicher?",
+				"message": "Wenn Sie zurückgehen, wird die hinzugefügte Signatur verworfen.",
+				"cancel": "Absagen",
+				"submit": "Ich verstehe"
+			}
 		}
 	},
 	"errorBoundary": {
