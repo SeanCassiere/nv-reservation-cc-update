@@ -61,6 +61,22 @@
 				"clear": "Effacer l'image arrière",
 				"notSelected": "Vous devez sélectionner l'image arrière."
 			}
+		},
+		"rentalSignature": {
+			"title": "Signature de réservation",
+			"title_agreement": "Signature du contrat",
+			"message": "Dessinez votre signature ci-dessous et appuyez sur le bouton Enregistrer.",
+			"message_agreement": "Dessinez votre signature ci-dessous et appuyez sur le bouton Enregistrer.",
+			"clearInput": "Effacer la signature",
+			"errorNoSignature": "Veuillez fournir une signature.",
+			"saveInput": "Pancarte",
+			"signatureRequired": "Ajoutez votre signature et appuyez sur le bouton Enregistrer avant de continuer.",
+			"goBack": {
+				"title": "Êtes-vous sûr?",
+				"message": "Revenir en arrière supprimera la signature ajoutée.",
+				"cancel": "Annuler",
+				"submit": "Je comprend"
+			}
 		}
 	},
 	"errorBoundary": {
