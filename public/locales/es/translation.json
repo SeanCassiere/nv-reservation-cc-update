@@ -61,6 +61,22 @@
 				"clear": "Limpiar la imagen trasera",
 				"notSelected": "Debes seleccionar la imagen trasera."
 			}
+		},
+		"rentalSignature": {
+			"title": "Firma de reserva",
+			"title_agreement": "Firma del contrato",
+			"message": "Dibuje su firma a continuación y presione el botón Guardar.",
+			"message_agreement": "Dibuje su firma a continuación y presione el botón Guardar.",
+			"clearInput": "Borrar la firma",
+			"errorNoSignature": "Proporcione una firma.",
+			"saveInput": "Señal",
+			"signatureRequired": "Agregue su firma y presione el botón Guardar antes de continuar.",
+			"goBack": {
+				"title": "Estas segura",
+				"message": "Si retrocede, se descartará la firma agregada.",
+				"cancel": "Cancelar",
+				"submit": "Entiendo"
+			}
 		}
 	},
 	"errorBoundary": {
