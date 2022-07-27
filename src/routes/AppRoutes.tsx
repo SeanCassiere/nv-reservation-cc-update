@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -10,10 +10,7 @@ import SuccessSubmission from "../shared/pages/SuccessSubmission/SuccessSubmissi
 import ErrorSubmission from "../shared/pages/ErrorSubmission/ErrorSubmission";
 import NavigateToNotAvailable from "./NavigateToNotAvailable";
 
-import { selectConfigState } from "../shared/redux/store";
-
-const AppRoutes = () => {
-	const appConfig = useSelector(selectConfigState);
+const AppRoutes: React.FC = () => {
 	const { t } = useTranslation();
 
 	return (
@@ -32,7 +29,7 @@ const AppRoutes = () => {
 					path='/success'
 					element={
 						<RequireAuth>
-							<SuccessSubmission referenceType={appConfig.referenceType} />
+							<SuccessSubmission />
 						</RequireAuth>
 					}
 				/>

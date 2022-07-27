@@ -176,7 +176,6 @@ const DefaultCreditCardAndLicenseUploadController = ({
 		} catch (error: any) {
 			const err = error as yup.ValidationError;
 			const formErrors = yupFormatSchemaErrors(err);
-			if (process.env.NODE_ENV !== "production") console.log(formErrors);
 			setSchemaErrors(formErrors);
 		}
 	}, [backImageFile, dispatch, formValues, frontImageFile, handleSubmit, schema]);
@@ -234,7 +233,7 @@ const DefaultCreditCardAndLicenseUploadController = ({
 								<Accordion
 									activeKey={key}
 									onSelect={(k) => {
-										if (k) setKey(k);
+										if (k) setKey(k as string);
 									}}
 									className='border-light'
 								>
@@ -252,7 +251,11 @@ const DefaultCreditCardAndLicenseUploadController = ({
 												clearButtonText={t("forms.licenseUpload.frontImage.clear")}
 												onSelectFile={selectFrontImage}
 												onClearFile={clearFrontImage}
-												acceptOnly={["image/jpeg", "image/jpg", "image/png"]}
+												acceptOnly={{
+													"image/jpeg": [".jpeg"],
+													"image/jpg": [".jpg"],
+													"image/png": [".png"],
+												}}
 												initialPreview={frontImageUrl ? { fileName: frontImageName!, url: frontImageUrl } : null}
 											/>
 										</Accordion.Body>
@@ -271,7 +274,11 @@ const DefaultCreditCardAndLicenseUploadController = ({
 												clearButtonText={t("forms.licenseUpload.backImage.clear")}
 												onSelectFile={selectBackImage}
 												onClearFile={clearBackImage}
-												acceptOnly={["image/jpeg", "image/jpg", "image/png"]}
+												acceptOnly={{
+													"image/jpeg": [".jpeg"],
+													"image/jpg": [".jpg"],
+													"image/png": [".png"],
+												}}
 												initialPreview={backImageUrl ? { fileName: backImageName!, url: backImageUrl } : null}
 											/>
 										</Accordion.Body>

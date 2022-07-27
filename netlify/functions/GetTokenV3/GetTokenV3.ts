@@ -1,17 +1,27 @@
-import { Handler } from "@netlify/functions";
+import { builder, Handler } from "@netlify/functions";
 import axios from "axios";
 
-const isValueTrue = (value: string | undefined | null) => {
-	return value && (value.toLowerCase() === "true" || value === "1");
+const containsKey = (rawQueryString: string, key: string): boolean => {
+	return rawQueryString.indexOf(key) !== -1;
 };
 
-export const handler: Handler = async (event, context) => {
-	const qaQuery = event.queryStringParameters.qa;
+const isValueTrue = (value: string | undefined | null | boolean): boolean => {
+	if (!value) return false;
+	return value &&
+		((typeof value === "string" && value.toLowerCase() === "true") ||
+			(typeof value === "string" && value === "1") ||
+			value === true)
+		? true
+		: false;
+};
 
+const myHandler: Handler = async (event, context) => {
+	const qaQuery = containsKey(event.rawQuery, "qa");
 	const isQa = Boolean(isValueTrue(qaQuery));
-	const url = isQa ? process.env.QA_V3_AUTH_URL : process.env.V3_AUTH_URL;
-	const clientId = isQa ? process.env.QA_V3_CLIENT_ID : process.env.V3_CLIENT_ID;
-	const clientSecret = isQa ? process.env.QA_V3_CLIENT_SECRET : process.env.V3_CLIENT_SECRET;
+
+	const url = isQa ? process.env.QA_V3_AUTH_URL! : process.env.V3_AUTH_URL!;
+	const clientId = isQa ? process.env.QA_V3_CLIENT_ID! : process.env.V3_CLIENT_ID!;
+	const clientSecret = isQa ? process.env.QA_V3_CLIENT_SECRET! : process.env.V3_CLIENT_SECRET!;
 
 	try {
 		const params = new URLSearchParams();
@@ -32,3 +42,7 @@ export const handler: Handler = async (event, context) => {
 		};
 	}
 };
+
+const handler = builder(myHandler);
+
+export { handler };

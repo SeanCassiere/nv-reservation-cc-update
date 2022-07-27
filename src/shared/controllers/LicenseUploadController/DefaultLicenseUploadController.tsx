@@ -143,7 +143,7 @@ const DefaultLicenseUploadController = ({
 								<Accordion
 									activeKey={key}
 									onSelect={(k) => {
-										if (k) setKey(k);
+										if (k) setKey(k as string);
 									}}
 									className='border-light'
 								>
@@ -161,7 +161,11 @@ const DefaultLicenseUploadController = ({
 												clearButtonText={t("forms.licenseUpload.frontImage.clear")}
 												onSelectFile={selectFrontImage}
 												onClearFile={clearFrontImage}
-												acceptOnly={["image/jpeg", "image/jpg", "image/png"]}
+												acceptOnly={{
+													"image/jpeg": [".jpeg"],
+													"image/jpg": [".jpg"],
+													"image/png": [".png"],
+												}}
 												initialPreview={frontImageUrl ? { fileName: frontImageName!, url: frontImageUrl } : null}
 											/>
 										</Accordion.Body>
@@ -180,7 +184,11 @@ const DefaultLicenseUploadController = ({
 												clearButtonText={t("forms.licenseUpload.backImage.clear")}
 												onSelectFile={selectBackImage}
 												onClearFile={clearBackImage}
-												acceptOnly={["image/jpeg", "image/jpg", "image/png"]}
+												acceptOnly={{
+													"image/jpeg": [".jpeg"],
+													"image/jpg": [".jpg"],
+													"image/png": [".png"],
+												}}
 												initialPreview={backImageUrl ? { fileName: backImageName!, url: backImageUrl } : null}
 											/>
 										</Accordion.Body>

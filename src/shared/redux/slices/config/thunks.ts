@@ -28,7 +28,7 @@ interface User {
 	userRoleID: number;
 }
 
-const AUTH_URL = process.env.REACT_APP_V3_AUTH_URL ?? "/.netlify/functions/GetTokenV3";
+const AUTH_URL = import.meta.env.VITE_APP_V3_AUTH_URL ?? "/.netlify/functions/GetTokenV3";
 
 // const auth = await client.post("/Login/GetClientSecretToken", {
 // 	ClientId: clientId,

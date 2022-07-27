@@ -1,9 +1,10 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 
 import { selectAuthState, selectSubmissionState } from "../shared/redux/store";
 
-const RequireAuth = ({ children }: { children: JSX.Element }) => {
+const RequireAuth: React.FC<{ children: JSX.Element }> = ({ children }) => {
 	let location = useLocation();
 	const { access_token } = useSelector(selectAuthState);
 	const { state, isSubmissionAttempted } = useSelector(selectSubmissionState);

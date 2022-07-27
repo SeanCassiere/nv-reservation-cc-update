@@ -27,6 +27,8 @@ type ConfigObject = {
 	fromRentall: boolean;
 };
 
+console.log(useMediaQuery);
+
 const initialConfigState: ConfigObject = {
 	referenceId: "0",
 	referenceType: "Reservation",

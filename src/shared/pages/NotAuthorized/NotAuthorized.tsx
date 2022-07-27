@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { selectConfigState } from "../../redux/store";
 import NotFoundImg from "../../assets/undraw_page_not_found_su7k.svg";
 
-const NotAuthorized = () => {
+const NotAuthorized: React.FC = () => {
 	const config = useSelector(selectConfigState);
 	const { t } = useTranslation();
 

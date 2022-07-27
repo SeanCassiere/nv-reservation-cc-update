@@ -13,7 +13,7 @@ interface Props {
 	tryAgainButton?: true | undefined;
 }
 
-const ErrorSubmission = (props: Props) => {
+const ErrorSubmission: React.FC<Props> = (props) => {
 	const { t } = useTranslation();
 
 	const config = useSelector(selectConfigState);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary as Boundary } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
 
 import AppRoutes from "./routes/AppRoutes";
@@ -11,6 +11,8 @@ import DeveloperDebugDrawer from "./shared/components/DeveloperDebugDrawer/Devel
 
 import { selectConfigState } from "./shared/redux/store";
 import { isValueTrue } from "./shared/utils/common";
+
+const ErrorBoundary = Boundary as any; // an odd error where typescript says it doesn't return a JSX element. This is a workaround
 
 const App = () => {
 	const { t } = useTranslation();
