@@ -2,7 +2,7 @@ import React from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useTranslation } from "react-i18next";
 
-import * as Responsive from "react-responsive";
+import { useMediaQuery } from "react-responsive";
 
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -27,6 +27,8 @@ type ConfigObject = {
 	fromRentall: boolean;
 };
 
+console.log(useMediaQuery);
+
 const initialConfigState: ConfigObject = {
 	referenceId: "0",
 	referenceType: "Reservation",
@@ -41,7 +43,7 @@ const initialConfigState: ConfigObject = {
 
 const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClose: () => void }) => {
 	const { t } = useTranslation();
-	const isPhone = Responsive.useMediaQuery({ query: "(max-width: 400px)" });
+	const isPhone = useMediaQuery({ query: "(max-width: 400px)" });
 	const SELECT_MENU_DEFAULT_KEY = t("developer.configCreator.formSelectValue");
 
 	const [initialConfig, setInitialConfig] = React.useState<ConfigObject>(initialConfigState);
