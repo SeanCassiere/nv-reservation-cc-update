@@ -22,7 +22,7 @@ const DefaultSubmitDetailsController = () => {
 		if (state === "submitting_details_error") {
 			return navigate("/error", { replace: true, state: { from: location } });
 		}
-		dispatch(submitFormThunk());
+		dispatch(submitFormThunk() as any);
 	}, [dispatch, navigate, location, state]);
 
 	return <LoadingSubmission title={current_submission_message} />;

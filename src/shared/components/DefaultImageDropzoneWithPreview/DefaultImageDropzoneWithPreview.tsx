@@ -1,9 +1,7 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Figure from "react-bootstrap/esm/Figure";
-import { useDropzone } from "react-dropzone";
-
-type MimeType = string | string[] | undefined;
+import { useDropzone, Accept } from "react-dropzone";
 
 const baseStyle = {
 	flex: 1,
@@ -40,7 +38,7 @@ interface IProps {
 	clearButtonText: string;
 	onSelectFile?: (file: File) => void;
 	onClearFile?: () => void;
-	acceptOnly?: MimeType;
+	acceptOnly?: Accept;
 	initialPreview?: { fileName: string; url: string } | null | undefined;
 }
 

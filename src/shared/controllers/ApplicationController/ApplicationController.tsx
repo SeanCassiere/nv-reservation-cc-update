@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import ErrorSubmission from "../../pages/ErrorSubmission/ErrorSubmission";
@@ -81,7 +81,7 @@ const ApplicationController = () => {
 			dispatch(setInitialReferenceId(agreementId));
 		}
 
-		dispatch(initializeAppThunk());
+		dispatch(initializeAppThunk() as any);
 	}, [dispatch, navigate]);
 
 	/*
