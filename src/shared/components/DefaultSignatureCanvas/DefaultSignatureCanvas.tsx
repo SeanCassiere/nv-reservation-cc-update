@@ -2,7 +2,7 @@ import React from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
+import * as Responsive from "react-responsive";
 
 interface IProps {
 	maxHeight?: number;
@@ -26,7 +26,7 @@ const DefaultSignatureCanvas = ({
 	const { t } = useTranslation();
 	const signaturePadRef = React.useRef<SignatureCanvas>(null);
 
-	const isPhone = useMediaQuery({ query: "(max-width: 400px)" });
+	const isPhone = Responsive.useMediaQuery({ query: "(max-width: 400px)" });
 
 	const [isDisabled, setIsDisabled] = React.useState(false);
 
