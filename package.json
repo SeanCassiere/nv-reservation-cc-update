@@ -36,9 +36,8 @@
 		"yup": "^0.32.11"
 	},
 	"scripts": {
-		"server": "node server.js",
 		"start": "react-scripts start",
-		"dev": "concurrently \"npm run server\" \"npm run start\"",
+		"dev": "netlify dev",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
@@ -65,9 +64,6 @@
 		"@types/react-credit-cards": "^0.8.1",
 		"@types/react-router": "^5.1.17",
 		"@types/react-router-dom": "^5.3.2",
-		"@types/react-signature-canvas": "^1.0.2",
-		"cors": "^2.8.5",
-		"dotenv": "^10.0.0",
-		"express": "^4.17.2"
+		"@types/react-signature-canvas": "^1.0.2"
 	}
 }
