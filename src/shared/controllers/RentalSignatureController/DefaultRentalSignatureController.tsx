@@ -109,7 +109,13 @@ const DefaultRentalSignatureController = ({
 								</Col>
 							)}
 							<Col xs={isPrevPageAvailable ? 10 : 12} className={isPrevPageAvailable ? "pl-2" : ""}>
-								<Button variant='primary' size='lg' style={{ width: "100%" }} onClick={handleNextState}>
+								<Button
+									variant='primary'
+									size='lg'
+									style={{ width: "100%" }}
+									disabled={signatureUrl === ""}
+									onClick={handleNextState}
+								>
 									{isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
 								</Button>
 							</Col>
