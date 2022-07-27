@@ -1,31 +1,18 @@
-import React, { memo, Suspense, lazy } from "react";
+import React, { memo, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 import { APP_CONSTANTS } from "../../utils/constants";
 
-const DefaultCreditCardController = lazy(
-	() =>
-		import(/* webpackChunkName: 'DefaultCreditCardController' */ "../CreditCardController/DefaultCreditCardController")
+const DefaultCreditCardController = React.lazy(() => import("../CreditCardController/DefaultCreditCardController"));
+const DefaultLicenseUploadController = React.lazy(
+	() => import("../LicenseUploadController/DefaultLicenseUploadController")
 );
-const DefaultLicenseUploadController = lazy(
-	() =>
-		import(
-			/* webpackChunkName: 'DefaultLicenseUploadController' */ "../LicenseUploadController/DefaultLicenseUploadController"
-		)
+const DefaultCreditCardAndLicenseUploadController = React.lazy(
+	() => import("../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController")
 );
-const DefaultCreditCardAndLicenseUploadController = lazy(
-	() =>
-		import(
-			/* webpackChunkName: 'DefaultCreditCardAndLicenseUploadController' */ "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController"
-		)
-);
-
-const DefaultRentalSignatureController = lazy(
-	() =>
-		import(
-			/* webpackChunkName: 'DefaultRentalSignatureController' */ "../RentalSignatureController/DefaultRentalSignatureController"
-		)
+const DefaultRentalSignatureController = React.lazy(
+	() => import("../RentalSignatureController/DefaultRentalSignatureController")
 );
 
 interface IProps {
@@ -46,71 +33,73 @@ const DisplayCurrentController = ({
 	const { t } = useTranslation();
 
 	return (
-		<Suspense fallback={<LoadingSubmission title={t("appStatusMessages.loading")} />}>
-			{selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_FORM && (
-				<DefaultCreditCardController
-					handleSubmit={handleNext}
-					isNextAvailable={isNextPageAvailable}
-					handlePrevious={handlePrevious}
-					isPrevPageAvailable={isPrevPageAvailable}
-				/>
-			)}
-			{selectedController === APP_CONSTANTS.VIEW_DEFAULT_LICENSE_UPLOAD_FORM && (
-				<DefaultLicenseUploadController
-					handleSubmit={handleNext}
-					isNextAvailable={isNextPageAvailable}
-					handlePrevious={handlePrevious}
-					isPrevPageAvailable={isPrevPageAvailable}
-				/>
-			)}
-			{selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_CONTROLLER ||
-			selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM ? (
-				<DefaultCreditCardAndLicenseUploadController
-					handleSubmit={handleNext}
-					isNextAvailable={isNextPageAvailable}
-					handlePrevious={handlePrevious}
-					isPrevPageAvailable={isPrevPageAvailable}
-				/>
-			) : null}
-			{selectedController === APP_CONSTANTS.VIEW_DEFAULT_RENTAL_SIGNATURE_FORM && (
-				<DefaultRentalSignatureController
-					handleSubmit={handleNext}
-					isNextAvailable={isNextPageAvailable}
-					handlePrevious={handlePrevious}
-					isPrevPageAvailable={isPrevPageAvailable}
-				/>
-			)}
-			{selectedController === "Default/Positive" && (
-				<div>
-					<h5>positive</h5>
-					<p>
-						{isPrevPageAvailable && (
-							<button type='button' onClick={handlePrevious}>
-								&#8592;
+		<React.Fragment>
+			<Suspense fallback={<LoadingSubmission title={t("appStatusMessages.loading")} />}>
+				{selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_FORM && (
+					<DefaultCreditCardController
+						handleSubmit={handleNext}
+						isNextAvailable={isNextPageAvailable}
+						handlePrevious={handlePrevious}
+						isPrevPageAvailable={isPrevPageAvailable}
+					/>
+				)}
+				{selectedController === APP_CONSTANTS.VIEW_DEFAULT_LICENSE_UPLOAD_FORM && (
+					<DefaultLicenseUploadController
+						handleSubmit={handleNext}
+						isNextAvailable={isNextPageAvailable}
+						handlePrevious={handlePrevious}
+						isPrevPageAvailable={isPrevPageAvailable}
+					/>
+				)}
+				{selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_CONTROLLER ||
+				selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM ? (
+					<DefaultCreditCardAndLicenseUploadController
+						handleSubmit={handleNext}
+						isNextAvailable={isNextPageAvailable}
+						handlePrevious={handlePrevious}
+						isPrevPageAvailable={isPrevPageAvailable}
+					/>
+				) : null}
+				{selectedController === APP_CONSTANTS.VIEW_DEFAULT_RENTAL_SIGNATURE_FORM && (
+					<DefaultRentalSignatureController
+						handleSubmit={handleNext}
+						isNextAvailable={isNextPageAvailable}
+						handlePrevious={handlePrevious}
+						isPrevPageAvailable={isPrevPageAvailable}
+					/>
+				)}
+				{selectedController === "Default/Positive" && (
+					<div>
+						<h5>positive</h5>
+						<p>
+							{isPrevPageAvailable && (
+								<button type='button' onClick={handlePrevious}>
+									&#8592;
+								</button>
+							)}
+							<button type='button' onClick={handleNext}>
+								{isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
 							</button>
-						)}
-						<button type='button' onClick={handleNext}>
-							{isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
-						</button>
-					</p>
-				</div>
-			)}
-			{selectedController === "Default/Negative" && (
-				<div>
-					<h5>negative</h5>
-					<p>
-						{isPrevPageAvailable && (
-							<button type='button' onClick={handlePrevious}>
-								&#8592;
+						</p>
+					</div>
+				)}
+				{selectedController === "Default/Negative" && (
+					<div>
+						<h5>negative</h5>
+						<p>
+							{isPrevPageAvailable && (
+								<button type='button' onClick={handlePrevious}>
+									&#8592;
+								</button>
+							)}
+							<button type='button' onClick={handleNext}>
+								{isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
 							</button>
-						)}
-						<button type='button' onClick={handleNext}>
-							{isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
-						</button>
-					</p>
-				</div>
-			)}
-		</Suspense>
+						</p>
+					</div>
+				)}
+			</Suspense>
+		</React.Fragment>
 	);
 };
 
