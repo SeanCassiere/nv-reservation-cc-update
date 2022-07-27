@@ -176,7 +176,6 @@ const DefaultCreditCardAndLicenseUploadController = ({
 		} catch (error: any) {
 			const err = error as yup.ValidationError;
 			const formErrors = yupFormatSchemaErrors(err);
-			if (process.env.NODE_ENV !== "production") console.log(formErrors);
 			setSchemaErrors(formErrors);
 		}
 	}, [backImageFile, dispatch, formValues, frontImageFile, handleSubmit, schema]);

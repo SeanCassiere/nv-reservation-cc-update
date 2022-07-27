@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import React from "react";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 import valid from "card-validator";
@@ -6,7 +6,7 @@ import valid from "card-validator";
 const useCreditCardSchema = () => {
 	const { t } = useTranslation();
 
-	const schema = useMemo(
+	const schema = React.useMemo(
 		() =>
 			yup.object().shape({
 				name: yup.string().required(t("forms.creditCard.errors.name")),

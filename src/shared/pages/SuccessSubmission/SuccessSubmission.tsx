@@ -7,7 +7,7 @@ import SuccessImg from "../../assets/undraw_make_it_rain_iwk4.svg";
 import { selectConfigState } from "../../redux/store";
 import { APP_CONSTANTS } from "../../utils/constants";
 
-const SuccessSubmission = ({ referenceType }: { referenceType: string }) => {
+const SuccessSubmission: React.FC = () => {
 	const { t } = useTranslation();
 	const appConfig = useSelector(selectConfigState);
 
