@@ -6,28 +6,28 @@ import "react-credit-cards/es/styles-compiled.css";
 import { ICreditCardFormData } from "../../redux/slices/forms/slice";
 
 interface IProps {
-	currentFocus: string;
-	formData: ICreditCardFormData;
-	handleCardIdentifier: (type: string, maxLength: number) => void;
+  currentFocus: string;
+  formData: ICreditCardFormData;
+  handleCardIdentifier: (type: string, maxLength: number) => void;
 }
 
 const DefaultCreditCard = ({ currentFocus, formData, handleCardIdentifier }: IProps) => {
-	const { t } = useTranslation();
-	const expiry = `${formData.monthExpiry}/${formData.yearExpiry}`;
-	return (
-		<Cards
-			number={formData.number}
-			name={formData.name}
-			cvc={formData.cvv}
-			expiry={expiry}
-			locale={{ valid: t("forms.creditCard.creditCardComponent.validThru") }}
-			placeholders={{ name: t("forms.creditCard.creditCardComponent.yourName") }}
-			focused={currentFocus as any}
-			callback={(card) => {
-				handleCardIdentifier(card.issuer, card.maxLength);
-			}}
-		/>
-	);
+  const { t } = useTranslation();
+  const expiry = `${formData.monthExpiry}/${formData.yearExpiry}`;
+  return (
+    <Cards
+      number={formData.number}
+      name={formData.name}
+      cvc={formData.cvv}
+      expiry={expiry}
+      locale={{ valid: t("forms.creditCard.creditCardComponent.validThru") }}
+      placeholders={{ name: t("forms.creditCard.creditCardComponent.yourName") }}
+      focused={currentFocus as any}
+      callback={(card) => {
+        handleCardIdentifier(card.issuer, card.maxLength);
+      }}
+    />
+  );
 };
 
 export default memo(DefaultCreditCard);

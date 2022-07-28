@@ -6,15 +6,15 @@ import reservationSlice from "./slices/retrievedDetails/slice";
 import authSlice from "./slices/auth/slice";
 
 const batchedReducers = combineReducers({
-	[configSlice.name]: configSlice.reducer,
-	[reservationSlice.name]: reservationSlice.reducer,
-	[formsSlice.name]: formsSlice.reducer,
-	[authSlice.name]: authSlice.reducer,
+  [configSlice.name]: configSlice.reducer,
+  [reservationSlice.name]: reservationSlice.reducer,
+  [formsSlice.name]: formsSlice.reducer,
+  [authSlice.name]: authSlice.reducer,
 });
 
 const store = configureStore({
-	reducer: batchedReducers,
-	middleware: (getDefaultMiddleware) => [...getDefaultMiddleware()],
+  reducer: batchedReducers,
+  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware()],
 });
 
 export type AppDispatch = typeof store.dispatch;

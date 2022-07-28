@@ -11,34 +11,34 @@ import ErrorSubmission from "../shared/pages/ErrorSubmission/ErrorSubmission";
 import NavigateToNotAvailable from "./NavigateToNotAvailable";
 
 const AppRoutes: React.FC = () => {
-	const { t } = useTranslation();
+  const { t } = useTranslation();
 
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route index element={<ApplicationController />} />
-				<Route
-					path='/submit-details'
-					element={
-						<RequireAuth>
-							<DefaultSubmitDetailsController />
-						</RequireAuth>
-					}
-				/>
-				<Route
-					path='/success'
-					element={
-						<RequireAuth>
-							<SuccessSubmission />
-						</RequireAuth>
-					}
-				/>
-				<Route path='/error' element={<ErrorSubmission msg={t("badSubmission.message")} tryAgainButton />} />
-				<Route path='/not-available' element={<NotAuthorized />} />
-				<Route path='*' element={<NavigateToNotAvailable />} />
-			</Routes>
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<ApplicationController />} />
+        <Route
+          path="/submit-details"
+          element={
+            <RequireAuth>
+              <DefaultSubmitDetailsController />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/success"
+          element={
+            <RequireAuth>
+              <SuccessSubmission />
+            </RequireAuth>
+          }
+        />
+        <Route path="/error" element={<ErrorSubmission msg={t("badSubmission.message")} tryAgainButton />} />
+        <Route path="/not-available" element={<NotAuthorized />} />
+        <Route path="*" element={<NavigateToNotAvailable />} />
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default AppRoutes;

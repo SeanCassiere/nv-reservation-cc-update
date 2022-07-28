@@ -11,11 +11,11 @@ import "./i18n";
 import LoadingSubmission from "./shared/pages/LoadingSubmission/LoadingSubmission";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<Suspense fallback={<LoadingSubmission title='' />}>
-			<Provider store={store}>
-				<App />
-			</Provider>
-		</Suspense>
-	</React.StrictMode>
+  <React.StrictMode>
+    <Suspense fallback={<LoadingSubmission title="" />}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Suspense>
+  </React.StrictMode>
 );
