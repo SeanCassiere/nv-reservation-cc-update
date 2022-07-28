@@ -4,10 +4,21 @@ import { useTranslation } from "react-i18next";
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 import { APP_CONSTANTS } from "../../utils/constants";
 
-import DefaultRentalSignatureController from "../RentalSignatureController/DefaultRentalSignatureController";
-import DefaultCreditCardController from "../CreditCardController/DefaultCreditCardController";
-import DefaultLicenseUploadController from "../LicenseUploadController/DefaultLicenseUploadController";
-import DefaultCreditCardAndLicenseUploadController from "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController";
+// import DefaultRentalSignatureController from "../RentalSignatureController/DefaultRentalSignatureController";
+// import DefaultCreditCardController from "../CreditCardController/DefaultCreditCardController";
+// import DefaultLicenseUploadController from "../LicenseUploadController/DefaultLicenseUploadController";
+// import DefaultCreditCardAndLicenseUploadController from "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController";
+
+const DefaultRentalSignatureController = React.lazy(
+  () => import("../RentalSignatureController/DefaultRentalSignatureController")
+);
+const DefaultCreditCardController = React.lazy(() => import("../CreditCardController/DefaultCreditCardController"));
+const DefaultLicenseUploadController = React.lazy(
+  () => import("../LicenseUploadController/DefaultLicenseUploadController")
+);
+const DefaultCreditCardAndLicenseUploadController = React.lazy(
+  () => import("../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController")
+);
 
 interface IProps {
   selectedController: string | null;
