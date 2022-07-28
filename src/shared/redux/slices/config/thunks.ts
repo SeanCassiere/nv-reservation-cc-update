@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import clientV3 from "../../../api/clientV3";
+import clientV3, { AUTH_URL } from "../../../api/clientV3";
 import { bodyEmailTemplate } from "../../../utils/bodyEmailTemplate";
 
 import { setAppStatus } from "./slice";
@@ -27,8 +27,6 @@ interface User {
   isActive: boolean;
   userRoleID: number;
 }
-
-const AUTH_URL = import.meta.env.VITE_APP_V3_AUTH_URL ?? "/.netlify/functions/GetTokenV3";
 
 // const auth = await client.post("/Login/GetClientSecretToken", {
 // 	ClientId: clientId,
@@ -88,8 +86,8 @@ export const initializeAppThunk = createAsyncThunk(
       dispatch(setCcEmails(emailsToCC));
     } catch (error) {
       console.error("get cc emails", error);
-      console.groupEnd();
-      return dispatch(setAppStatus({ status: "authentication_error" }));
+      // console.groupEnd();
+      // return dispatch(setAppStatus({ status: "authentication_error" }));
     }
 
     // Fetch the customer details based on the Reference Type = Reservation | Agreement
@@ -134,7 +132,7 @@ export const initializeAppThunk = createAsyncThunk(
       dispatch(setEmailTemplateDetails({ templateTypeId, subjectLine }));
     } catch (error) {
       console.error("get email template details", error);
-      console.groupEnd();
+      // console.groupEnd();
       // failing to fetch the email template details should not fail the app
       // return dispatch(setAppStatus({ status: "authentication_error" }));
     }
@@ -168,7 +166,7 @@ export const initializeAppThunk = createAsyncThunk(
       }
     } catch (error) {
       console.error("get email template html", error);
-      console.groupEnd();
+      // console.groupEnd();
       // failing to fetch the email template html should not fail the app
       // return dispatch(setAppStatus({ status: "authentication_error" }));
     }
