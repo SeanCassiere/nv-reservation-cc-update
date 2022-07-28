@@ -3,54 +3,54 @@ import { ICreditCardFormData } from "../redux/slices/forms/slice";
 import { urlBlobToBase64 } from "../utils/blobUtils";
 
 export const insertCreditCardForCustomer = async (
-	customerId: string,
-	formBody: ICreditCardFormData
+  customerId: string,
+  formBody: ICreditCardFormData
 ): Promise<boolean> => {
-	try {
-		await clientV3.post(`/Customers/${customerId}/CreditCards`, {
-			creditCardType: formBody.type,
-			creditCardNumber: formBody.number,
-			creditCardExpiryMonth: parseInt(formBody.monthExpiry),
-			creditCardExpiryYear: parseInt(`20${formBody.yearExpiry}`),
-			creditCardCVSNumber: formBody.cvv,
-			nameOnCard: formBody.name,
-			creditCardBillingZipCode: formBody.billingZip,
-			gatewayMandateID: null,
-			gatewayRedirectFlow: null,
-			gatewayCustomerID: null,
-		});
+  try {
+    await clientV3.post(`/Customers/${customerId}/CreditCards`, {
+      creditCardType: formBody.type,
+      creditCardNumber: formBody.number,
+      creditCardExpiryMonth: parseInt(formBody.monthExpiry),
+      creditCardExpiryYear: parseInt(`20${formBody.yearExpiry}`),
+      creditCardCVSNumber: formBody.cvv,
+      nameOnCard: formBody.name,
+      creditCardBillingZipCode: formBody.billingZip,
+      gatewayMandateID: null,
+      gatewayRedirectFlow: null,
+      gatewayCustomerID: null,
+    });
 
-		return true;
-	} catch (error) {
-		console.error("Error inserting credit card for customer", error);
-		return false;
-	}
+    return true;
+  } catch (error) {
+    console.error("Error inserting credit card for customer", error);
+    return false;
+  }
 };
 
 export const uploadDriverLicenseImageForCustomer = async (
-	customerId: string,
-	clientId: any,
-	imageUrl: string,
-	imageName: string
+  customerId: string,
+  clientId: any,
+  imageUrl: string,
+  imageName: string
 ): Promise<boolean> => {
-	const imageBase64 = await urlBlobToBase64(imageUrl);
-	const mimeType = imageBase64.split(";")[0].split(":")[1];
+  const imageBase64 = await urlBlobToBase64(imageUrl);
+  const mimeType = imageBase64.split(";")[0].split(":")[1];
 
-	try {
-		await clientV3.post(`/Customers/${customerId}/Documents`, {
-			clientId: clientId,
-			blob: imageBase64,
-			fileName: imageName,
-			contentType: mimeType,
-			docTypeId: 5,
-			videoDetails: null,
-			printDocWithAgreement: true,
-			attachDocWithAgreement: true,
-		});
+  try {
+    await clientV3.post(`/Customers/${customerId}/Documents`, {
+      clientId: clientId,
+      blob: imageBase64,
+      fileName: imageName,
+      contentType: mimeType,
+      docTypeId: 5,
+      videoDetails: null,
+      printDocWithAgreement: true,
+      attachDocWithAgreement: true,
+    });
 
-		return true;
-	} catch (error) {
-		console.error(`Error uploading driver license image for customer (imageName: ${imageName})`, error);
-		return false;
-	}
+    return true;
+  } catch (error) {
+    console.error(`Error uploading driver license image for customer (imageName: ${imageName})`, error);
+    return false;
+  }
 };
