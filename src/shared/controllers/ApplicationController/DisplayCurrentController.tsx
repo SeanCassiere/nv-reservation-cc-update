@@ -9,6 +9,17 @@ import DefaultCreditCardController from "../CreditCardController/DefaultCreditCa
 import DefaultLicenseUploadController from "../LicenseUploadController/DefaultLicenseUploadController";
 import DefaultCreditCardAndLicenseUploadController from "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController";
 
+// const DefaultRentalSignatureController = React.lazy(
+//   () => import("../RentalSignatureController/DefaultRentalSignatureController")
+// );
+// const DefaultCreditCardController = React.lazy(() => import("../CreditCardController/DefaultCreditCardController"));
+// const DefaultLicenseUploadController = React.lazy(
+//   () => import("../LicenseUploadController/DefaultLicenseUploadController")
+// );
+// const DefaultCreditCardAndLicenseUploadController = React.lazy(
+//   () => import("../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController")
+// );
+
 interface IProps {
   selectedController: string | null;
   handleNext: () => void;
