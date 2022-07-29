@@ -1,58 +1,94 @@
 # RENTALL - Customer Details Update
 
-This application is used to add additional details to their reservation.
+This application is meant for usage a RENTALL/Navotar client's customer to be able to add additional details to their reservation or agreement.
 
-Install `concurrently` globally before running `yarn dev`.
+## Set-up the application for development
 
-`npm install -g concurrently`
+1. Clone the repository.
+2. Install dependencies `yarn install`.
+3. Create a `.env` file and add the necessary `secrets` into it. You can use the `.env.example` file as a reference.
+4. Run the development server using `yarn dev`.
 
-View the RENTALL API V3 Documentation [API Documentation](https://api.apprentall.com/docs).
+## How does it work?
 
-## Create your own flow
+A custom URL pointed at the hosted application is added into the client account as a link in a email template sent to their customer.
 
-You can create your own config flow by using the built-in developer menu. This creator can be access using the following keyboard shortcut.
+Example: [https://nv-reservation-cc-details.netlify.app/?agreementId=640904&lang=en&config=eyJjbGllbnRJZCI6MTAxMywiZW1haWxUZW1wbGF0ZUlkIjo4Mzg4LCJmbG93IjpbIkRlZmF1bHQvUmVudGFsU2lnbmF0dXJlRm9ybSJdLCJmcm9tUmVudGFsbCI6dHJ1ZX0=](https://nv-reservation-cc-details.netlify.app/?agreementId=640904&lang=en&config=eyJjbGllbnRJZCI6MTAxMywiZW1haWxUZW1wbGF0ZUlkIjo4Mzg4LCJmbG93IjpbIkRlZmF1bHQvUmVudGFsU2lnbmF0dXJlRm9ybSJdLCJmcm9tUmVudGFsbCI6dHJ1ZX0=)
+
+Once the customer accesses the application via the provided custom URL, they would then be able to add details requested by the client, directly against their booking.
+
+## Developer information
+
+The application authorizes itself via a proxy lambda function hosted on Netlify, which in-turn obtains its access token from the Navotar OAuth2 Authorization server using `client credentials`. Then it obtains and updates information into the client account using the RENTALL V3 API.
+
+You can view the OpenAPI documentation via this [link](https://api.apprentall.com/docs).
+
+### Controlling the application flow
+
+The information being requested from the client is based on the flow setup within the config of the URL params.
+
+To create your own config and flow, you can use the built-in developer menu. You can access this menu using the following keyboard shortcut.
 
 Windows: `CTRL + SHIFT + K`
 
 Mac: `CMD + SHIFT + K`
 
-## URL Params
+### URL params
+
+The URL search params are used to easily provide/pass the configuration settings required to correctly initiate and authorize the application.
 
 ```
 ?reservationId=xxxxx&config=xxxx&lang=en
 ```
 
-| Param         | Value                                                                                        |
-| ------------- | -------------------------------------------------------------------------------------------- |
-| reservationId | (optional) Reservation number or ID.                                                         |
-| agreementId   | (optional) Agreement number or ID.                                                           |
-| lang          | Supported languages codes, listed down below.                                                |
-| config        | base64 encoding of a JSON string with certain bits of application configuration information. |
+| Param         | Required | Value                                                                                        |
+| ------------- | -------- | -------------------------------------------------------------------------------------------- |
+| reservationId | false\*  | Reservation number or ID.                                                                    |
+| agreementId   | false\*  | Agreement number or ID.                                                                      |
+| lang          | false    | One of supported languages codes, listed down below.                                         |
+| config        | true     | base64 encoding of a JSON string with certain bits of application configuration information. |
 
-**NOTE:** Preference will be given to the reservation details first. Therefore, if the url includes both the `reservationId` and `agreementId` query params, the app will pursue the **reservation** flow.
+**NOTE:** Either the `reservationId` or `agreementId` must be passed into the URL params.
 
-## Config params
+**NOTE:** If both the `reservationId` and `agreementId` are present in the URL params, it will default to proceed into a **Reservation** based flow, thereby disregarding any **Agreement** related queries or mutations.
 
-When creating the base64 encoded JSON string, add in the following into the string.
+### Language localization
+
+These are the language codes supported by the application.
+| Language | Code |
+| --- | --- |
+| English | en |
+| French | fr |
+| German | de |
+| Spanish | es |
+
+### Config params
+
+Should you wish to manually create your own config string, you will need to create a JSON object using the shape defined below.
 
 ```json
 {
-	"clientId": 1013,
-	"emailTemplateId": 7388,
-	"flow": ["Default/CreditCardForm"]
+  "clientId": 1013,
+  "emailTemplateId": 7388,
+  "flow": ["Default/CreditCardForm"],
+  "fromRentall": true
 }
 
 // Example Base64 --> eyJjbGllbnRJZCI6IDEwMTMsImVtYWlsVGVtcGxhdGVJZCI6IDczODgsImZsb3ciOiBbIkRlZmF1bHQvQ3JlZGl0Q2FyZEZvcm0iXX0=
 ```
 
-| Param           | Value                                                                                                                                                                                       |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| clientId        | Navotar Client ID of the User.                                                                                                                                                              |
-| emailTemplateId | Navotar Client Custom Email Template ID of the User in the Reservation Confirmation Emails section.                                                                                         |
-| flow            | Ordered array of the screens/views to be gone through. <br /><br /> This is an optional field. If not given in the config, only the **Default/CreditCardForm** will be shown to the user.   |
-| fromRentall     | Boolean value indicating if this user's primary account is RENTALL or Navotar. <br /><br /> Based on this the link at the bottom of the page will be changed, along with the support email. |
+These are the parameters supported in the configuration object.
 
-## Available screens/views
+| Param           | Value                                                                                                                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| clientId        | RENTALL/Navotar Client ID of the client account.                                                                                                                                      |
+| emailTemplateId | Custom Email Template ID to be used when sending the confirmation email.<br />Please note, that this email template must exist in the client's account.                               |
+| flow            | Ordered array of the screens/views to be gone through. <br /> This is an optional field. If not given in the config, only the **Default/CreditCardForm** will be shown to the user.   |
+| fromRentall     | Boolean value indicating if this user's primary account is RENTALL or Navotar. <br /> Based on this the link at the bottom of the page will be changed, along with the support email. |
+
+Afterwards, you can encode this JSON object using Base64 to formulate the final URL-safe config string. [https://www.base64encode.org/](https://www.base64encode.org/)
+
+### Available screens/views
 
 | Key                                    | Description                                                                                |
 | -------------------------------------- | ------------------------------------------------------------------------------------------ |
@@ -60,13 +96,3 @@ When creating the base64 encoded JSON string, add in the following into the stri
 | Default/LicenseUploadForm              | The default form for uploading driver's license images                                     |
 | Default/CreditCardAndLicenseUploadForm | The a combination of both the `Default/CreditCardForm` and the `Default/LicenseUploadForm` |
 | Default/RentalSignatureForm            | The default canvas to capture the customer's signature.                                    |
-
-## Language Support
-
-Languages supported
-| Language | Code |
-| --- | --- |
-| English | en |
-| French | fr |
-| German | de |
-| Spanish | es |
