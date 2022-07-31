@@ -54,13 +54,13 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
   // Add the rental signature to the array of submissions to run
   if (formState.rentalSignatureForm.isReadyToSubmit) {
     formPromisesToRun.push(
-      uploadRentalDigitalSignatureFromUrl(
-        formState.rentalSignatureForm.data.signatureUrl,
-        retrievedDetails.data.driverId,
-        retrievedDetails.data.customerName,
-        configState.referenceType,
-        retrievedDetails.referenceId
-      )
+      uploadRentalDigitalSignatureFromUrl({
+        imageUrl: formState.rentalSignatureForm.data.signatureUrl,
+        additionalDriverId: retrievedDetails.data.driverId,
+        customerName: retrievedDetails.data.customerName,
+        referenceType: configState.referenceType,
+        referenceId: retrievedDetails.referenceId,
+      })
     );
   }
 

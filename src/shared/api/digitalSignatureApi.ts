@@ -3,34 +3,35 @@ import clientV3 from "./clientV3";
 import { urlBlobToBase64 } from "../utils/blobUtils";
 import { APP_CONSTANTS } from "../utils/constants";
 
-export const uploadRentalDigitalSignatureFromUrl = async (
-  imageUrl: string,
-  additionalDriverId: number,
-  customerName: string,
-  referenceType: any,
-  referenceId: any
-) => {
-  const imageBase64 = await urlBlobToBase64(imageUrl);
+export const uploadRentalDigitalSignatureFromUrl = async (opts: {
+  imageUrl: string;
+  additionalDriverId: number;
+  customerName: string;
+  referenceType: any;
+  referenceId: any;
+}) => {
+  const imageBase64 = await urlBlobToBase64(opts.imageUrl);
 
   const date = new Date().toISOString().substring(0, 19).replace("T", " (").replaceAll(":", "-");
   const imageType = `.${imageBase64.split(";")[0].split(":")[1].split("/")[1]}`;
-  const imageName = `${date}) ${referenceType} Signature`;
+  const imageName = `${date}) ${opts.referenceType} Signature`;
 
   let body: any = {
-    agreementId: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? `${referenceId}` : 0,
-    reservationId: referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION ? `${referenceId}` : 0,
+    agreementId: opts.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? `${opts.referenceId}` : 0,
+    reservationId: opts.referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION ? `${opts.referenceId}` : 0,
     imageName,
     base64String: imageBase64,
     imageType,
     isCheckIn: false,
     isDamageView: false,
     signatureImage: null,
-    signatureName: customerName,
+    signatureName: opts.customerName,
   };
 
-  if (additionalDriverId) {
-    body = { additionalDriverId, ...body };
-  }
+  // disabled since we are not using this anymore
+  // if (opts.additionalDriverId) {
+  //   body = { additionalDriverId: opts.additionalDriverId, ...body };
+  // }
 
   try {
     await clientV3.post(`/DigitalSignature/UploadSignature`, body);
