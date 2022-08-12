@@ -1,139 +1,140 @@
 {
-	"developer": {
-		"drawerTitle": "Developer Menu",
-		"configCreator": {
-			"formSelectValue": "Select",
-			"btnCopy": "Copy",
-			"btnCopiedToClipboard": "Copied to clipboard",
-			"btnSave": "Open new config",
-			"btnReset": "Clear changes",
-			"referenceType": "Reference Type",
-			"referenceId": "Reference ID",
-			"clientId": "Client ID",
-			"lang": "Language",
-			"responseTemplateId": "Response Email Template ID",
-			"applicationFlows": "Flows",
-			"applicationBranding": "Branding?",
-			"applicationEnvironment": "Environment?",
-			"environmentQa": "Using QA",
-			"environmentProduction": "Using Production",
-			"openedDevMenu": "Developer Menu Opened?",
-			"devMenuOpened": "Open",
-			"devMenuClosed": "Closed"
-		}
-	},
-	"appStatusMessages": {
-		"loading": "Loading",
-		"sendingCreditCard": "Submitting your credit card information",
-		"sendingLicenseImagesBundle": "Submitting your driving license images",
-		"sendingConfirmationEmail": "Sending confirmation email",
-		"submittingYourDetailsMsg": "Submitting your details"
-	},
-	"forms": {
-		"navBack": "Back",
-		"navNext": "Next",
-		"navSubmit": "Submit",
-		"creditCard": {
-			"title": "Credit Card Information",
-			"message": "Please enter in your credit card information to be used for your reservation.",
-			"labels": {
-				"cardNumber": "Card Number",
-				"nameOnCard": "Name on the Credit Card",
-				"cvv": "CVV",
-				"billingZip": "Billing Zip Code",
-				"expMonth": "Expiry Month",
-				"expYear": "Expiry Year",
-				"placeholders": {
-					"name": "John Doe",
-					"zipCode": "Zip Code",
-					"select": "Select"
-				}
-			},
-			"creditCardComponent": {
-				"validThru": "valid thru",
-				"yourName": "YOUR NAME HERE"
-			},
-			"errors": {
-				"cardNumber": "Enter a full credit card number.",
-				"name": "Enter the name printed on the credit card.",
-				"expMonth": "Enter the credit card expiry month.",
-				"expYear": "Enter the credit card expiry year.",
-				"cvv": "Enter the PIN on the back of the credit card.",
-				"billingZip": "Enter your billing zip code."
-			}
-		},
-		"licenseUpload": {
-			"title": "Driver's License",
-			"message": "Upload front and back images of your driver's license.",
-			"goBack": {
-				"title": "Are you sure?",
-				"message": "Going back will discard the added files.",
-				"cancel": "Cancel",
-				"submit": "I Understand"
-			},
-			"frontImage": {
-				"title": "Front Image",
-				"drag": "Drag and drop the front image here",
-				"select": "Select the front image",
-				"clear": "Clear the front image",
-				"notSelected": "You must select the front image."
-			},
-			"backImage": {
-				"title": "Back Image",
-				"drag": "Drag and drop the back image here",
-				"select": "Select the back image",
-				"clear": "Clear the back image",
-				"notSelected": "You must select the back image."
-			}
-		},
-		"rentalSignature": {
-			"title": "Booking Signature",
-			"title_agreement": "Contract Signature",
-			"message": "Draw your signature below and press the Save button.",
-			"message_agreement": "Draw your signature below and press the Save button.",
-			"clearInput": "Clear the signature",
-			"errorNoSignature": "Please provide a signature.",
-			"saveInput": "Sign",
-			"signatureRequired": "Add your signature and press the Save button before you continue.",
-			"goBack": {
-				"title": "Are you sure?",
-				"message": "Going back will discard the added signature.",
-				"cancel": "Cancel",
-				"submit": "I Understand"
-			}
-		}
-	},
-	"errorBoundary": {
-		"title": "Uh Oh",
-		"message": "There was a fatal error in the application."
-	},
-	"successSubmission": {
-		"title": "Success!",
-		"message": "Thank you for submitting your information towards the booking.",
-		"message_agreement": "Thank you for submitting your information towards the rental contract."
-	},
-	"authenticationSubmission": {
-		"title": "Authenticating",
-		"message": "We had trouble authenticating this connection."
-	},
-	"coreDetailsFetchError": {
-		"title": "Uh Oh",
-		"title_agreement": "Uh Oh",
-		"message": "We could not locate the reservation.",
-		"message_agreement": "We could not locate the rental contract."
-	},
-	"badSubmission": {
-		"title": "Uh Oh",
-		"message": "I encountered an error when trying to submit your information.",
-		"report": "Please report to",
-		"btnRetrySubmission": "Retry submission"
-	},
-	"queryMissing": {
-		"title": "Uh Oh",
-		"message": "It looks like all not all the necessary information was sent.",
-		"report": "Please report to"
-	},
-	"footer": {
-		"poweredBy": "Powered by"
-	}
+  "developer": {
+    "drawerTitle": "Developer Menu",
+    "viewProjectRepo": "GitHub Repository",
+    "configCreator": {
+      "formSelectValue": "Select",
+      "btnCopy": "Copy",
+      "btnCopiedToClipboard": "Copied to clipboard",
+      "btnSave": "Open new config",
+      "btnReset": "Clear changes",
+      "referenceType": "Reference Type",
+      "referenceId": "Reference ID",
+      "clientId": "Client ID",
+      "lang": "Language",
+      "responseTemplateId": "Response Email Template ID",
+      "applicationFlows": "Flows",
+      "applicationBranding": "Branding?",
+      "applicationEnvironment": "Environment?",
+      "environmentQa": "Using QA",
+      "environmentProduction": "Using Production",
+      "openedDevMenu": "Developer Menu Opened?",
+      "devMenuOpened": "Open",
+      "devMenuClosed": "Closed"
+    }
+  },
+  "appStatusMessages": {
+    "loading": "Loading",
+    "sendingCreditCard": "Submitting your credit card information",
+    "sendingLicenseImagesBundle": "Submitting your driving license images",
+    "sendingConfirmationEmail": "Sending confirmation email",
+    "submittingYourDetailsMsg": "Submitting your details"
+  },
+  "forms": {
+    "navBack": "Back",
+    "navNext": "Next",
+    "navSubmit": "Submit",
+    "creditCard": {
+      "title": "Credit Card Information",
+      "message": "Please enter in your credit card information to be used for your reservation.",
+      "labels": {
+        "cardNumber": "Card Number",
+        "nameOnCard": "Name on the Credit Card",
+        "cvv": "CVV",
+        "billingZip": "Billing Zip Code",
+        "expMonth": "Expiry Month",
+        "expYear": "Expiry Year",
+        "placeholders": {
+          "name": "John Doe",
+          "zipCode": "Zip Code",
+          "select": "Select"
+        }
+      },
+      "creditCardComponent": {
+        "validThru": "valid thru",
+        "yourName": "YOUR NAME HERE"
+      },
+      "errors": {
+        "cardNumber": "Enter a full credit card number.",
+        "name": "Enter the name printed on the credit card.",
+        "expMonth": "Enter the credit card expiry month.",
+        "expYear": "Enter the credit card expiry year.",
+        "cvv": "Enter the PIN on the back of the credit card.",
+        "billingZip": "Enter your billing zip code."
+      }
+    },
+    "licenseUpload": {
+      "title": "Driver's License",
+      "message": "Upload front and back images of your driver's license.",
+      "goBack": {
+        "title": "Are you sure?",
+        "message": "Going back will discard the added files.",
+        "cancel": "Cancel",
+        "submit": "I Understand"
+      },
+      "frontImage": {
+        "title": "Front Image",
+        "drag": "Drag and drop the front image here",
+        "select": "Select the front image",
+        "clear": "Clear the front image",
+        "notSelected": "You must select the front image."
+      },
+      "backImage": {
+        "title": "Back Image",
+        "drag": "Drag and drop the back image here",
+        "select": "Select the back image",
+        "clear": "Clear the back image",
+        "notSelected": "You must select the back image."
+      }
+    },
+    "rentalSignature": {
+      "title": "Booking Signature",
+      "title_agreement": "Contract Signature",
+      "message": "Draw your signature below and press the Save button.",
+      "message_agreement": "Draw your signature below and press the Save button.",
+      "clearInput": "Clear the signature",
+      "errorNoSignature": "Please provide a signature.",
+      "saveInput": "Sign",
+      "signatureRequired": "Add your signature and press the Save button before you continue.",
+      "goBack": {
+        "title": "Are you sure?",
+        "message": "Going back will discard the added signature.",
+        "cancel": "Cancel",
+        "submit": "I Understand"
+      }
+    }
+  },
+  "errorBoundary": {
+    "title": "Uh Oh",
+    "message": "There was a fatal error in the application."
+  },
+  "successSubmission": {
+    "title": "Success!",
+    "message": "Thank you for submitting your information towards the booking.",
+    "message_agreement": "Thank you for submitting your information towards the rental contract."
+  },
+  "authenticationSubmission": {
+    "title": "Authenticating",
+    "message": "We had trouble authenticating this connection."
+  },
+  "coreDetailsFetchError": {
+    "title": "Uh Oh",
+    "title_agreement": "Uh Oh",
+    "message": "We could not locate the reservation.",
+    "message_agreement": "We could not locate the rental contract."
+  },
+  "badSubmission": {
+    "title": "Uh Oh",
+    "message": "I encountered an error when trying to submit your information.",
+    "report": "Please report to",
+    "btnRetrySubmission": "Retry submission"
+  },
+  "queryMissing": {
+    "title": "Uh Oh",
+    "message": "It looks like all not all the necessary information was sent.",
+    "report": "Please report to"
+  },
+  "footer": {
+    "poweredBy": "Powered by"
+  }
 }

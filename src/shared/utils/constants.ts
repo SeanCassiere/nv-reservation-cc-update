@@ -1,3 +1,5 @@
+export const REPO_URL = import.meta.env.VITE_APP_REPO_URL ?? "https://github.com/SeanCassiere/nv-reservation-cc-update";
+
 export const APP_CONSTANTS = {
   REF_TYPE_AGREEMENT: "Agreement",
   REF_TYPE_RESERVATION: "Reservation",
