@@ -133,7 +133,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
         <Offcanvas.Body className="mt-0 pt-0">
           <div className="pt-1 pb-3 pl-3 pr-3">
             <a href={REPO_URL} rel="noreferrer" target="_blank">
-              Github repository
+              {t("developer.viewProjectRepo")}
             </a>
           </div>
           <div className="p-2 rounded w-100 bg-light d-flex flex-column gap-1" style={{ overflowWrap: "anywhere" }}>
