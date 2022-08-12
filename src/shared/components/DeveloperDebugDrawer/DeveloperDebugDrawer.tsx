@@ -12,7 +12,7 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 
 import { supportedLanguages } from "../../redux/slices/config/slice";
-import { ALL_SCREEN_FLOWS, APP_CONSTANTS } from "../../utils/constants";
+import { ALL_SCREEN_FLOWS, APP_CONSTANTS, REPO_URL } from "../../utils/constants";
 import { isValueTrue } from "../../utils/common";
 
 type ConfigObject = {
@@ -131,6 +131,11 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
           <Offcanvas.Title>{t("developer.drawerTitle")}</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body className="mt-0 pt-0">
+          <div className="pt-1 pb-3 pl-3 pr-3">
+            <a href={REPO_URL} rel="noreferrer" target="_blank">
+              Github repository
+            </a>
+          </div>
           <div className="p-2 rounded w-100 bg-light d-flex flex-column gap-1" style={{ overflowWrap: "anywhere" }}>
             <p className="m-0">{devConfigToQueryUrl(config)}</p>
             <Button
@@ -149,6 +154,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
                 : t("developer.configCreator.btnCopy")}
             </Button>
           </div>
+
           <Form onSubmit={handleSubmit} className="mt-3">
             <Form.Group className="mb-3" controlId="devForm.referenceType">
               <Form.Label>{t("developer.configCreator.referenceType")}</Form.Label>
