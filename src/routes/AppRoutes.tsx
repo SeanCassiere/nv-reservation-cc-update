@@ -6,7 +6,7 @@ import RequireAuth from "./RequireAuth";
 import NotAuthorized from "../shared/pages/NotAuthorized/NotAuthorized";
 import ApplicationController from "../shared/controllers/ApplicationController/ApplicationController";
 import DefaultSubmitDetailsController from "../shared/controllers/SubmitDetailsController/DefaultSubmitDetailsController";
-import SuccessSubmission from "../shared/pages/SuccessSubmission/SuccessSubmission";
+import SuccessSubmissionPage from "../shared/pages/SuccessSubmission/SuccessSubmission";
 import ErrorSubmission from "../shared/pages/ErrorSubmission/ErrorSubmission";
 import NavigateToNotAvailable from "./NavigateToNotAvailable";
 
@@ -29,7 +29,7 @@ const AppRoutes: React.FC = () => {
           path="/success"
           element={
             <RequireAuth>
-              <SuccessSubmission />
+              <SuccessSubmissionPage />
             </RequireAuth>
           }
         />

@@ -10,6 +10,8 @@ export const APP_CONSTANTS = {
   VIEW_DEFAULT_RENTAL_SIGNATURE_FORM: "Default/RentalSignatureForm",
   VIEW_DEV_SCREEN_1: "Default/Positive",
   VIEW_DEV_SCREEN_2: "Default/Negative",
+  SUCCESS_SCREEN_DEFAULT: "Default/SuccessSubmission",
+  SUCCESS_SCREEN_TEST: "test/test",
 } as const;
 
 export const ALL_SCREEN_FLOWS = [
@@ -36,5 +38,16 @@ export const ALL_SCREEN_FLOWS = [
   {
     label: "Dev Screen 02",
     value: APP_CONSTANTS.VIEW_DEV_SCREEN_2,
+  },
+];
+
+export const ALL_SUCCESS_SCREENS = [
+  {
+    label: APP_CONSTANTS.SUCCESS_SCREEN_TEST,
+    value: APP_CONSTANTS.SUCCESS_SCREEN_TEST,
+  },
+  {
+    label: APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT,
+    value: APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT,
   },
 ];

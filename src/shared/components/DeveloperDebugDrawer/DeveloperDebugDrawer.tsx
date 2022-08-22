@@ -12,7 +12,7 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 
 import { supportedLanguages } from "../../redux/slices/config/slice";
-import { ALL_SCREEN_FLOWS, APP_CONSTANTS, REPO_URL } from "../../utils/constants";
+import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "../../utils/constants";
 import { isValueTrue } from "../../utils/common";
 
 type ConfigObject = {
@@ -25,6 +25,7 @@ type ConfigObject = {
   emailTemplateId: string;
   flow: string[];
   fromRentall: boolean;
+  successSubmissionScreen: string;
 };
 
 const initialConfigState: ConfigObject = {
@@ -37,6 +38,7 @@ const initialConfigState: ConfigObject = {
   emailTemplateId: "0",
   flow: [ALL_SCREEN_FLOWS[0].value],
   fromRentall: true,
+  successSubmissionScreen: APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT,
 };
 
 const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClose: () => void }) => {
@@ -118,6 +120,7 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
         : initialConfigState.emailTemplateId,
       flow: readConfig.flow ?? initialConfigState.flow,
       fromRentall: readConfig.fromRentall !== undefined ? readConfig.fromRentall : initialConfigState.fromRentall,
+      successSubmissionScreen: readConfig.successSubmissionScreen ?? initialConfigState.successSubmissionScreen,
     };
 
     setConfig(formObject);
@@ -253,6 +256,21 @@ const DeveloperDebugDrawer = ({ open, handleClose }: { open: boolean; handleClos
                 ))}
               </ListGroup>
             </Form.Group>
+            <Form.Group className="mb-3" controlId="devForm.successSubmissionScreen">
+              <Form.Label>{t("developer.configCreator.applicationSuccessScreen")}</Form.Label>
+              <Form.Select
+                name="successSubmissionScreen"
+                id="devForm.successSubmissionScreen"
+                defaultValue={config.successSubmissionScreen}
+                onChange={handleSelectInputChange}
+              >
+                {ALL_SUCCESS_SCREENS.map((successScreen) => (
+                  <option value={successScreen.value} key={`select-successSubmissionScreen-${successScreen.value}`}>
+                    {successScreen.label}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
             <Row>
               <Col md={6}>
                 <Form.Group className="mb-3">
@@ -357,7 +375,9 @@ function devConfigToQueryUrl(config: ConfigObject) {
     emailTemplateId: Number(config.emailTemplateId) ?? Number(initialConfigState.emailTemplateId),
     flow: config.flow ?? initialConfigState.flow,
     fromRentall: config.fromRentall !== undefined ? config.fromRentall : initialConfigState.fromRentall,
+    successSubmissionScreen: config.successSubmissionScreen ?? initialConfigState.successSubmissionScreen,
   };
+
   let objJsonStr = JSON.stringify(hashObj);
   let objJsonB64 = btoa(objJsonStr);
   queryString += "&config=" + objJsonB64;

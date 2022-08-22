@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ALL_SUCCESS_SCREENS, APP_CONSTANTS } from "../../../utils/constants";
 import { initializeAppThunk } from "./thunks";
 
 const appStates = [
@@ -10,9 +11,10 @@ const appStates = [
 ] as const;
 export const supportedLanguages = ["en", "de", "fr", "es"] as const;
 
-// type Controllers = typeof allControllerFlows[number];
 type AppState = typeof appStates[number];
 export type SupportedLanguages = typeof supportedLanguages[number];
+
+const successScreenKeys: string[] = ALL_SUCCESS_SCREENS.map((screen) => screen.value);
 
 export interface ConfigSliceState {
   lang: string;
@@ -20,6 +22,7 @@ export interface ConfigSliceState {
   clientId: string | null;
   responseTemplateId: string | null;
   flow: string[];
+  successSubmissionScreen: string;
   rawConfig: string;
   rawQueryString: string;
   fromRentall: boolean;
@@ -32,11 +35,12 @@ const initialState: ConfigSliceState = {
   status: "authenticating",
   clientId: null,
   responseTemplateId: null,
-  flow: ["Default/CreditCardForm"],
+  flow: [APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_FORM],
+  successSubmissionScreen: APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT,
   rawConfig: "",
   rawQueryString: "",
   fromRentall: true,
-  referenceType: "Reservation",
+  referenceType: APP_CONSTANTS.REF_TYPE_RESERVATION,
   qa: false,
 };
 
@@ -64,6 +68,7 @@ const configSlice = createSlice({
         flow: string[];
         fromRentall: boolean;
         qa: boolean;
+        successSubmissionScreen?: string;
       }>
     ) => {
       state.clientId = action.payload.clientId;
@@ -73,6 +78,12 @@ const configSlice = createSlice({
       }
       state.fromRentall = action.payload.fromRentall;
       state.qa = action.payload.qa;
+      if (
+        action.payload.successSubmissionScreen &&
+        successScreenKeys.includes(action.payload.successSubmissionScreen)
+      ) {
+        state.successSubmissionScreen = action.payload.successSubmissionScreen;
+      }
     },
     setReferenceType: (state, action: PayloadAction<{ referenceType: string }>) => {
       state.referenceType = action.payload.referenceType;
