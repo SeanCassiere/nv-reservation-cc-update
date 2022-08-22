@@ -16,13 +16,13 @@ This project uses React and is written in Typescript. The reason I (Sean) chose 
 
 ## Documentation
 
-See [DOCUMENTATION.md](DOCUMENTATION.md) for instruction to set up the repository and the configuration options of the application.
+See [DOCUMENTATION](DOCUMENTATION.md) for information and configuration options for the application.
 
 ## Contributing
 
 Contributions are always welcome!
 
-See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for ways to get started.
+See [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for ways to get started.
 
 Please adhere to this project's `code of conduct`.
 
