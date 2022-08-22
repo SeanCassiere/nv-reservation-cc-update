@@ -20,6 +20,7 @@ type ConfigState = {
   emailTemplateId: string | null;
   flow: string[];
   fromRentall: boolean;
+  successSubmissionScreen?: string;
 };
 
 const ApplicationController = () => {
@@ -70,6 +71,7 @@ const ApplicationController = () => {
         flow: config.flow,
         fromRentall: config.fromRentall,
         qa: isValueTrue(qaQuery) ? true : false,
+        successSubmissionScreen: config.successSubmissionScreen,
       })
     );
 
