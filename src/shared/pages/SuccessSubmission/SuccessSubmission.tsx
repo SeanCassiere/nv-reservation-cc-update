@@ -1,29 +1,31 @@
 import React from "react";
-import { Card } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
-import SuccessImg from "../../assets/undraw_make_it_rain_iwk4.svg";
+import SubmissionSuccessDefaultLayout from "../../layouts/SubmissionSuccess/Default";
 import { selectConfigState } from "../../redux/store";
 import { APP_CONSTANTS } from "../../utils/constants";
 
-const SuccessSubmission: React.FC = () => {
-  const { t } = useTranslation();
+const SuccessSubmissionPage: React.FC = () => {
   const appConfig = useSelector(selectConfigState);
 
-  return (
-    <Card border="success" style={{ width: "100%", padding: "2rem 0.5rem" }}>
-      <Card.Img variant="top" alt="Success" src={SuccessImg} />
-      <Card.Body>
-        <Card.Title>{t("successSubmission.title")}</Card.Title>
-        <Card.Text>
-          {t("successSubmission.message", {
-            context: appConfig.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
-          })}
-        </Card.Text>
-      </Card.Body>
-    </Card>
-  );
+  if (appConfig.successSubmissionScreen === APP_CONSTANTS.SUCCESS_SCREEN_TEST) {
+    return <TestSubmissionLayout />;
+  }
+
+  if (appConfig.successSubmissionScreen === APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT) {
+    return <SubmissionSuccessDefaultLayout />;
+  }
+
+  return <SubmissionSuccessDefaultLayout />;
 };
 
-export default SuccessSubmission;
+export default SuccessSubmissionPage;
+
+const TestSubmissionLayout = () => {
+  return (
+    <div>
+      <h2>Test Success Submission</h2>
+      <p>submission successful</p>
+    </div>
+  );
+};
