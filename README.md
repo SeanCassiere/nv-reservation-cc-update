@@ -79,12 +79,13 @@ Should you wish to manually create your own config string, you will need to crea
 
 These are the parameters supported in the configuration object.
 
-| Param           | Value                                                                                                                                                                                 |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| clientId        | RENTALL/Navotar Client ID of the client account.                                                                                                                                      |
-| emailTemplateId | Custom Email Template ID to be used when sending the confirmation email.<br />Please note, that this email template must exist in the client's account.                               |
-| flow            | Ordered array of the screens/views to be gone through. <br /> This is an optional field. If not given in the config, only the **Default/CreditCardForm** will be shown to the user.   |
-| fromRentall     | Boolean value indicating if this user's primary account is RENTALL or Navotar. <br /> Based on this the link at the bottom of the page will be changed, along with the support email. |
+| Param                   | Type       | Value                                                                                                                                                                                                             |
+| ----------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| clientId                | **number** | RENTALL/Navotar Client ID of the client account.                                                                                                                                                                  |
+| emailTemplateId         | **number** | Custom Email Template ID to be used when sending the confirmation email.<br /><br /> **_Important_**: Please note, that this email template must exist in the client's account.                                   |
+| flow                    | string[]?  | Ordered array of the screens/views to be gone through. <br /><br /> **_Default_** `["Default/CreditCardForm"]`                                                                                                    |
+| successSubmissionScreen | string?    | The key of the success screen to be shown to the user once the details have been successfully submitted <br /><br /> **_Default_** `"Default/SuccessSubmission"`                                                  |
+| fromRentall             | boolean?   | Boolean value indicating if this user's primary account is RENTALL or Navotar. Based on this the link at the bottom of the page will be changed, along with the support email. <br /><br /> **_Default_** `false` |
 
 Afterwards, you can encode this JSON object using Base64 to formulate the final URL-safe config string. [https://www.base64encode.org/](https://www.base64encode.org/)
 
@@ -95,4 +96,10 @@ Afterwards, you can encode this JSON object using Base64 to formulate the final 
 | Default/CreditCardForm                 | The default credit card form                                                               |
 | Default/LicenseUploadForm              | The default form for uploading driver's license images                                     |
 | Default/CreditCardAndLicenseUploadForm | The a combination of both the `Default/CreditCardForm` and the `Default/LicenseUploadForm` |
-| Default/RentalSignatureForm            | The default canvas to capture the customer's signature.                                    |
+| Default/RentalSignatureForm            | The default canvas to capture the customer's signature                                     |
+
+### Available success screens
+
+| Key                       | Description                                    |
+| ------------------------- | ---------------------------------------------- |
+| Default/SuccessSubmission | The default generic application success screen |
