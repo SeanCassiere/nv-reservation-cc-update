@@ -14,6 +14,7 @@
       "lang": "Language",
       "responseTemplateId": "Response Email Template ID",
       "applicationFlows": "Flows",
+      "applicationSuccessScreen": "Success Screen",
       "applicationBranding": "Branding?",
       "applicationEnvironment": "Environment?",
       "environmentQa": "Using QA",
