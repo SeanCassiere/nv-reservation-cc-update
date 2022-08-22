@@ -1,28 +1,10 @@
-# CONTRIBUTING
+# CODE OF CONDUCT
 
-When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
-
-Please note we have a code of conduct, please follow it in all your interactions with the project.
-Pull Request Process
-
-    1. Find yourself an issue you want to work on, see if anybody is working on it, if not, then assign it to yourself
-    2. Fork the repo, create a branch for your issue
-    3. Make changes, commit and open a pull request into the [main](https://github.com/SeanCassiere/nv-reservation-cc-update/tree/main) branch
-    4. Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) while creating new commit
-    5. Request review from a contributor
-    6. If your pr was approved, rebase and squash your commits, then merge it.
-    7. Good job, you've just contributed!
-
-    Update the README.md with details of changes to the interface, this includes new environment variables (.env.example), exposed ports, useful file locations and container parameters. This will help new contributors to understand how to use the application.
-    You may merge your pull request after receiving an approval from Sean, or any other core contributor.
-
-## CODE OF CONDUCT
-
-### OUR PLEDGE
+## OUR PLEDGE
 
 In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-### OUR STANDARDS
+## OUR STANDARDS
 
 Examples of behavior that contributes to creating a positive environment include:
 
@@ -40,17 +22,17 @@ Examples of unacceptable behavior by participants include:
 - Publishing others' private information, such as a physical or electronic address, without explicit permission
 - Other conduct which could reasonably be considered inappropriate in a professional setting
 
-### ENFORCEMENT RESPONSIBILITIES
+## ENFORCEMENT RESPONSIBILITIES
 
 Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
 
 Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
 
-### SCOPE
+## SCOPE
 
 This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event. Representation of a project may be further defined and clarified by project maintainers.
 
-### ENFORCEMENT
+## ENFORCEMENT
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at sean.cassiere@gmail.com. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
 

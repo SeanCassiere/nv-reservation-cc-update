@@ -22,12 +22,12 @@ See [DOCUMENTATION](DOCUMENTATION.md) for information and configuration options 
 
 Contributions are always welcome!
 
-See [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for ways to get started.
+See [CONTRIBUTION](CONTRIBUTION.md) for ways to get started.
 
-Please adhere to this project's `code of conduct`.
+Please adhere to this project's [CODE OF CONDUCT](CODE_OF_CONDUCT.md).
 
 ![Issues](https://img.shields.io/github/issues/SeanCassiere/nv-reservation-cc-update)
-![PRs](https://img.shields.io/github/issues-pr-closed/SeanCassiere/nv-reservation-cc-update)
+![Pull Requests](https://img.shields.io/github/issues-pr-closed/SeanCassiere/nv-reservation-cc-update)
 
 ## Development
 
