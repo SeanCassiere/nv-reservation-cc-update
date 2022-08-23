@@ -1,6 +1,6 @@
 {
   "name": "nav-reservation-cc-update",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "0.1.1",
