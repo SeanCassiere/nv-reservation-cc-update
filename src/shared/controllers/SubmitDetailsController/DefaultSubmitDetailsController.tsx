@@ -6,7 +6,7 @@ import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 import { selectSubmissionState } from "../../redux/store";
 import { submitFormThunk } from "../../redux/slices/forms/thunks";
 
-const DefaultSubmitDetailsController = () => {
+const DefaultSubmitDetailsController: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();

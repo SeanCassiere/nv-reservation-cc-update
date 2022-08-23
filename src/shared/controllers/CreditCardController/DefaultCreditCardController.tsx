@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import { Card, Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
@@ -7,11 +6,13 @@ import { useTranslation } from "react-i18next";
 import { selectCreditCardForm } from "../../redux/store";
 import { setCreditCardFormData } from "../../redux/slices/forms/slice";
 import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
+import { creditCardTypeFormat } from "../../utils/creditCardTypeFormat";
+import useCreditCardSchema from "../../hooks/useCreditCardSchema";
+
 import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
 import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
-import { creditCardTypeFormat } from "../../utils/creditCardTypeFormat";
-
-import useCreditCardSchema from "../../hooks/useCreditCardSchema";
+import Button from "../../components/Elements/Button";
+import CardLayout from "../../layouts/Card";
 
 interface IProps {
   handleSubmit: () => void;
@@ -84,49 +85,41 @@ const DefaultCreditCardController = ({
   const handleBlur = useCallback(() => setCurrentFocus(""), []);
 
   return (
-    <Card border="light">
-      <Card.Body>
-        <Card.Title>{t("forms.creditCard.title")}</Card.Title>
-        <Card.Subtitle>{t("forms.creditCard.message")}</Card.Subtitle>
-        <div className="mt-4 d-grid">
-          <Row>
-            <Col md={12}>
-              <DefaultCreditCard
-                currentFocus={currentFocus}
-                formData={formValues}
-                handleCardIdentifier={handleCardIdentifier}
-              />
-            </Col>
-          </Row>
-          <Row className="mt-3">
-            <Col md={12}>
-              <DefaultCardDetailsForm
-                formData={formValues}
-                cardMaxLength={cardMaxLength}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                handleFocus={handleFocus}
-                schemaErrors={schemaErrors}
-              />
-            </Col>
-          </Row>
-          <Row className="mt-3">
-            {isPrevPageAvailable && (
-              <Col xs={2} className="pr-0">
-                <Button variant="warning" size="lg" style={{ width: "100%" }} onClick={handlePrevious}>
-                  &#8592;
-                </Button>
-              </Col>
-            )}
-            <Col xs={isPrevPageAvailable ? 10 : 12} className={isPrevPageAvailable ? "pl-2" : ""}>
-              <Button variant="primary" size="lg" style={{ width: "100%" }} onClick={handleNextState}>
-                {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
-              </Button>
-            </Col>
-          </Row>
+    <CardLayout title={t("forms.creditCard.title")} subtitle={t("forms.creditCard.message")}>
+      <div className="mt-4 grid grid-cols-1">
+        <div>
+          <DefaultCreditCard
+            currentFocus={currentFocus}
+            formData={formValues}
+            handleCardIdentifier={handleCardIdentifier}
+          />
         </div>
-      </Card.Body>
-    </Card>
+        <div className="mt-3">
+          <DefaultCardDetailsForm
+            formData={formValues}
+            cardMaxLength={cardMaxLength}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            handleFocus={handleFocus}
+            schemaErrors={schemaErrors}
+          />
+        </div>
+        <div className="mt-3 flex">
+          {isPrevPageAvailable && (
+            <div>
+              <Button variant="warning" size="lg" onClick={handlePrevious}>
+                &#8592;
+              </Button>
+            </div>
+          )}
+          <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
+            <Button variant="primary" size="lg" onClick={handleNextState}>
+              {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </CardLayout>
   );
 };
 

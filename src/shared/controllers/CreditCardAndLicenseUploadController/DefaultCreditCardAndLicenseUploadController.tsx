@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Card, Button, Col, Row, Modal, Accordion, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
@@ -8,12 +7,14 @@ import { selectCreditCardForm, selectLicenseUploadForm } from "../../redux/store
 import { clearReduxFormState, setCreditCardFormData, setLicenseUploadFormData } from "../../redux/slices/forms/slice";
 import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
 import { creditCardTypeFormat } from "../../utils/creditCardTypeFormat";
+import useCreditCardSchema from "../../hooks/useCreditCardSchema";
+import { urlToBlob } from "../../utils/blobUtils";
 
 import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
 import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
 import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
-import useCreditCardSchema from "../../hooks/useCreditCardSchema";
-import { urlToBlob } from "../../utils/blobUtils";
+import Button from "../../components/Elements/Button";
+import CardLayout, { cardSubtitleClassNames, cardTitleClassNames } from "../../layouts/Card";
 
 interface IProps {
   handleSubmit: () => void;
@@ -131,21 +132,12 @@ const DefaultCreditCardAndLicenseUploadController = ({
     setBackImageFile(null);
   }, []);
 
-  // General component state
-  const [returnModalOpen, setReturnModalOpen] = useState(false);
-
   const handleOpenModalConfirmation = useCallback(() => {
-    setReturnModalOpen(true);
-  }, []);
-
-  const handleModalAcceptReturn = useCallback(() => {
-    dispatch(clearReduxFormState("licenseUploadForm"));
-    handlePrevious();
-  }, [dispatch, handlePrevious]);
-
-  const handleModalDenyReturn = useCallback(() => {
-    setReturnModalOpen(false);
-  }, []);
+    if (window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))) {
+      dispatch(clearReduxFormState("licenseUploadForm"));
+      handlePrevious();
+    }
+  }, [dispatch, handlePrevious, t]);
 
   // validate the form data against the schema
   const handleNextState = useCallback(async () => {
@@ -180,130 +172,95 @@ const DefaultCreditCardAndLicenseUploadController = ({
   }, [backImageFile, dispatch, formValues, frontImageFile, handleSubmit, schema]);
 
   return (
-    <>
-      <Card border="light">
-        <Card.Body>
-          <Card.Title>{t("forms.creditCard.title")}</Card.Title>
-          <Card.Subtitle>{t("forms.creditCard.message")}</Card.Subtitle>
-          <div className="mt-4 d-grid">
-            <Row>
-              <Col md={12}>
-                <DefaultCreditCard
-                  currentFocus={currentFocus}
-                  formData={formValues}
-                  handleCardIdentifier={handleCardIdentifier}
-                />
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col md={12}>
-                <DefaultCardDetailsForm
-                  formData={formValues}
-                  cardMaxLength={cardMaxLength}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  handleFocus={handleFocus}
-                  schemaErrors={schemaErrors}
-                />
-              </Col>
-            </Row>
+    <React.Fragment>
+      <CardLayout>
+        {/* Credit card form */}
+        <div>
+          <h1 className={cardTitleClassNames}>{t("forms.creditCard.title")}</h1>
+          <span className={cardSubtitleClassNames}>{t("forms.creditCard.message")}</span>
+          <div className="mt-4 grid grid-cols-1">
+            <div>
+              <DefaultCreditCard
+                currentFocus={currentFocus}
+                formData={formValues}
+                handleCardIdentifier={handleCardIdentifier}
+              />
+            </div>
+            <div className="mt-3">
+              <DefaultCardDetailsForm
+                formData={formValues}
+                cardMaxLength={cardMaxLength}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                handleFocus={handleFocus}
+                schemaErrors={schemaErrors}
+              />
+            </div>
           </div>
-        </Card.Body>
-        {/* License Upload Modal */}
-        <Modal show={returnModalOpen} onHide={handleModalDenyReturn} keyboard={true} centered>
-          <Modal.Header>{t("forms.licenseUpload.goBack.title")}</Modal.Header>
-          <Modal.Body>{t("forms.licenseUpload.goBack.message")}</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleModalDenyReturn}>
-              {t("forms.licenseUpload.goBack.cancel")}
-            </Button>
-            <Button variant="warning" onClick={handleModalAcceptReturn}>
-              {t("forms.licenseUpload.goBack.submit")}
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        </div>
         {/* License Upload Form */}
-        <Card.Body className="mt-4">
-          <Card.Title>{t("forms.licenseUpload.title")}</Card.Title>
-          <Card.Subtitle>{t("forms.licenseUpload.message")}</Card.Subtitle>
+        <div className="mt-4">
+          <h1 className={cardTitleClassNames}>{t("forms.licenseUpload.title")}</h1>
+          <span className={cardSubtitleClassNames}>{t("forms.licenseUpload.message")}</span>
           <div className="mt-3 d-grid">
-            <Row>
-              <Col md={12}>
-                <Accordion
-                  activeKey={key}
-                  onSelect={(k) => {
-                    if (k) setKey(k as string);
+            <div>
+              <h2>{t("forms.licenseUpload.frontImage.title")}</h2>
+              <div>
+                {displayNoFrontImageError && <div>{t("forms.licenseUpload.frontImage.notSelected")}</div>}
+
+                <DefaultImageDropzoneWithPreview
+                  dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
+                  selectButtonText={t("forms.licenseUpload.frontImage.select")}
+                  clearButtonText={t("forms.licenseUpload.frontImage.clear")}
+                  onSelectFile={selectFrontImage}
+                  onClearFile={clearFrontImage}
+                  acceptOnly={{
+                    "image/jpeg": [".jpeg"],
+                    "image/jpg": [".jpg"],
+                    "image/png": [".png"],
                   }}
-                  className="border-light"
-                >
-                  <Accordion.Item eventKey="front" className="border-light" style={{ background: "none" }}>
-                    <Accordion.Header className="border-light" style={{ padding: "0px !important" }}>
-                      {t("forms.licenseUpload.frontImage.title")}
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      {displayNoFrontImageError && (
-                        <Alert variant="light">{t("forms.licenseUpload.frontImage.notSelected")}</Alert>
-                      )}
-                      <DefaultImageDropzoneWithPreview
-                        dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
-                        selectButtonText={t("forms.licenseUpload.frontImage.select")}
-                        clearButtonText={t("forms.licenseUpload.frontImage.clear")}
-                        onSelectFile={selectFrontImage}
-                        onClearFile={clearFrontImage}
-                        acceptOnly={{
-                          "image/jpeg": [".jpeg"],
-                          "image/jpg": [".jpg"],
-                          "image/png": [".png"],
-                        }}
-                        initialPreview={frontImageUrl ? { fileName: frontImageName!, url: frontImageUrl } : null}
-                      />
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="back" className="border-light">
-                    <Accordion.Header className="border-light">
-                      {t("forms.licenseUpload.backImage.title")}
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      {displayNoBackImageError && (
-                        <Alert variant="light">{t("forms.licenseUpload.backImage.notSelected")}</Alert>
-                      )}
-                      <DefaultImageDropzoneWithPreview
-                        dragDisplayText={t("forms.licenseUpload.backImage.drag")}
-                        selectButtonText={t("forms.licenseUpload.backImage.select")}
-                        clearButtonText={t("forms.licenseUpload.backImage.clear")}
-                        onSelectFile={selectBackImage}
-                        onClearFile={clearBackImage}
-                        acceptOnly={{
-                          "image/jpeg": [".jpeg"],
-                          "image/jpg": [".jpg"],
-                          "image/png": [".png"],
-                        }}
-                        initialPreview={backImageUrl ? { fileName: backImageName!, url: backImageUrl } : null}
-                      />
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-              </Col>
-            </Row>
+                  initialPreview={frontImageUrl ? { fileName: frontImageName!, url: frontImageUrl } : null}
+                />
+              </div>
+            </div>
+            <div>
+              <h2>{t("forms.licenseUpload.backImage.title")}</h2>
+              <div>
+                {displayNoBackImageError && <div>{t("forms.licenseUpload.backImage.notSelected")}</div>}
+                <DefaultImageDropzoneWithPreview
+                  dragDisplayText={t("forms.licenseUpload.backImage.drag")}
+                  selectButtonText={t("forms.licenseUpload.backImage.select")}
+                  clearButtonText={t("forms.licenseUpload.backImage.clear")}
+                  onSelectFile={selectBackImage}
+                  onClearFile={clearBackImage}
+                  acceptOnly={{
+                    "image/jpeg": [".jpeg"],
+                    "image/jpg": [".jpg"],
+                    "image/png": [".png"],
+                  }}
+                  initialPreview={backImageUrl ? { fileName: backImageName!, url: backImageUrl } : null}
+                />
+              </div>
+            </div>
             {/* Navigation */}
-            <Row className="mt-3">
+            <div className="mt-1 flex">
               {isPrevPageAvailable && (
-                <Col xs={2} className="pr-0">
-                  <Button variant="warning" size="lg" style={{ width: "100%" }} onClick={handleOpenModalConfirmation}>
+                <div className="pr-0">
+                  <Button variant="warning" size="lg" onClick={handleOpenModalConfirmation}>
                     &#8592;
                   </Button>
-                </Col>
+                </div>
               )}
-              <Col xs={isPrevPageAvailable ? 10 : 12} className={isPrevPageAvailable ? "pl-2" : ""}>
-                <Button variant="primary" size="lg" style={{ width: "100%" }} onClick={handleNextState}>
+              <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
+                <Button variant="primary" size="lg" onClick={handleNextState}>
                   {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
                 </Button>
-              </Col>
-            </Row>
+              </div>
+            </div>
           </div>
-        </Card.Body>
-      </Card>
-    </>
+        </div>
+      </CardLayout>
+    </React.Fragment>
   );
 };
 

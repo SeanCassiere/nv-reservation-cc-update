@@ -23,7 +23,7 @@ type ConfigState = {
   successSubmissionScreen?: string;
 };
 
-const ApplicationController = () => {
+const ApplicationController: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

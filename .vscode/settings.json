@@ -1,17 +1,18 @@
 {
-	"cSpell.words": [
-		"browserslist",
-		"Checkin",
-		"cyit",
-		"dropzone",
-		"esbuild",
-		"kwbl",
-		"languagedetector",
-		"Lngs",
-		"Navotar",
-		"Offcanvas",
-		"reduxjs",
-		"RENTALL",
-		"reservationview"
-	]
+  "cSpell.words": [
+    "browserslist",
+    "Checkin",
+    "cyit",
+    "dropzone",
+    "esbuild",
+    "kwbl",
+    "languagedetector",
+    "Lngs",
+    "Navotar",
+    "Offcanvas",
+    "reduxjs",
+    "RENTALL",
+    "reservationview",
+    "tailwindcss"
+  ]
 }

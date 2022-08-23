@@ -1,11 +1,11 @@
 import React, { ReactNode, useMemo } from "react";
-import Card from "react-bootstrap/esm/Card";
-import Button from "react-bootstrap/esm/Button";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import ErrorImg from "../../assets/undraw_warning_cyit.svg";
 import { selectConfigState } from "../../redux/store";
+
+import CardLayout from "../../layouts/Card";
 
 interface Props {
   title?: string;
@@ -25,35 +25,34 @@ const ErrorSubmission: React.FC<Props> = (props) => {
   }, [config.rawQueryString]);
 
   return (
-    <Card border="danger" style={{ width: "100%", padding: "2rem 0.5rem" }}>
-      <Card.Img variant="top" alt="Not Found" src={ErrorImg} />
-      <Card.Body>
-        <Card.Title>{props.title ? props.title : t("badSubmission.title")}</Card.Title>
-        <Card.Text>
-          {props.msg}
+    <CardLayout image={ErrorImg} title={props.title ? props.title : t("badSubmission.title")}>
+      <p>{props.msg}</p>
+      <br />
+      <p>
+        {t("badSubmission.report")}&nbsp;
+        <a
+          href={config.fromRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {config.fromRentall ? "support@rentallsoftware.com" : "support@navotar.com"}
+        </a>
+        .
+      </p>
+      {props.tryAgainButton && (
+        <>
           <br />
-          {t("badSubmission.report")}&nbsp;
-          <a
-            href={config.fromRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {config.fromRentall ? "support@rentallsoftware.com" : "support@navotar.com"}
-          </a>
-          .
-          {props.tryAgainButton && (
-            <>
-              <br />
-              <span className="mt-3 d-block">
-                <Button as="a" href={originUrl} size="lg" variant="outline-primary" style={{ width: "100%" }}>
-                  {t("badSubmission.btnRetrySubmission")}
-                </Button>
-              </span>
-            </>
-          )}
-        </Card.Text>
-      </Card.Body>
-    </Card>
+          <span className="mt-3 block">
+            <a
+              className="block rounded no-underline hover:no-underline text-center w-full px-3 py-3 bg-red-600 hover:bg-red-700 text-white"
+              href={originUrl}
+            >
+              {t("badSubmission.btnRetrySubmission")}
+            </a>
+          </span>
+        </>
+      )}
+    </CardLayout>
   );
 };
 

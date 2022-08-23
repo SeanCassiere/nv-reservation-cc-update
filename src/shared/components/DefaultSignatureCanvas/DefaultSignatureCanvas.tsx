@@ -1,8 +1,8 @@
 import React from "react";
 import SignatureCanvas from "react-signature-canvas";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import * as Responsive from "react-responsive";
+import Button from "../Elements/Button";
 
 interface IProps {
   maxHeight?: number;
@@ -68,7 +68,7 @@ const DefaultSignatureCanvas = ({
   }, [onSignature, trimmed]);
 
   return (
-    <>
+    <React.Fragment>
       <div
         style={{
           border: `4px solid ${isDisabled ? "#333333" : "#325d88"}`,
@@ -82,7 +82,7 @@ const DefaultSignatureCanvas = ({
           canvasProps={{ height: isPhone ? 360 : maxHeight, width: isPhone ? 310 : maxWidth }}
         />
       </div>
-      <div className="mt-2 d-flex justify-content-center gap-2">
+      <div className="mt-2 flex gap-2">
         <Button variant="danger" style={{ width: "60%" }} onClick={handleClear}>
           {clearText ?? t("forms.rentalSignature.clearInput")}
         </Button>
@@ -90,7 +90,7 @@ const DefaultSignatureCanvas = ({
           {saveText ?? t("forms.rentalSignature.saveInput")}
         </Button>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 

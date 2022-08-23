@@ -1,10 +1,12 @@
 import React, { memo } from "react";
-import { Form, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 import { ICreditCardFormData } from "../../redux/slices/forms/slice";
 import { currentYearNum, range } from "../../utils/common";
 import { YupErrorsFormatted } from "../../utils/yupSchemaErrors";
+
+import SelectInput from "../Elements/SelectInput";
+import TextInput from "../Elements/TextInput";
 
 let numOfYears = range(currentYearNum, 40);
 let numOfMonths = range(1, 12);
@@ -37,134 +39,107 @@ const DefaultCardDetailsForm = ({
   };
 
   return (
-    <Form>
-      <Row>
-        <Col>
-          <Form.Group controlId="numberInput">
-            <Form.Label>{t("forms.creditCard.labels.cardNumber")}</Form.Label>
-            <Form.Control
-              placeholder="XXXX-XXXX-XXXX-XXXX"
-              name="number"
-              value={formData.number}
-              onChange={handleChange}
-              onFocus={handleFocus as any}
-              onBlur={handleBlur}
-              pattern={`[0-9]{${formData.type === "AMEX".toLowerCase() ? 13 : 15},${cardMaxLength + 1}}`}
-              required
-              type="text"
-              maxLength={cardMaxLength + 1}
-              autoComplete="off"
-              isInvalid={isFieldInvalid("number")}
-            />
-            <Form.Control.Feedback type="invalid">{t("forms.creditCard.errors.cardNumber")}</Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col>
-          <Form.Group controlId="nameInput">
-            <Form.Label>{t("forms.creditCard.labels.nameOnCard")}</Form.Label>
-            <Form.Control
-              placeholder={t("forms.creditCard.labels.placeholders.name")}
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              onFocus={handleFocus as any}
-              onBlur={handleBlur}
-              required
-              type="text"
-              autoComplete="off"
-              isInvalid={isFieldInvalid("name")}
-            />
-            <Form.Control.Feedback type="invalid">{t("forms.creditCard.errors.name")}</Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col>
-          <Form.Group controlId="monthInput">
-            <Form.Label>{t("forms.creditCard.labels.expMonth")}</Form.Label>
-            <Form.Select
-              name="monthExpiry"
-              onChange={handleChange as any}
-              onFocus={handleFocus as any}
-              onBlur={handleBlur}
-              required
-              isInvalid={isFieldInvalid("monthExpiry")}
-              className="form-control"
-            >
-              <option value="">{t("forms.creditCard.labels.placeholders.select")}</option>
-              {numOfMonths.map((val) => (
-                <option value={val.toString().length === 1 ? `0${val}` : val} key={val}>
-                  {val.toString().length === 1 ? `0${val}` : val}
-                </option>
-              ))}
-            </Form.Select>
-            <Form.Control.Feedback type="invalid">{t("forms.creditCard.errors.expMonth")}</Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId="yearInput">
-            <Form.Label>{t("forms.creditCard.labels.expYear")}</Form.Label>
-            <Form.Select
-              name="yearExpiry"
-              onChange={handleChange as any}
-              onFocus={handleFocus as any}
-              onBlur={handleBlur}
-              required
-              isInvalid={isFieldInvalid("yearExpiry")}
-              className="form-control"
-            >
-              <option value="">{t("forms.creditCard.labels.placeholders.select")}</option>
-              {numOfYears.map((val) => (
-                <option value={val} key={val}>
-                  20{val}
-                </option>
-              ))}
-            </Form.Select>
-            <Form.Control.Feedback type="invalid">{t("forms.creditCard.errors.expYear")}</Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col>
-          <Form.Group controlId="cvvInput">
-            <Form.Label>{t("forms.creditCard.labels.cvv")}</Form.Label>
-            <Form.Control
-              placeholder="***"
-              name="cvv"
-              value={formData.cvv}
-              onChange={handleChange}
-              onFocus={handleFocus as any}
-              onBlur={handleBlur}
-              pattern={`[0-9]{3,4}`}
-              required
-              type="password"
-              minLength={3}
-              maxLength={4}
-              isInvalid={isFieldInvalid("cvv")}
-            />
-            <Form.Control.Feedback type="invalid">{t("forms.creditCard.errors.cvv")}</Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId="zipCodeInput">
-            <Form.Label>{t("forms.creditCard.labels.billingZip")}</Form.Label>
-            <Form.Control
-              placeholder={t("forms.creditCard.labels.placeholders.zipCode")}
-              name="billingZip"
-              value={formData.billingZip}
-              onChange={handleChange}
-              required
-              type="text"
-              autoComplete="off"
-              isInvalid={isFieldInvalid("billingZip")}
-            />
-            <Form.Control.Feedback type="invalid">{t("forms.creditCard.errors.billingZip")}</Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-      </Row>
-    </Form>
+    <div className="grid grid-cols-2 gap-4">
+      <div className="col-span-2">
+        <TextInput
+          placeholder="XXXX-XXXX-XXXX-XXXX"
+          name="number"
+          value={formData.number}
+          onChange={handleChange}
+          onFocus={handleFocus as any}
+          onBlur={handleBlur}
+          pattern={`[0-9]{${formData.type === "AMEX".toLowerCase() ? 13 : 15},${cardMaxLength + 1}}`}
+          required
+          type="text"
+          maxLength={cardMaxLength + 1}
+          autoComplete="off"
+          label={t("forms.creditCard.labels.cardNumber")}
+          errorText={isFieldInvalid("number") && t("forms.creditCard.errors.cardNumber")}
+        />
+      </div>
+      <div className="col-span-2">
+        <TextInput
+          placeholder={t("forms.creditCard.labels.placeholders.name")}
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          onFocus={handleFocus as any}
+          onBlur={handleBlur}
+          required
+          type="text"
+          autoComplete="off"
+          label={t("forms.creditCard.labels.nameOnCard")}
+          errorText={isFieldInvalid("name") && t("forms.creditCard.errors.name")}
+        />
+      </div>
+      <div>
+        <SelectInput
+          name="monthExpiry"
+          onChange={handleChange as any}
+          onFocus={handleFocus as any}
+          onBlur={handleBlur}
+          required
+          label={t("forms.creditCard.labels.expMonth")}
+          errorText={isFieldInvalid("monthExpiry") && t("forms.creditCard.errors.expMonth")}
+        >
+          <option value="">{t("forms.creditCard.labels.placeholders.select")}</option>
+          {numOfMonths.map((val) => (
+            <option value={val.toString().length === 1 ? `0${val}` : val} key={val}>
+              {val.toString().length === 1 ? `0${val}` : val}
+            </option>
+          ))}
+        </SelectInput>
+      </div>
+      <div>
+        <SelectInput
+          name="yearExpiry"
+          onChange={handleChange as any}
+          onFocus={handleFocus as any}
+          onBlur={handleBlur}
+          required
+          label={t("forms.creditCard.labels.expYear")}
+          errorText={isFieldInvalid("yearExpiry") && t("forms.creditCard.labels.placeholders.select")}
+        >
+          <option value="">{t("forms.creditCard.labels.placeholders.select")}</option>
+          {numOfYears.map((val) => (
+            <option value={val} key={val}>
+              20{val}
+            </option>
+          ))}
+        </SelectInput>
+      </div>
+      <div>
+        <TextInput
+          placeholder="***"
+          name="cvv"
+          value={formData.cvv}
+          onChange={handleChange}
+          onFocus={handleFocus as any}
+          onBlur={handleBlur}
+          pattern={`[0-9]{3,4}`}
+          required
+          type="password"
+          minLength={3}
+          maxLength={4}
+          autoComplete="off"
+          label={t("forms.creditCard.labels.cvv")}
+          errorText={isFieldInvalid("cvv") && t("forms.creditCard.errors.cvv")}
+        />
+      </div>
+      <div>
+        <TextInput
+          placeholder={t("forms.creditCard.labels.placeholders.zipCode")}
+          name="billingZip"
+          value={formData.billingZip}
+          onChange={handleChange}
+          required
+          type="text"
+          autoComplete="off"
+          label={t("forms.creditCard.labels.placeholders.zipCode")}
+          errorText={isFieldInvalid("billingZip") && t("forms.creditCard.errors.billingZip")}
+        />
+      </div>
+    </div>
   );
 };
 

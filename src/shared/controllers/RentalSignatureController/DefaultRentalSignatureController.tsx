@@ -1,9 +1,10 @@
 import React from "react";
-import { Card, Row, Col, Button, Modal, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import DefaultSignatureCanvas from "../../components/DefaultSignatureCanvas/DefaultSignatureCanvas";
+import Button from "../../components/Elements/Button";
+import CardLayout from "../../layouts/Card";
 
 import { clearReduxFormState, setRentalSignatureFormData } from "../../redux/slices/forms/slice";
 import { selectConfigState } from "../../redux/store";
@@ -28,7 +29,6 @@ const DefaultRentalSignatureController = ({
   const configState = useSelector(selectConfigState);
   const [signatureUrl, setSignatureUrl] = React.useState("");
 
-  const [returnModalOpen, setReturnModalOpen] = React.useState(false);
   const [showRequiredMessage, setShowRequiredMessage] = React.useState(false);
 
   const handleNextState = React.useCallback(() => {
@@ -43,17 +43,11 @@ const DefaultRentalSignatureController = ({
   }, [dispatch, handleSubmit, signatureUrl]);
 
   const handleOpenModalConfirmation = React.useCallback(() => {
-    setReturnModalOpen(true);
-  }, []);
-
-  const handleModalAcceptReturn = React.useCallback(() => {
-    dispatch(clearReduxFormState("rentalSignatureForm"));
-    handlePrevious();
-  }, [dispatch, handlePrevious]);
-
-  const handleModalDenyReturn = React.useCallback(() => {
-    setReturnModalOpen(false);
-  }, []);
+    if (window.confirm(t("forms.rentalSignature.goBack.title") + "\n" + t("forms.rentalSignature.goBack.message"))) {
+      dispatch(clearReduxFormState("rentalSignatureForm"));
+      handlePrevious();
+    }
+  }, [dispatch, handlePrevious, t]);
 
   const handleSettingSignatureUrl = React.useCallback((url: string) => {
     if (url === "") {
@@ -67,63 +61,36 @@ const DefaultRentalSignatureController = ({
   React.useEffect(() => {
     dispatch(setRentalSignatureFormData({ signatureUrl: "", isReadyToSubmit: false }));
   }, [dispatch]);
+
   return (
-    <>
-      <Modal show={returnModalOpen} onHide={handleModalDenyReturn} keyboard={true} centered>
-        <Modal.Header>{t("forms.rentalSignature.goBack.title")}</Modal.Header>
-        <Modal.Body>{t("forms.rentalSignature.goBack.message")}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalDenyReturn}>
-            {t("forms.rentalSignature.goBack.cancel")}
-          </Button>
-          <Button variant="warning" onClick={handleModalAcceptReturn}>
-            {t("forms.rentalSignature.goBack.submit")}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Card border="light">
-        <Card.Body>
-          <Card.Title>
-            {t("forms.rentalSignature.title", {
-              context: configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
-            })}
-          </Card.Title>
-          <Card.Subtitle>
-            {t("forms.rentalSignature.message", {
-              context: configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
-            })}
-          </Card.Subtitle>
-          <div className="mt-3 d-grid">
-            {showRequiredMessage && <Alert variant="light">{t("forms.rentalSignature.signatureRequired")}</Alert>}
-            <Row>
-              <Col md={12}>
-                <DefaultSignatureCanvas onSignature={handleSettingSignatureUrl} />
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              {isPrevPageAvailable && (
-                <Col xs={2} className="pr-0">
-                  <Button variant="warning" size="lg" style={{ width: "100%" }} onClick={handleOpenModalConfirmation}>
-                    &#8592;
-                  </Button>
-                </Col>
-              )}
-              <Col xs={isPrevPageAvailable ? 10 : 12} className={isPrevPageAvailable ? "pl-2" : ""}>
-                <Button
-                  variant="primary"
-                  size="lg"
-                  style={{ width: "100%" }}
-                  disabled={signatureUrl === ""}
-                  onClick={handleNextState}
-                >
-                  {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
-                </Button>
-              </Col>
-            </Row>
+    <CardLayout
+      title={t("forms.rentalSignature.title", {
+        context: configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+      })}
+      subtitle={t("forms.rentalSignature.message", {
+        context: configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+      })}
+    >
+      <div className="mt-3 d-grid">
+        {showRequiredMessage && <div>{t("forms.rentalSignature.signatureRequired")}</div>}
+
+        <DefaultSignatureCanvas onSignature={handleSettingSignatureUrl} />
+        <div className="mt-1 flex">
+          {isPrevPageAvailable && (
+            <div className="pr-0">
+              <Button variant="warning" size="lg" onClick={handleOpenModalConfirmation}>
+                &#8592;
+              </Button>
+            </div>
+          )}
+          <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
+            <Button variant="primary" size="lg" disabled={signatureUrl === ""} onClick={handleNextState}>
+              {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+            </Button>
           </div>
-        </Card.Body>
-      </Card>
-    </>
+        </div>
+      </div>
+    </CardLayout>
   );
 };
 
