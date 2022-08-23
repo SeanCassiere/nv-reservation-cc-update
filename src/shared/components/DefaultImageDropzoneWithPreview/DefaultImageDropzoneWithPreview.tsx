@@ -1,7 +1,6 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
-import Button from "react-bootstrap/esm/Button";
-import Figure from "react-bootstrap/esm/Figure";
 import { useDropzone, Accept } from "react-dropzone";
+import Button from "../Elements/Button";
 
 const baseStyle = {
   flex: 1,
@@ -32,7 +31,7 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-interface IProps {
+interface Props {
   dragDisplayText: string;
   selectButtonText: string;
   clearButtonText: string;
@@ -42,7 +41,7 @@ interface IProps {
   initialPreview?: { fileName: string; url: string } | null | undefined;
 }
 
-const DefaultImageDropzoneWithPreview = ({
+const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
   dragDisplayText,
   clearButtonText,
   selectButtonText,
@@ -50,7 +49,7 @@ const DefaultImageDropzoneWithPreview = ({
   onClearFile,
   acceptOnly = undefined,
   initialPreview = null,
-}: IProps) => {
+}) => {
   const [previewImage, setPreviewImage] = useState<{ fileName: string; url: string } | null>(initialPreview);
 
   const onDrop = useCallback(
@@ -94,31 +93,37 @@ const DefaultImageDropzoneWithPreview = ({
     }),
     [isDragActive, isDragAccept, isDragReject]
   );
+
   return (
-    <>
+    <React.Fragment>
       <div {...getRootProps({ style: style as any })}>
         <input {...getInputProps()} />
         {previewImage ? (
-          <Figure style={{ width: "100%", textAlign: "center", margin: 0 }}>
-            <Figure.Image alt={previewImage.fileName} src={previewImage.url} style={{ height: "130px" }} />
-            <Figure.Caption>{previewImage.fileName}</Figure.Caption>
-          </Figure>
+          <figure className="w-full flex flex-col items-center">
+            <img
+              alt={previewImage.fileName}
+              src={previewImage.url}
+              className="object-contain"
+              style={{ height: "130px" }}
+            />
+            <figcaption className="mt-1 text-sm">{previewImage.fileName}</figcaption>
+          </figure>
         ) : (
           <p>{dragDisplayText}</p>
         )}
       </div>
       <div className="mt-2">
         {previewImage ? (
-          <Button variant="danger" style={{ width: "100%" }} onClick={handleClearImage}>
+          <Button variant="danger" size="sm" onClick={handleClearImage}>
             {clearButtonText}
           </Button>
         ) : (
-          <Button variant="secondary" style={{ width: "100%" }} onClick={open}>
+          <Button variant="secondary" size="sm" onClick={open}>
             {selectButtonText}
           </Button>
         )}
       </div>
-    </>
+    </React.Fragment>
   );
 };
 

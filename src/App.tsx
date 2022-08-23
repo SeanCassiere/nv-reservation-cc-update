@@ -1,16 +1,15 @@
 import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { ErrorBoundary as Boundary } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
 
 import AppRoutes from "./routes/AppRoutes";
 import ErrorSubmission from "./shared/pages/ErrorSubmission/ErrorSubmission";
-
-import DeveloperDebugDrawer from "./shared/components/DeveloperDebugDrawer/DeveloperDebugDrawer";
+import DeveloperDebugMenu from "./shared/components/DeveloperDebugMenu/DeveloperDebugMenu";
 
 import { selectConfigState } from "./shared/redux/store";
 import { isValueTrue } from "./shared/utils/common";
+import AnchorLink from "./shared/components/Elements/AnchorLink";
 
 const ErrorBoundary = Boundary as any; // an odd error where typescript says it doesn't return a JSX element. This is a workaround
 
@@ -40,29 +39,31 @@ const App = () => {
   }, []);
 
   return (
-    <Container>
-      <Row className="justify-content-lg-center" style={{ paddingTop: "1rem" }}>
-        <Col xs={12} sm={12} md={12} lg={6}>
+    <main className="w-full max-w-xl mx-auto">
+      <div className="grid grid-cols-1 pt-2">
+        <div>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <DeveloperDebugDrawer open={isDeveloperDrawerOpen} handleClose={handleCloseDeveloperDrawer} />
-            <AppRoutes />
+            <div className="flex flex-col gap-4 px-1">
+              <DeveloperDebugMenu open={isDeveloperDrawerOpen} handleClose={handleCloseDeveloperDrawer} />
+              <AppRoutes />
+            </div>
           </ErrorBoundary>
-        </Col>
-        <Col xs={12} sm={12} md={12} lg={12}>
-          <p style={{ padding: "1rem 0" }} className="text-center">
+        </div>
+        <div className="pt-4 pb-5">
+          <p className="text-sm text-center">
             {t("footer.poweredBy")}&nbsp;
-            <a
+            <AnchorLink
               href={fromRentall ? "https://rentallsoftware.com" : "https://navotar.com"}
               target="_blank"
               rel="noreferrer"
-              className="text-primary"
+              className="text-sm"
             >
               {fromRentall ? "RENTALL" : "Navotar"}
-            </a>
+            </AnchorLink>
           </p>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </main>
   );
 };
 

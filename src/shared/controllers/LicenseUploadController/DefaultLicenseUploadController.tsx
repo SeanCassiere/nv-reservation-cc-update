@@ -1,12 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Card, Row, Col, Button, Modal, Accordion, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
 import { clearReduxFormState, setLicenseUploadFormData } from "../../redux/slices/forms/slice";
 import { selectLicenseUploadForm } from "../../redux/store";
 import { urlToBlob } from "../../utils/blobUtils";
+
+import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
+import Button from "../../components/Elements/Button";
+import CardLayout from "../../layouts/Card";
+import Alert from "../../components/Elements/Alert";
 
 interface IProps {
   handleSubmit: () => void;
@@ -15,19 +18,17 @@ interface IProps {
   isPrevPageAvailable: boolean;
 }
 
-const DefaultLicenseUploadController = ({
+const DefaultLicenseUploadController: React.FC<IProps> = ({
   handleSubmit,
   handlePrevious,
   isNextAvailable,
   isPrevPageAvailable,
-}: IProps) => {
+}) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const {
     data: { frontImageUrl, frontImageName, backImageName, backImageUrl },
   } = useSelector(selectLicenseUploadForm);
-
-  const [key, setKey] = useState<string | undefined>("front");
 
   const [frontImageFile, setFrontImageFile] = useState<File | null>(null);
   const [displayNoFrontImageError, setDisplayNoFrontImageError] = useState(false);
@@ -46,10 +47,6 @@ const DefaultLicenseUploadController = ({
   const selectFrontImage = useCallback(async (file: File) => {
     setDisplayNoFrontImageError(false);
     setFrontImageFile(file);
-
-    setTimeout(() => {
-      setKey("back");
-    }, 500);
   }, []);
 
   const clearFrontImage = useCallback(() => {
@@ -73,9 +70,6 @@ const DefaultLicenseUploadController = ({
   const selectBackImage = useCallback((file: File) => {
     setDisplayNoBackImageError(false);
     setBackImageFile(file);
-    setTimeout(() => {
-      setKey(undefined);
-    }, 500);
   }, []);
 
   const clearBackImage = useCallback(() => {
@@ -83,18 +77,10 @@ const DefaultLicenseUploadController = ({
   }, []);
 
   // General component state
-  const [returnModalOpen, setReturnModalOpen] = useState(false);
   const handleNextState = useCallback(() => {
-    if (!frontImageFile) {
-      setKey("front");
-      setDisplayNoFrontImageError(true);
-      return;
-    }
-    if (!backImageFile) {
-      setKey("back");
-      setDisplayNoBackImageError(true);
-      return;
-    }
+    if (!frontImageFile) setDisplayNoFrontImageError(true);
+    if (!backImageFile) setDisplayNoBackImageError(true);
+    if (!backImageFile || !frontImageFile) return;
 
     dispatch(
       setLicenseUploadFormData({
@@ -108,112 +94,70 @@ const DefaultLicenseUploadController = ({
   }, [backImageFile, dispatch, frontImageFile, handleSubmit]);
 
   const handleOpenModalConfirmation = useCallback(() => {
-    setReturnModalOpen(true);
-  }, []);
+    if (window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))) {
+      dispatch(clearReduxFormState("licenseUploadForm"));
+      handlePrevious();
+    }
+  }, [dispatch, handlePrevious, t]);
 
-  const handleModalAcceptReturn = useCallback(() => {
-    dispatch(clearReduxFormState("licenseUploadForm"));
-    handlePrevious();
-  }, [dispatch, handlePrevious]);
-
-  const handleModalDenyReturn = useCallback(() => {
-    setReturnModalOpen(false);
-  }, []);
   return (
-    <>
-      <Modal show={returnModalOpen} onHide={handleModalDenyReturn} keyboard={true} centered>
-        <Modal.Header>{t("forms.licenseUpload.goBack.title")}</Modal.Header>
-        <Modal.Body>{t("forms.licenseUpload.goBack.message")}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalDenyReturn}>
-            {t("forms.licenseUpload.goBack.cancel")}
-          </Button>
-          <Button variant="warning" onClick={handleModalAcceptReturn}>
-            {t("forms.licenseUpload.goBack.submit")}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Card border="light">
-        <Card.Body>
-          <Card.Title>{t("forms.licenseUpload.title")}</Card.Title>
-          <Card.Subtitle>{t("forms.licenseUpload.message")}</Card.Subtitle>
-          <div className="mt-3 d-grid">
-            <Row>
-              <Col md={12}>
-                <Accordion
-                  activeKey={key}
-                  onSelect={(k) => {
-                    if (k) setKey(k as string);
-                  }}
-                  className="border-light"
-                >
-                  <Accordion.Item eventKey="front" className="border-light" style={{ background: "none" }}>
-                    <Accordion.Header className="border-light" style={{ padding: "0px !important" }}>
-                      {t("forms.licenseUpload.frontImage.title")}
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      {displayNoFrontImageError && (
-                        <Alert variant="light">{t("forms.licenseUpload.frontImage.notSelected")}</Alert>
-                      )}
-                      <DefaultImageDropzoneWithPreview
-                        dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
-                        selectButtonText={t("forms.licenseUpload.frontImage.select")}
-                        clearButtonText={t("forms.licenseUpload.frontImage.clear")}
-                        onSelectFile={selectFrontImage}
-                        onClearFile={clearFrontImage}
-                        acceptOnly={{
-                          "image/jpeg": [".jpeg"],
-                          "image/jpg": [".jpg"],
-                          "image/png": [".png"],
-                        }}
-                        initialPreview={frontImageUrl ? { fileName: frontImageName!, url: frontImageUrl } : null}
-                      />
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="back" className="border-light">
-                    <Accordion.Header className="border-light">
-                      {t("forms.licenseUpload.backImage.title")}
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      {displayNoBackImageError && (
-                        <Alert variant="light">{t("forms.licenseUpload.backImage.notSelected")}</Alert>
-                      )}
-                      <DefaultImageDropzoneWithPreview
-                        dragDisplayText={t("forms.licenseUpload.backImage.drag")}
-                        selectButtonText={t("forms.licenseUpload.backImage.select")}
-                        clearButtonText={t("forms.licenseUpload.backImage.clear")}
-                        onSelectFile={selectBackImage}
-                        onClearFile={clearBackImage}
-                        acceptOnly={{
-                          "image/jpeg": [".jpeg"],
-                          "image/jpg": [".jpg"],
-                          "image/png": [".png"],
-                        }}
-                        initialPreview={backImageUrl ? { fileName: backImageName!, url: backImageUrl } : null}
-                      />
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              {isPrevPageAvailable && (
-                <Col xs={2} className="pr-0">
-                  <Button variant="warning" size="lg" style={{ width: "100%" }} onClick={handleOpenModalConfirmation}>
-                    &#8592;
-                  </Button>
-                </Col>
-              )}
-              <Col xs={isPrevPageAvailable ? 10 : 12} className={isPrevPageAvailable ? "pl-2" : ""}>
-                <Button variant="primary" size="lg" style={{ width: "100%" }} onClick={handleNextState}>
-                  {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
-                </Button>
-              </Col>
-            </Row>
+    <CardLayout title={t("forms.licenseUpload.title")} subtitle={t("forms.licenseUpload.message")}>
+      <div className="mt-3 grid grid-cols-1 gap-4">
+        <div>
+          <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.frontImage.title")}</h2>
+          <div>
+            {displayNoFrontImageError && <Alert fullWidth>{t("forms.licenseUpload.frontImage.notSelected")}</Alert>}
+
+            <DefaultImageDropzoneWithPreview
+              dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
+              selectButtonText={t("forms.licenseUpload.frontImage.select")}
+              clearButtonText={t("forms.licenseUpload.frontImage.clear")}
+              onSelectFile={selectFrontImage}
+              onClearFile={clearFrontImage}
+              acceptOnly={{
+                "image/jpeg": [".jpeg"],
+                "image/jpg": [".jpg"],
+                "image/png": [".png"],
+              }}
+              initialPreview={frontImageUrl ? { fileName: frontImageName!, url: frontImageUrl } : null}
+            />
           </div>
-        </Card.Body>
-      </Card>
-    </>
+        </div>
+        <div className="mt-2">
+          <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.backImage.title")}</h2>
+          <div>
+            {displayNoBackImageError && <Alert fullWidth>{t("forms.licenseUpload.backImage.notSelected")}</Alert>}
+            <DefaultImageDropzoneWithPreview
+              dragDisplayText={t("forms.licenseUpload.backImage.drag")}
+              selectButtonText={t("forms.licenseUpload.backImage.select")}
+              clearButtonText={t("forms.licenseUpload.backImage.clear")}
+              onSelectFile={selectBackImage}
+              onClearFile={clearBackImage}
+              acceptOnly={{
+                "image/jpeg": [".jpeg"],
+                "image/jpg": [".jpg"],
+                "image/png": [".png"],
+              }}
+              initialPreview={backImageUrl ? { fileName: backImageName!, url: backImageUrl } : null}
+            />
+          </div>
+        </div>
+        <div className="mt-1 flex">
+          {isPrevPageAvailable && (
+            <div className="pr-0">
+              <Button variant="warning" size="lg" onClick={handleOpenModalConfirmation}>
+                &#8592;
+              </Button>
+            </div>
+          )}
+          <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
+            <Button variant="primary" size="lg" onClick={handleNextState}>
+              {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </CardLayout>
   );
 };
 export default DefaultLicenseUploadController;
