@@ -2,11 +2,12 @@ import React, { ReactNode, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import ErrorImg from "../../assets/undraw_warning_cyit.svg";
 import { selectConfigState } from "../../redux/store";
 
 import CardLayout from "../../layouts/Card";
 import AnchorLink from "../../components/Elements/AnchorLink";
+
+const ErrorImgUri = "/assets/undraw_warning_cyit.svg";
 
 interface Props {
   title?: string;
@@ -26,7 +27,7 @@ const ErrorSubmission: React.FC<Props> = (props) => {
   }, [config.rawQueryString]);
 
   return (
-    <CardLayout image={ErrorImg} title={props.title ? props.title : t("badSubmission.title")}>
+    <CardLayout image={ErrorImgUri} title={props.title ? props.title : t("badSubmission.title")}>
       <p>{props.msg}</p>
       <p className="mt-2">
         {t("badSubmission.report")}&nbsp;
