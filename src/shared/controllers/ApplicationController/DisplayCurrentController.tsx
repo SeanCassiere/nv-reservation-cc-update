@@ -1,24 +1,25 @@
 import React, { memo, Suspense } from "react";
 import { useTranslation } from "react-i18next";
+import Button from "../../components/Elements/Button";
 
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 import { APP_CONSTANTS } from "../../utils/constants";
 
 // import DefaultRentalSignatureController from "../RentalSignatureController/DefaultRentalSignatureController";
-import DefaultCreditCardController from "../CreditCardController/DefaultCreditCardController";
-import DefaultLicenseUploadController from "../LicenseUploadController/DefaultLicenseUploadController";
-import DefaultCreditCardAndLicenseUploadController from "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController";
+// import DefaultCreditCardController from "../CreditCardController/DefaultCreditCardController";
+// import DefaultLicenseUploadController from "../LicenseUploadController/DefaultLicenseUploadController";
+// import DefaultCreditCardAndLicenseUploadController from "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController";
 
 const DefaultRentalSignatureController = React.lazy(
   () => import("../RentalSignatureController/DefaultRentalSignatureController")
 );
-// const DefaultCreditCardController = React.lazy(() => import("../CreditCardController/DefaultCreditCardController"));
-// const DefaultLicenseUploadController = React.lazy(
-//   () => import("../LicenseUploadController/DefaultLicenseUploadController")
-// );
-// const DefaultCreditCardAndLicenseUploadController = React.lazy(
-//   () => import("../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController")
-// );
+const DefaultCreditCardController = React.lazy(() => import("../CreditCardController/DefaultCreditCardController"));
+const DefaultLicenseUploadController = React.lazy(
+  () => import("../LicenseUploadController/DefaultLicenseUploadController")
+);
+const DefaultCreditCardAndLicenseUploadController = React.lazy(
+  () => import("../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController")
+);
 
 interface IProps {
   selectedController: string | null;
@@ -78,13 +79,13 @@ const DisplayCurrentController = ({
             <h5>positive</h5>
             <p>
               {isPrevPageAvailable && (
-                <button type="button" onClick={handlePrevious}>
+                <Button type="button" onClick={handlePrevious}>
                   &#8592;
-                </button>
+                </Button>
               )}
-              <button type="button" onClick={handleNext}>
+              <Button type="button" onClick={handleNext}>
                 {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
-              </button>
+              </Button>
             </p>
           </div>
         )}
@@ -93,13 +94,13 @@ const DisplayCurrentController = ({
             <h5>negative</h5>
             <p>
               {isPrevPageAvailable && (
-                <button type="button" onClick={handlePrevious}>
+                <Button type="button" onClick={handlePrevious}>
                   &#8592;
-                </button>
+                </Button>
               )}
-              <button type="button" onClick={handleNext}>
+              <Button type="button" onClick={handleNext}>
                 {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
-              </button>
+              </Button>
             </p>
           </div>
         )}
