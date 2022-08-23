@@ -14,7 +14,7 @@ const SubmissionSuccessDefaultLayout: React.FC = () => {
 
   return (
     <CardLayout image={SuccessImg} title={t("successSubmission.title")}>
-      <p>
+      <p className="mt-5 text-base">
         {t("successSubmission.message", {
           context: appConfig.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
         })}

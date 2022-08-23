@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { useTranslation } from "react-i18next";
 import * as Responsive from "react-responsive";
@@ -11,9 +11,10 @@ interface IProps {
   clearText?: string;
   saveText?: string;
   trimmed?: boolean;
+  initialDataURL?: string;
 }
 
-const DefaultSignatureCanvas = ({
+const DefaultSignatureCanvas: React.FC<IProps> = ({
   maxHeight = 400,
   maxWidth = 450,
   onSignature = (url: string) => {
@@ -22,8 +23,10 @@ const DefaultSignatureCanvas = ({
   clearText = undefined,
   saveText = undefined,
   trimmed = false,
-}: IProps) => {
+  initialDataURL = undefined,
+}) => {
   const { t } = useTranslation();
+
   const signaturePadRef = React.useRef<SignatureCanvas>(null);
 
   const isPhone = Responsive.useMediaQuery({ query: "(max-width: 400px)" });
@@ -67,6 +70,14 @@ const DefaultSignatureCanvas = ({
     }
   }, [onSignature, trimmed]);
 
+  useEffect(() => {
+    if (initialDataURL) {
+      setIsDisabled(true);
+      signaturePadRef.current?.fromDataURL(initialDataURL);
+      signaturePadRef.current?.off();
+    }
+  }, [initialDataURL, signaturePadRef]);
+
   return (
     <React.Fragment>
       <div
@@ -83,10 +94,10 @@ const DefaultSignatureCanvas = ({
         />
       </div>
       <div className="mt-2 flex gap-2">
-        <Button variant="danger" style={{ width: "60%" }} onClick={handleClear}>
+        <Button variant="danger" size="sm" style={{ width: "60%" }} onClick={handleClear}>
           {clearText ?? t("forms.rentalSignature.clearInput")}
         </Button>
-        <Button variant="primary" style={{ width: "30%" }} onClick={handleSave} disabled={isDisabled}>
+        <Button variant="primary" size="sm" style={{ width: "40%" }} onClick={handleSave} disabled={isDisabled}>
           {saveText ?? t("forms.rentalSignature.saveInput")}
         </Button>
       </div>

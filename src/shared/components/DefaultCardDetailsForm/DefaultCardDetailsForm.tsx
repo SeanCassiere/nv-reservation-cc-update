@@ -98,7 +98,7 @@ const DefaultCardDetailsForm = ({
           onBlur={handleBlur}
           required
           label={t("forms.creditCard.labels.expYear")}
-          errorText={isFieldInvalid("yearExpiry") && t("forms.creditCard.labels.placeholders.select")}
+          errorText={isFieldInvalid("yearExpiry") && t("forms.creditCard.errors.expYear")}
         >
           <option value="">{t("forms.creditCard.labels.placeholders.select")}</option>
           {numOfYears.map((val) => (

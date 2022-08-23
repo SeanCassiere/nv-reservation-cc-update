@@ -9,6 +9,9 @@ import { devConfigToQueryUrl } from "./utils";
 import TextInput from "../Elements/TextInput";
 import CheckInput from "../Elements/CheckInput";
 import SelectInput from "../Elements/SelectInput";
+import AnchorLink from "../Elements/AnchorLink";
+import Button from "../Elements/Button";
+import CardLayout from "../../layouts/Card";
 
 export type DevConfigObject = {
   referenceId: string;
@@ -43,14 +46,11 @@ const DeveloperDebugMenu = ({ open, handleClose }: { open: boolean; handleClose:
 
   return (
     <React.Fragment>
-      <div className="rounded border-2 border-teal-500 p-2">
-        <div>
-          <h1>{t("developer.drawerTitle")}</h1>
-        </div>
+      <CardLayout title={t("developer.drawerTitle")}>
         <div className="mt-0 pt-0">
           <ConfigCreator />
         </div>
-      </div>
+      </CardLayout>
     </React.Fragment>
   );
 };
@@ -142,15 +142,17 @@ const ConfigCreator: React.FC = () => {
 
   return (
     <React.Fragment>
-      <div className="pt-1 pb-3 pl-3 pr-3">
-        <a href={REPO_URL} rel="noreferrer" target="_blank">
+      <div className="pt-1 pb-3">
+        <AnchorLink href={REPO_URL} rel="noreferrer" target="_blank">
           {t("developer.viewProjectRepo")}
-        </a>
+        </AnchorLink>
       </div>
       <div className="p-2 rounded w-full bg-amber-100 flex flex-col gap-1" style={{ overflowWrap: "anywhere" }}>
-        <p className="m-0">{devConfigToQueryUrl(config)}</p>
-        <button
+        <p className="m-0 text-sm text-gray-600">{devConfigToQueryUrl(config)}</p>
+        <Button
           type="button"
+          variant="secondary"
+          size="sm"
           onClick={() => {
             navigator.clipboard.writeText(devConfigToQueryUrl(config));
             setShowCopiedMessage(true);
@@ -160,12 +162,12 @@ const ConfigCreator: React.FC = () => {
           }}
         >
           {showCopiedMessage ? t("developer.configCreator.btnCopiedToClipboard") : t("developer.configCreator.btnCopy")}
-        </button>
+        </Button>
       </div>
 
       <form onSubmit={handleSubmit} className="mt-3">
         <div className="mb-3">
-          <span>{t("developer.configCreator.referenceType")}</span>
+          <span className="text-gray-600">{t("developer.configCreator.referenceType")}</span>
           <div>
             <CheckInput
               type="radio"
@@ -249,16 +251,20 @@ const ConfigCreator: React.FC = () => {
             ))}
           </SelectInput>
           <div>
-            <ol className="list-decimal ml-4 mt-3">
+            <ol className="list-decimal ml-6 mt-3">
               {config.flow.map((flowItem, index) => (
                 <li key={`flow-item-${flowItem}-${index}`}>
-                  <div className="flex">
-                    <div className="flex-1">
-                      <span className="font-bold">{flowItem}</span>
-                    </div>
-                    <button type="button" onClick={() => handleRemoveFlowItem(index)}>
+                  <div className="flex align-middle items-center gap-1 px-2 py-1 bg-gray-100 rounded my-1">
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveFlowItem(index)}
+                      className="bg-red-500 text-white text-sm h-5 aspect-square rounded-full flex align-middle justify-center"
+                    >
                       &times;
                     </button>
+                    <div className="flex-1 truncate">
+                      <span className="font-bold text-sm">{flowItem}</span>
+                    </div>
                   </div>
                 </li>
               ))}
@@ -280,7 +286,7 @@ const ConfigCreator: React.FC = () => {
           </SelectInput>
         </div>
         {/*  */}
-        <div className="grid grid-cols-2">
+        <div className="my-3 grid grid-cols-2 gap-2">
           <div>
             <span>{t("developer.configCreator.applicationBranding")}</span>
             <CheckInput
@@ -319,13 +325,13 @@ const ConfigCreator: React.FC = () => {
             />
           </div>
         </div>
-        <div className="w-full flex">
-          <button type="submit" className="py-2 px-4 bg-gray-300">
+        <div className="my-3 w-full flex gap-1">
+          <Button type="submit" className="py-2 px-4 bg-gray-300">
             {t("developer.configCreator.btnSave")}
-          </button>
-          <button type="button" className="py-2 px-4 bg-teal-300" onClick={handleReset}>
+          </Button>
+          <Button type="button" variant="secondary" className="py-2 px-4 bg-teal-300" onClick={handleReset}>
             {t("developer.configCreator.btnReset")}
-          </button>
+          </Button>
         </div>
       </form>
     </React.Fragment>

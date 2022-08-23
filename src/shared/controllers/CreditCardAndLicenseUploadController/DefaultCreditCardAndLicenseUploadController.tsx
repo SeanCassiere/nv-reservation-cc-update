@@ -15,6 +15,7 @@ import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditC
 import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
 import Button from "../../components/Elements/Button";
 import CardLayout, { cardSubtitleClassNames, cardTitleClassNames } from "../../layouts/Card";
+import Alert from "../../components/Elements/Alert";
 
 interface IProps {
   handleSubmit: () => void;
@@ -77,7 +78,6 @@ const DefaultCreditCardAndLicenseUploadController = ({
   const {
     data: { frontImageName, frontImageUrl, backImageName, backImageUrl },
   } = useSelector(selectLicenseUploadForm);
-  const [key, setKey] = useState<string | undefined>("front");
 
   const [frontImageFile, setFrontImageFile] = useState<File | null>(null);
   const [displayNoFrontImageError, setDisplayNoFrontImageError] = useState(false);
@@ -96,10 +96,6 @@ const DefaultCreditCardAndLicenseUploadController = ({
   const selectFrontImage = useCallback(async (file: File) => {
     setDisplayNoFrontImageError(false);
     setFrontImageFile(file);
-
-    setTimeout(() => {
-      setKey("back");
-    }, 500);
   }, []);
 
   const clearFrontImage = useCallback(() => {
@@ -123,9 +119,6 @@ const DefaultCreditCardAndLicenseUploadController = ({
   const selectBackImage = useCallback((file: File) => {
     setDisplayNoBackImageError(false);
     setBackImageFile(file);
-    setTimeout(() => {
-      setKey(undefined);
-    }, 500);
   }, []);
 
   const clearBackImage = useCallback(() => {
@@ -143,17 +136,17 @@ const DefaultCreditCardAndLicenseUploadController = ({
   const handleNextState = useCallback(async () => {
     setSchemaErrors([]);
     try {
-      await schema.validate(formValues, { abortEarly: false });
-      if (!frontImageFile) {
-        setKey("front");
-        setDisplayNoFrontImageError(true);
+      const formValid = await schema.isValid(formValues);
+      if (!frontImageFile) setDisplayNoFrontImageError(true);
+      if (!backImageFile) setDisplayNoBackImageError(true);
+
+      if (!backImageFile || !frontImageFile || !formValid) {
+        if (!formValid) {
+          await schema.validate(formValues, { abortEarly: false });
+        }
         return;
       }
-      if (!backImageFile) {
-        setKey("back");
-        setDisplayNoBackImageError(true);
-        return;
-      }
+
       dispatch(
         setLicenseUploadFormData({
           frontImageUrl: URL.createObjectURL(frontImageFile),
@@ -199,14 +192,14 @@ const DefaultCreditCardAndLicenseUploadController = ({
           </div>
         </div>
         {/* License Upload Form */}
-        <div className="mt-4">
+        <div className="mt-5 pt-5">
           <h1 className={cardTitleClassNames}>{t("forms.licenseUpload.title")}</h1>
           <span className={cardSubtitleClassNames}>{t("forms.licenseUpload.message")}</span>
           <div className="mt-3 d-grid">
             <div>
-              <h2>{t("forms.licenseUpload.frontImage.title")}</h2>
+              <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.frontImage.title")}</h2>
               <div>
-                {displayNoFrontImageError && <div>{t("forms.licenseUpload.frontImage.notSelected")}</div>}
+                {displayNoFrontImageError && <Alert>{t("forms.licenseUpload.frontImage.notSelected")}</Alert>}
 
                 <DefaultImageDropzoneWithPreview
                   dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
@@ -223,10 +216,10 @@ const DefaultCreditCardAndLicenseUploadController = ({
                 />
               </div>
             </div>
-            <div>
-              <h2>{t("forms.licenseUpload.backImage.title")}</h2>
+            <div className="mt-4">
+              <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.backImage.title")}</h2>
               <div>
-                {displayNoBackImageError && <div>{t("forms.licenseUpload.backImage.notSelected")}</div>}
+                {displayNoBackImageError && <Alert>{t("forms.licenseUpload.backImage.notSelected")}</Alert>}
                 <DefaultImageDropzoneWithPreview
                   dragDisplayText={t("forms.licenseUpload.backImage.drag")}
                   selectButtonText={t("forms.licenseUpload.backImage.select")}
@@ -242,21 +235,21 @@ const DefaultCreditCardAndLicenseUploadController = ({
                 />
               </div>
             </div>
-            {/* Navigation */}
-            <div className="mt-1 flex">
-              {isPrevPageAvailable && (
-                <div className="pr-0">
-                  <Button variant="warning" size="lg" onClick={handleOpenModalConfirmation}>
-                    &#8592;
-                  </Button>
-                </div>
-              )}
-              <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
-                <Button variant="primary" size="lg" onClick={handleNextState}>
-                  {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
-                </Button>
-              </div>
+          </div>
+        </div>
+        {/* Navigation */}
+        <div className="mt-4 flex">
+          {isPrevPageAvailable && (
+            <div className="pr-0">
+              <Button variant="warning" size="lg" onClick={handleOpenModalConfirmation}>
+                &#8592;
+              </Button>
             </div>
+          )}
+          <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
+            <Button variant="primary" size="lg" onClick={handleNextState}>
+              {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+            </Button>
           </div>
         </div>
       </CardLayout>

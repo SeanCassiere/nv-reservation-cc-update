@@ -9,6 +9,7 @@ import DeveloperDebugMenu from "./shared/components/DeveloperDebugMenu/Developer
 
 import { selectConfigState } from "./shared/redux/store";
 import { isValueTrue } from "./shared/utils/common";
+import AnchorLink from "./shared/components/Elements/AnchorLink";
 
 const ErrorBoundary = Boundary as any; // an odd error where typescript says it doesn't return a JSX element. This is a workaround
 
@@ -48,17 +49,17 @@ const App = () => {
             </div>
           </ErrorBoundary>
         </div>
-        <div className="py-2">
-          <p style={{ padding: "1rem 0" }} className="text-center">
+        <div className="pt-4 pb-5">
+          <p className="text-sm text-center">
             {t("footer.poweredBy")}&nbsp;
-            <a
+            <AnchorLink
               href={fromRentall ? "https://rentallsoftware.com" : "https://navotar.com"}
               target="_blank"
               rel="noreferrer"
-              className="text-primary"
+              className="text-sm"
             >
               {fromRentall ? "RENTALL" : "Navotar"}
-            </a>
+            </AnchorLink>
           </p>
         </div>
       </div>

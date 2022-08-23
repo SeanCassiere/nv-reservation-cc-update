@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .custom-loader {
-  border: 10px solid #f3f3f3; /* Light grey */
-  border-top: 10px solid rgba(45 212 191); /* Blue */
+  border: 6px solid #dedede; /* Light grey */
+  border-top: 6px solid rgba(45 212 191); /* Blue */
   border-radius: 50%;
   width: 200px;
   height: 200px;

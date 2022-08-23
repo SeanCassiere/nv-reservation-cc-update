@@ -6,6 +6,7 @@ import { selectConfigState } from "../../redux/store";
 import NotFoundImg from "../../assets/undraw_page_not_found_su7k.svg";
 
 import CardLayout from "../../layouts/Card";
+import AnchorLink from "../../components/Elements/AnchorLink";
 
 const NotAuthorized: React.FC = () => {
   const config = useSelector(selectConfigState);
@@ -16,13 +17,13 @@ const NotAuthorized: React.FC = () => {
       <p>{t("queryMissing.message")}</p>
       <br />
       <p>{t("queryMissing.report")}</p>&nbsp;
-      <a
+      <AnchorLink
         href={config.fromRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
         target="_blank"
         rel="noreferrer"
       >
         {config.fromRentall ? "support@rentallsoftware.com" : "support@navotar.com"}
-      </a>
+      </AnchorLink>
     </CardLayout>
   );
 };

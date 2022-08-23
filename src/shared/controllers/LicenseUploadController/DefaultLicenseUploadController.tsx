@@ -9,6 +9,7 @@ import { urlToBlob } from "../../utils/blobUtils";
 import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
 import Button from "../../components/Elements/Button";
 import CardLayout from "../../layouts/Card";
+import Alert from "../../components/Elements/Alert";
 
 interface IProps {
   handleSubmit: () => void;
@@ -77,14 +78,9 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
 
   // General component state
   const handleNextState = useCallback(() => {
-    if (!frontImageFile) {
-      setDisplayNoFrontImageError(true);
-      return;
-    }
-    if (!backImageFile) {
-      setDisplayNoBackImageError(true);
-      return;
-    }
+    if (!frontImageFile) setDisplayNoFrontImageError(true);
+    if (!backImageFile) setDisplayNoBackImageError(true);
+    if (!backImageFile || !frontImageFile) return;
 
     dispatch(
       setLicenseUploadFormData({
@@ -108,9 +104,9 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
     <CardLayout title={t("forms.licenseUpload.title")} subtitle={t("forms.licenseUpload.message")}>
       <div className="mt-3 grid grid-cols-1 gap-4">
         <div>
-          <h2>{t("forms.licenseUpload.frontImage.title")}</h2>
+          <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.frontImage.title")}</h2>
           <div>
-            {displayNoFrontImageError && <div>{t("forms.licenseUpload.frontImage.notSelected")}</div>}
+            {displayNoFrontImageError && <Alert fullWidth>{t("forms.licenseUpload.frontImage.notSelected")}</Alert>}
 
             <DefaultImageDropzoneWithPreview
               dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
@@ -127,10 +123,10 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
             />
           </div>
         </div>
-        <div>
-          <h2>{t("forms.licenseUpload.backImage.title")}</h2>
+        <div className="mt-2">
+          <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.backImage.title")}</h2>
           <div>
-            {displayNoBackImageError && <div>{t("forms.licenseUpload.backImage.notSelected")}</div>}
+            {displayNoBackImageError && <Alert fullWidth>{t("forms.licenseUpload.backImage.notSelected")}</Alert>}
             <DefaultImageDropzoneWithPreview
               dragDisplayText={t("forms.licenseUpload.backImage.drag")}
               selectButtonText={t("forms.licenseUpload.backImage.select")}

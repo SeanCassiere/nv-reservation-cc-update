@@ -93,8 +93,9 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
     }),
     [isDragActive, isDragAccept, isDragReject]
   );
+
   return (
-    <>
+    <React.Fragment>
       <div {...getRootProps({ style: style as any })}>
         <input {...getInputProps()} />
         {previewImage ? (
@@ -105,7 +106,7 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
               className="object-contain"
               style={{ height: "130px" }}
             />
-            <figcaption>{previewImage.fileName}</figcaption>
+            <figcaption className="mt-1 text-sm">{previewImage.fileName}</figcaption>
           </figure>
         ) : (
           <p>{dragDisplayText}</p>
@@ -122,7 +123,7 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
           </Button>
         )}
       </div>
-    </>
+    </React.Fragment>
   );
 };
 

@@ -8,11 +8,11 @@ type Props = {
   image?: string;
 };
 
-export const cardTitleClassNames = cn();
-export const cardSubtitleClassNames = cn();
+export const cardTitleClassNames = cn("text-lg", "font-medium", "text-gray-600");
+export const cardSubtitleClassNames = cn("text-sm", "text-gray-500");
 
 const CardLayout: React.FC<Props> = ({ title, subtitle, image, children }) => {
-  const cardClassNames = cn("w-full", "rounded", "border", "border-gray-100", "px-3", "py-4");
+  const cardClassNames = cn("w-full", "rounded", "border", "border-gray-100", "px-5", "py-5");
 
   return (
     <div className={cardClassNames}>
@@ -26,8 +26,8 @@ const CardLayout: React.FC<Props> = ({ title, subtitle, image, children }) => {
       {subtitle && typeof subtitle === "function" && <React.Fragment>{subtitle}</React.Fragment>}
       {/* image */}
       {image && (
-        <div>
-          <img src={image} alt="" />
+        <div className="flex align-middle justify-center py-5">
+          <img src={image} alt="" style={{ maxWidth: "70%" }} />
         </div>
       )}
       {/* body */}

@@ -7,7 +7,7 @@ import Button from "../../components/Elements/Button";
 import CardLayout from "../../layouts/Card";
 
 import { clearReduxFormState, setRentalSignatureFormData } from "../../redux/slices/forms/slice";
-import { selectConfigState } from "../../redux/store";
+import { selectConfigState, selectRentalSignatureForm } from "../../redux/store";
 import { APP_CONSTANTS } from "../../utils/constants";
 
 interface IProps {
@@ -27,7 +27,10 @@ const DefaultRentalSignatureController = ({
   const { t } = useTranslation();
 
   const configState = useSelector(selectConfigState);
-  const [signatureUrl, setSignatureUrl] = React.useState("");
+  const signatureFormState = useSelector(selectRentalSignatureForm);
+  const [signatureUrl, setSignatureUrl] = React.useState(
+    signatureFormState.data.signatureUrl !== "" ? signatureFormState.data.signatureUrl : ""
+  );
 
   const [showRequiredMessage, setShowRequiredMessage] = React.useState(false);
 
@@ -74,8 +77,11 @@ const DefaultRentalSignatureController = ({
       <div className="mt-3 d-grid">
         {showRequiredMessage && <div>{t("forms.rentalSignature.signatureRequired")}</div>}
 
-        <DefaultSignatureCanvas onSignature={handleSettingSignatureUrl} />
-        <div className="mt-1 flex">
+        <DefaultSignatureCanvas
+          onSignature={handleSettingSignatureUrl}
+          initialDataURL={signatureUrl !== "" ? signatureUrl : undefined}
+        />
+        <div className="mt-3 flex">
           {isPrevPageAvailable && (
             <div className="pr-0">
               <Button variant="warning" size="lg" onClick={handleOpenModalConfirmation}>

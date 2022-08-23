@@ -6,6 +6,7 @@ import ErrorImg from "../../assets/undraw_warning_cyit.svg";
 import { selectConfigState } from "../../redux/store";
 
 import CardLayout from "../../layouts/Card";
+import AnchorLink from "../../components/Elements/AnchorLink";
 
 interface Props {
   title?: string;
@@ -27,28 +28,26 @@ const ErrorSubmission: React.FC<Props> = (props) => {
   return (
     <CardLayout image={ErrorImg} title={props.title ? props.title : t("badSubmission.title")}>
       <p>{props.msg}</p>
-      <br />
-      <p>
+      <p className="mt-2">
         {t("badSubmission.report")}&nbsp;
-        <a
+        <AnchorLink
           href={config.fromRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
           target="_blank"
           rel="noreferrer"
         >
           {config.fromRentall ? "support@rentallsoftware.com" : "support@navotar.com"}
-        </a>
+        </AnchorLink>
         .
       </p>
       {props.tryAgainButton && (
         <>
-          <br />
           <span className="mt-3 block">
-            <a
+            <AnchorLink
               className="block rounded no-underline hover:no-underline text-center w-full px-3 py-3 bg-red-600 hover:bg-red-700 text-white"
               href={originUrl}
             >
               {t("badSubmission.btnRetrySubmission")}
-            </a>
+            </AnchorLink>
           </span>
         </>
       )}
