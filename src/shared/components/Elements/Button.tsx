@@ -3,7 +3,8 @@ import cn from "classnames";
 
 interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   loading?: boolean;
-  variant?: "primary" | "secondary" | "success" | "danger" | "warning";
+  color?: "primary" | "secondary" | "success" | "danger" | "warning";
+  variant?: "filled" | "muted";
   fullWidth?: boolean;
   size?: "sm" | "md" | "lg";
   uppercase?: boolean;
@@ -12,7 +13,8 @@ interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLB
 const Button: React.FC<Props> = ({
   children,
   className,
-  variant = "primary",
+  color = "primary",
+  variant = "filled",
   fullWidth = true,
   size = "md",
   uppercase = false,
@@ -21,57 +23,53 @@ const Button: React.FC<Props> = ({
   ...buttonProps
 }) => {
   const buttonClasses = cn(
-    className,
-    {
-      "py-3": size === "lg",
-      "px-5": size === "lg",
-      "text-base": size === "lg",
-    },
-    {
-      "py-2": size === "md",
-      "px-5": size === "md",
-      "text-base": size === "md",
-    },
-    {
-      "py-1.5": size === "sm",
-      "px-2": size === "sm",
-      "text-sm": size === "sm",
-    },
+    "inline-flex",
+    "items-center",
+    "justify-center",
+    "border",
+    "border-transparent",
     "rounded",
     "font-medium",
+    "focus:outline-none",
+    "focus:ring-2",
+    "focus:ring-offset-2",
     "transition-colors",
     "disabled:cursor-not-allowed",
+    { "py-2": size === "lg", "px-4": size === "lg", "text-lg": size === "lg" },
+    { "py-2": size === "md", "px-4": size === "md", "text-base": size === "md" },
+    { "py-2": size === "sm", "px-3": size === "sm", "text-sm": size === "sm" },
     { "w-full": fullWidth, uppercase: uppercase },
     {
-      "text-white": variant === "primary",
-      "bg-blue-700": variant === "primary",
-      "hover:bg-blue-800": variant === "primary",
-      "disabled:bg-blue-400": variant === "primary",
+      // variant="filled"
+      "text-white": color === "primary" && variant === "filled",
+      "bg-indigo-600": color === "primary" && variant === "filled",
+      "hover:bg-indigo-700": color === "primary" && variant === "filled",
+      "disabled:bg-indigo-400": color === "primary" && variant === "filled",
+      // variant="muted"
+      "text-indigo-700": color === "primary" && variant === "muted",
+      "bg-indigo-100": color === "primary" && variant === "muted",
+      "hover:bg-indigo-200": color === "primary" && variant === "muted",
+      "disabled:bg-indigo-100": color === "primary" && variant === "muted",
+      "disabled:text-indigo-400": color === "primary" && variant === "muted",
+      // shared
+      "focus:ring-indigo-700": color === "primary",
     },
     {
-      "bg-gray-500": variant === "secondary",
-      "text-white": variant === "secondary",
-      "hover:bg-gray-600": variant === "secondary",
-      "disabled:bg-gray-400": variant === "secondary",
+      // variant="filled"
+      "text-white": color === "danger" && variant === "filled",
+      "bg-red-500": color === "danger" && variant === "filled",
+      "hover:bg-red-600": color === "danger" && variant === "filled",
+      "disabled:bg-red-300": color === "danger" && variant === "filled",
+      // variant="muted"
+      "text-red-600": color === "danger" && variant === "muted",
+      "bg-red-100": color === "danger" && variant === "muted",
+      "hover:bg-red-200": color === "danger" && variant === "muted",
+      "disabled:bg-red-50": color === "danger" && variant === "muted",
+      "disabled:text-red-400": color === "danger" && variant === "muted",
+      // shared
+      "focus:ring-red-600": color === "danger",
     },
-    {
-      "text-white": variant === "success",
-      "bg-green-600": variant === "success",
-      "hover:bg-green-700": variant === "success",
-      "disabled:bg-green-400": variant === "success",
-    },
-    {
-      "text-white": variant === "danger",
-      "bg-red-600": variant === "danger",
-      "hover:bg-red-700": variant === "danger",
-      "disabled:bg-red-400": variant === "danger",
-    },
-    {
-      "text-white": variant === "warning",
-      "bg-amber-600": variant === "warning",
-      "hover:bg-amber-700": variant === "warning",
-      "disabled:bg-amber-400": variant === "warning",
-    }
+    className
   );
 
   return (

@@ -106,19 +106,19 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
               className="object-contain"
               style={{ height: "130px" }}
             />
-            <figcaption className="mt-1 text-sm">{previewImage.fileName}</figcaption>
+            <figcaption className="mt-1 text-xs">{previewImage.fileName}</figcaption>
           </figure>
         ) : (
-          <p>{dragDisplayText}</p>
+          <p className="text-sm">{dragDisplayText}</p>
         )}
       </div>
-      <div className="mt-2">
+      <div className="mt-2 px-4">
         {previewImage ? (
-          <Button variant="danger" size="sm" onClick={handleClearImage}>
+          <Button color="danger" variant="muted" size="sm" onClick={handleClearImage}>
             {clearButtonText}
           </Button>
         ) : (
-          <Button variant="secondary" size="sm" onClick={open}>
+          <Button color="primary" variant="muted" size="sm" onClick={open}>
             {selectButtonText}
           </Button>
         )}

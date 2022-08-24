@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import { supportedLanguages } from "../../redux/slices/config/slice";
@@ -41,17 +41,24 @@ export const initialConfigState: DevConfigObject = {
 
 const DeveloperDebugMenu = ({ open, handleClose }: { open: boolean; handleClose: () => void }) => {
   const { t } = useTranslation();
+  const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (open) {
+      divRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [open]);
 
   if (!open) return null;
 
   return (
-    <React.Fragment>
+    <div ref={divRef}>
       <CardLayout
         title={
           <div className="flex align-middle justify-center">
             <h1 className="flex-1">{t("developer.drawerTitle")}</h1>
             <div>
-              <Button variant="danger" size="sm" onClick={handleClose}>
+              <Button color="danger" size="sm" onClick={handleClose}>
                 &times;
               </Button>
             </div>
@@ -62,7 +69,7 @@ const DeveloperDebugMenu = ({ open, handleClose }: { open: boolean; handleClose:
           <ConfigCreator />
         </div>
       </CardLayout>
-    </React.Fragment>
+    </div>
   );
 };
 
@@ -154,15 +161,16 @@ const ConfigCreator: React.FC = () => {
   return (
     <React.Fragment>
       <div className="pt-1 pb-3">
-        <AnchorLink href={REPO_URL} rel="noreferrer" target="_blank">
+        <AnchorLink href={REPO_URL} rel="noreferrer" target="_blank" className="text-indigo-600">
           {t("developer.viewProjectRepo")}
         </AnchorLink>
       </div>
-      <div className="p-2 rounded w-full bg-amber-100 flex flex-col gap-1" style={{ overflowWrap: "anywhere" }}>
-        <p className="m-0 text-sm text-gray-600">{devConfigToQueryUrl(config)}</p>
+      <div className="p-2 rounded w-full bg-yellow-50 flex flex-col gap-1" style={{ overflowWrap: "anywhere" }}>
+        <p className="m-0 text-sm text-gray-700">{devConfigToQueryUrl(config)}</p>
         <Button
           type="button"
-          variant="secondary"
+          color="primary"
+          variant="muted"
           size="sm"
           onClick={() => {
             navigator.clipboard.writeText(devConfigToQueryUrl(config));
@@ -177,9 +185,9 @@ const ConfigCreator: React.FC = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="mt-3">
-        <div className="mb-3">
-          <span className="text-gray-600">{t("developer.configCreator.referenceType")}</span>
-          <div>
+        <div className="mb-4">
+          <span className="text-sm font-medium text-gray-700">{t("developer.configCreator.referenceType")}</span>
+          <div className="mt-1 flex flex-col gap-1">
             <CheckInput
               type="radio"
               name="referenceType"
@@ -198,7 +206,7 @@ const ConfigCreator: React.FC = () => {
             />
           </div>
         </div>
-        <div className="mb-3">
+        <div className="mb-4">
           <TextInput
             type="text"
             value={config.referenceId}
@@ -208,7 +216,7 @@ const ConfigCreator: React.FC = () => {
             required
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-4">
           <div>
             <SelectInput
               value={config.lang}
@@ -226,7 +234,7 @@ const ConfigCreator: React.FC = () => {
             </SelectInput>
           </div>
         </div>
-        <div className="mb-3">
+        <div className="mb-4">
           <TextInput
             type="number"
             value={config.clientId}
@@ -249,7 +257,7 @@ const ConfigCreator: React.FC = () => {
           />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-4">
           <SelectInput
             name="flow"
             onChange={handleSelectFlowItem}
@@ -265,7 +273,7 @@ const ConfigCreator: React.FC = () => {
             <ol className="list-decimal ml-6 mt-3">
               {config.flow.map((flowItem, index) => (
                 <li key={`flow-item-${flowItem}-${index}`}>
-                  <div className="flex align-middle items-center gap-1 px-2 py-1 bg-gray-100 rounded my-1">
+                  <div className="flex align-middle items-center gap-3 px-2 py-2 bg-gray-100 rounded my-1">
                     <button
                       type="button"
                       onClick={() => handleRemoveFlowItem(index)}
@@ -274,7 +282,7 @@ const ConfigCreator: React.FC = () => {
                       &times;
                     </button>
                     <div className="flex-1 truncate">
-                      <span className="font-bold text-sm">{flowItem}</span>
+                      <span className="font-medium text-sm">{flowItem}</span>
                     </div>
                   </div>
                 </li>
@@ -282,7 +290,7 @@ const ConfigCreator: React.FC = () => {
             </ol>
           </div>
         </div>
-        <div className="mb-3">
+        <div className="mb-4">
           <SelectInput
             name="successSubmissionScreen"
             defaultValue={config.successSubmissionScreen}
@@ -297,9 +305,11 @@ const ConfigCreator: React.FC = () => {
           </SelectInput>
         </div>
         {/*  */}
-        <div className="my-3 grid grid-cols-2 gap-2">
+        <div className="mt-4 grid grid-cols-2 gap-2">
           <div>
-            <span>{t("developer.configCreator.applicationBranding")}</span>
+            <span className="text-sm font-medium text-gray-700">
+              {t("developer.configCreator.applicationBranding")}
+            </span>
             <CheckInput
               type="checkbox"
               name="fromRentall"
@@ -309,7 +319,9 @@ const ConfigCreator: React.FC = () => {
             />
           </div>
           <div>
-            <span>{t("developer.configCreator.applicationEnvironment")}</span>
+            <span className="text-sm font-medium text-gray-700">
+              {t("developer.configCreator.applicationEnvironment")}
+            </span>
             <CheckInput
               type="checkbox"
               name="qa"
@@ -324,7 +336,7 @@ const ConfigCreator: React.FC = () => {
           </div>
 
           <div>
-            <span>{t("developer.configCreator.openedDevMenu")}</span>
+            <span className="text-sm font-medium text-gray-700">{t("developer.configCreator.openedDevMenu")}</span>
             <CheckInput
               type="checkbox"
               name="dev"
@@ -336,11 +348,11 @@ const ConfigCreator: React.FC = () => {
             />
           </div>
         </div>
-        <div className="my-3 w-full flex gap-1">
+        <div className="mt-6 w-full flex gap-1">
           <Button type="submit" className="py-2 px-4 bg-gray-300">
             {t("developer.configCreator.btnSave")}
           </Button>
-          <Button type="button" variant="secondary" className="py-2 px-4 bg-teal-300" onClick={handleReset}>
+          <Button type="button" color="primary" variant="muted" className="py-2 px-4 bg-teal-300" onClick={handleReset}>
             {t("developer.configCreator.btnReset")}
           </Button>
         </div>

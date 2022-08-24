@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import DefaultSignatureCanvas from "../../components/DefaultSignatureCanvas/DefaultSignatureCanvas";
+import Alert from "../../components/Elements/Alert";
 import Button from "../../components/Elements/Button";
 import CardLayout from "../../layouts/Card";
 
@@ -80,7 +81,7 @@ const DefaultRentalSignatureController = ({
       })}
     >
       <div className="mt-3 d-grid">
-        {showRequiredMessage && <div>{t("forms.rentalSignature.signatureRequired")}</div>}
+        {showRequiredMessage && <Alert variant="danger">{t("forms.rentalSignature.signatureRequired")}</Alert>}
 
         <DefaultSignatureCanvas
           onSignature={handleSettingSignatureUrl}
@@ -88,16 +89,16 @@ const DefaultRentalSignatureController = ({
             signatureFormState.data.signatureUrl !== "" ? signatureFormState.data.signatureUrl : undefined
           }
         />
-        <div className="mt-3 flex">
+        <div className="mt-6 flex">
           {isPrevPageAvailable && (
             <div className="pr-0">
-              <Button variant="warning" size="lg" onClick={handleOpenModalConfirmation}>
+              <Button color="primary" variant="muted" size="lg" onClick={handleOpenModalConfirmation}>
                 &#8592;
               </Button>
             </div>
           )}
           <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
-            <Button variant="primary" size="lg" disabled={signatureUrl === ""} onClick={handleNextState}>
+            <Button color="primary" size="lg" disabled={signatureUrl === ""} onClick={handleNextState}>
               {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
             </Button>
           </div>

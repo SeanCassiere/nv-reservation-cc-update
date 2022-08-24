@@ -4,7 +4,7 @@
 
 .custom-loader {
   border: 6px solid #dedede; /* Light grey */
-  border-top: 6px solid rgba(45 212 191); /* Blue */
+  border-top: 6px solid #4f46e5; /* Blue */
   border-radius: 50%;
   width: 200px;
   height: 200px;

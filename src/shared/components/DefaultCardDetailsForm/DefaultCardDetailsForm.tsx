@@ -54,7 +54,8 @@ const DefaultCardDetailsForm = ({
           maxLength={cardMaxLength + 1}
           autoComplete="off"
           label={t("forms.creditCard.labels.cardNumber")}
-          errorText={isFieldInvalid("number") && t("forms.creditCard.errors.cardNumber")}
+          isError={isFieldInvalid("number")}
+          helperText={isFieldInvalid("number") && t("forms.creditCard.errors.cardNumber")}
         />
       </div>
       <div className="col-span-2">
@@ -69,10 +70,11 @@ const DefaultCardDetailsForm = ({
           type="text"
           autoComplete="off"
           label={t("forms.creditCard.labels.nameOnCard")}
-          errorText={isFieldInvalid("name") && t("forms.creditCard.errors.name")}
+          isError={isFieldInvalid("name")}
+          helperText={isFieldInvalid("name") && t("forms.creditCard.errors.name")}
         />
       </div>
-      <div>
+      <div className="col-span-2 md:col-span-1">
         <SelectInput
           name="monthExpiry"
           onChange={handleChange as any}
@@ -80,7 +82,8 @@ const DefaultCardDetailsForm = ({
           onBlur={handleBlur}
           required
           label={t("forms.creditCard.labels.expMonth")}
-          errorText={isFieldInvalid("monthExpiry") && t("forms.creditCard.errors.expMonth")}
+          isError={isFieldInvalid("monthExpiry")}
+          helperText={isFieldInvalid("monthExpiry") && t("forms.creditCard.errors.expMonth")}
         >
           <option value="">{t("forms.creditCard.labels.placeholders.select")}</option>
           {numOfMonths.map((val) => (
@@ -90,7 +93,7 @@ const DefaultCardDetailsForm = ({
           ))}
         </SelectInput>
       </div>
-      <div>
+      <div className="col-span-2 md:col-span-1">
         <SelectInput
           name="yearExpiry"
           onChange={handleChange as any}
@@ -98,7 +101,8 @@ const DefaultCardDetailsForm = ({
           onBlur={handleBlur}
           required
           label={t("forms.creditCard.labels.expYear")}
-          errorText={isFieldInvalid("yearExpiry") && t("forms.creditCard.errors.expYear")}
+          isError={isFieldInvalid("yearExpiry")}
+          helperText={isFieldInvalid("yearExpiry") && t("forms.creditCard.errors.expYear")}
         >
           <option value="">{t("forms.creditCard.labels.placeholders.select")}</option>
           {numOfYears.map((val) => (
@@ -108,7 +112,7 @@ const DefaultCardDetailsForm = ({
           ))}
         </SelectInput>
       </div>
-      <div>
+      <div className="col-span-2 md:col-span-1">
         <TextInput
           placeholder="***"
           name="cvv"
@@ -123,10 +127,11 @@ const DefaultCardDetailsForm = ({
           maxLength={4}
           autoComplete="off"
           label={t("forms.creditCard.labels.cvv")}
-          errorText={isFieldInvalid("cvv") && t("forms.creditCard.errors.cvv")}
+          isError={isFieldInvalid("cvv")}
+          helperText={isFieldInvalid("cvv") && t("forms.creditCard.errors.cvv")}
         />
       </div>
-      <div>
+      <div className="col-span-2 md:col-span-1">
         <TextInput
           placeholder={t("forms.creditCard.labels.placeholders.zipCode")}
           name="billingZip"
@@ -136,7 +141,8 @@ const DefaultCardDetailsForm = ({
           type="text"
           autoComplete="off"
           label={t("forms.creditCard.labels.placeholders.zipCode")}
-          errorText={isFieldInvalid("billingZip") && t("forms.creditCard.errors.billingZip")}
+          isError={isFieldInvalid("billingZip")}
+          helperText={isFieldInvalid("billingZip") && t("forms.creditCard.errors.billingZip")}
         />
       </div>
     </div>

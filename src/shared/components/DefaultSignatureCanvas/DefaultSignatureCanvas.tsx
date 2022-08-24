@@ -81,24 +81,18 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
 
   return (
     <React.Fragment>
-      <div
-        style={{
-          border: `4px solid ${isDisabled ? "#333333" : "#325d88"}`,
-          borderRadius: 5,
-          padding: "0.1rem",
-        }}
-      >
+      <div className="p-1 rounded-md border-4 border-indigo-900">
         <SignatureCanvas
           ref={signaturePadRef}
           dotSize={4}
           canvasProps={{ height: isPhone ? 360 : maxHeight, width: isPhone ? 310 : maxWidth }}
         />
       </div>
-      <div className="mt-2 flex gap-2">
-        <Button variant="danger" size="sm" style={{ width: "60%" }} onClick={handleClear}>
+      <div className="mx-5 mt-2 flex gap-2">
+        <Button color="danger" size="sm" style={{ width: "60%" }} onClick={handleClear}>
           {clearText ?? t("forms.rentalSignature.clearInput")}
         </Button>
-        <Button variant="primary" size="sm" style={{ width: "40%" }} onClick={handleSave} disabled={isDisabled}>
+        <Button color="primary" size="sm" style={{ width: "40%" }} onClick={handleSave} disabled={isDisabled}>
           {saveText ?? t("forms.rentalSignature.saveInput")}
         </Button>
       </div>
