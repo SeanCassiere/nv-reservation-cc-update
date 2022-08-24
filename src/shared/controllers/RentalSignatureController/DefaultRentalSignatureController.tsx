@@ -44,11 +44,18 @@ const DefaultRentalSignatureController = ({
   }, [dispatch, handleSubmit, signatureUrl]);
 
   const handleOpenModalConfirmation = React.useCallback(() => {
-    if (window.confirm(t("forms.rentalSignature.goBack.title") + "\n" + t("forms.rentalSignature.goBack.message"))) {
+    if (
+      signatureUrl !== "" &&
+      window.confirm(t("forms.rentalSignature.goBack.title") + "\n" + t("forms.rentalSignature.goBack.message"))
+    ) {
       dispatch(clearReduxFormState("rentalSignatureForm"));
       handlePrevious();
     }
-  }, [dispatch, handlePrevious, t]);
+
+    if (signatureUrl === "") {
+      handlePrevious();
+    }
+  }, [dispatch, handlePrevious, signatureUrl, t]);
 
   const handleSettingSignatureUrl = React.useCallback((url: string) => {
     if (url === "") {

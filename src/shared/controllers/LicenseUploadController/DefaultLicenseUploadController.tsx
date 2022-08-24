@@ -94,11 +94,18 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
   }, [backImageFile, dispatch, frontImageFile, handleSubmit]);
 
   const handleOpenModalConfirmation = useCallback(() => {
-    if (window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))) {
+    if (
+      (backImageFile || frontImageFile) &&
+      window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))
+    ) {
       dispatch(clearReduxFormState("licenseUploadForm"));
       handlePrevious();
     }
-  }, [dispatch, handlePrevious, t]);
+
+    if (!backImageFile && !frontImageFile) {
+      handlePrevious();
+    }
+  }, [backImageFile, dispatch, frontImageFile, handlePrevious, t]);
 
   return (
     <CardLayout title={t("forms.licenseUpload.title")} subtitle={t("forms.licenseUpload.message")}>
