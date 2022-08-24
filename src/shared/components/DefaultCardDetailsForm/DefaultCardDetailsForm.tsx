@@ -15,9 +15,9 @@ interface IProps {
   formData: ICreditCardFormData;
   cardMaxLength: number;
   schemaErrors: YupErrorsFormatted;
-  handleBlur: () => void;
-  handleFocus: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleBlur: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
+  handleFocus: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const DefaultCardDetailsForm = ({
@@ -35,7 +35,7 @@ const DefaultCardDetailsForm = ({
     if (findIfAvailable) {
       return true;
     }
-    return false;
+    return undefined;
   };
 
   return (
@@ -46,7 +46,7 @@ const DefaultCardDetailsForm = ({
           name="number"
           value={formData.number}
           onChange={handleChange}
-          onFocus={handleFocus as any}
+          onFocus={handleFocus}
           onBlur={handleBlur}
           pattern={`[0-9]{${formData.type === "AMEX".toLowerCase() ? 13 : 15},${cardMaxLength + 1}}`}
           required
@@ -54,7 +54,7 @@ const DefaultCardDetailsForm = ({
           maxLength={cardMaxLength + 1}
           autoComplete="off"
           label={t("forms.creditCard.labels.cardNumber")}
-          isError={isFieldInvalid("number")}
+          isError={Boolean(isFieldInvalid("number"))}
           helperText={isFieldInvalid("number") && t("forms.creditCard.errors.cardNumber")}
         />
       </div>
@@ -64,13 +64,13 @@ const DefaultCardDetailsForm = ({
           name="name"
           value={formData.name}
           onChange={handleChange}
-          onFocus={handleFocus as any}
+          onFocus={handleFocus}
           onBlur={handleBlur}
           required
           type="text"
           autoComplete="off"
           label={t("forms.creditCard.labels.nameOnCard")}
-          isError={isFieldInvalid("name")}
+          isError={Boolean(isFieldInvalid("name"))}
           helperText={isFieldInvalid("name") && t("forms.creditCard.errors.name")}
         />
       </div>
@@ -78,11 +78,11 @@ const DefaultCardDetailsForm = ({
         <SelectInput
           name="monthExpiry"
           onChange={handleChange as any}
-          onFocus={handleFocus as any}
+          onFocus={handleFocus}
           onBlur={handleBlur}
           required
           label={t("forms.creditCard.labels.expMonth")}
-          isError={isFieldInvalid("monthExpiry")}
+          isError={Boolean(isFieldInvalid("monthExpiry"))}
           helperText={isFieldInvalid("monthExpiry") && t("forms.creditCard.errors.expMonth")}
         >
           <option value="">{t("forms.creditCard.labels.placeholders.select")}</option>
@@ -97,11 +97,11 @@ const DefaultCardDetailsForm = ({
         <SelectInput
           name="yearExpiry"
           onChange={handleChange as any}
-          onFocus={handleFocus as any}
+          onFocus={handleFocus}
           onBlur={handleBlur}
           required
           label={t("forms.creditCard.labels.expYear")}
-          isError={isFieldInvalid("yearExpiry")}
+          isError={Boolean(isFieldInvalid("yearExpiry"))}
           helperText={isFieldInvalid("yearExpiry") && t("forms.creditCard.errors.expYear")}
         >
           <option value="">{t("forms.creditCard.labels.placeholders.select")}</option>
@@ -118,7 +118,7 @@ const DefaultCardDetailsForm = ({
           name="cvv"
           value={formData.cvv}
           onChange={handleChange}
-          onFocus={handleFocus as any}
+          onFocus={handleFocus}
           onBlur={handleBlur}
           pattern={`[0-9]{3,4}`}
           required
@@ -127,7 +127,7 @@ const DefaultCardDetailsForm = ({
           maxLength={4}
           autoComplete="off"
           label={t("forms.creditCard.labels.cvv")}
-          isError={isFieldInvalid("cvv")}
+          isError={Boolean(isFieldInvalid("cvv"))}
           helperText={isFieldInvalid("cvv") && t("forms.creditCard.errors.cvv")}
         />
       </div>
@@ -137,11 +137,13 @@ const DefaultCardDetailsForm = ({
           name="billingZip"
           value={formData.billingZip}
           onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           required
           type="text"
           autoComplete="off"
           label={t("forms.creditCard.labels.placeholders.zipCode")}
-          isError={isFieldInvalid("billingZip")}
+          isError={Boolean(isFieldInvalid("billingZip"))}
           helperText={isFieldInvalid("billingZip") && t("forms.creditCard.errors.billingZip")}
         />
       </div>
