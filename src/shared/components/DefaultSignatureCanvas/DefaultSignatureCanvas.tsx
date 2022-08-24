@@ -75,8 +75,9 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
       setIsDisabled(true);
       signaturePadRef.current?.fromDataURL(initialDataURL);
       signaturePadRef.current?.off();
+      onSignature(initialDataURL);
     }
-  }, [initialDataURL, signaturePadRef]);
+  }, [initialDataURL, onSignature, signaturePadRef]);
 
   return (
     <React.Fragment>

@@ -28,9 +28,7 @@ const DefaultRentalSignatureController = ({
 
   const configState = useSelector(selectConfigState);
   const signatureFormState = useSelector(selectRentalSignatureForm);
-  const [signatureUrl, setSignatureUrl] = React.useState(
-    signatureFormState.data.signatureUrl !== "" ? signatureFormState.data.signatureUrl : ""
-  );
+  const [signatureUrl, setSignatureUrl] = React.useState("");
 
   const [showRequiredMessage, setShowRequiredMessage] = React.useState(false);
 
@@ -79,7 +77,9 @@ const DefaultRentalSignatureController = ({
 
         <DefaultSignatureCanvas
           onSignature={handleSettingSignatureUrl}
-          initialDataURL={signatureUrl !== "" ? signatureUrl : undefined}
+          initialDataURL={
+            signatureFormState.data.signatureUrl !== "" ? signatureFormState.data.signatureUrl : undefined
+          }
         />
         <div className="mt-3 flex">
           {isPrevPageAvailable && (
