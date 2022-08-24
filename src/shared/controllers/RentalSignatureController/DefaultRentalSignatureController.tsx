@@ -28,9 +28,7 @@ const DefaultRentalSignatureController = ({
 
   const configState = useSelector(selectConfigState);
   const signatureFormState = useSelector(selectRentalSignatureForm);
-  const [signatureUrl, setSignatureUrl] = React.useState(
-    signatureFormState.data.signatureUrl !== "" ? signatureFormState.data.signatureUrl : ""
-  );
+  const [signatureUrl, setSignatureUrl] = React.useState("");
 
   const [showRequiredMessage, setShowRequiredMessage] = React.useState(false);
 
@@ -46,11 +44,18 @@ const DefaultRentalSignatureController = ({
   }, [dispatch, handleSubmit, signatureUrl]);
 
   const handleOpenModalConfirmation = React.useCallback(() => {
-    if (window.confirm(t("forms.rentalSignature.goBack.title") + "\n" + t("forms.rentalSignature.goBack.message"))) {
+    if (
+      signatureUrl !== "" &&
+      window.confirm(t("forms.rentalSignature.goBack.title") + "\n" + t("forms.rentalSignature.goBack.message"))
+    ) {
       dispatch(clearReduxFormState("rentalSignatureForm"));
       handlePrevious();
     }
-  }, [dispatch, handlePrevious, t]);
+
+    if (signatureUrl === "") {
+      handlePrevious();
+    }
+  }, [dispatch, handlePrevious, signatureUrl, t]);
 
   const handleSettingSignatureUrl = React.useCallback((url: string) => {
     if (url === "") {
@@ -79,7 +84,9 @@ const DefaultRentalSignatureController = ({
 
         <DefaultSignatureCanvas
           onSignature={handleSettingSignatureUrl}
-          initialDataURL={signatureUrl !== "" ? signatureUrl : undefined}
+          initialDataURL={
+            signatureFormState.data.signatureUrl !== "" ? signatureFormState.data.signatureUrl : undefined
+          }
         />
         <div className="mt-3 flex">
           {isPrevPageAvailable && (

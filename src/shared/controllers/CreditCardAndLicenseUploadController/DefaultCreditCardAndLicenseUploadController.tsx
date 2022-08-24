@@ -126,11 +126,18 @@ const DefaultCreditCardAndLicenseUploadController = ({
   }, []);
 
   const handleOpenModalConfirmation = useCallback(() => {
-    if (window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))) {
+    if (
+      (backImageFile || frontImageFile) &&
+      window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))
+    ) {
       dispatch(clearReduxFormState("licenseUploadForm"));
       handlePrevious();
     }
-  }, [dispatch, handlePrevious, t]);
+
+    if (!backImageFile && !frontImageFile) {
+      handlePrevious();
+    }
+  }, [backImageFile, dispatch, frontImageFile, handlePrevious, t]);
 
   // validate the form data against the schema
   const handleNextState = useCallback(async () => {
