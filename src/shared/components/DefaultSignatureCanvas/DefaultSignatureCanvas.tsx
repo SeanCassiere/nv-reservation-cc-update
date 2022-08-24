@@ -65,11 +65,14 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
   }, [onSignature, trimmed]);
 
   useEffect(() => {
-    if (initialDataURL) {
+    if (initialDataURL && initialDataURL !== "" && signaturePadRef.current !== null) {
       setIsDisabled(true);
       signaturePadRef.current?.fromDataURL(initialDataURL);
       signaturePadRef.current?.off();
       onSignature(initialDataURL);
+    } else {
+      signaturePadRef.current?.on();
+      signaturePadRef.current?.clear();
     }
   }, [initialDataURL, onSignature, signaturePadRef]);
 
