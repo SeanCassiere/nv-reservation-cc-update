@@ -4,8 +4,6 @@ import { useTranslation } from "react-i18next";
 import Button from "../Elements/Button";
 
 interface IProps {
-  maxHeight?: number;
-  maxWidth?: number;
   onSignature?: (signatureUrl: string) => void;
   clearText?: string;
   saveText?: string;
@@ -14,8 +12,6 @@ interface IProps {
 }
 
 const DefaultSignatureCanvas: React.FC<IProps> = ({
-  maxHeight = 400,
-  maxWidth = 450,
   onSignature = (url: string) => {
     console.log("Signature URL: ", url);
   },
@@ -79,13 +75,22 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
 
   return (
     <React.Fragment>
-      <div ref={signatureDivRef} className="p-1 rounded-md border-4 border-indigo-900" style={{ maxHeight: "430px" }}>
+      <div
+        ref={signatureDivRef}
+        className="p-1 rounded-md border-4 border-indigo-900 flex items-center justify-center"
+        style={{ maxHeight: "430px" }}
+      >
         <SignatureCanvas
           ref={signaturePadRef}
           dotSize={4}
+          clearOnResize={true}
           canvasProps={{
-            height: signatureDivRef?.current?.clientHeight ? signatureDivRef?.current?.clientHeight : undefined,
-            width: signatureDivRef?.current?.clientWidth,
+            height: signatureDivRef?.current?.getBoundingClientRect().height
+              ? signatureDivRef?.current?.getBoundingClientRect().height - 10
+              : undefined,
+            width: signatureDivRef?.current?.getBoundingClientRect().width
+              ? signatureDivRef?.current?.getBoundingClientRect().width - 10
+              : undefined,
           }}
         />
       </div>
