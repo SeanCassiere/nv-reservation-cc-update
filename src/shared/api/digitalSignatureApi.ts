@@ -24,6 +24,7 @@ export const uploadRentalDigitalSignatureFromUrl = async (opts: {
     imageType,
     isCheckIn: false,
     isDamageView: false,
+    signatureDate: new Date().toISOString(),
     signatureImage: null,
     signatureName: opts.customerName,
   };
