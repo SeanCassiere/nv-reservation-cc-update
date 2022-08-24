@@ -9,12 +9,12 @@ export const insertCreditCardForCustomer = async (
   try {
     await clientV3.post(`/Customers/${customerId}/CreditCards`, {
       creditCardType: formBody.type,
-      creditCardNumber: formBody.number,
+      creditCardNumber: formBody.number?.replaceAll(" ", "")?.trim(),
       creditCardExpiryMonth: parseInt(formBody.monthExpiry),
       creditCardExpiryYear: parseInt(`20${formBody.yearExpiry}`),
-      creditCardCVSNumber: formBody.cvv,
-      nameOnCard: formBody.name,
-      creditCardBillingZipCode: formBody.billingZip,
+      creditCardCVSNumber: formBody.cvv?.trim(),
+      nameOnCard: formBody.name?.trim(),
+      creditCardBillingZipCode: formBody.billingZip?.trim(),
       gatewayMandateID: null,
       gatewayRedirectFlow: null,
       gatewayCustomerID: null,

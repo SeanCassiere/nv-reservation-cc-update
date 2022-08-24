@@ -14,9 +14,10 @@ export interface ICreditCardFormData {
   billingZip: string;
   monthExpiry: string;
   yearExpiry: string;
+  monthYearExpiry: string;
 }
 
-interface IFormsSliceState {
+export interface IFormsSliceState {
   submission: {
     state: SubmissionState;
     current_submission_message: string;
@@ -43,7 +44,7 @@ interface IFormsSliceState {
   };
 }
 
-const initialState: IFormsSliceState = {
+export const initialFormSliceState: IFormsSliceState = {
   submission: {
     state: "submitting_details_pending",
     current_submission_message: "",
@@ -59,6 +60,7 @@ const initialState: IFormsSliceState = {
       billingZip: "",
       monthExpiry: "",
       yearExpiry: "",
+      monthYearExpiry: "",
     },
   },
   licenseUploadForm: {
@@ -80,7 +82,7 @@ const initialState: IFormsSliceState = {
 
 const formsSlice = createSlice({
   name: "forms",
-  initialState,
+  initialState: initialFormSliceState,
   reducers: {
     setCreditCardFormData: (state, action: PayloadAction<ICreditCardFormData>) => {
       state.creditCardForm.data = action.payload;
@@ -121,13 +123,13 @@ const formsSlice = createSlice({
     ) => {
       switch (action.payload) {
         case "creditCardForm":
-          state.creditCardForm = initialState.creditCardForm;
+          state.creditCardForm = initialFormSliceState.creditCardForm;
           break;
         case "licenseUploadForm":
-          state.licenseUploadForm = initialState.licenseUploadForm;
+          state.licenseUploadForm = initialFormSliceState.licenseUploadForm;
           break;
         case "rentalSignatureForm":
-          state.rentalSignatureForm = initialState.rentalSignatureForm;
+          state.rentalSignatureForm = initialFormSliceState.rentalSignatureForm;
           break;
       }
     },

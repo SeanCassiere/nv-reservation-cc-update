@@ -1,13 +1,10 @@
-import React, { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 
 import { selectCreditCardForm } from "../../redux/store";
 import { setCreditCardFormData } from "../../redux/slices/forms/slice";
-import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
-import { creditCardTypeFormat } from "../../utils/creditCardTypeFormat";
-import useCreditCardSchema from "../../hooks/useCreditCardSchema";
+import useCreditCardLogic from "../../hooks/useCreditCardLogic";
 
 import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
 import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
@@ -31,96 +28,36 @@ const DefaultCreditCardController = ({
   const { t } = useTranslation();
   const { data: initialFormData } = useSelector(selectCreditCardForm);
 
-  const [formValues, setFormValues] = useState(initialFormData);
-  const [schemaErrors, setSchemaErrors] = useState<YupErrorsFormatted>([]);
-  const [cardMaxLength, setCardMaxLength] = useState(16);
-
-  const [currentFocus, setCurrentFocus] = useState<string>("");
-
-  const { schema } = useCreditCardSchema();
+  const {
+    validateCardData,
+    handleCardInputChange,
+    handleCardInputBlur,
+    handleCardInputFocus,
+    currentFocus,
+    schemaErrors,
+    formValues,
+  } = useCreditCardLogic(initialFormData);
 
   // validate the form data against the schema
   const handleNextState = useCallback(async () => {
-    try {
-      await schema.validate(formValues, { abortEarly: false });
-      dispatch(setCreditCardFormData(formValues));
+    await validateCardData((values) => {
+      dispatch(setCreditCardFormData(values));
       handleSubmit();
-    } catch (error: any) {
-      const err = error as yup.ValidationError;
-      const formErrors = yupFormatSchemaErrors(err);
-      setSchemaErrors(formErrors);
-    }
-  }, [dispatch, formValues, handleSubmit, schema]);
-
-  // Form element handlers
-  const handleCardIdentifier = useCallback(
-    (type: string, maxLength: number) => {
-      const formattedType = creditCardTypeFormat(type);
-      setFormValues({
-        ...formValues,
-        type: formattedType,
-      });
-      setCardMaxLength(maxLength);
-    },
-    [formValues]
-  );
-  const handleCardFormChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-      setFormValues({
-        ...formValues,
-        [e.target.name]: e.target.value,
-      });
-    },
-    [formValues]
-  );
-  const handleCardFormFocus = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-      if (e.target.name === "monthExpiry" || e.target.name === "yearExpiry") {
-        setCurrentFocus("expiry");
-      } else if (e.target.name === "cvv") {
-        setCurrentFocus("cvc");
-      } else {
-        setCurrentFocus(e.target.name);
-      }
-    },
-    []
-  );
-  const handleCardFormBlur = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-      setCurrentFocus("");
-      try {
-        const pickedSchema = schema.pick([e.target.name]);
-        await pickedSchema.validate({ [e.target.name]: e.target.value }, { abortEarly: false });
-        setSchemaErrors((prev) => prev.filter((item) => item.path !== e.target.name));
-      } catch (error) {
-        const err = error as yup.ValidationError;
-        const formErrors = yupFormatSchemaErrors(err);
-        setSchemaErrors((prev) => {
-          const cloneList = prev.filter((item) => item.path !== e.target.name);
-          return [...cloneList, ...formErrors];
-        });
-      }
-    },
-    [schema]
-  );
+    });
+  }, [dispatch, handleSubmit, validateCardData]);
 
   return (
     <CardLayout title={t("forms.creditCard.title")} subtitle={t("forms.creditCard.message")}>
       <div className="mt-4 grid grid-cols-1">
         <div className="my-4 md:my-2">
-          <DefaultCreditCard
-            currentFocus={currentFocus}
-            formData={formValues}
-            handleCardIdentifier={handleCardIdentifier}
-          />
+          <DefaultCreditCard currentFocus={currentFocus} formData={formValues} />
         </div>
         <div className="mt-4">
           <DefaultCardDetailsForm
             formData={formValues}
-            cardMaxLength={cardMaxLength}
-            handleChange={handleCardFormChange}
-            handleBlur={handleCardFormBlur}
-            handleFocus={handleCardFormFocus}
+            handleChange={handleCardInputChange}
+            handleBlur={handleCardInputBlur}
+            handleFocus={handleCardInputFocus}
             schemaErrors={schemaErrors}
           />
         </div>
