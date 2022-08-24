@@ -9,7 +9,7 @@ const appStates = [
   "core_details_fetch_failed",
   "submission_loading",
 ] as const;
-export const supportedLanguages = ["en", "de", "fr", "es"] as const;
+export const supportedLanguages = ["en", "en-GB", "de", "fr", "es"] as const;
 
 type AppState = typeof appStates[number];
 export type SupportedLanguages = typeof supportedLanguages[number];

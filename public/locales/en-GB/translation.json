@@ -1,0 +1,15 @@
+{
+  "forms": {
+    "creditCard": {
+      "labels": {
+        "billingZip": "Billing Post Code",
+        "placeholders": {
+          "zipCode": "Post Code"
+        }
+      },
+      "errors": {
+        "billingZip": "Enter your billing post code"
+      }
+    }
+  }
+}
