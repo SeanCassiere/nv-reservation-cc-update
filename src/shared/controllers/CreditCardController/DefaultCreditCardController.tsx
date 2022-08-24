@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
@@ -18,12 +18,12 @@ interface IProps {
   isPrevPageAvailable: boolean;
 }
 
-const DefaultCreditCardController = ({
+const DefaultCreditCardController: React.FC<IProps> = ({
   handleSubmit,
   isNextAvailable,
   handlePrevious,
   isPrevPageAvailable,
-}: IProps) => {
+}) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { data: initialFormData } = useSelector(selectCreditCardForm);

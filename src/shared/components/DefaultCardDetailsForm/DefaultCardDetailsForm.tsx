@@ -15,7 +15,13 @@ interface IProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const DefaultCardDetailsForm = ({ formData, handleBlur, handleFocus, handleChange, schemaErrors }: IProps) => {
+const DefaultCardDetailsForm: React.FC<IProps> = ({
+  formData,
+  handleBlur,
+  handleFocus,
+  handleChange,
+  schemaErrors,
+}) => {
   const { t } = useTranslation();
 
   const isFieldInvalid = (field: string) => {

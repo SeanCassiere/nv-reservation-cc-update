@@ -21,12 +21,12 @@ interface IProps {
   isPrevPageAvailable: boolean;
 }
 
-const DefaultCreditCardAndLicenseUploadController = ({
+const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
   handleSubmit,
   isNextAvailable,
   handlePrevious,
   isPrevPageAvailable,
-}: IProps) => {
+}) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { data: initialFormData } = useSelector(selectCreditCardForm);

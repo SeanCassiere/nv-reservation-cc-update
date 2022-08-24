@@ -18,12 +18,12 @@ interface IProps {
   isPrevPageAvailable: boolean;
 }
 
-const DefaultRentalSignatureController = ({
+const DefaultRentalSignatureController: React.FC<IProps> = ({
   handleSubmit,
   handlePrevious,
   isNextAvailable,
   isPrevPageAvailable,
-}: IProps) => {
+}) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 

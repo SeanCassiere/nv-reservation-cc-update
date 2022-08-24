@@ -1,7 +1,7 @@
 import React from "react";
+import Payment from "payment";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
-import Payment from "payment";
 
 import { IFormsSliceState, initialFormSliceState } from "../redux/slices/forms/slice";
 import { creditCardTypeFormat, getFormattedExpirationDate } from "../utils/creditCardTypeFormat";
