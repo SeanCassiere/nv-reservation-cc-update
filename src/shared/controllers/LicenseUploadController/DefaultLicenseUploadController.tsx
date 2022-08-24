@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import { clearReduxFormState, setLicenseUploadFormData } from "../../redux/slices/forms/slice";
 import { selectLicenseUploadForm } from "../../redux/store";
-import { urlToBlob } from "../../utils/blobUtils";
+import { useDriverLicenseLogic } from "../../hooks/useDriverLicenseLogic";
 
 import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
 import Button from "../../components/Elements/Button";
@@ -30,82 +30,54 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
     data: { frontImageUrl, frontImageName, backImageName, backImageUrl },
   } = useSelector(selectLicenseUploadForm);
 
-  const [frontImageFile, setFrontImageFile] = useState<File | null>(null);
-  const [displayNoFrontImageError, setDisplayNoFrontImageError] = useState(false);
-
-  // if available in redux, setting the front image file
-  useEffect(() => {
-    if (frontImageUrl) {
-      (async () => {
-        const blob = await urlToBlob(frontImageUrl);
-        const file = new File([blob], frontImageName!);
-        setFrontImageFile(file);
-      })();
-    }
-  }, [frontImageName, frontImageUrl]);
-
-  const selectFrontImage = useCallback(async (file: File) => {
-    setDisplayNoFrontImageError(false);
-    setFrontImageFile(file);
-  }, []);
-
-  const clearFrontImage = useCallback(() => {
-    setFrontImageFile(null);
-  }, []);
-
-  const [backImageFile, setBackImageFile] = useState<File | null>(null);
-  const [displayNoBackImageError, setDisplayNoBackImageError] = useState(false);
-
-  // if available in redux, setting the back image file
-  useEffect(() => {
-    if (backImageUrl) {
-      (async () => {
-        const blob = await urlToBlob(backImageUrl);
-        const file = new File([blob], backImageName!);
-        setBackImageFile(file);
-      })();
-    }
-  }, [backImageName, backImageUrl]);
-
-  const selectBackImage = useCallback((file: File) => {
-    setDisplayNoBackImageError(false);
-    setBackImageFile(file);
-  }, []);
-
-  const clearBackImage = useCallback(() => {
-    setBackImageFile(null);
-  }, []);
+  const {
+    frontLicenseImage,
+    backLicenseImage,
+    setFrontImageError,
+    setBackImageError,
+    noFrontImageError,
+    noBackImageError,
+    setFrontImage,
+    setBackImage,
+    clearFrontImage,
+    clearBackImage,
+  } = useDriverLicenseLogic({
+    frontImageDataUrl: frontImageUrl,
+    frontImageName,
+    backImageDataUrl: backImageUrl,
+    backImageName,
+  });
 
   // General component state
   const handleNextState = useCallback(() => {
-    if (!frontImageFile) setDisplayNoFrontImageError(true);
-    if (!backImageFile) setDisplayNoBackImageError(true);
-    if (!backImageFile || !frontImageFile) return;
+    if (!frontLicenseImage) setFrontImageError(true);
+    if (!backLicenseImage) setBackImageError(true);
+    if (!frontLicenseImage || !backLicenseImage) return;
 
     dispatch(
       setLicenseUploadFormData({
-        frontImageUrl: URL.createObjectURL(frontImageFile),
-        backImageUrl: URL.createObjectURL(backImageFile),
-        frontImageName: frontImageFile.name,
-        backImageName: backImageFile.name,
+        frontImageUrl: URL.createObjectURL(frontLicenseImage),
+        backImageUrl: URL.createObjectURL(backLicenseImage),
+        frontImageName: frontLicenseImage.name,
+        backImageName: backLicenseImage.name,
       })
     );
     handleSubmit();
-  }, [backImageFile, dispatch, frontImageFile, handleSubmit]);
+  }, [frontLicenseImage, setFrontImageError, backLicenseImage, setBackImageError, dispatch, handleSubmit]);
 
   const handleOpenModalConfirmation = useCallback(() => {
     if (
-      (backImageFile || frontImageFile) &&
+      (backLicenseImage || frontLicenseImage) &&
       window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))
     ) {
       dispatch(clearReduxFormState("licenseUploadForm"));
       handlePrevious();
     }
 
-    if (!backImageFile && !frontImageFile) {
+    if (!backLicenseImage && !frontLicenseImage) {
       handlePrevious();
     }
-  }, [backImageFile, dispatch, frontImageFile, handlePrevious, t]);
+  }, [backLicenseImage, dispatch, frontLicenseImage, handlePrevious, t]);
 
   return (
     <CardLayout title={t("forms.licenseUpload.title")} subtitle={t("forms.licenseUpload.message")}>
@@ -113,7 +85,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
         <div>
           <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.frontImage.title")}</h2>
           <div>
-            {displayNoFrontImageError && (
+            {noFrontImageError && (
               <Alert variant="danger" fullWidth>
                 {t("forms.licenseUpload.frontImage.notSelected")}
               </Alert>
@@ -123,7 +95,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
               dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
               selectButtonText={t("forms.licenseUpload.frontImage.select")}
               clearButtonText={t("forms.licenseUpload.frontImage.clear")}
-              onSelectFile={selectFrontImage}
+              onSelectFile={setFrontImage}
               onClearFile={clearFrontImage}
               acceptOnly={{
                 "image/jpeg": [".jpeg"],
@@ -140,7 +112,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
         <div className="mt-2">
           <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.backImage.title")}</h2>
           <div>
-            {displayNoBackImageError && (
+            {noBackImageError && (
               <Alert variant="danger" fullWidth>
                 {t("forms.licenseUpload.backImage.notSelected")}
               </Alert>
@@ -149,7 +121,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
               dragDisplayText={t("forms.licenseUpload.backImage.drag")}
               selectButtonText={t("forms.licenseUpload.backImage.select")}
               clearButtonText={t("forms.licenseUpload.backImage.clear")}
-              onSelectFile={selectBackImage}
+              onSelectFile={setBackImage}
               onClearFile={clearBackImage}
               acceptOnly={{
                 "image/jpeg": [".jpeg"],
