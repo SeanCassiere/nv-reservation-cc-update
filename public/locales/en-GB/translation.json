@@ -2,9 +2,9 @@
   "forms": {
     "creditCard": {
       "labels": {
-        "billingZip": "Billing Post Code",
+        "billingZip": "Billing post code",
         "placeholders": {
-          "zipCode": "Post Code"
+          "zipCode": "Billing post code"
         }
       },
       "errors": {

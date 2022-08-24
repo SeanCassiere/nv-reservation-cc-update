@@ -1,6 +1,6 @@
 {
   "name": "nav-reservation-cc-update",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "0.1.1",
@@ -8,12 +8,12 @@
     "@reduxjs/toolkit": "1.8.4",
     "axios": "0.27.2",
     "buffer": "6.0.3",
-    "card-validator": "8.1.1",
     "classnames": "^2.3.1",
     "events": "3.3.0",
     "i18next": "21.9.0",
     "i18next-browser-languagedetector": "6.1.5",
     "i18next-http-backend": "1.4.1",
+    "payment": "^2.4.6",
     "react": "18.2.0",
     "react-credit-cards": "0.8.3",
     "react-dom": "18.2.0",
@@ -41,6 +41,7 @@
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.2",
     "@types/node": "18.7.2",
+    "@types/payment": "^2.1.4",
     "@types/react": "18.0.17",
     "@types/react-credit-cards": "0.8.1",
     "@types/react-dom": "18.0.6",

@@ -1,13 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 
 import { selectCreditCardForm, selectLicenseUploadForm } from "../../redux/store";
 import { clearReduxFormState, setCreditCardFormData, setLicenseUploadFormData } from "../../redux/slices/forms/slice";
-import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
-import { creditCardTypeFormat } from "../../utils/creditCardTypeFormat";
-import useCreditCardSchema from "../../hooks/useCreditCardSchema";
+import useCreditCardLogic from "../../hooks/useCreditCardLogic";
 import { urlToBlob } from "../../utils/blobUtils";
 
 import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
@@ -24,75 +21,26 @@ interface IProps {
   isPrevPageAvailable: boolean;
 }
 
-const DefaultCreditCardAndLicenseUploadController = ({
+const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
   handleSubmit,
   isNextAvailable,
   handlePrevious,
   isPrevPageAvailable,
-}: IProps) => {
+}) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { data: initialFormData } = useSelector(selectCreditCardForm);
 
-  const [formValues, setFormValues] = useState(initialFormData);
-  const [schemaErrors, setSchemaErrors] = useState<YupErrorsFormatted>([]);
-  const [cardMaxLength, setCardMaxLength] = useState(16);
-
-  const [currentFocus, setCurrentFocus] = useState<string>("");
-
-  const { schema } = useCreditCardSchema();
-
-  // Form element handlers
-  const handleCardIdentifier = useCallback(
-    (type: string, maxLength: number) => {
-      const formattedType = creditCardTypeFormat(type);
-      setFormValues({
-        ...formValues,
-        type: formattedType,
-      });
-      setCardMaxLength(maxLength);
-    },
-    [formValues]
-  );
-  const handleCardFormChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-      setFormValues({
-        ...formValues,
-        [e.target.name]: e.target.value,
-      });
-    },
-    [formValues]
-  );
-  const handleCardFormFocus = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-      if (e.target.name === "monthExpiry" || e.target.name === "yearExpiry") {
-        setCurrentFocus("expiry");
-      } else if (e.target.name === "cvv") {
-        setCurrentFocus("cvc");
-      } else {
-        setCurrentFocus(e.target.name);
-      }
-    },
-    []
-  );
-  const handleCardFormBlur = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-      setCurrentFocus("");
-      try {
-        const pickedSchema = schema.pick([e.target.name]);
-        await pickedSchema.validate({ [e.target.name]: e.target.value }, { abortEarly: false });
-        setSchemaErrors((prev) => prev.filter((item) => item.path !== e.target.name));
-      } catch (error) {
-        const err = error as yup.ValidationError;
-        const formErrors = yupFormatSchemaErrors(err);
-        setSchemaErrors((prev) => {
-          const cloneList = prev.filter((item) => item.path !== e.target.name);
-          return [...cloneList, ...formErrors];
-        });
-      }
-    },
-    [schema]
-  );
+  const {
+    validateCardData,
+    handleCardInputChange,
+    handleCardInputBlur,
+    handleCardInputFocus,
+    isValidCheck,
+    currentFocus,
+    schemaErrors,
+    formValues,
+  } = useCreditCardLogic(initialFormData);
 
   // license related handlers
   const {
@@ -161,35 +109,28 @@ const DefaultCreditCardAndLicenseUploadController = ({
 
   // validate the form data against the schema
   const handleNextState = useCallback(async () => {
-    setSchemaErrors([]);
-    try {
-      const formValid = await schema.isValid(formValues);
-      if (!frontImageFile) setDisplayNoFrontImageError(true);
-      if (!backImageFile) setDisplayNoBackImageError(true);
+    const formValid = await isValidCheck();
+    if (!frontImageFile) setDisplayNoFrontImageError(true);
+    if (!backImageFile) setDisplayNoBackImageError(true);
 
-      if (!backImageFile || !frontImageFile || !formValid) {
-        if (!formValid) {
-          await schema.validate(formValues, { abortEarly: false });
-        }
-        return;
-      }
-
-      dispatch(
-        setLicenseUploadFormData({
-          frontImageUrl: URL.createObjectURL(frontImageFile),
-          backImageUrl: URL.createObjectURL(backImageFile),
-          frontImageName: frontImageFile.name,
-          backImageName: backImageFile.name,
-        })
-      );
-      dispatch(setCreditCardFormData(formValues));
-      handleSubmit();
-    } catch (error: any) {
-      const err = error as yup.ValidationError;
-      const formErrors = yupFormatSchemaErrors(err);
-      setSchemaErrors(formErrors);
+    if (!backImageFile || !frontImageFile || !formValid) {
+      await validateCardData((values) => {
+        dispatch(setCreditCardFormData(values));
+      });
+      return;
     }
-  }, [backImageFile, dispatch, formValues, frontImageFile, handleSubmit, schema]);
+
+    dispatch(
+      setLicenseUploadFormData({
+        frontImageUrl: URL.createObjectURL(frontImageFile),
+        backImageUrl: URL.createObjectURL(backImageFile),
+        frontImageName: frontImageFile.name,
+        backImageName: backImageFile.name,
+      })
+    );
+
+    handleSubmit();
+  }, [backImageFile, dispatch, frontImageFile, handleSubmit, isValidCheck, validateCardData]);
 
   return (
     <React.Fragment>
@@ -200,19 +141,14 @@ const DefaultCreditCardAndLicenseUploadController = ({
           <span className={cardSubtitleClassNames}>{t("forms.creditCard.message")}</span>
           <div className="mt-4 grid grid-cols-1">
             <div className="my-4 md:my-2">
-              <DefaultCreditCard
-                currentFocus={currentFocus}
-                formData={formValues}
-                handleCardIdentifier={handleCardIdentifier}
-              />
+              <DefaultCreditCard currentFocus={currentFocus} formData={formValues} />
             </div>
             <div className="mt-4">
               <DefaultCardDetailsForm
                 formData={formValues}
-                cardMaxLength={cardMaxLength}
-                handleChange={handleCardFormChange}
-                handleBlur={handleCardFormBlur}
-                handleFocus={handleCardFormFocus}
+                handleChange={handleCardInputChange}
+                handleBlur={handleCardInputBlur}
+                handleFocus={handleCardInputFocus}
                 schemaErrors={schemaErrors}
               />
             </div>

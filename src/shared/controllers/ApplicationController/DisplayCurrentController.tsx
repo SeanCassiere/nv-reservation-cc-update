@@ -82,7 +82,7 @@ const DisplayCurrentController = ({
                 type="button"
                 color="primary"
                 variant="muted"
-                disabled={!isNextPageAvailable}
+                disabled={!isPrevPageAvailable}
                 onClick={handlePrevious}
               >
                 &#8592;

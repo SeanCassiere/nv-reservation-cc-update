@@ -1,115 +1,118 @@
 {
-	"appStatusMessages": {
-		"loading": "le bourrage",
-		"sendingCreditCard": "Soumission des informations de carte de crédit",
-		"sendingLicenseImagesBundle": "Soumettre vos images de permis de conduire",
-		"sendingConfirmationEmail": "Envoi d'email de confirmation",
-		"submittingYourDetailsMsg": "Soumission des informations de carte de crédit"
-	},
-	"forms": {
-		"navNext": "Prochaine",
-		"navSubmit": "Soumettre",
-		"creditCard": {
-			"title": "Informations de carte de crédit",
-			"message": "Veuillez saisir les informations de votre carte de crédit à utiliser pour votre réservation.",
-			"labels": {
-				"cardNumber": "Numéro de carte",
-				"nameOnCard": "Nom sur la carte de crédit",
-				"cvv": "CVV",
-				"billingZip": "Code postal",
-				"expMonth": "Mois d'expiration",
-				"expYear": "Année d'expiration ",
-				"placeholders": {
-					"name": "John Doe",
-					"zipCode": "Code postal",
-					"select": "Sélectionner"
-				}
-			},
-			"creditCardComponent": {
-				"validThru": "valide à travers",
-				"yourName": "VOTRE NOM ICI"
-			},
-			"errors": {
-				"cardNumber": "Entrez un numéro de carte de crédit complet.",
-				"name": "Entrez le nom imprimé sur la carte de crédit.",
-				"expMonth": "Entrez le mois d'expiration de la carte de crédit.",
-				"expYear": "Saisissez l'année d'expiration de la carte de crédit.",
-				"cvv": "Entrez le code PIN au dos de la carte de crédit.",
-				"billingZip": "Entrez votre code postal de facturation."
-			}
-		},
-		"licenseUpload": {
-			"title": "Le permis de conduire",
-			"message": "Téléchargez des images recto et verso de votre permis de conduire.",
-			"goBack": {
-				"title": "Es-tu sûr?",
-				"message": "Revenir en arrière supprimera les fichiers ajoutés.",
-				"cancel": "Annuler",
-				"submit": "Je comprends"
-			},
-			"frontImage": {
-				"title": "Image de face",
-				"drag": "Faites glisser et déposez l'image de devant ici",
-				"select": "Sélectionnez l'image de face",
-				"clear": "Effacer l'image avant",
-				"notSelected": "Vous devez sélectionner l'image de face."
-			},
-			"backImage": {
-				"title": "Retour Image",
-				"drag": "Faites glisser et déposez l'image arrière ici",
-				"select": "Sélectionnez l'image arrière",
-				"clear": "Effacer l'image arrière",
-				"notSelected": "Vous devez sélectionner l'image arrière."
-			}
-		},
-		"rentalSignature": {
-			"title": "Signature de réservation",
-			"title_agreement": "Signature du contrat",
-			"message": "Dessinez votre signature ci-dessous et appuyez sur le bouton Enregistrer.",
-			"message_agreement": "Dessinez votre signature ci-dessous et appuyez sur le bouton Enregistrer.",
-			"clearInput": "Effacer la signature",
-			"errorNoSignature": "Veuillez fournir une signature.",
-			"saveInput": "Pancarte",
-			"signatureRequired": "Ajoutez votre signature et appuyez sur le bouton Enregistrer avant de continuer.",
-			"goBack": {
-				"title": "Êtes-vous sûr?",
-				"message": "Revenir en arrière supprimera la signature ajoutée.",
-				"cancel": "Annuler",
-				"submit": "Je comprend"
-			}
-		}
-	},
-	"errorBoundary": {
-		"title": "Uh Oh",
-		"message": "Il y a eu une erreur fatale dans l'application."
-	},
-	"successSubmission": {
-		"title": "Succès!",
-		"message": "Merci d'avoir soumis les informations de votre carte de crédit pour votre réservation.",
-		"message_agreement": "Merci de soumettre vos informations pour le contrat de location."
-	},
-	"authenticationSubmission": {
-		"title": "Authentification",
-		"message": "Nous avons eu du mal à authentifier cette connexion."
-	},
-	"coreDetailsFetchError": {
-		"title": "Uh Oh",
-		"title_agreement": "Uh Oh",
-		"message": "Nous n'avons pas pu localiser la réservation.",
-		"message_agreement": "Nous n'avons pas pu localiser le contrat de location."
-	},
-	"badSubmission": {
-		"title": "Uh Oh",
-		"message": "J'ai rencontré une erreur en essayant de soumettre vos informations.",
-		"report": "Veuillez signaler à",
-		"btnRetrySubmission": "Réessayer la soumission"
-	},
-	"queryMissing": {
-		"title": "Uh Oh",
-		"message": "Il semble que toutes les informations ne sont pas nécessaires a été envoyé.",
-		"report": "Veuillez signaler à"
-	},
-	"footer": {
-		"poweredBy": "Alimenté par"
-	}
+  "appStatusMessages": {
+    "loading": "le bourrage",
+    "sendingCreditCard": "Soumission des informations de carte de crédit",
+    "sendingLicenseImagesBundle": "Soumettre vos images de permis de conduire",
+    "sendingConfirmationEmail": "Envoi d'email de confirmation",
+    "submittingYourDetailsMsg": "Soumission des informations de carte de crédit"
+  },
+  "forms": {
+    "navNext": "Prochaine",
+    "navSubmit": "Soumettre",
+    "creditCard": {
+      "title": "Informations de carte de crédit",
+      "message": "Veuillez saisir les informations de votre carte de crédit à utiliser pour votre réservation.",
+      "labels": {
+        "cardNumber": "Numéro de carte",
+        "nameOnCard": "Nom sur la carte de crédit",
+        "cvv": "CVV",
+        "billingZip": "Code postal",
+        "expMonth": "Mois d'expiration",
+        "expYear": "Année d'expiration ",
+        "expMonthYear": "Expire",
+        "placeholders": {
+          "name": "John Doe",
+          "zipCode": "Code postal",
+          "expMonthYear": "MM/YY",
+          "select": "Sélectionner"
+        }
+      },
+      "creditCardComponent": {
+        "validThru": "valide à travers",
+        "yourName": "VOTRE NOM ICI"
+      },
+      "errors": {
+        "cardNumber": "Entrez un numéro de carte de crédit complet.",
+        "name": "Entrez le nom imprimé sur la carte de crédit.",
+        "expMonthYear": "Entrez l'expiration de la carte",
+        "expMonth": "Entrez le mois d'expiration de la carte de crédit.",
+        "expYear": "Saisissez l'année d'expiration de la carte de crédit.",
+        "cvv": "Entrez le code PIN au dos de la carte de crédit.",
+        "billingZip": "Entrez votre code postal de facturation."
+      }
+    },
+    "licenseUpload": {
+      "title": "Le permis de conduire",
+      "message": "Téléchargez des images recto et verso de votre permis de conduire.",
+      "goBack": {
+        "title": "Es-tu sûr?",
+        "message": "Revenir en arrière supprimera les fichiers ajoutés.",
+        "cancel": "Annuler",
+        "submit": "Je comprends"
+      },
+      "frontImage": {
+        "title": "Image de face",
+        "drag": "Faites glisser et déposez l'image de devant ici",
+        "select": "Sélectionnez l'image de face",
+        "clear": "Effacer l'image avant",
+        "notSelected": "Vous devez sélectionner l'image de face."
+      },
+      "backImage": {
+        "title": "Retour Image",
+        "drag": "Faites glisser et déposez l'image arrière ici",
+        "select": "Sélectionnez l'image arrière",
+        "clear": "Effacer l'image arrière",
+        "notSelected": "Vous devez sélectionner l'image arrière."
+      }
+    },
+    "rentalSignature": {
+      "title": "Signature de réservation",
+      "title_agreement": "Signature du contrat",
+      "message": "Dessinez votre signature ci-dessous et appuyez sur le bouton Enregistrer.",
+      "message_agreement": "Dessinez votre signature ci-dessous et appuyez sur le bouton Enregistrer.",
+      "clearInput": "Effacer la signature",
+      "errorNoSignature": "Veuillez fournir une signature.",
+      "saveInput": "Pancarte",
+      "signatureRequired": "Ajoutez votre signature et appuyez sur le bouton Enregistrer avant de continuer.",
+      "goBack": {
+        "title": "Êtes-vous sûr?",
+        "message": "Revenir en arrière supprimera la signature ajoutée.",
+        "cancel": "Annuler",
+        "submit": "Je comprend"
+      }
+    }
+  },
+  "errorBoundary": {
+    "title": "Uh Oh",
+    "message": "Il y a eu une erreur fatale dans l'application."
+  },
+  "successSubmission": {
+    "title": "Succès!",
+    "message": "Merci d'avoir soumis les informations de votre carte de crédit pour votre réservation.",
+    "message_agreement": "Merci de soumettre vos informations pour le contrat de location."
+  },
+  "authenticationSubmission": {
+    "title": "Authentification",
+    "message": "Nous avons eu du mal à authentifier cette connexion."
+  },
+  "coreDetailsFetchError": {
+    "title": "Uh Oh",
+    "title_agreement": "Uh Oh",
+    "message": "Nous n'avons pas pu localiser la réservation.",
+    "message_agreement": "Nous n'avons pas pu localiser le contrat de location."
+  },
+  "badSubmission": {
+    "title": "Uh Oh",
+    "message": "J'ai rencontré une erreur en essayant de soumettre vos informations.",
+    "report": "Veuillez signaler à",
+    "btnRetrySubmission": "Réessayer la soumission"
+  },
+  "queryMissing": {
+    "title": "Uh Oh",
+    "message": "Il semble que toutes les informations ne sont pas nécessaires a été envoyé.",
+    "report": "Veuillez signaler à"
+  },
+  "footer": {
+    "poweredBy": "Alimenté par"
+  }
 }

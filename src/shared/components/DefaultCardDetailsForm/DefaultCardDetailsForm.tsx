@@ -2,32 +2,26 @@ import React, { memo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ICreditCardFormData } from "../../redux/slices/forms/slice";
-import { currentYearNum, range } from "../../utils/common";
+import { formatCreditCardNumber } from "../../utils/creditCardTypeFormat";
 import { YupErrorsFormatted } from "../../utils/yupSchemaErrors";
 
-import SelectInput from "../Elements/SelectInput";
 import TextInput from "../Elements/TextInput";
-
-let numOfYears = range(currentYearNum, 40);
-let numOfMonths = range(1, 12);
 
 interface IProps {
   formData: ICreditCardFormData;
-  cardMaxLength: number;
   schemaErrors: YupErrorsFormatted;
   handleBlur: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
   handleFocus: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const DefaultCardDetailsForm = ({
+const DefaultCardDetailsForm: React.FC<IProps> = ({
   formData,
-  cardMaxLength,
   handleBlur,
   handleFocus,
   handleChange,
   schemaErrors,
-}: IProps) => {
+}) => {
   const { t } = useTranslation();
 
   const isFieldInvalid = (field: string) => {
@@ -38,20 +32,27 @@ const DefaultCardDetailsForm = ({
     return undefined;
   };
 
+  const passOnChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+    if (e.target.name === "number") {
+      e.target.value = formatCreditCardNumber(e.target.value);
+      handleChange(e);
+      return;
+    }
+    handleChange(e);
+  };
+
   return (
     <div className="grid grid-cols-2 gap-4">
       <div className="col-span-2">
         <TextInput
-          placeholder="XXXX-XXXX-XXXX-XXXX"
+          placeholder="XXXX XXXX XXXX XXXX"
           name="number"
           value={formData.number}
-          onChange={handleChange}
+          onChange={passOnChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          pattern={`[0-9]{${formData.type === "AMEX".toLowerCase() ? 13 : 15},${cardMaxLength + 1}}`}
           required
           type="text"
-          maxLength={cardMaxLength + 1}
           autoComplete="off"
           label={t("forms.creditCard.labels.cardNumber")}
           isError={Boolean(isFieldInvalid("number"))}
@@ -75,42 +76,20 @@ const DefaultCardDetailsForm = ({
         />
       </div>
       <div className="col-span-2 md:col-span-1">
-        <SelectInput
-          name="monthExpiry"
-          onChange={handleChange as any}
+        <TextInput
+          placeholder={t("forms.creditCard.labels.placeholders.expMonthYear")}
+          name="monthYearExpiry"
+          value={formData.monthYearExpiry}
+          onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
           required
-          label={t("forms.creditCard.labels.expMonth")}
-          isError={Boolean(isFieldInvalid("monthExpiry"))}
-          helperText={isFieldInvalid("monthExpiry") && t("forms.creditCard.errors.expMonth")}
-        >
-          <option value="">{t("forms.creditCard.labels.placeholders.select")}</option>
-          {numOfMonths.map((val) => (
-            <option value={val.toString().length === 1 ? `0${val}` : val} key={val}>
-              {val.toString().length === 1 ? `0${val}` : val}
-            </option>
-          ))}
-        </SelectInput>
-      </div>
-      <div className="col-span-2 md:col-span-1">
-        <SelectInput
-          name="yearExpiry"
-          onChange={handleChange as any}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          required
-          label={t("forms.creditCard.labels.expYear")}
-          isError={Boolean(isFieldInvalid("yearExpiry"))}
-          helperText={isFieldInvalid("yearExpiry") && t("forms.creditCard.errors.expYear")}
-        >
-          <option value="">{t("forms.creditCard.labels.placeholders.select")}</option>
-          {numOfYears.map((val) => (
-            <option value={val} key={val}>
-              20{val}
-            </option>
-          ))}
-        </SelectInput>
+          type="text"
+          autoComplete="off"
+          label={t("forms.creditCard.labels.expMonthYear")}
+          isError={Boolean(isFieldInvalid("monthYearExpiry"))}
+          helperText={isFieldInvalid("monthYearExpiry") && t("forms.creditCard.errors.expMonthYear")}
+        />
       </div>
       <div className="col-span-2 md:col-span-1">
         <TextInput
@@ -131,7 +110,7 @@ const DefaultCardDetailsForm = ({
           helperText={isFieldInvalid("cvv") && t("forms.creditCard.errors.cvv")}
         />
       </div>
-      <div className="col-span-2 md:col-span-1">
+      <div className="col-span-2">
         <TextInput
           placeholder={t("forms.creditCard.labels.placeholders.zipCode")}
           name="billingZip"

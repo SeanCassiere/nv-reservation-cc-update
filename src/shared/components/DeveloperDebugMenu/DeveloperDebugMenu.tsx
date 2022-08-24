@@ -39,7 +39,7 @@ export const initialConfigState: DevConfigObject = {
   successSubmissionScreen: APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT,
 };
 
-const DeveloperDebugMenu = ({ open, handleClose }: { open: boolean; handleClose: () => void }) => {
+const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> = ({ open, handleClose }) => {
   const { t } = useTranslation();
   const divRef = useRef<HTMLDivElement>(null);
 
