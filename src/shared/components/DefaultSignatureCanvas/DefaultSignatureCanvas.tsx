@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { useTranslation } from "react-i18next";
-import * as Responsive from "react-responsive";
 import Button from "../Elements/Button";
 
 interface IProps {
@@ -27,9 +26,8 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  const signatureDivRef = React.useRef<HTMLDivElement>(null);
   const signaturePadRef = React.useRef<SignatureCanvas>(null);
-
-  const isPhone = Responsive.useMediaQuery({ query: "(max-width: 400px)" });
 
   const [isDisabled, setIsDisabled] = React.useState(false);
 
@@ -81,24 +79,21 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
 
   return (
     <React.Fragment>
-      <div
-        style={{
-          border: `4px solid ${isDisabled ? "#333333" : "#325d88"}`,
-          borderRadius: 5,
-          padding: "0.1rem",
-        }}
-      >
+      <div ref={signatureDivRef} className="p-1 rounded-md border-4 border-indigo-900" style={{ maxHeight: "430px" }}>
         <SignatureCanvas
           ref={signaturePadRef}
           dotSize={4}
-          canvasProps={{ height: isPhone ? 360 : maxHeight, width: isPhone ? 310 : maxWidth }}
+          canvasProps={{
+            height: signatureDivRef?.current?.clientHeight ? signatureDivRef?.current?.clientHeight : undefined,
+            width: signatureDivRef?.current?.clientWidth,
+          }}
         />
       </div>
-      <div className="mt-2 flex gap-2">
-        <Button variant="danger" size="sm" style={{ width: "60%" }} onClick={handleClear}>
+      <div className="mx-5 mt-2 flex gap-2">
+        <Button color="danger" size="sm" style={{ width: "60%" }} onClick={handleClear}>
           {clearText ?? t("forms.rentalSignature.clearInput")}
         </Button>
-        <Button variant="primary" size="sm" style={{ width: "40%" }} onClick={handleSave} disabled={isDisabled}>
+        <Button color="primary" size="sm" style={{ width: "40%" }} onClick={handleSave} disabled={isDisabled}>
           {saveText ?? t("forms.rentalSignature.saveInput")}
         </Button>
       </div>

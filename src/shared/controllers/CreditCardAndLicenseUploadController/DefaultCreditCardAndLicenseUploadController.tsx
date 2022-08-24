@@ -179,14 +179,14 @@ const DefaultCreditCardAndLicenseUploadController = ({
           <h1 className={cardTitleClassNames}>{t("forms.creditCard.title")}</h1>
           <span className={cardSubtitleClassNames}>{t("forms.creditCard.message")}</span>
           <div className="mt-4 grid grid-cols-1">
-            <div>
+            <div className="my-4 md:my-2">
               <DefaultCreditCard
                 currentFocus={currentFocus}
                 formData={formValues}
                 handleCardIdentifier={handleCardIdentifier}
               />
             </div>
-            <div className="mt-3">
+            <div className="mt-4">
               <DefaultCardDetailsForm
                 formData={formValues}
                 cardMaxLength={cardMaxLength}
@@ -199,14 +199,19 @@ const DefaultCreditCardAndLicenseUploadController = ({
           </div>
         </div>
         {/* License Upload Form */}
-        <div className="mt-5 pt-5">
+        <div className="mt-7">
+          <hr />
+        </div>
+        <div className="pt-5">
           <h1 className={cardTitleClassNames}>{t("forms.licenseUpload.title")}</h1>
           <span className={cardSubtitleClassNames}>{t("forms.licenseUpload.message")}</span>
-          <div className="mt-3 d-grid">
+          <div className="mt-4 d-grid">
             <div>
               <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.frontImage.title")}</h2>
               <div>
-                {displayNoFrontImageError && <Alert>{t("forms.licenseUpload.frontImage.notSelected")}</Alert>}
+                {displayNoFrontImageError && (
+                  <Alert variant="danger">{t("forms.licenseUpload.frontImage.notSelected")}</Alert>
+                )}
 
                 <DefaultImageDropzoneWithPreview
                   dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
@@ -223,10 +228,12 @@ const DefaultCreditCardAndLicenseUploadController = ({
                 />
               </div>
             </div>
-            <div className="mt-4">
+            <div className="mt-6">
               <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.backImage.title")}</h2>
               <div>
-                {displayNoBackImageError && <Alert>{t("forms.licenseUpload.backImage.notSelected")}</Alert>}
+                {displayNoBackImageError && (
+                  <Alert variant="danger">{t("forms.licenseUpload.backImage.notSelected")}</Alert>
+                )}
                 <DefaultImageDropzoneWithPreview
                   dragDisplayText={t("forms.licenseUpload.backImage.drag")}
                   selectButtonText={t("forms.licenseUpload.backImage.select")}
@@ -245,16 +252,16 @@ const DefaultCreditCardAndLicenseUploadController = ({
           </div>
         </div>
         {/* Navigation */}
-        <div className="mt-4 flex">
+        <div className="mt-6 flex">
           {isPrevPageAvailable && (
             <div className="pr-0">
-              <Button variant="warning" size="lg" onClick={handleOpenModalConfirmation}>
+              <Button color="primary" variant="muted" size="lg" onClick={handleOpenModalConfirmation}>
                 &#8592;
               </Button>
             </div>
           )}
           <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
-            <Button variant="primary" size="lg" onClick={handleNextState}>
+            <Button color="primary" size="lg" onClick={handleNextState}>
               {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
             </Button>
           </div>

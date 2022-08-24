@@ -87,14 +87,14 @@ const DefaultCreditCardController = ({
   return (
     <CardLayout title={t("forms.creditCard.title")} subtitle={t("forms.creditCard.message")}>
       <div className="mt-4 grid grid-cols-1">
-        <div>
+        <div className="my-4 md:my-2">
           <DefaultCreditCard
             currentFocus={currentFocus}
             formData={formValues}
             handleCardIdentifier={handleCardIdentifier}
           />
         </div>
-        <div className="mt-3">
+        <div className="mt-4">
           <DefaultCardDetailsForm
             formData={formValues}
             cardMaxLength={cardMaxLength}
@@ -104,16 +104,16 @@ const DefaultCreditCardController = ({
             schemaErrors={schemaErrors}
           />
         </div>
-        <div className="mt-3 flex">
+        <div className="mt-6 flex">
           {isPrevPageAvailable && (
             <div>
-              <Button variant="warning" size="lg" onClick={handlePrevious}>
+              <Button color="primary" variant="muted" size="lg" onClick={handlePrevious}>
                 &#8592;
               </Button>
             </div>
           )}
           <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
-            <Button variant="primary" size="lg" onClick={handleNextState}>
+            <Button color="primary" size="lg" onClick={handleNextState}>
               {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
             </Button>
           </div>

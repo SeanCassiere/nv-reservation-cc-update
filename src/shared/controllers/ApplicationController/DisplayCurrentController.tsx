@@ -78,11 +78,15 @@ const DisplayCurrentController = ({
           <div>
             <h5>positive</h5>
             <div className="flex gap-1">
-              {isPrevPageAvailable && (
-                <Button type="button" variant="secondary" onClick={handlePrevious}>
-                  &#8592;
-                </Button>
-              )}
+              <Button
+                type="button"
+                color="primary"
+                variant="muted"
+                disabled={!isNextPageAvailable}
+                onClick={handlePrevious}
+              >
+                &#8592;
+              </Button>
               <Button type="button" onClick={handleNext}>
                 {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
               </Button>
@@ -93,11 +97,15 @@ const DisplayCurrentController = ({
           <div>
             <h5>negative</h5>
             <div className="flex gap-1">
-              {isPrevPageAvailable && (
-                <Button type="button" variant="secondary" onClick={handlePrevious}>
-                  &#8592;
-                </Button>
-              )}
+              <Button
+                type="button"
+                color="primary"
+                variant="muted"
+                disabled={!isPrevPageAvailable}
+                onClick={handlePrevious}
+              >
+                &#8592;
+              </Button>
               <Button type="button" onClick={handleNext}>
                 {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
               </Button>

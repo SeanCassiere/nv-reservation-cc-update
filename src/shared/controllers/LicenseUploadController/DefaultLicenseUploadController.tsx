@@ -113,7 +113,11 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
         <div>
           <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.frontImage.title")}</h2>
           <div>
-            {displayNoFrontImageError && <Alert fullWidth>{t("forms.licenseUpload.frontImage.notSelected")}</Alert>}
+            {displayNoFrontImageError && (
+              <Alert variant="danger" fullWidth>
+                {t("forms.licenseUpload.frontImage.notSelected")}
+              </Alert>
+            )}
 
             <DefaultImageDropzoneWithPreview
               dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
@@ -131,9 +135,16 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
           </div>
         </div>
         <div className="mt-2">
+          <hr />
+        </div>
+        <div className="mt-2">
           <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.backImage.title")}</h2>
           <div>
-            {displayNoBackImageError && <Alert fullWidth>{t("forms.licenseUpload.backImage.notSelected")}</Alert>}
+            {displayNoBackImageError && (
+              <Alert variant="danger" fullWidth>
+                {t("forms.licenseUpload.backImage.notSelected")}
+              </Alert>
+            )}
             <DefaultImageDropzoneWithPreview
               dragDisplayText={t("forms.licenseUpload.backImage.drag")}
               selectButtonText={t("forms.licenseUpload.backImage.select")}
@@ -152,13 +163,13 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
         <div className="mt-1 flex">
           {isPrevPageAvailable && (
             <div className="pr-0">
-              <Button variant="warning" size="lg" onClick={handleOpenModalConfirmation}>
+              <Button color="primary" variant="muted" size="lg" onClick={handleOpenModalConfirmation}>
                 &#8592;
               </Button>
             </div>
           )}
           <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
-            <Button variant="primary" size="lg" onClick={handleNextState}>
+            <Button color="primary" size="lg" onClick={handleNextState}>
               {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
             </Button>
           </div>

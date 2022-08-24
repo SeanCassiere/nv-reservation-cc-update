@@ -1,39 +1,58 @@
 import React, { useId } from "react";
 import cn from "classnames";
 
+import { ExclamationIcon } from "../Icons";
+
 interface Props extends React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
   label?: React.ReactNode;
-  errorText?: React.ReactNode;
+  helperText?: React.ReactNode;
+  isError?: boolean;
 }
 
-const SelectInput: React.FC<Props> = ({ id, label, errorText, children, className, ...selectProps }) => {
+const SelectInput: React.FC<Props> = ({ id, label, helperText, children, isError, className, ...selectProps }) => {
   const elementId = useId();
 
-  const classNames = cn(
+  const inputClassNames = cn(
+    "block",
     "w-full",
+    "sm:text-sm",
     "rounded",
-    "bg-gray-50",
-    "border",
     "border-gray-300",
-    "text-gray-900",
-    "text-sm",
-    "focus:ring-blue-500",
-    "focus:border-blue-500",
-    { "bg-red-50": errorText, "border-red-500": errorText },
+    "focus:ring-indigo-500",
+    "focus:border-indigo-500",
+    {
+      "bg-red-50": isError,
+      "border-red-300": isError,
+      "text-red-900": isError,
+      "focus:outline-none": isError,
+      "focus:ring-red-500": isError,
+      "focus:border-red-500": isError,
+      "placeholder-red-400": isError,
+    },
     className
   );
 
+  const helperClassNames = cn("mt-2", "text-sm", { "text-gray-500": !isError, "text-red-600": isError });
+
   return (
-    <div className="">
+    <div>
       {label && (
-        <div className="block mb-1 text-sm text-gray-600">
-          <label htmlFor={id ?? elementId}>{label}</label>
-        </div>
+        <label htmlFor={id ?? elementId} className="block text-sm font-medium text-gray-700">
+          {label}
+          {selectProps.required && <span className="text-red-500">&nbsp;*</span>}
+        </label>
       )}
-      <select id={id ?? elementId} className={classNames} {...selectProps}>
-        {children}
-      </select>
-      {errorText && <span className="block mt-1 text-xs text-red-500">{errorText}</span>}
+      <div className="mt-1 relative">
+        <select id={id ?? elementId} className={inputClassNames} {...selectProps}>
+          {children}
+        </select>
+        {isError && (
+          <div className="absolute inset-y-0 right-0 pr-8 flex items-center pointer-events-none">
+            <ExclamationIcon className="text-red-500" />
+          </div>
+        )}
+      </div>
+      {helperText && <span className={helperClassNames}>{helperText}</span>}
     </div>
   );
 };

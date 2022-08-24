@@ -56,7 +56,7 @@ const App = () => {
               href={fromRentall ? "https://rentallsoftware.com" : "https://navotar.com"}
               target="_blank"
               rel="noreferrer"
-              className="text-sm"
+              className="text-sm text-indigo-600"
             >
               {fromRentall ? "RENTALL" : "Navotar"}
             </AnchorLink>

@@ -35,6 +35,7 @@ const ErrorSubmission: React.FC<Props> = (props) => {
           href={config.fromRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
           target="_blank"
           rel="noreferrer"
+          className="text-indigo-600"
         >
           {config.fromRentall ? "support@rentallsoftware.com" : "support@navotar.com"}
         </AnchorLink>

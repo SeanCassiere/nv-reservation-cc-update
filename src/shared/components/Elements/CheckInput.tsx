@@ -3,32 +3,34 @@ import cn from "classnames";
 
 interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   label?: React.ReactNode;
-  errorText?: React.ReactNode;
+  isError?: boolean;
+  helperText?: React.ReactNode;
 }
 
-const CheckInput: React.FC<Props> = ({ id, label, errorText, className, ...inputProps }) => {
+const CheckInput: React.FC<Props> = ({ id, label, helperText, className, ...inputProps }) => {
   const elementId = useId();
 
   const classNames = cn(
     "w-4",
     "h-4",
-    "text-blue-600",
-    "bg-gray-100",
     "rounded",
+    "text-indigo-600",
     "border-gray-300",
-    "focus:ring-blue-500",
+    "focus:ring-indigo-600",
     className
   );
 
   return (
-    <div className="">
+    <div className="flex items-center h-5">
       <input id={id ?? elementId} className={classNames} {...inputProps} />
       {label && (
-        <label htmlFor={id ?? elementId} className="ml-2 text-sm font-medium text-gray-600">
-          {label}
-        </label>
+        <div className="ml-3 text-sm">
+          <label htmlFor={id ?? elementId} className="text-gray-700 font-medium">
+            {label}
+          </label>
+        </div>
       )}
-      {errorText && <span className="block">{errorText}</span>}
+      {helperText && <span className="block">{helperText}</span>}
     </div>
   );
 };
