@@ -39,6 +39,7 @@ These are the language codes supported by the application.
 | Language | Code |
 | --- | --- |
 | English | en |
+| English (Great Britain) | en-GB |
 | French | fr |
 | German | de |
 | Spanish | es |
