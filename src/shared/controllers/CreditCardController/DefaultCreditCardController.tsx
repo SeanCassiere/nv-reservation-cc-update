@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { selectCreditCardForm } from "../../redux/store";
 import { setCreditCardFormData } from "../../redux/slices/forms/slice";
-import useCreditCardLogic from "../../hooks/useCreditCardLogic";
+import { useCreditCardLogic } from "../../hooks/useCreditCardLogic";
 
 import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
 import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
