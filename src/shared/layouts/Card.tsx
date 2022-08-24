@@ -19,11 +19,13 @@ const CardLayout: React.FC<Props> = ({ title, subtitle, image, children }) => {
       {/* title */}
       {title && typeof title === "string" && <h1 className={cardTitleClassNames}>{title}</h1>}
       {title && typeof title === "number" && <h1 className={cardTitleClassNames}>{title}</h1>}
-      {title && typeof title === "function" && <React.Fragment>{title}</React.Fragment>}
+      {title && typeof title !== "string" && typeof title !== "number" && <React.Fragment>{title}</React.Fragment>}
       {/* subtitle */}
       {subtitle && typeof subtitle === "string" && <span className={cardSubtitleClassNames}>{subtitle}</span>}
       {subtitle && typeof subtitle === "number" && <span className={cardSubtitleClassNames}>{subtitle}</span>}
-      {subtitle && typeof subtitle === "function" && <React.Fragment>{subtitle}</React.Fragment>}
+      {subtitle && typeof subtitle !== "string" && typeof subtitle !== "number" && (
+        <React.Fragment>{subtitle}</React.Fragment>
+      )}
       {/* image */}
       {image && (
         <div className="flex align-middle justify-center py-5">

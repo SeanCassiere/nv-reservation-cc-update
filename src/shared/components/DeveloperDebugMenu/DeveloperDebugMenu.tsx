@@ -46,7 +46,18 @@ const DeveloperDebugMenu = ({ open, handleClose }: { open: boolean; handleClose:
 
   return (
     <React.Fragment>
-      <CardLayout title={t("developer.drawerTitle")}>
+      <CardLayout
+        title={
+          <div className="flex align-middle justify-center">
+            <h1 className="flex-1">{t("developer.drawerTitle")}</h1>
+            <div>
+              <Button variant="danger" size="sm" onClick={handleClose}>
+                &times;
+              </Button>
+            </div>
+          </div>
+        }
+      >
         <div className="mt-0 pt-0">
           <ConfigCreator />
         </div>
