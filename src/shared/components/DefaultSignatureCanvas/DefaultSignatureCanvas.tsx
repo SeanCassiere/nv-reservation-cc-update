@@ -4,8 +4,6 @@ import { useTranslation } from "react-i18next";
 import Button from "../Elements/Button";
 
 interface IProps {
-  maxHeight?: number;
-  maxWidth?: number;
   onSignature?: (signatureUrl: string) => void;
   clearText?: string;
   saveText?: string;
@@ -14,8 +12,6 @@ interface IProps {
 }
 
 const DefaultSignatureCanvas: React.FC<IProps> = ({
-  maxHeight = 400,
-  maxWidth = 450,
   onSignature = (url: string) => {
     console.log("Signature URL: ", url);
   },
@@ -26,6 +22,7 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  const [showPad, setShowPad] = React.useState(false);
   const signatureDivRef = React.useRef<HTMLDivElement>(null);
   const signaturePadRef = React.useRef<SignatureCanvas>(null);
 
@@ -69,25 +66,46 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
   }, [onSignature, trimmed]);
 
   useEffect(() => {
-    if (initialDataURL) {
+    if (initialDataURL && initialDataURL !== "" && signaturePadRef.current !== null) {
       setIsDisabled(true);
       signaturePadRef.current?.fromDataURL(initialDataURL);
       signaturePadRef.current?.off();
       onSignature(initialDataURL);
+    } else {
+      signaturePadRef.current?.clear();
+      signaturePadRef.current?.on();
     }
+    setShowPad(true);
   }, [initialDataURL, onSignature, signaturePadRef]);
+
+  useEffect(() => {
+    handleSave();
+    handleClear();
+    setShowPad(true);
+  }, [handleClear, handleSave]);
 
   return (
     <React.Fragment>
-      <div ref={signatureDivRef} className="p-1 rounded-md border-4 border-indigo-900" style={{ maxHeight: "430px" }}>
-        <SignatureCanvas
-          ref={signaturePadRef}
-          dotSize={4}
-          canvasProps={{
-            height: signatureDivRef?.current?.clientHeight ? signatureDivRef?.current?.clientHeight : undefined,
-            width: signatureDivRef?.current?.clientWidth,
-          }}
-        />
+      <div
+        ref={signatureDivRef}
+        className="p-1 rounded-md border-4 border-indigo-900 flex items-center justify-center"
+        style={{ height: "430px" }}
+      >
+        {showPad && (
+          <SignatureCanvas
+            ref={signaturePadRef}
+            dotSize={4}
+            clearOnResize={true}
+            canvasProps={{
+              height: signatureDivRef?.current?.getBoundingClientRect().height
+                ? signatureDivRef?.current?.getBoundingClientRect().height - 10
+                : undefined,
+              width: signatureDivRef?.current?.getBoundingClientRect().width
+                ? signatureDivRef?.current?.getBoundingClientRect().width - 10
+                : undefined,
+            }}
+          />
+        )}
       </div>
       <div className="mx-5 mt-2 flex gap-2">
         <Button color="danger" size="sm" style={{ width: "60%" }} onClick={handleClear}>

@@ -54,8 +54,8 @@ const DefaultCreditCardAndLicenseUploadController = ({
     },
     [formValues]
   );
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCardFormChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
       setFormValues({
         ...formValues,
         [e.target.name]: e.target.value,
@@ -63,16 +63,36 @@ const DefaultCreditCardAndLicenseUploadController = ({
     },
     [formValues]
   );
-  const handleFocus = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "monthExpiry" || e.target.name === "yearExpiry") {
-      setCurrentFocus("expiry");
-    } else if (e.target.name === "cvv") {
-      setCurrentFocus("cvc");
-    } else {
-      setCurrentFocus(e.target.name);
-    }
-  }, []);
-  const handleBlur = useCallback(() => setCurrentFocus(""), []);
+  const handleCardFormFocus = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+      if (e.target.name === "monthExpiry" || e.target.name === "yearExpiry") {
+        setCurrentFocus("expiry");
+      } else if (e.target.name === "cvv") {
+        setCurrentFocus("cvc");
+      } else {
+        setCurrentFocus(e.target.name);
+      }
+    },
+    []
+  );
+  const handleCardFormBlur = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+      setCurrentFocus("");
+      try {
+        const pickedSchema = schema.pick([e.target.name]);
+        await pickedSchema.validate({ [e.target.name]: e.target.value }, { abortEarly: false });
+        setSchemaErrors((prev) => prev.filter((item) => item.path !== e.target.name));
+      } catch (error) {
+        const err = error as yup.ValidationError;
+        const formErrors = yupFormatSchemaErrors(err);
+        setSchemaErrors((prev) => {
+          const cloneList = prev.filter((item) => item.path !== e.target.name);
+          return [...cloneList, ...formErrors];
+        });
+      }
+    },
+    [schema]
+  );
 
   // license related handlers
   const {
@@ -190,9 +210,9 @@ const DefaultCreditCardAndLicenseUploadController = ({
               <DefaultCardDetailsForm
                 formData={formValues}
                 cardMaxLength={cardMaxLength}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                handleFocus={handleFocus}
+                handleChange={handleCardFormChange}
+                handleBlur={handleCardFormBlur}
+                handleFocus={handleCardFormFocus}
                 schemaErrors={schemaErrors}
               />
             </div>
