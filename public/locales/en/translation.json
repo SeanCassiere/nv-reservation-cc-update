@@ -56,12 +56,12 @@
         "yourName": "YOUR NAME HERE"
       },
       "errors": {
-        "cardNumber": "Enter a full credit card number.",
-        "name": "Enter the name printed on the credit card.",
-        "expMonth": "Enter the credit card expiry month.",
-        "expYear": "Enter the credit card expiry year.",
-        "cvv": "Enter the PIN on the back of the credit card.",
-        "billingZip": "Enter your billing zip code."
+        "cardNumber": "Enter a full credit card number",
+        "name": "Enter the name printed on the card",
+        "expMonth": "Enter the credit card expiry month",
+        "expYear": "Enter the credit card expiry year",
+        "cvv": "Enter the PIN on the back of the card",
+        "billingZip": "Enter your billing zip code"
       }
     },
     "licenseUpload": {
@@ -78,14 +78,14 @@
         "drag": "Drag and drop the front image here",
         "select": "Select the front image",
         "clear": "Clear the front image",
-        "notSelected": "You must select the front image."
+        "notSelected": "You must select the front image"
       },
       "backImage": {
         "title": "Back Image",
         "drag": "Drag and drop the back image here",
         "select": "Select the back image",
         "clear": "Clear the back image",
-        "notSelected": "You must select the back image."
+        "notSelected": "You must select the back image"
       }
     },
     "rentalSignature": {
@@ -96,7 +96,7 @@
       "clearInput": "Clear the signature",
       "errorNoSignature": "Please provide a signature.",
       "saveInput": "Sign",
-      "signatureRequired": "Add your signature and press the Save button before you continue.",
+      "signatureRequired": "Add your signature and press the Save button before you continue",
       "goBack": {
         "title": "Are you sure?",
         "message": "Going back will discard the added signature.",
