@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { selectCreditCardForm, selectLicenseUploadForm } from "../../redux/store";
 import { clearReduxFormState, setCreditCardFormData, setLicenseUploadFormData } from "../../redux/slices/forms/slice";
-import useCreditCardLogic from "../../hooks/useCreditCardLogic";
+import { useCreditCardLogic } from "../../hooks/useCreditCardLogic";
 import { useDriverLicenseLogic } from "../../hooks/useDriverLicenseLogic";
 
 import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";

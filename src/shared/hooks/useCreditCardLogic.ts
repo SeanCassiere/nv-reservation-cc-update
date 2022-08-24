@@ -11,7 +11,7 @@ const storeKeys = Object.keys(initialFormSliceState.creditCardForm.data);
 
 type StateStorage = IFormsSliceState["creditCardForm"]["data"];
 
-const useCreditCardLogic = (initialData: StateStorage) => {
+export const useCreditCardLogic = (initialData: StateStorage) => {
   const { t } = useTranslation();
 
   const [currentFocus, setCurrentFocus] = React.useState("");
@@ -158,5 +158,3 @@ const useCreditCardLogic = (initialData: StateStorage) => {
     validateCardData,
   };
 };
-
-export default useCreditCardLogic;
