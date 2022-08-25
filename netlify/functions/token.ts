@@ -41,7 +41,7 @@ const myHandler: Handler = async (event, context) => {
     });
 
     if (LOGGER_SERVICE_URI && LOGGER_SERVICE_ID) {
-      await logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "request-access-token", {
+      logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "request-access-token", {
         ip: requestIp,
         environment: isQa ? "qa" : "production",
         data: {
@@ -49,7 +49,7 @@ const myHandler: Handler = async (event, context) => {
           referenceType: requestBookingTypes[0],
           referenceId: requestBookingIds[0],
         },
-      });
+      }).then(() => {});
     }
 
     return { statusCode: 200, body: JSON.stringify(data), headers: responseHeaders };

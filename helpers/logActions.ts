@@ -19,7 +19,7 @@ export async function logAction({ loggerUri, loggerServiceId }: LoggerAuthType, 
     ip: opts.ip,
     data: opts.data,
   };
-  console.log(loggerUri, body);
+
   return await axios
     .post(loggerUri + "/api/logs", body)
     .then((res) => {
