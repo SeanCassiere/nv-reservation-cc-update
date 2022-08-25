@@ -40,14 +40,24 @@ export const initializeAppThunk = createAsyncThunk(
     let systemUserId = 0;
 
     let state = getState() as RootState;
-    const { clientId, responseTemplateId } = state.config;
+    const { clientId, responseTemplateId, referenceType } = state.config;
     console.group("config/initializeApp");
 
     // authenticate app
     try {
+      const STATIC_PARAMS =
+        "client_id=" +
+        clientId +
+        "&reference_type=" +
+        referenceType +
+        "&reference_id=" +
+        state.retrievedDetails.referenceId;
       let auth_url = AUTH_URL;
+
       if (state.config.qa) {
-        auth_url += "?qa=true";
+        auth_url += `?qa=true&${STATIC_PARAMS}`;
+      } else {
+        auth_url += `?${STATIC_PARAMS}`;
       }
       const authV3 = await axios.get(auth_url);
 
