@@ -37,7 +37,7 @@ const completionHandler: Handler = async (event) => {
   const LOGGER_SERVICE_ID = process.env.LOGGER_SERVICE_ID;
 
   if (LOGGER_SERVICE_URI && LOGGER_SERVICE_ID) {
-    logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "submitted-details", {
+    await logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "submitted-details", {
       ip: requestIp,
       environment: isQa ? "qa" : "production",
       data: {

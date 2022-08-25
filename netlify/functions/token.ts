@@ -41,7 +41,7 @@ const myHandler: Handler = async (event, context) => {
     });
 
     if (LOGGER_SERVICE_URI && LOGGER_SERVICE_ID) {
-      logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "request-access-token", {
+      await logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "request-access-token", {
         ip: requestIp,
         environment: isQa ? "qa" : "production",
         data: {
