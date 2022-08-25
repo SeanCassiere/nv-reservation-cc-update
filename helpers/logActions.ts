@@ -7,6 +7,7 @@ type LoggerAuthType = {
 
 type LoggerOptions = {
   ip?: string;
+  lookupFilterValue?: string;
   environment: string;
   data?: Object | any[];
 };
@@ -17,6 +18,7 @@ export async function logAction({ loggerUri, loggerServiceId }: LoggerAuthType, 
     action,
     environment: opts.environment,
     ip: opts.ip,
+    lookupFilterValue: opts.lookupFilterValue,
     data: opts.data,
   };
 

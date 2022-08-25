@@ -44,6 +44,7 @@ const myHandler: Handler = async (event, context) => {
       await logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "request-access-token", {
         ip: requestIp,
         environment: isQa ? "qa" : "production",
+        lookupFilterValue: requestClientIds[0],
         data: {
           clientId: requestClientIds[0],
           referenceType: requestBookingTypes[0],

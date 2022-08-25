@@ -58,7 +58,9 @@ export async function makeCompletionRequest(failed: boolean) {
   const state = store.getState();
 
   const params = new URLSearchParams();
-  params.append("qa", state.config.qa ? "true" : "false");
+  if (state.config.qa) {
+    params.append("qa", "true");
+  }
   params.append("client_id", `${state.config.clientId}`);
   params.append("reference_type", `${state.config.referenceType}`);
   params.append("reference_id", `${state.retrievedDetails.referenceId}`);
