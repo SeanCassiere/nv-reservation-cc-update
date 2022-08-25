@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import i18next from "i18next";
 
-import clientV3 from "../../../api/clientV3";
+import clientV3, { makeCompletionRequest } from "../../../api/clientV3";
 import { insertCreditCardForCustomer, uploadDriverLicenseImageForCustomer } from "../../../api/customerApi";
 
 import { bodyEmailTemplate } from "../../../utils/bodyEmailTemplate";
@@ -67,6 +67,10 @@ export const submitFormThunk = createAsyncThunk("forms/submitAllAvailable", asyn
   // await saving all the form details
   dispatch(setSubmissionMessage(t("appStatusMessages.submittingYourDetailsMsg")));
   const runPromises = await Promise.all(formPromisesToRun);
+
+  // log the completion in the log server
+  await makeCompletionRequest(runPromises.includes(false)); // if runPromises.includes(false) then the submission failed
+
   if (runPromises.includes(false)) {
     console.groupEnd();
     dispatch(setSubmissionErrorState("submitting_details_error"));

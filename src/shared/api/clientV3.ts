@@ -5,7 +5,9 @@ import { isValueTrue } from "../utils/common";
 
 const baseURL = import.meta.env.VITE_APP_API_BASE_URL_V3 || "https://api.apprentall.com/api/v3";
 const baseURLQa = import.meta.env.VITE_APP_QA_API_BASE_URL_V3 || "https://testapi.appnavotar.com/api/v3";
+
 export const AUTH_URL = "/api/token";
+export const SUBMISSION_COMPLETION_URL = "/api/complete";
 
 const isQa = isValueTrue(new URLSearchParams(window.location.search).get("qa"));
 
@@ -51,3 +53,19 @@ clientV3.interceptors.request.use(
 );
 
 export default clientV3;
+
+export async function makeCompletionRequest(failed: boolean) {
+  const state = store.getState();
+
+  const params = new URLSearchParams();
+  params.append("qa", state.config.qa ? "true" : "false");
+  params.append("client_id", `${state.config.clientId}`);
+  params.append("reference_type", `${state.config.referenceType}`);
+  params.append("reference_id", `${state.retrievedDetails.referenceId}`);
+  params.append("customer_id", `${state.retrievedDetails.data.customerId}`);
+  params.append("status", failed ? "failure" : "success");
+  return await axios
+    .get(SUBMISSION_COMPLETION_URL, { params })
+    .then(() => true)
+    .catch(() => false);
+}
