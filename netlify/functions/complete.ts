@@ -40,6 +40,7 @@ const completionHandler: Handler = async (event) => {
     await logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "submitted-details", {
       ip: requestIp,
       environment: isQa ? "qa" : "production",
+      lookupFilterValue: requestClientIds[0],
       data: {
         status: requestStatusValues[0],
         clientId: requestClientIds[0],
