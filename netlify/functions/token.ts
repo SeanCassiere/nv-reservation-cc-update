@@ -13,7 +13,7 @@ const myHandler: Handler = async (event, context) => {
   const requestClientIds = requestParams.getAll("client_id");
   const requestBookingTypes = requestParams.getAll("reference_type");
   const requestBookingIds = requestParams.getAll("reference_id");
-  const requestIp = event.headers["client-ip"];
+  const requestIp = event.headers["x-nf-client-connection-ip"] ?? event.headers["client-ip"];
 
   if (requestClientIds.length === 0 || requestBookingTypes.length === 0 || requestBookingIds.length === 0) {
     return {

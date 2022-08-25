@@ -14,7 +14,7 @@ const completionHandler: Handler = async (event) => {
   const requestBookingIds = requestParams.getAll("reference_id");
   const requestCustomerIds = requestParams.getAll("customer_id");
   const requestStatusValues = requestParams.getAll("status");
-  const requestIp = event.headers["client-ip"];
+  const requestIp = event.headers["x-nf-client-connection-ip"] ?? event.headers["client-ip"];
 
   if (
     requestClientIds.length === 0 ||
