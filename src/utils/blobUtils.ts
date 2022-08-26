@@ -13,3 +13,9 @@ export async function urlBlobToBase64(url: string): Promise<string> {
     reader.onerror = reject;
   });
 }
+
+export async function createHtmlBlobDataUrl(html: string) {
+  const blob = new Blob([html], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  return url;
+}

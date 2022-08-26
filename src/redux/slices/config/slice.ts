@@ -1,15 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { supportedLanguages } from "../../../i18n";
 import { ALL_SUCCESS_SCREENS, APP_CONSTANTS } from "../../../utils/constants";
 import { initializeAppThunk } from "./thunks";
 
-const appStates = [
-  "authenticating",
-  "loaded",
-  "authentication_error",
-  "core_details_fetch_failed",
-  "submission_loading",
-] as const;
-export const supportedLanguages = ["en", "en-GB", "de", "fr", "es"] as const;
+const appStates = ["authenticating", "loaded", "authentication_error", "core_details_fetch_failed"] as const;
 
 type AppState = typeof appStates[number];
 export type SupportedLanguages = typeof supportedLanguages[number];

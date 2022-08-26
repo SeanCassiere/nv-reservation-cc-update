@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useAuthStore } from "../hooks/useAuthStore";
 import { setAccessToken } from "../redux/slices/auth/slice";
 import store from "../redux/store";
 import { isValueTrue } from "../utils/common";
@@ -10,6 +11,16 @@ export const AUTH_URL = "/api/token";
 export const SUBMISSION_COMPLETION_URL = "/api/complete";
 
 const isQa = isValueTrue(new URLSearchParams(window.location.search).get("qa"));
+
+export const clientFetch = (input: string, init?: RequestInit) =>
+  fetch(`${isQa ? baseURLQa : baseURL}${input}`, {
+    ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...init?.headers,
+      Authorization: `${useAuthStore.getState().token_type} ${useAuthStore.getState().access_token}`,
+    },
+  });
 
 const clientV3 = axios.create({
   baseURL: isQa ? baseURLQa : baseURL,

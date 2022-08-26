@@ -1,90 +1,103 @@
 import React, { useState, useCallback, useMemo, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import ErrorSubmission from "../../pages/ErrorSubmission/ErrorSubmission";
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
-
-import { setConfigValues, setLang, setRawConfig, setReferenceType } from "../../redux/slices/config/slice";
-import { setInitialReferenceId } from "../../redux/slices/retrievedDetails/slice";
-import { selectConfigState } from "../../redux/store";
-import { initializeAppThunk } from "../../redux/slices/config/thunks";
-
 import DisplayCurrentController from "./DisplayCurrentController";
-import { APP_CONSTANTS } from "../../utils/constants";
-import { isValueTrue } from "../../utils/common";
 
-type ConfigState = {
-  clientId: string | null;
-  emailTemplateId: string | null;
-  flow: string[];
-  fromRentall: boolean;
-  successSubmissionScreen?: string;
-};
+import { useConfigStore } from "../../hooks/useConfigStore";
+import { useAuthStore } from "../../hooks/useAuthStore";
+import { useRuntimeStore } from "../../hooks/useRuntimeStore";
+
+import { APP_CONSTANTS } from "../../utils/constants";
+import { authenticateWithLambda } from "../../api/lambdas";
+import { bootUp, initDataFetch } from "../../api/boot";
+
+const bootStatuses = ["authenticating", "loaded", "authentication_error", "core_details_fetch_failed"] as const;
+type BootStatus = typeof bootStatuses[number];
 
 const ApplicationController: React.FC = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const appConfig = useSelector(selectConfigState);
   const { t } = useTranslation();
 
-  // initial app boot
-  useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
+  const setAuthValues = useAuthStore((s) => s.setAuthValues);
 
-    const lang = query.get("lang");
-    dispatch(setLang({ lang: lang as any }));
+  const setRawQuery = useConfigStore((s) => s.setRawQuery);
+  const setConfigStoreValues = useConfigStore((s) => s.setConfigValues);
+  const setInitReferenceValues = useRuntimeStore((s) => s.setReferenceInitValues);
+  const setEmailTemplateAndClientId = useRuntimeStore((s) => s.setEmailTemplateAndClientId);
+  const setRuntimeConfirmationEmail = useRuntimeStore((s) => s.setRuntimeConfirmationEmail);
+  const setRuntimeRental = useRuntimeStore((s) => s.setRuntimeRental);
+  const setRuntimeAdminUserId = useRuntimeStore((s) => s.setRuntimeAdminUserId);
 
-    let findingRefsMissing = false;
+  const flowScreens = useConfigStore((s) => s.flow);
+  const referenceType = useRuntimeStore((s) => s.referenceType);
 
-    let reservationId = query.get("reservationId");
-    let agreementId = query.get("agreementId");
+  const [bootStatus, setBootStatus] = useState<BootStatus>("authenticating");
 
-    findingRefsMissing = Boolean(reservationId || agreementId);
-    if (!findingRefsMissing) {
-      return navigate("/not-available");
+  const { mutate: callInitDataFetch } = useMutation(["fetch-core-details"], initDataFetch, {
+    onSuccess: (data) => {
+      console.log("dataFetchSuccess", data);
+      setRuntimeConfirmationEmail(data.confirmationEmail);
+      setRuntimeRental(data.rental);
+      setRuntimeAdminUserId(data.adminUserId);
+      setBootStatus("loaded");
+    },
+    onError: (err) => {
+      setBootStatus("core_details_fetch_failed");
+    },
+  });
+
+  const { mutate: authorizeApp } = useMutation(["authorization"], authenticateWithLambda, {
+    onSuccess: (data) => {
+      setAuthValues(data);
+      callInitDataFetch({
+        clientId: `${data.clientId}`,
+        referenceType: `${data.referenceType}`,
+        referenceIdentifier: `${data.referenceIdentifier}`,
+        responseTemplateId: `${data.responseTemplateId}`,
+      });
+    },
+    onError: (err) => {
+      setBootStatus("authentication_error");
+    },
+  });
+
+  const { error, isError, isLoading } = useQuery(
+    ["boot-sequence"],
+    async () => bootUp({ windowQueryString: window.location.search }),
+    {
+      enabled: true,
+      refetchOnWindowFocus: false,
+      refetchIntervalInBackground: false,
+      retry: false,
+      onSuccess: (data) => {
+        if (!data) {
+          navigate("/not-available");
+          return;
+        }
+        setRawQuery({ rawConfig: data.rawConfig, rawQueryString: window.location.search });
+        setConfigStoreValues({
+          flow: data.flow,
+          fromRentall: data.fromRentall,
+          qa: data.qa,
+          successSubmissionScreen: data.successSubmissionScreen,
+        });
+        setEmailTemplateAndClientId({ newClientId: data.clientId, newTemplateId: data.responseEmailTemplateId });
+        setInitReferenceValues({ newReferenceType: data.referenceType, newReferenceIdentifier: data.referenceId });
+        authorizeApp({ clientId: data.clientId, qa: data.qa });
+      },
+      onError: (err) => {
+        function explode() {
+          throw new Error(err as any);
+        }
+        explode();
+      },
     }
-
-    const configQuery = query.get("config");
-    const qaQuery = query.get("qa");
-
-    let config: ConfigState = {
-      clientId: null,
-      emailTemplateId: null,
-      flow: [],
-      fromRentall: true,
-    };
-    if (configQuery) {
-      dispatch(setRawConfig({ rawConfig: configQuery, rawQueryString: window.location.search }));
-      const readConfig = JSON.parse(Buffer.from(configQuery, "base64").toString("ascii"));
-      config = { ...config, ...readConfig };
-    }
-
-    if (!config.clientId || !config.emailTemplateId) return navigate("/not-available");
-
-    dispatch(
-      setConfigValues({
-        clientId: config.clientId,
-        responseTemplateId: config.emailTemplateId,
-        flow: config.flow,
-        fromRentall: config.fromRentall,
-        qa: isValueTrue(qaQuery) ? true : false,
-        successSubmissionScreen: config.successSubmissionScreen,
-      })
-    );
-
-    if (reservationId) {
-      dispatch(setReferenceType({ referenceType: APP_CONSTANTS.REF_TYPE_RESERVATION }));
-      dispatch(setInitialReferenceId(reservationId));
-    } else if (agreementId) {
-      dispatch(setReferenceType({ referenceType: APP_CONSTANTS.REF_TYPE_AGREEMENT }));
-      dispatch(setInitialReferenceId(agreementId));
-    }
-
-    dispatch(initializeAppThunk() as any);
-  }, [dispatch, navigate]);
+  );
 
   /*
    ** Application Controller management
@@ -100,12 +113,12 @@ const ApplicationController: React.FC = () => {
     const currentPrevScreens = previousControllers;
     const currentScreen = activeController!;
 
-    const newActiveScreen = currentPrevScreens.pop() || appConfig.flow[0];
+    const newActiveScreen = currentPrevScreens.pop() || flowScreens[0];
 
     setActiveController(newActiveScreen);
     setPreviousControllers(currentPrevScreens.filter((screen) => screen !== newActiveScreen));
     setRemainingFlowControllers([currentScreen, ...remainingFlowControllers]);
-  }, [activeController, appConfig.flow, previousControllers, remainingFlowControllers]);
+  }, [activeController, flowScreens, previousControllers, remainingFlowControllers]);
 
   const isNextPageAvailable = useMemo(() => remainingFlowControllers.length > 0, [remainingFlowControllers]);
   const handleSubmit = useCallback(() => {
@@ -127,32 +140,33 @@ const ApplicationController: React.FC = () => {
   }, [activeController, remainingFlowControllers, previousControllers, navigate]);
 
   useEffect(() => {
-    const startingController = appConfig.flow[0];
+    const startingController = flowScreens[0];
     // Removing the starting controller since it will automatically be shown
-    const startingControllers = appConfig.flow.filter((elem) => elem !== startingController);
+    const startingControllers = flowScreens.filter((elem) => elem !== startingController);
 
     setRemainingFlowControllers(startingControllers);
     setActiveController(startingController);
-  }, [appConfig.flow]);
+  }, [flowScreens]);
 
   return (
     <>
-      {appConfig.status === "authenticating" && <LoadingSubmission title={t("authenticationSubmission.title")} />}
-      {appConfig.status === "authentication_error" && (
+      {isLoading === false && isError && error}
+      {bootStatus === "authenticating" && <LoadingSubmission title={t("authenticationSubmission.title")} />}
+      {bootStatus === "authentication_error" && (
         <ErrorSubmission msg={t("authenticationSubmission.message")} tryAgainButton />
       )}
-      {appConfig.status === "core_details_fetch_failed" && (
+      {bootStatus === "core_details_fetch_failed" && (
         <ErrorSubmission
           title={t("coreDetailsFetchError.title", {
-            context: appConfig.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+            context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
           })}
           msg={t("coreDetailsFetchError.message", {
-            context: appConfig.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+            context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
           })}
           tryAgainButton
         />
       )}
-      {appConfig.status === "loaded" && (
+      {bootStatus === "loaded" && (
         <>
           <DisplayCurrentController
             selectedController={activeController}

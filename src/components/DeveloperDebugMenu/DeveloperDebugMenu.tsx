@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { supportedLanguages } from "../../redux/slices/config/slice";
+import { supportedLanguages } from "../../i18n";
 import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "../../utils/constants";
 import { isValueTrue } from "../../utils/common";
 import { devConfigToQueryUrl } from "./utils";

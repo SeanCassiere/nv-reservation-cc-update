@@ -1,4 +1,5 @@
-import clientV3 from "./clientV3";
+import { createBodyForEmail, CreateBodyForEmail } from "../utils/bodyEmailTemplate";
+import clientV3, { clientFetch } from "./clientV3";
 
 type ComposeTemplateArrayItem = {
   clientId: number;
@@ -73,3 +74,72 @@ export const getComposeEmailDetails = async (
 
   return composeEmailDetails;
 };
+
+export async function fetchEmailTemplate(opts: {
+  clientId: string;
+  templateId: string;
+}): Promise<{ templateTypeId: number } | null> {
+  const params = new URLSearchParams();
+  params.append("clientId", opts.clientId);
+  try {
+    const { templateTypeId } = await clientFetch(`/Emails/${opts.templateId}/EmailTemplate?` + params).then((r) =>
+      r.json()
+    );
+    return {
+      templateTypeId,
+    };
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function fetchComposeEmailDetails(opts: {
+  clientId: string;
+  adminUserId: number;
+  referenceType: string;
+  referenceId: string;
+  responseTemplateId: string;
+}) {
+  let apiResponseDetails: GetComposeDetails | null = null;
+  let composeEmailDetails: ReturnComposeEmailDetails | null = null;
+
+  try {
+    const params = new URLSearchParams();
+    params.append("clientId", opts.clientId);
+    params.append("userId", opts.adminUserId.toString());
+    params.append("referenceType", opts.referenceType);
+    params.append("referenceId", opts.referenceId);
+
+    const res = await clientFetch("/Emails/ComposeEmail?" + params).then((r) => r.json());
+    apiResponseDetails = res;
+  } catch (error) {
+    return null;
+  }
+
+  if (!apiResponseDetails) {
+    return null;
+  }
+
+  const ccEmails = apiResponseDetails.ccAddresses.split(",");
+  const templateList = apiResponseDetails.emailTemplateList;
+
+  const selectedTemplate = templateList.find((t) => t.templateId === Number(opts.responseTemplateId));
+  composeEmailDetails = {
+    ...apiResponseDetails,
+    ccEmails: ccEmails.filter((e) => e !== ""),
+    selectedTemplate: selectedTemplate ?? null,
+  };
+
+  return composeEmailDetails;
+}
+
+export async function fetchEmailTemplateHtml(opts: CreateBodyForEmail) {
+  try {
+    return await clientFetch("/Emails/PreviewTemplate", {
+      method: "POST",
+      body: JSON.stringify(createBodyForEmail(opts)),
+    }).then((r) => r.text());
+  } catch (error) {
+    return null;
+  }
+}
