@@ -4,12 +4,12 @@ import { ErrorBoundary as Boundary } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
 
 import AppRoutes from "./routes/AppRoutes";
-import ErrorSubmission from "./shared/pages/ErrorSubmission/ErrorSubmission";
-import DeveloperDebugMenu from "./shared/components/DeveloperDebugMenu/DeveloperDebugMenu";
+import ErrorSubmission from "./pages/ErrorSubmission/ErrorSubmission";
+import DeveloperDebugMenu from "./components/DeveloperDebugMenu/DeveloperDebugMenu";
+import AnchorLink from "./components/Elements/AnchorLink";
 
-import { selectConfigState } from "./shared/redux/store";
-import { isValueTrue } from "./shared/utils/common";
-import AnchorLink from "./shared/components/Elements/AnchorLink";
+import { selectConfigState } from "./redux/store";
+import { isValueTrue } from "./utils/common";
 
 const ErrorBoundary = Boundary as any; // an odd error where typescript says it doesn't return a JSX element. This is a workaround
 
