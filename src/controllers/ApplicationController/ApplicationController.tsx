@@ -40,7 +40,6 @@ const ApplicationController: React.FC = () => {
 
   const { mutate: callInitDataFetch } = useMutation(["fetch-core-details"], initDataFetch, {
     onSuccess: (data) => {
-      console.log("dataFetchSuccess", data);
       setRuntimeConfirmationEmail(data.confirmationEmail);
       setRuntimeRental(data.rental);
       setRuntimeAdminUserId(data.adminUserId);

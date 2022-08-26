@@ -30,7 +30,7 @@ export async function fetchAdminUser(clientId: string | number) {
   params.append("clientId", `${clientId}`);
 
   try {
-    const users = (await clientFetch("/users?" + params).then((r) => r.json())) as SystemUser[];
+    const users = (await clientFetch("/Users?" + params).then((r) => r.json())) as SystemUser[];
     const adminUserIdToUse = users.filter((u) => u.userRoleID === 1);
     if (adminUserIdToUse.length === 0) {
       throw new Error("No admin user found");
