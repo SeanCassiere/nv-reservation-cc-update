@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 
-import { selectAuthState, selectSubmissionState } from "../shared/redux/store";
+import { selectAuthState, selectSubmissionState } from "../redux/store";
 
 const RequireAuth: React.FC<{ children: JSX.Element }> = ({ children }) => {
   let location = useLocation();

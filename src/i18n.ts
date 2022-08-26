@@ -3,7 +3,7 @@ import HttpApi from "i18next-http-backend";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-import { supportedLanguages } from "./shared/redux/slices/config/slice";
+import { supportedLanguages } from "./redux/slices/config/slice";
 
 i18n
   .use(HttpApi)
