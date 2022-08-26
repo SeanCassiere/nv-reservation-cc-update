@@ -14,7 +14,6 @@ type LoggerOptions = {
 
 export async function logAction({ loggerUri, loggerServiceId }: LoggerAuthType, action: string, opts: LoggerOptions) {
   const body = {
-    serviceId: loggerServiceId,
     action,
     environment: opts.environment,
     ip: opts.ip,
@@ -23,7 +22,7 @@ export async function logAction({ loggerUri, loggerServiceId }: LoggerAuthType, 
   };
 
   return await axios
-    .post(loggerUri + "/api/logs", body)
+    .post(`${loggerUri}/api/services/${loggerServiceId}/logs`, body)
     .then((res) => {
       return { success: true, data: res.data };
     })
