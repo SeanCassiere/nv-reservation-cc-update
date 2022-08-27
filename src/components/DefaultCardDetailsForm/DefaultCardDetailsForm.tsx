@@ -1,14 +1,14 @@
 import React, { memo } from "react";
 import { useTranslation } from "react-i18next";
+import type { CreditCardStoreType } from "../../hooks/stores/useFormStore";
 
-import { ICreditCardFormData } from "../../redux/slices/forms/slice";
 import { formatCreditCardNumber } from "../../utils/creditCardTypeFormat";
 import { YupErrorsFormatted } from "../../utils/yupSchemaErrors";
 
 import TextInput from "../Elements/TextInput";
 
 interface IProps {
-  formData: ICreditCardFormData;
+  formData: CreditCardStoreType["data"];
   schemaErrors: YupErrorsFormatted;
   handleBlur: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
   handleFocus: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;

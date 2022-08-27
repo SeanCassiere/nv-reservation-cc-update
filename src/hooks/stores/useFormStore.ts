@@ -39,7 +39,7 @@ interface FormStoreType extends ApplicationFormsStoreType {
   clearFormStateKey: (key: keyof ApplicationFormsStoreType) => void;
 }
 
-const formsInitialState: ApplicationFormsStoreType = {
+export const formsInitialState: ApplicationFormsStoreType = {
   customerCreditCard: {
     isFilled: false,
     data: {

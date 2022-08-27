@@ -3,13 +3,13 @@ import Payment from "payment";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 
-import { IFormsSliceState, initialFormSliceState } from "../../redux/slices/forms/slice";
 import { creditCardTypeFormat, getFormattedExpirationDate } from "../../utils/creditCardTypeFormat";
 import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
+import { CreditCardStoreType, formsInitialState } from "../stores/useFormStore";
 
-const storeKeys = Object.keys(initialFormSliceState.creditCardForm.data);
+const storeKeys = Object.keys(formsInitialState.customerCreditCard.data);
 
-type StateStorage = IFormsSliceState["creditCardForm"]["data"];
+type StateStorage = CreditCardStoreType["data"];
 
 export const useCreditCardLogic = (initialData: StateStorage) => {
   const { t } = useTranslation();

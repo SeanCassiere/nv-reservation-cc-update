@@ -3,11 +3,11 @@ import Cards from "react-credit-cards";
 import { useTranslation } from "react-i18next";
 import "react-credit-cards/es/styles-compiled.css";
 
-import { ICreditCardFormData } from "../../redux/slices/forms/slice";
+import type { CreditCardStoreType } from "../../hooks/stores/useFormStore";
 
 interface IProps {
   currentFocus: string;
-  formData: ICreditCardFormData;
+  formData: CreditCardStoreType["data"];
 }
 
 const DefaultCreditCard: React.FC<IProps> = ({ currentFocus, formData }) => {

@@ -1,6 +1,6 @@
-import * as yup from "yup";
+import type { ValidationError } from "yup";
 
-export function yupFormatSchemaErrors(err: yup.ValidationError) {
+export function yupFormatSchemaErrors(err: ValidationError) {
   const errors = err.inner.map((e) => {
     return {
       path: e.path,

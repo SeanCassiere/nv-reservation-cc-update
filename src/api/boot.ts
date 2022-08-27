@@ -1,18 +1,20 @@
 import { createHtmlBlobDataUrl } from "../utils/blobUtils";
 import { isValueTrue } from "../utils/common";
 import { APP_CONSTANTS } from "../utils/constants";
+
 import { fetchAgreementByIdOrNumber } from "./agreementApi";
 import { fetchComposeEmailDetails, fetchEmailTemplate, fetchEmailTemplateHtml } from "./emailsApi";
 import { fetchReservationByIdOrNumber, RentalSourcedDetails } from "./reservationApi";
 import { fetchAdminUser } from "./usersApi";
+import { postCustomerCreditCard, postDriverLicenseImage } from "./customerApi";
+import { postUploadRentalSignature } from "./digitalSignatureApi";
+
 import type {
   CreditCardStoreType,
   DriversLicenseStoreType,
   RentalSignatureStoreType,
 } from "../hooks/stores/useFormStore";
-import { postCustomerCreditCard, postDriverLicenseImage } from "./customerApi";
-import { postUploadRentalSignature } from "./digitalSignatureApi";
-import { RentalStoreType } from "../hooks/stores/useRuntimeStore";
+import type { RentalStoreType } from "../hooks/stores/useRuntimeStore";
 
 type QueryConfigState = {
   clientId: string | null;
