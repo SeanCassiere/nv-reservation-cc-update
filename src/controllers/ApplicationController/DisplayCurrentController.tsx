@@ -1,4 +1,4 @@
-import React, { memo, Suspense } from "react";
+import React, { memo, Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 import Button from "../../components/Elements/Button";
@@ -6,14 +6,12 @@ import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 
 import { APP_CONSTANTS } from "../../utils/constants";
 
-const DefaultRentalSignatureController = React.lazy(
+const DefaultRentalSignatureController = lazy(
   () => import("../RentalSignatureController/DefaultRentalSignatureController")
 );
-const DefaultCreditCardController = React.lazy(() => import("../CreditCardController/DefaultCreditCardController"));
-const DefaultLicenseUploadController = React.lazy(
-  () => import("../LicenseUploadController/DefaultLicenseUploadController")
-);
-const DefaultCreditCardAndLicenseUploadController = React.lazy(
+const DefaultCreditCardController = lazy(() => import("../CreditCardController/DefaultCreditCardController"));
+const DefaultLicenseUploadController = lazy(() => import("../LicenseUploadController/DefaultLicenseUploadController"));
+const DefaultCreditCardAndLicenseUploadController = lazy(
   () => import("../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController")
 );
 

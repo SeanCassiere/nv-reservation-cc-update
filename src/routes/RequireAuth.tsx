@@ -1,22 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuthStore } from "../hooks/stores/useAuthStore";
 
-import { selectSubmissionState } from "../redux/store";
+import { useAuthStore } from "../hooks/stores/useAuthStore";
+import { useRuntimeStore } from "../hooks/stores/useRuntimeStore";
 
 const RequireAuth: React.FC<{ children: JSX.Element }> = ({ children }) => {
   let location = useLocation();
 
   const access_token = useAuthStore((s) => s.access_token);
-  const { state, isSubmissionAttempted } = useSelector(selectSubmissionState);
+  const detailsHaveBeenSubmitted = useRuntimeStore((s) => s.detailsHaveBeenSubmitted);
 
-  if (!access_token) {
+  if (!access_token && !detailsHaveBeenSubmitted) {
     return <Navigate to="/not-available" replace state={{ from: location }} />;
-  }
-
-  if (isSubmissionAttempted && state === "submitting_details_error") {
-    return <Navigate to="/error" replace state={{ from: location }} />;
   }
 
   return children;

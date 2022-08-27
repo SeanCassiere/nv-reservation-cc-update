@@ -6,7 +6,7 @@ interface GenericFormStoreType<T> {
   data: T;
 }
 
-type CreditCardStoreType = GenericFormStoreType<{
+export type CreditCardStoreType = GenericFormStoreType<{
   name: string;
   type: string;
   number: string;
@@ -17,14 +17,14 @@ type CreditCardStoreType = GenericFormStoreType<{
   monthYearExpiry: string;
 }>;
 
-type DriversLicenseStoreType = GenericFormStoreType<{
+export type DriversLicenseStoreType = GenericFormStoreType<{
   frontImageUrl: string | null;
   frontImageName: string | null;
   backImageUrl: string | null;
   backImageName: string | null;
 }>;
 
-type RentalSignatureStoreType = GenericFormStoreType<{ signatureUrl: string }>;
+export type RentalSignatureStoreType = GenericFormStoreType<{ signatureUrl: string }>;
 
 type ApplicationFormsStoreType = {
   customerCreditCard: CreditCardStoreType;

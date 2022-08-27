@@ -32,6 +32,7 @@ const ApplicationController: React.FC = () => {
   const setRuntimeConfirmationEmail = useRuntimeStore((s) => s.setRuntimeConfirmationEmail);
   const setRuntimeRental = useRuntimeStore((s) => s.setRuntimeRental);
   const setRuntimeAdminUserId = useRuntimeStore((s) => s.setRuntimeAdminUserId);
+  const setRuntimeReferenceId = useRuntimeStore((s) => s.setRuntimeReferenceId);
 
   const flowScreens = useConfigStore((s) => s.flow);
   const referenceType = useRuntimeStore((s) => s.referenceType);
@@ -40,6 +41,7 @@ const ApplicationController: React.FC = () => {
 
   const { mutate: callInitDataFetch } = useMutation(["app-init-details"], initDataFetch, {
     onSuccess: (data) => {
+      setRuntimeReferenceId(data.referenceId);
       setRuntimeConfirmationEmail(data.confirmationEmail);
       setRuntimeRental(data.rental);
       setRuntimeAdminUserId(data.adminUserId);

@@ -1,3 +1,4 @@
+import { ConfirmationEmailStoreType } from "../hooks/stores/useRuntimeStore";
 import { createBodyForEmail, CreateBodyForEmail } from "../utils/bodyEmailTemplate";
 import clientV3, { clientFetch } from "./clientV3";
 
@@ -142,4 +143,21 @@ export async function fetchEmailTemplateHtml(opts: CreateBodyForEmail) {
   } catch (error) {
     return null;
   }
+}
+
+interface PostConfirmationEmailProps extends CreateBodyForEmail {
+  dataUrl: string;
+}
+
+export async function postConfirmationEmail(opts: PostConfirmationEmailProps) {
+  if (!opts.dataUrl) return null;
+  const dataUrl = opts.dataUrl;
+  const emailBodyHtml = await fetch(dataUrl).then((r) => r.text());
+
+  await clientFetch("/Emails", {
+    method: "POST",
+    body: JSON.stringify(createBodyForEmail({ ...opts, emailBody: emailBodyHtml })),
+  });
+  URL.revokeObjectURL(dataUrl);
+  return true;
 }

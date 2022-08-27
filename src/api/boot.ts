@@ -5,6 +5,14 @@ import { fetchAgreementByIdOrNumber } from "./agreementApi";
 import { fetchComposeEmailDetails, fetchEmailTemplate, fetchEmailTemplateHtml } from "./emailsApi";
 import { fetchReservationByIdOrNumber, RentalSourcedDetails } from "./reservationApi";
 import { fetchAdminUser } from "./usersApi";
+import type {
+  CreditCardStoreType,
+  DriversLicenseStoreType,
+  RentalSignatureStoreType,
+} from "../hooks/stores/useFormStore";
+import { postCustomerCreditCard, postDriverLicenseImage } from "./customerApi";
+import { postUploadRentalSignature } from "./digitalSignatureApi";
+import { RentalStoreType } from "../hooks/stores/useRuntimeStore";
 
 type QueryConfigState = {
   clientId: string | null;
@@ -46,7 +54,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     throw new Error("Could not parse config");
   }
 
-  if (!config.clientId || !config.emailTemplateId) {
+  if (!config.clientId) {
     return null;
   }
 
@@ -71,6 +79,7 @@ export async function initDataFetch(opts: {
   referenceType: string;
   referenceIdentifier: RandomAll;
 }) {
+  let referenceIdLatest = opts.referenceIdentifier;
   let rentalSourcedDetails: RentalSourcedDetails | null = null;
   let emailTemplateTypeId = 0;
   let emailTemplateCcEmails: string[] = [];
@@ -90,6 +99,7 @@ export async function initDataFetch(opts: {
       referenceId: `${opts.referenceIdentifier}`,
     });
     rentalSourcedDetails = reservation;
+    referenceIdLatest = reservation.referenceId;
   } else {
     const agreement = await fetchAgreementByIdOrNumber({
       clientId: opts.clientId,
@@ -97,6 +107,7 @@ export async function initDataFetch(opts: {
       adminUserId: adminUser.userID,
     });
     rentalSourcedDetails = agreement;
+    referenceIdLatest = agreement.referenceId;
   }
 
   if (Number(opts.responseTemplateId)) {
@@ -116,7 +127,7 @@ export async function initDataFetch(opts: {
         adminUserId: adminUser.userID,
         responseTemplateId: `${opts.responseTemplateId}`,
         referenceType: opts.referenceType,
-        referenceId: `${opts.referenceIdentifier}`,
+        referenceId: `${referenceIdLatest}`,
       });
       if (templateDetails) {
         emailTemplateCcEmails = templateDetails.ccEmails;
@@ -131,7 +142,7 @@ export async function initDataFetch(opts: {
     if (emailTemplateTypeId) {
       const html = await fetchEmailTemplateHtml({
         referenceType: opts.referenceType,
-        referenceId: Number(opts.referenceIdentifier),
+        referenceId: Number(referenceIdLatest),
         subject: responseSubject,
         toEmails: [toEmailAddress],
         ccEmails: emailTemplateCcEmails,
@@ -149,16 +160,85 @@ export async function initDataFetch(opts: {
 
   return {
     adminUserId: adminUser.userID,
-    confirmationEmail: {
-      templateId: Number(opts.responseTemplateId),
-      templateTypeId: emailTemplateTypeId,
-      fromAddress: fromEmailAddress,
-      fromName: fromEmailName,
-      ccList: emailTemplateCcEmails,
-      toList: [toEmailAddress],
-      subject: responseSubject,
-      dataUrl: emailDataBlobUrl,
-    },
+    confirmationEmail: Number(opts.responseTemplateId)
+      ? {
+          templateId: Number(opts.responseTemplateId),
+          templateTypeId: emailTemplateTypeId,
+          fromEmail: fromEmailAddress,
+          fromName: fromEmailName,
+          ccList: emailTemplateCcEmails,
+          toList: [toEmailAddress].filter((e) => e !== ""),
+          subject: responseSubject,
+          dataUrl: emailDataBlobUrl,
+        }
+      : null,
     rental: rentalSourcedDetails,
+    referenceId: referenceIdLatest,
   };
+}
+
+export async function postFormDataToApi(stores: {
+  clientId: string | number;
+  customerId: number;
+  referenceId: string | number;
+  referenceType: string;
+  rental: RentalStoreType | null;
+  creditCard: CreditCardStoreType;
+  driversLicense: DriversLicenseStoreType;
+  rentalSignature: RentalSignatureStoreType;
+}) {
+  const customerId = stores.customerId;
+  const clientId = stores.clientId;
+  const referenceId = stores.referenceId;
+  const referenceType = stores.referenceType;
+
+  const rental = stores.rental;
+
+  const creditCard = stores.creditCard;
+  const driversLicense = stores.driversLicense;
+  const rentalSignature = stores.rentalSignature;
+
+  const promisesToRun = [];
+
+  if (creditCard.isFilled) {
+    promisesToRun.push(postCustomerCreditCard({ customerId, creditCard: creditCard.data }));
+  }
+
+  if (driversLicense.isFilled) {
+    if (driversLicense.data.frontImageName && driversLicense.data.frontImageUrl) {
+      promisesToRun.push(
+        postDriverLicenseImage({
+          clientId: Number(clientId),
+          customerId: `${customerId}`,
+          imageUrl: driversLicense.data.frontImageUrl,
+          imageName: driversLicense.data.frontImageName,
+          side: "Front",
+        })
+      );
+    }
+    if (driversLicense.data.backImageName && driversLicense.data.backImageUrl) {
+      promisesToRun.push(
+        postDriverLicenseImage({
+          clientId: Number(clientId),
+          customerId: `${customerId}`,
+          imageUrl: driversLicense.data.backImageUrl,
+          imageName: driversLicense.data.backImageName,
+          side: "Back",
+        })
+      );
+    }
+  }
+
+  if (rentalSignature.isFilled && rental) {
+    promisesToRun.push(
+      postUploadRentalSignature({
+        customerName: rental.driverName,
+        imageUrl: rentalSignature.data.signatureUrl,
+        referenceType,
+        referenceId: `${referenceId}`,
+      })
+    );
+  }
+
+  return await Promise.all(promisesToRun);
 }

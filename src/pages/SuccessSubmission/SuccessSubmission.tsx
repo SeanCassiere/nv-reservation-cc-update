@@ -1,11 +1,10 @@
 import React, { Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-
-import { selectConfigState } from "../../redux/store";
-import { APP_CONSTANTS } from "../../utils/constants";
 
 import LoadingSubmission from "../LoadingSubmission/LoadingSubmission";
+
+import { useConfigStore } from "../../hooks/stores/useConfigStore";
+import { APP_CONSTANTS } from "../../utils/constants";
 
 const SubmissionSuccessDefaultLayout = lazy(
   () => import("../../layouts/SubmissionSuccess/SubmissionSuccessDefaultLayout")
@@ -13,15 +12,13 @@ const SubmissionSuccessDefaultLayout = lazy(
 
 const SuccessSubmissionPage: React.FC = () => {
   const { t } = useTranslation();
-  const appConfig = useSelector(selectConfigState);
+  const submissionSuccessScreen = useConfigStore((s) => s.successSubmissionScreen);
 
   return (
     <React.Fragment>
       <Suspense fallback={<LoadingSubmission title={t("appStatusMessages.loading")} />}>
-        {appConfig.successSubmissionScreen === APP_CONSTANTS.SUCCESS_SCREEN_TEST && <TestSubmissionLayout />}
-        {appConfig.successSubmissionScreen === APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT && (
-          <SubmissionSuccessDefaultLayout />
-        )}
+        {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_SCREEN_TEST && <TestSubmissionLayout />}
+        {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT && <SubmissionSuccessDefaultLayout />}
       </Suspense>
     </React.Fragment>
   );
