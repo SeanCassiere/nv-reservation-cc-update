@@ -1,14 +1,17 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import RequireAuth from "./RequireAuth";
-import NotAuthorized from "../shared/pages/NotAuthorized/NotAuthorized";
-import ApplicationController from "../shared/controllers/ApplicationController/ApplicationController";
-import DefaultSubmitDetailsController from "../shared/controllers/SubmitDetailsController/DefaultSubmitDetailsController";
-import SuccessSubmissionPage from "../shared/pages/SuccessSubmission/SuccessSubmission";
-import ErrorSubmission from "../shared/pages/ErrorSubmission/ErrorSubmission";
+import LoadingSubmission from "../pages/LoadingSubmission/LoadingSubmission";
+import NotAuthorized from "../pages/NotAuthorized/NotAuthorized";
+import ApplicationController from "../controllers/ApplicationController/ApplicationController";
+import SuccessSubmissionPage from "../pages/SuccessSubmission/SuccessSubmission";
+import ErrorSubmission from "../pages/ErrorSubmission/ErrorSubmission";
 import NavigateToNotAvailable from "./NavigateToNotAvailable";
+// import DefaultSubmitDetailsController from "../controllers/SubmitDetailsController/DefaultSubmitDetailsController";
+
+const SubmitDetailsController = lazy(() => import("../controllers/SubmitDetailsController/SubmitDetailsController"));
 
 const AppRoutes: React.FC = () => {
   const { t } = useTranslation();
@@ -21,7 +24,9 @@ const AppRoutes: React.FC = () => {
           path="/submit-details"
           element={
             <RequireAuth>
-              <DefaultSubmitDetailsController />
+              <Suspense fallback={<LoadingSubmission title={t("appStatusMessages.loading")} />}>
+                <SubmitDetailsController />
+              </Suspense>
             </RequireAuth>
           }
         />

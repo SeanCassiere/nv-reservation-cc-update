@@ -13,6 +13,8 @@
     "reduxjs",
     "RENTALL",
     "reservationview",
-    "tailwindcss"
+    "tailwindcss",
+    "tanstack",
+    "zustand"
   ]
 }

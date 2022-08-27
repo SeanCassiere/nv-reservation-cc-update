@@ -7,6 +7,7 @@
   "plugins": ["import", "prettier"],
   "rules": {
     "no-unused-vars": "off",
+    "no-loop-func": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "import/no-named-as-default-member": "off"
   }
