@@ -9,6 +9,9 @@ import { APP_CONSTANTS } from "../../utils/constants";
 const SubmissionSuccessDefaultLayout = lazy(
   () => import("../../layouts/SubmissionSuccess/SubmissionSuccessDefaultLayout")
 );
+const RentalSummarySuccessDefaultLayout = lazy(
+  () => import("../../layouts/SubmissionSuccess/RentalSummarySuccessDefaultLayout")
+);
 
 const SuccessSubmissionPage: React.FC = () => {
   const { t } = useTranslation();
@@ -19,6 +22,9 @@ const SuccessSubmissionPage: React.FC = () => {
       <Suspense fallback={<LoadingSubmission title={t("appStatusMessages.loading")} />}>
         {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_SCREEN_TEST && <TestSubmissionLayout />}
         {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT && <SubmissionSuccessDefaultLayout />}
+        {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_SCREEN_RENTAL_SUMMARY && (
+          <RentalSummarySuccessDefaultLayout />
+        )}
       </Suspense>
     </React.Fragment>
   );

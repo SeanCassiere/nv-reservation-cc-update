@@ -1,4 +1,5 @@
 {
+  "intlCurrency": "{{value, currency}}",
   "developer": {
     "drawerTitle": "Developer Menu",
     "viewProjectRepo": "GitHub Repository",

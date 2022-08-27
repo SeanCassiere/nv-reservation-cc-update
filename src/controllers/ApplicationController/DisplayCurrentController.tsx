@@ -14,6 +14,7 @@ const DefaultLicenseUploadController = lazy(() => import("../LicenseUploadContro
 const DefaultCreditCardAndLicenseUploadController = lazy(
   () => import("../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController")
 );
+const DefaultRentalSummaryController = lazy(() => import("../RentalSummaryController/DefaultRentalSummaryController"));
 
 interface IProps {
   selectedController: string | null;
@@ -68,9 +69,17 @@ const DisplayCurrentController = ({
             isPrevPageAvailable={isPrevPageAvailable}
           />
         )}
-        {selectedController === "Default/Positive" && (
+        {selectedController === APP_CONSTANTS.VIEW_DEFAULT_RENTAL_CHARGES_FORM && (
+          <DefaultRentalSummaryController
+            handleSubmit={handleNext}
+            isNextAvailable={isNextPageAvailable}
+            handlePrevious={handlePrevious}
+            isPrevPageAvailable={isPrevPageAvailable}
+          />
+        )}
+        {selectedController === APP_CONSTANTS.VIEW_DEV_SCREEN_1 && (
           <div>
-            <h5>positive</h5>
+            <h5>{APP_CONSTANTS.VIEW_DEV_SCREEN_1}</h5>
             <div className="flex gap-1">
               <Button
                 type="button"
@@ -87,9 +96,9 @@ const DisplayCurrentController = ({
             </div>
           </div>
         )}
-        {selectedController === "Default/Negative" && (
+        {selectedController === APP_CONSTANTS.VIEW_DEV_SCREEN_2 && (
           <div>
-            <h5>negative</h5>
+            <h5>{APP_CONSTANTS.VIEW_DEV_SCREEN_2}</h5>
             <div className="flex gap-1">
               <Button
                 type="button"
