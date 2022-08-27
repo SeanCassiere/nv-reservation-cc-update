@@ -20,7 +20,10 @@ const RentalSummarySuccessDefaultLayout: React.FC = () => {
         {t("successSubmission.message", {
           context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
         })}
-        &nbsp;Please find the summary of charges for your booking below.
+        &nbsp;
+        {t("successSubmission.rentalSummaryMessage", {
+          context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+        })}
       </p>
       <div className="mt-5">
         <DefaultRentalSummary clientId={clientId ?? 0} referenceId={referenceId ?? 0} referenceType={referenceType} />

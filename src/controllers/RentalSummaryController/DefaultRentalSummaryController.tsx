@@ -1,11 +1,12 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
 import Button from "../../components/Elements/Button";
 import DefaultRentalSummary from "../../components/RentalSummary/DefaultRentalSummary";
 
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { useTranslation } from "react-i18next";
+import { APP_CONSTANTS } from "../../utils/constants";
 
 interface IProps {
   handleSubmit: () => void;
@@ -26,7 +27,14 @@ const DefaultRentalSummaryController: React.FC<IProps> = ({
   const referenceType = useRuntimeStore((s) => s.referenceType);
 
   return (
-    <CardLayout title="Rental summary" subtitle="Summary of charges for this booking">
+    <CardLayout
+      title={t("forms.rentalSummary.title", {
+        context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+      })}
+      subtitle={t("forms.rentalSummary.message", {
+        context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+      })}
+    >
       <div className="mt-3">
         <DefaultRentalSummary clientId={clientId ?? 0} referenceId={referenceId ?? 0} referenceType={referenceType} />
         <div className="mt-6 flex">

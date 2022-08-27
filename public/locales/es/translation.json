@@ -80,6 +80,12 @@
         "cancel": "Cancelar",
         "submit": "Entiendo"
       }
+    },
+    "rentalSummary": {
+      "title": "Resumen de alquiler",
+      "title_agreement": "Resumen de alquiler",
+      "message": "Resumen de los cargos de esta reserva.",
+      "message_agreement": "Resumen de los cargos de esta reserva."
     }
   },
   "errorBoundary": {
@@ -89,7 +95,50 @@
   "successSubmission": {
     "title": "¡éxito!",
     "message": "Gracias por enviar la información de su tarjeta de crédito a su reserva.",
-    "message_agreement": "Gracias por enviar su información para el contrato de alquiler."
+    "message_agreement": "Gracias por enviar su información para el contrato de alquiler.",
+    "rentalSummaryMessage": "A continuación encontrará el resumen de los cargos de su reserva.",
+    "rentalSummaryMessage_agreement": "A continuación encontrará el resumen de los cargos de su contrato de alquiler."
+  },
+  "summaryOfCharges": {
+    "reservation": {
+      "baseRate": "Tasa básica",
+      "discountOnBaseRate": "Promoción",
+      "finalBaseRate": "Tarifa básica final",
+      "totalTaxMischarges": "miscelánea total cargos (imponibles)",
+      "totalNonTaxMischarges": "miscelánea total cargos (no imponibles)",
+      "preTaxAdjustment": "Ajustes antes de impuestos",
+      "preSubtotal": "Subtotal antes del descuento",
+      "discountOnSubtotal": "Promoción sobre subtotal",
+      "subtotal": "Total parcial",
+      "totalTaxCharges": "Cargos fiscales totales",
+      "additionalCharges": "Cargos adicionales",
+      "estimatedTotalWithDeposit": "Total Estimado",
+      "grandTotal": "gran total",
+      "balanceDue": "Saldo adeudado",
+      "amountPaid": "Cantidad pagada",
+      "securityDeposit": "Depósito de seguridad"
+    },
+    "agreement": {
+      "baseRate": "Total rate charges",
+      "discountOnBaseRate": "Promoción",
+      "finalBaseRate": "Tarifa básica final",
+      "totalTaxMischarges": "Total misc. charges (taxable)",
+      "totalNonTaxMischarges": "Total misc. charges (non-Taxable)",
+      "preTaxAdjustment": "Ajustes antes de impuestos",
+      "preSubtotal": "Subtotal antes del descuento",
+      "discountOnSubtotal": "Promoción sobre subtotal",
+      "subtotal": "Total parcial",
+      "totalTaxCharges": "Cargos fiscales totales",
+      "additionalCharges": "Additional charges",
+      "grandTotal": "gran total",
+      "balanceDue": "Saldo adeudado",
+      "amountPaid": "Cantidad pagada",
+      "securityDeposit": "Depósito de seguridad",
+      "extraMileageCharges": "Cargos por kilometraje adicional",
+      "extraDurationCharges": "Cargos por duración adicional",
+      "extraFuelCharges": "Cargos adicionales por combustible",
+      "postTaxAdjustment": "Ajustes después de impuestos"
+    }
   },
   "authenticationSubmission": {
     "title": "Autenticando",

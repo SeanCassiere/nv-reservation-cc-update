@@ -107,6 +107,12 @@
         "cancel": "Cancel",
         "submit": "I Understand"
       }
+    },
+    "rentalSummary": {
+      "title": "Rental summary",
+      "title_agreement": "Rental summary",
+      "message": "Summary of charges for this booking.",
+      "message_agreement": "Summary of charges for this booking."
     }
   },
   "errorBoundary": {
@@ -116,7 +122,50 @@
   "successSubmission": {
     "title": "Success!",
     "message": "Thank you for submitting your information towards the booking.",
-    "message_agreement": "Thank you for submitting your information towards the rental contract."
+    "message_agreement": "Thank you for submitting your information towards the rental contract.",
+    "rentalSummaryMessage": "Please find the summary of charges for your booking below.",
+    "rentalSummaryMessage_agreement": "Please find the summary of charges for your rental contract below."
+  },
+  "summaryOfCharges": {
+    "reservation": {
+      "baseRate": "Base rate",
+      "discountOnBaseRate": "Promotion",
+      "finalBaseRate": "Final base rate",
+      "totalTaxMischarges": "Total misc. charges (taxable)",
+      "totalNonTaxMischarges": "Total misc. charges (non-Taxable)",
+      "preTaxAdjustment": "Pre-tax adjustments",
+      "preSubtotal": "Subtotal before discount",
+      "discountOnSubtotal": "Promotion on subtotal",
+      "subtotal": "Subtotal",
+      "totalTaxCharges": "Total tax charges",
+      "additionalCharges": "Additional charges",
+      "estimatedTotalWithDeposit": "Estimated Total",
+      "grandTotal": "Grand total",
+      "balanceDue": "Balance due",
+      "amountPaid": "Amount paid",
+      "securityDeposit": "Security deposit"
+    },
+    "agreement": {
+      "baseRate": "Total rate charges",
+      "discountOnBaseRate": "Promotion",
+      "finalBaseRate": "Final base rate",
+      "totalTaxMischarges": "Total misc. charges (taxable)",
+      "totalNonTaxMischarges": "Total misc. charges (non-Taxable)",
+      "preTaxAdjustment": "Pre-tax adjustments",
+      "preSubtotal": "Subtotal before discount",
+      "discountOnSubtotal": "Promotion on subtotal",
+      "subtotal": "Subtotal",
+      "totalTaxCharges": "Total tax charges",
+      "additionalCharges": "Additional charges",
+      "grandTotal": "Grand total",
+      "balanceDue": "Balance due",
+      "amountPaid": "Amount paid",
+      "securityDeposit": "Security deposit",
+      "extraMileageCharges": "Extra mileage charges",
+      "extraDurationCharges": "Extra duration charges",
+      "extraFuelCharges": "Extra fuel charges",
+      "postTaxAdjustment": "Post-tax adjustments"
+    }
   },
   "authenticationSubmission": {
     "title": "Authenticating",
