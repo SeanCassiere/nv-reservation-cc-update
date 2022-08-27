@@ -80,6 +80,12 @@
         "cancel": "Annuler",
         "submit": "Je comprend"
       }
+    },
+    "rentalSummary": {
+      "title": "Récapitulatif de la location",
+      "title_agreement": "Récapitulatif de la location",
+      "message": "Récapitulatif des frais pour cette réservation.",
+      "message_agreement": "Récapitulatif des frais pour cette réservation."
     }
   },
   "errorBoundary": {
@@ -89,7 +95,50 @@
   "successSubmission": {
     "title": "Succès!",
     "message": "Merci d'avoir soumis les informations de votre carte de crédit pour votre réservation.",
-    "message_agreement": "Merci de soumettre vos informations pour le contrat de location."
+    "message_agreement": "Merci de soumettre vos informations pour le contrat de location.",
+    "rentalSummaryMessage": "Veuillez trouver ci-dessous le récapitulatif des frais de votre réservation.",
+    "rentalSummaryMessage_agreement": "Veuillez trouver ci-dessous le récapitulatif des charges de votre contrat de location."
+  },
+  "summaryOfCharges": {
+    "reservation": {
+      "baseRate": "Taux de base",
+      "discountOnBaseRate": "Promotion",
+      "finalBaseRate": "Taux de base final",
+      "totalTaxMischarges": "Total divers charges (taxables)",
+      "totalNonTaxMischarges": "Total divers charges (non taxables)",
+      "preTaxAdjustment": "Ajustements avant impôts",
+      "preSubtotal": "Sous-total avant remise",
+      "discountOnSubtotal": "Promotion sur sous-total",
+      "subtotal": "Total",
+      "totalTaxCharges": "Charges fiscales totales",
+      "additionalCharges": "Frais supplémentaires",
+      "estimatedTotalWithDeposit": "Total estimé",
+      "grandTotal": "Somme finale",
+      "balanceDue": "Solde dû",
+      "amountPaid": "Le montant payé",
+      "securityDeposit": "Dépôt de garantie"
+    },
+    "agreement": {
+      "baseRate": "Total rate charges",
+      "discountOnBaseRate": "Promotion",
+      "finalBaseRate": "Taux de base final",
+      "totalTaxMischarges": "Total divers charges (taxables)",
+      "totalNonTaxMischarges": "Total divers charges (non taxables)",
+      "preTaxAdjustment": "Ajustements avant impôts",
+      "preSubtotal": "Sous-total avant remise",
+      "discountOnSubtotal": "Promotion sur sous-total",
+      "subtotal": "Total",
+      "totalTaxCharges": "Charges fiscales totales",
+      "additionalCharges": "Frais supplémentaires",
+      "grandTotal": "Somme finale",
+      "balanceDue": "Solde dû",
+      "amountPaid": "Le montant payé",
+      "securityDeposit": "Dépôt de garantie",
+      "extraMileageCharges": "Frais de kilométrage supplémentaire",
+      "extraDurationCharges": "Frais de durée supplémentaire",
+      "extraFuelCharges": "Frais de carburant supplémentaires",
+      "postTaxAdjustment": "Ajustements après impôts"
+    }
   },
   "authenticationSubmission": {
     "title": "Authentification",

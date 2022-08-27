@@ -56,7 +56,7 @@ Should you wish to manually create your own config string, you will need to crea
   "fromRentall": true
 }
 
-// Example Base64 --> eyJjbGllbnRJZCI6IDEwMTMsImVtYWlsVGVtcGxhdGVJZCI6IDczODgsImZsb3ciOiBbIkRlZmF1bHQvQ3JlZGl0Q2FyZEZvcm0iXX0=
+// Example Base64 --> eyJjbGllbnRJZCI6MTAxMywiZW1haWxUZW1wbGF0ZUlkIjo3Mzg4LCJmbG93IjpbIkRlZmF1bHQvQ3JlZGl0Q2FyZEZvcm0iXSwiZnJvbVJlbnRhbGwiOnRydWV9
 ```
 
 These are the parameters supported in the configuration object.
@@ -73,15 +73,17 @@ Afterwards, you can encode this JSON object using Base64 to formulate the final 
 
 ## Available flow screens
 
-| Key                                    | Description                                                                                |
-| -------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Default/CreditCardForm                 | The default credit card form                                                               |
-| Default/LicenseUploadForm              | The default form for uploading driver's license images                                     |
-| Default/CreditCardAndLicenseUploadForm | The a combination of both the `Default/CreditCardForm` and the `Default/LicenseUploadForm` |
-| Default/RentalSignatureForm            | The default canvas to capture the customer's signature                                     |
+| Key                                    | Description                                                                                                                |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Default/CreditCardForm                 | The default credit card form                                                                                               |
+| Default/LicenseUploadForm              | The default form for uploading driver's license images                                                                     |
+| Default/CreditCardAndLicenseUploadForm | The a combination of both the `Default/CreditCardForm` and the `Default/LicenseUploadForm`                                 |
+| Default/RentalSignatureForm            | The default canvas to capture the customer's signature                                                                     |
+| Default/RentalSummaryForm              | The default screen showing the rental's summary of charges needing the customer to view it before submitting their details |
 
 ## Available success screens
 
-| Key                       | Description                                    |
-| ------------------------- | ---------------------------------------------- |
-| Default/SuccessSubmission | The default generic application success screen |
+| Key                          | Description                                                                                                                                                                                |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Default/SuccessSubmission    | The default generic application success screen                                                                                                                                             |
+| Default/SuccessRentalSummary | Application success screen with the same message shown in the _Default/SuccessSubmission_ screen, as well as the summary of charges table shown in the _Default/RentalSummaryForm_ screen. |

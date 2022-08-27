@@ -80,6 +80,12 @@
         "cancel": "Absagen",
         "submit": "Ich verstehe"
       }
+    },
+    "rentalSummary": {
+      "title": "Mietübersicht",
+      "title_agreement": "Mietübersicht",
+      "message": "Zusammenfassung der Gebühren für diese Buchung.",
+      "message_agreement": "Zusammenfassung der Gebühren für diese Buchung."
     }
   },
   "errorBoundary": {
@@ -89,7 +95,50 @@
   "successSubmission": {
     "title": "Erfolg!",
     "message": "Vielen Dank, dass Sie Ihre Kreditkarteninformationen für Ihre Reservierung übermittelt haben.",
-    "message_agreement": "Vielen Dank für die Übermittlung Ihrer Informationen zum Mietvertrag."
+    "message_agreement": "Vielen Dank für die Übermittlung Ihrer Informationen zum Mietvertrag.",
+    "rentalSummaryMessage": "Nachfolgend finden Sie die Gebührenübersicht für Ihre Buchung.",
+    "rentalSummaryMessage_agreement": "Nachfolgend finden Sie die Gebührenübersicht für Ihren Mietvertrag."
+  },
+  "summaryOfCharges": {
+    "reservation": {
+      "baseRate": "Grundtarif",
+      "discountOnBaseRate": "Förderung",
+      "finalBaseRate": "Endgültiger Basispreis",
+      "totalTaxMischarges": "Insgesamt versch. Gebühren (steuerpflichtig)",
+      "totalNonTaxMischarges": "Insgesamt versch. Gebühren (nicht steuerpflichtig)",
+      "preTaxAdjustment": "Anpassungen vor Steuern",
+      "preSubtotal": "Zwischensumme vor Rabatt",
+      "discountOnSubtotal": "Promotion auf Zwischensumme",
+      "subtotal": "Zwischensumme",
+      "totalTaxCharges": "Gesamtsteuerbelastung",
+      "additionalCharges": "Zusätzliche Kosten",
+      "estimatedTotalWithDeposit": "geschätzter Gesamtwert",
+      "grandTotal": "Gesamtsumme",
+      "balanceDue": "Restbetrag fällig",
+      "amountPaid": "Bezahlter Betrag",
+      "securityDeposit": "Kaution"
+    },
+    "agreement": {
+      "baseRate": "Gesamtgebühren",
+      "discountOnBaseRate": "Förderung",
+      "finalBaseRate": "Endgültiger Basispreis",
+      "totalTaxMischarges": "Insgesamt versch. Gebühren (steuerpflichtig)",
+      "totalNonTaxMischarges": "Insgesamt versch. Gebühren (nicht steuerpflichtig)",
+      "preTaxAdjustment": "Anpassungen vor Steuern",
+      "preSubtotal": "Zwischensumme vor Rabatt",
+      "discountOnSubtotal": "Promotion auf Zwischensumme",
+      "subtotal": "Zwischensumme",
+      "totalTaxCharges": "Gesamtsteuerbelastung",
+      "additionalCharges": "Zusätzliche Kosten",
+      "grandTotal": "Gesamtsumme",
+      "balanceDue": "Restbetrag fällig",
+      "amountPaid": "Bezahlter Betrag",
+      "securityDeposit": "Kaution",
+      "extraMileageCharges": "Gebühren für zusätzliche Kilometer",
+      "extraDurationCharges": "Gebühren für zusätzliche Dauer",
+      "extraFuelCharges": "Zusätzliche Kraftstoffgebühren",
+      "postTaxAdjustment": "Anpassungen nach Steuern"
+    }
   },
   "authenticationSubmission": {
     "title": "Authentifizierung",

@@ -8,35 +8,41 @@ export const APP_CONSTANTS = {
   VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM: "Default/CreditCardAndLicenseUploadForm",
   VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_CONTROLLER: "Default/CreditCardAndLicenseUploadController",
   VIEW_DEFAULT_RENTAL_SIGNATURE_FORM: "Default/RentalSignatureForm",
+  VIEW_DEFAULT_RENTAL_CHARGES_FORM: "Default/RentalSummaryForm",
   VIEW_DEV_SCREEN_1: "Default/Positive",
   VIEW_DEV_SCREEN_2: "Default/Negative",
   SUCCESS_SCREEN_DEFAULT: "Default/SuccessSubmission",
+  SUCCESS_SCREEN_RENTAL_SUMMARY: "Default/SuccessRentalSummary",
   SUCCESS_SCREEN_TEST: "test/test",
 } as const;
 
 export const ALL_SCREEN_FLOWS = [
   {
-    label: "Credit Card Form",
+    label: APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_FORM,
     value: APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_FORM,
   },
   {
-    label: "License Upload Form",
+    label: APP_CONSTANTS.VIEW_DEFAULT_LICENSE_UPLOAD_FORM,
     value: APP_CONSTANTS.VIEW_DEFAULT_LICENSE_UPLOAD_FORM,
   },
   {
-    label: "Credit Card and License Upload Form",
+    label: APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM,
     value: APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM,
   },
   {
-    label: "Rental Signature Form",
+    label: APP_CONSTANTS.VIEW_DEFAULT_RENTAL_SIGNATURE_FORM,
     value: APP_CONSTANTS.VIEW_DEFAULT_RENTAL_SIGNATURE_FORM,
   },
   {
-    label: "Dev Screen 01",
+    label: APP_CONSTANTS.VIEW_DEFAULT_RENTAL_CHARGES_FORM,
+    value: APP_CONSTANTS.VIEW_DEFAULT_RENTAL_CHARGES_FORM,
+  },
+  {
+    label: APP_CONSTANTS.VIEW_DEV_SCREEN_1,
     value: APP_CONSTANTS.VIEW_DEV_SCREEN_1,
   },
   {
-    label: "Dev Screen 02",
+    label: APP_CONSTANTS.VIEW_DEV_SCREEN_2,
     value: APP_CONSTANTS.VIEW_DEV_SCREEN_2,
   },
 ];
@@ -49,5 +55,9 @@ export const ALL_SUCCESS_SCREENS = [
   {
     label: APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT,
     value: APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT,
+  },
+  {
+    label: APP_CONSTANTS.SUCCESS_SCREEN_RENTAL_SUMMARY,
+    value: APP_CONSTANTS.SUCCESS_SCREEN_RENTAL_SUMMARY,
   },
 ];
