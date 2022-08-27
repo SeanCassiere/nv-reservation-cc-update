@@ -45,7 +45,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
     <div className="grid grid-cols-2 gap-4">
       <div className="col-span-2">
         <TextInput
-          placeholder="XXXX XXXX XXXX XXXX"
+          placeholder="xxxx xxxx xxxx xxxx"
           name="number"
           value={formData.number}
           onChange={passOnChange}
@@ -53,7 +53,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           onBlur={handleBlur}
           required
           type="text"
-          autoComplete="off"
+          autoComplete="cc-number"
           label={t("forms.creditCard.labels.cardNumber")}
           isError={Boolean(isFieldInvalid("number"))}
           helperText={isFieldInvalid("number") && t("forms.creditCard.errors.cardNumber")}
@@ -69,7 +69,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           onBlur={handleBlur}
           required
           type="text"
-          autoComplete="off"
+          autoComplete="cc-name"
           label={t("forms.creditCard.labels.nameOnCard")}
           isError={Boolean(isFieldInvalid("name"))}
           helperText={isFieldInvalid("name") && t("forms.creditCard.errors.name")}
@@ -85,7 +85,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           onBlur={handleBlur}
           required
           type="text"
-          autoComplete="off"
+          autoComplete="cc-exp"
           label={t("forms.creditCard.labels.expMonthYear")}
           isError={Boolean(isFieldInvalid("monthYearExpiry"))}
           helperText={isFieldInvalid("monthYearExpiry") && t("forms.creditCard.errors.expMonthYear")}
@@ -104,7 +104,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           type="password"
           minLength={3}
           maxLength={4}
-          autoComplete="off"
+          autoComplete="cc-csc"
           label={t("forms.creditCard.labels.cvv")}
           isError={Boolean(isFieldInvalid("cvv"))}
           helperText={isFieldInvalid("cvv") && t("forms.creditCard.errors.cvv")}
@@ -120,7 +120,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           onBlur={handleBlur}
           required
           type="text"
-          autoComplete="off"
+          autoComplete="postal-code"
           label={t("forms.creditCard.labels.placeholders.zipCode")}
           isError={Boolean(isFieldInvalid("billingZip"))}
           helperText={isFieldInvalid("billingZip") && t("forms.creditCard.errors.billingZip")}
