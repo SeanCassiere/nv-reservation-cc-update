@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -9,16 +8,15 @@ import ErrorSubmission from "./pages/ErrorSubmission/ErrorSubmission";
 import DeveloperDebugMenu from "./components/DeveloperDebugMenu/DeveloperDebugMenu";
 import AnchorLink from "./components/Elements/AnchorLink";
 
-import { selectConfigState } from "./redux/store";
+import { useConfigStore } from "./hooks/stores/useConfigStore";
 import { isValueTrue } from "./utils/common";
-import { useConfigStore } from "./hooks/useConfigStore";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const { t } = useTranslation();
-  const { fromRentall } = useSelector(selectConfigState);
 
+  const isUsingRentall = useConfigStore((s) => s.fromRentall);
   const isDevOpenMain = useConfigStore((s) => s.isDevMenuOpen);
   const setDevOpenState = useConfigStore((s) => s.setDevMenuState);
 
@@ -58,12 +56,12 @@ const App = () => {
             <p className="text-sm text-center">
               {t("footer.poweredBy")}&nbsp;
               <AnchorLink
-                href={fromRentall ? "https://rentallsoftware.com" : "https://navotar.com"}
+                href={isUsingRentall ? "https://rentallsoftware.com" : "https://navotar.com"}
                 target="_blank"
                 rel="noreferrer"
                 className="text-sm text-indigo-600"
               >
-                {fromRentall ? "RENTALL" : "Navotar"}
+                {isUsingRentall ? "RENTALL" : "Navotar"}
               </AnchorLink>
             </p>
           </div>

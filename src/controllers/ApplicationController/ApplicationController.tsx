@@ -7,9 +7,9 @@ import ErrorSubmission from "../../pages/ErrorSubmission/ErrorSubmission";
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 import DisplayCurrentController from "./DisplayCurrentController";
 
-import { useConfigStore } from "../../hooks/useConfigStore";
-import { useAuthStore } from "../../hooks/useAuthStore";
-import { useRuntimeStore } from "../../hooks/useRuntimeStore";
+import { useConfigStore } from "../../hooks/stores/useConfigStore";
+import { useAuthStore } from "../../hooks/stores/useAuthStore";
+import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 
 import { APP_CONSTANTS } from "../../utils/constants";
 import { authenticateWithLambda } from "../../api/lambdas";
@@ -38,7 +38,7 @@ const ApplicationController: React.FC = () => {
 
   const [bootStatus, setBootStatus] = useState<BootStatus>("authenticating");
 
-  const { mutate: callInitDataFetch } = useMutation(["fetch-core-details"], initDataFetch, {
+  const { mutate: callInitDataFetch } = useMutation(["app-init-details"], initDataFetch, {
     onSuccess: (data) => {
       setRuntimeConfirmationEmail(data.confirmationEmail);
       setRuntimeRental(data.rental);
@@ -50,7 +50,7 @@ const ApplicationController: React.FC = () => {
     },
   });
 
-  const { mutate: authorizeApp } = useMutation(["authorization"], authenticateWithLambda, {
+  const { mutate: authorizeApp } = useMutation(["app-authorization"], authenticateWithLambda, {
     onSuccess: (data) => {
       setAuthValues(data);
       callInitDataFetch({

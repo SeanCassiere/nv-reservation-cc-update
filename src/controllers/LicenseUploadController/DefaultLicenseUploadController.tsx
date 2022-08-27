@@ -1,15 +1,13 @@
 import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { clearReduxFormState, setLicenseUploadFormData } from "../../redux/slices/forms/slice";
-import { selectLicenseUploadForm } from "../../redux/store";
-import { useDriverLicenseLogic } from "../../hooks/useDriverLicenseLogic";
-
-import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
-import Button from "../../components/Elements/Button";
 import CardLayout from "../../layouts/Card";
 import Alert from "../../components/Elements/Alert";
+import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
+import Button from "../../components/Elements/Button";
+
+import { useDriverLicenseLogic } from "../../hooks/logic/useDriverLicenseLogic";
+import { useFormStore } from "../../hooks/stores/useFormStore";
 
 interface IProps {
   handleSubmit: () => void;
@@ -24,11 +22,11 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
   isNextAvailable,
   isPrevPageAvailable,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const {
-    data: { frontImageUrl, frontImageName, backImageName, backImageUrl },
-  } = useSelector(selectLicenseUploadForm);
+
+  const clearFormState = useFormStore((s) => s.clearFormStateKey);
+  const setDriversLicenseToStore = useFormStore((s) => s.setDriversLicense);
+  const initialDriverLicenseData = useFormStore((s) => s.driversLicense.data);
 
   const {
     frontLicenseImage,
@@ -42,10 +40,10 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
     clearFrontImage,
     clearBackImage,
   } = useDriverLicenseLogic({
-    frontImageDataUrl: frontImageUrl,
-    frontImageName,
-    backImageDataUrl: backImageUrl,
-    backImageName,
+    frontImageDataUrl: initialDriverLicenseData.frontImageUrl,
+    frontImageName: initialDriverLicenseData.frontImageName,
+    backImageDataUrl: initialDriverLicenseData.backImageUrl,
+    backImageName: initialDriverLicenseData.backImageName,
   });
 
   // General component state
@@ -54,30 +52,35 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
     if (!backLicenseImage) setBackImageError(true);
     if (!frontLicenseImage || !backLicenseImage) return;
 
-    dispatch(
-      setLicenseUploadFormData({
-        frontImageUrl: URL.createObjectURL(frontLicenseImage),
-        backImageUrl: URL.createObjectURL(backLicenseImage),
-        frontImageName: frontLicenseImage.name,
-        backImageName: backLicenseImage.name,
-      })
-    );
+    setDriversLicenseToStore({
+      frontImageUrl: URL.createObjectURL(frontLicenseImage),
+      backImageUrl: URL.createObjectURL(backLicenseImage),
+      frontImageName: frontLicenseImage.name,
+      backImageName: backLicenseImage.name,
+    });
     handleSubmit();
-  }, [frontLicenseImage, setFrontImageError, backLicenseImage, setBackImageError, dispatch, handleSubmit]);
+  }, [
+    frontLicenseImage,
+    backLicenseImage,
+    setFrontImageError,
+    setBackImageError,
+    setDriversLicenseToStore,
+    handleSubmit,
+  ]);
 
   const handleOpenModalConfirmation = useCallback(() => {
     if (
       (backLicenseImage || frontLicenseImage) &&
       window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))
     ) {
-      dispatch(clearReduxFormState("licenseUploadForm"));
+      clearFormState("driversLicense");
       handlePrevious();
     }
 
     if (!backLicenseImage && !frontLicenseImage) {
       handlePrevious();
     }
-  }, [backLicenseImage, dispatch, frontLicenseImage, handlePrevious, t]);
+  }, [backLicenseImage, clearFormState, frontLicenseImage, handlePrevious, t]);
 
   return (
     <CardLayout title={t("forms.licenseUpload.title")} subtitle={t("forms.licenseUpload.message")}>
@@ -102,7 +105,14 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
                 "image/jpg": [".jpg"],
                 "image/png": [".png"],
               }}
-              initialPreview={frontImageUrl ? { fileName: frontImageName!, url: frontImageUrl } : null}
+              initialPreview={
+                initialDriverLicenseData.frontImageUrl
+                  ? {
+                      fileName: initialDriverLicenseData.frontImageName!,
+                      url: initialDriverLicenseData.frontImageUrl,
+                    }
+                  : null
+              }
             />
           </div>
         </div>
@@ -128,7 +138,14 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
                 "image/jpg": [".jpg"],
                 "image/png": [".png"],
               }}
-              initialPreview={backImageUrl ? { fileName: backImageName!, url: backImageUrl } : null}
+              initialPreview={
+                initialDriverLicenseData.backImageUrl
+                  ? {
+                      fileName: initialDriverLicenseData.backImageName!,
+                      url: initialDriverLicenseData.backImageUrl,
+                    }
+                  : null
+              }
             />
           </div>
         </div>

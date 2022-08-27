@@ -1,18 +1,16 @@
 import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { selectCreditCardForm, selectLicenseUploadForm } from "../../redux/store";
-import { clearReduxFormState, setCreditCardFormData, setLicenseUploadFormData } from "../../redux/slices/forms/slice";
-import { useCreditCardLogic } from "../../hooks/useCreditCardLogic";
-import { useDriverLicenseLogic } from "../../hooks/useDriverLicenseLogic";
-
-import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
-import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
-import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
-import Button from "../../components/Elements/Button";
 import CardLayout, { cardSubtitleClassNames, cardTitleClassNames } from "../../layouts/Card";
+import Button from "../../components/Elements/Button";
 import Alert from "../../components/Elements/Alert";
+import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
+import DefaultDynamicCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
+import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
+
+import { useCreditCardLogic } from "../../hooks/logic/useCreditCardLogic";
+import { useDriverLicenseLogic } from "../../hooks/logic/useDriverLicenseLogic";
+import { useFormStore } from "../../hooks/stores/useFormStore";
 
 interface IProps {
   handleSubmit: () => void;
@@ -27,26 +25,27 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
   handlePrevious,
   isPrevPageAvailable,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { data: initialFormData } = useSelector(selectCreditCardForm);
+  const clearFormState = useFormStore((s) => s.clearFormStateKey);
 
+  const setDriversLicenseToStore = useFormStore((s) => s.setDriversLicense);
+  const setCustomerCreditCardToStore = useFormStore((s) => s.setCustomerCreditCard);
+  const initialCreditCardFormData = useFormStore((s) => s.customerCreditCard.data);
+  const initialDriverLicenseData = useFormStore((s) => s.driversLicense.data);
+
+  // credit card relate handlers
   const {
     validateCardData,
     handleCardInputChange,
     handleCardInputBlur,
     handleCardInputFocus,
-    isValidCheck,
+    isValidCheck: isCreditCardValid,
     currentFocus,
     schemaErrors,
     formValues,
-  } = useCreditCardLogic(initialFormData);
+  } = useCreditCardLogic(initialCreditCardFormData);
 
   // license related handlers
-  const {
-    data: { frontImageName, frontImageUrl, backImageName, backImageUrl },
-  } = useSelector(selectLicenseUploadForm);
-
   const {
     frontLicenseImage,
     backLicenseImage,
@@ -59,10 +58,10 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
     clearFrontImage,
     clearBackImage,
   } = useDriverLicenseLogic({
-    frontImageDataUrl: frontImageUrl,
-    frontImageName,
-    backImageDataUrl: backImageUrl,
-    backImageName,
+    frontImageDataUrl: initialDriverLicenseData.frontImageUrl,
+    frontImageName: initialDriverLicenseData.frontImageName,
+    backImageDataUrl: initialDriverLicenseData.backImageUrl,
+    backImageName: initialDriverLicenseData.backImageName,
   });
 
   const handleOpenModalConfirmation = useCallback(() => {
@@ -70,47 +69,45 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
       (backLicenseImage || frontLicenseImage) &&
       window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))
     ) {
-      dispatch(clearReduxFormState("licenseUploadForm"));
+      clearFormState("driversLicense");
       handlePrevious();
     }
 
     if (!backLicenseImage && !frontLicenseImage) {
       handlePrevious();
     }
-  }, [backLicenseImage, dispatch, frontLicenseImage, handlePrevious, t]);
+  }, [backLicenseImage, clearFormState, frontLicenseImage, handlePrevious, t]);
 
   // validate the form data against the schema
   const handleNextState = useCallback(async () => {
-    const formValid = await isValidCheck();
+    const formValid = await isCreditCardValid();
     if (!frontLicenseImage) setFrontImageError(true);
     if (!backLicenseImage) setBackImageError(true);
 
     if (!backLicenseImage || !frontLicenseImage || !formValid) {
-      await validateCardData((values) => {
-        dispatch(setCreditCardFormData(values));
-      });
       return;
     }
-
-    dispatch(
-      setLicenseUploadFormData({
-        frontImageUrl: URL.createObjectURL(frontLicenseImage),
-        backImageUrl: URL.createObjectURL(backLicenseImage),
-        frontImageName: frontLicenseImage.name,
-        backImageName: backLicenseImage.name,
-      })
-    );
+    await validateCardData((values) => {
+      setCustomerCreditCardToStore(values);
+    });
+    setDriversLicenseToStore({
+      frontImageUrl: URL.createObjectURL(frontLicenseImage),
+      backImageUrl: URL.createObjectURL(backLicenseImage),
+      frontImageName: frontLicenseImage.name,
+      backImageName: backLicenseImage.name,
+    });
 
     handleSubmit();
   }, [
     backLicenseImage,
-    dispatch,
     frontLicenseImage,
     handleSubmit,
-    isValidCheck,
+    isCreditCardValid,
+    validateCardData,
     setBackImageError,
     setFrontImageError,
-    validateCardData,
+    setCustomerCreditCardToStore,
+    setDriversLicenseToStore,
   ]);
 
   return (
@@ -122,7 +119,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
           <span className={cardSubtitleClassNames}>{t("forms.creditCard.message")}</span>
           <div className="mt-4 grid grid-cols-1">
             <div className="my-4 md:my-2">
-              <DefaultCreditCard currentFocus={currentFocus} formData={formValues} />
+              <DefaultDynamicCreditCard currentFocus={currentFocus} formData={formValues} />
             </div>
             <div className="mt-4">
               <DefaultCardDetailsForm
@@ -159,7 +156,14 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
                     "image/jpg": [".jpg"],
                     "image/png": [".png"],
                   }}
-                  initialPreview={frontImageUrl ? { fileName: frontImageName!, url: frontImageUrl } : null}
+                  initialPreview={
+                    initialDriverLicenseData.frontImageUrl
+                      ? {
+                          fileName: initialDriverLicenseData.frontImageName!,
+                          url: initialDriverLicenseData.frontImageUrl,
+                        }
+                      : null
+                  }
                 />
               </div>
             </div>
@@ -178,7 +182,14 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
                     "image/jpg": [".jpg"],
                     "image/png": [".png"],
                   }}
-                  initialPreview={backImageUrl ? { fileName: backImageName!, url: backImageUrl } : null}
+                  initialPreview={
+                    initialDriverLicenseData.backImageUrl
+                      ? {
+                          fileName: initialDriverLicenseData.backImageName!,
+                          url: initialDriverLicenseData.backImageUrl,
+                        }
+                      : null
+                  }
                 />
               </div>
             </div>

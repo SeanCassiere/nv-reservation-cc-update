@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuthStore } from "../hooks/useAuthStore";
+import { useAuthStore } from "../hooks/stores/useAuthStore";
 import { setAccessToken } from "../redux/slices/auth/slice";
 import store from "../redux/store";
 import { isValueTrue } from "../utils/common";

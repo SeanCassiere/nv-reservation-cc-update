@@ -1,11 +1,10 @@
 import React, { ReactNode, useMemo } from "react";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-
-import { selectConfigState } from "../../redux/store";
 
 import CardLayout from "../../layouts/Card";
 import AnchorLink from "../../components/Elements/AnchorLink";
+
+import { useConfigStore } from "../../hooks/stores/useConfigStore";
 
 const ErrorImgUri = "/assets/undraw_warning_cyit.svg";
 
@@ -18,13 +17,14 @@ interface Props {
 const ErrorSubmission: React.FC<Props> = (props) => {
   const { t } = useTranslation();
 
-  const config = useSelector(selectConfigState);
+  const isUsingRentall = useConfigStore((s) => s.fromRentall);
+  const rawInitUrlQueryString = useConfigStore((s) => s.rawQueryString);
 
   const originUrl = useMemo(() => {
     const url = new URL(window.location.href);
-    const returnUrl = `${url.origin}/${config.rawQueryString}`;
+    const returnUrl = `${url.origin}/${rawInitUrlQueryString}`;
     return returnUrl;
-  }, [config.rawQueryString]);
+  }, [rawInitUrlQueryString]);
 
   return (
     <CardLayout image={ErrorImgUri} title={props.title ? props.title : t("badSubmission.title")}>
@@ -32,12 +32,12 @@ const ErrorSubmission: React.FC<Props> = (props) => {
       <p className="mt-2">
         {t("badSubmission.report")}&nbsp;
         <AnchorLink
-          href={config.fromRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
+          href={isUsingRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
           target="_blank"
           rel="noreferrer"
           className="text-indigo-600"
         >
-          {config.fromRentall ? "support@rentallsoftware.com" : "support@navotar.com"}
+          {isUsingRentall ? "support@rentallsoftware.com" : "support@navotar.com"}
         </AnchorLink>
         .
       </p>

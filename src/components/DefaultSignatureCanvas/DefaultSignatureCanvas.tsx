@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import SignatureCanvas from "react-signature-canvas";
 import { useTranslation } from "react-i18next";
+import SignatureCanvas from "react-signature-canvas";
+
 import Button from "../Elements/Button";
 
 interface IProps {
@@ -27,6 +28,13 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
   const signaturePadRef = React.useRef<SignatureCanvas>(null);
 
   const [isDisabled, setIsDisabled] = React.useState(false);
+  const canvasHeight = signatureDivRef?.current?.getBoundingClientRect().height
+    ? signatureDivRef?.current?.getBoundingClientRect().height - 10
+    : undefined;
+
+  const canvasWidth = signatureDivRef?.current?.getBoundingClientRect().width
+    ? signatureDivRef?.current?.getBoundingClientRect().width - 10
+    : undefined;
 
   const handleClear = React.useCallback(() => {
     onSignature("");
@@ -65,24 +73,35 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
     }
   }, [onSignature, trimmed]);
 
-  useEffect(() => {
-    if (initialDataURL && initialDataURL !== "" && signaturePadRef.current !== null) {
+  const handleInitialUrl = React.useCallback(
+    (url: string) => {
       setIsDisabled(true);
-      signaturePadRef.current?.fromDataURL(initialDataURL);
+
+      signaturePadRef.current?.fromDataURL(url, {
+        height: canvasHeight,
+        width: canvasWidth,
+        callback: (err) => {
+          console.log("canvas-fromDataURL-callback", err);
+        },
+      });
+
+      handleSave();
+
       signaturePadRef.current?.off();
-      onSignature(initialDataURL);
+      onSignature(url);
+    },
+    [canvasHeight, canvasWidth, handleSave, onSignature]
+  );
+
+  useEffect(() => {
+    setShowPad(true);
+    if (initialDataURL && initialDataURL !== "") {
+      handleInitialUrl(initialDataURL);
     } else {
       signaturePadRef.current?.clear();
       signaturePadRef.current?.on();
     }
-    setShowPad(true);
-  }, [initialDataURL, onSignature, signaturePadRef]);
-
-  useEffect(() => {
-    handleSave();
-    handleClear();
-    setShowPad(true);
-  }, [handleClear, handleSave]);
+  }, [handleInitialUrl, initialDataURL, onSignature, signaturePadRef]);
 
   return (
     <React.Fragment>
@@ -97,18 +116,14 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
             dotSize={4}
             clearOnResize={true}
             canvasProps={{
-              height: signatureDivRef?.current?.getBoundingClientRect().height
-                ? signatureDivRef?.current?.getBoundingClientRect().height - 10
-                : undefined,
-              width: signatureDivRef?.current?.getBoundingClientRect().width
-                ? signatureDivRef?.current?.getBoundingClientRect().width - 10
-                : undefined,
+              height: canvasHeight,
+              width: canvasWidth,
             }}
           />
         )}
       </div>
       <div className="mx-5 mt-2 flex gap-2">
-        <Button color="danger" size="sm" style={{ width: "60%" }} onClick={handleClear}>
+        <Button color="danger" variant="muted" size="sm" style={{ width: "60%" }} onClick={handleClear}>
           {clearText ?? t("forms.rentalSignature.clearInput")}
         </Button>
         <Button color="primary" size="sm" style={{ width: "40%" }} onClick={handleSave} disabled={isDisabled}>

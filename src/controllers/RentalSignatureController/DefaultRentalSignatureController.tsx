@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
 
-import DefaultSignatureCanvas from "../../components/DefaultSignatureCanvas/DefaultSignatureCanvas";
-import Alert from "../../components/Elements/Alert";
-import Button from "../../components/Elements/Button";
 import CardLayout from "../../layouts/Card";
+import Alert from "../../components/Elements/Alert";
+import DefaultSignatureCanvas from "../../components/DefaultSignatureCanvas/DefaultSignatureCanvas";
+import Button from "../../components/Elements/Button";
 
-import { clearReduxFormState, setRentalSignatureFormData } from "../../redux/slices/forms/slice";
-import { selectConfigState, selectRentalSignatureForm } from "../../redux/store";
 import { APP_CONSTANTS } from "../../utils/constants";
+import { useFormStore } from "../../hooks/stores/useFormStore";
+import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 
 interface IProps {
   handleSubmit: () => void;
@@ -24,39 +23,43 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
   isNextAvailable,
   isPrevPageAvailable,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const configState = useSelector(selectConfigState);
-  const signatureFormState = useSelector(selectRentalSignatureForm);
+  const clearFormState = useFormStore((s) => s.clearFormStateKey);
+  const setRentalSignature = useFormStore((s) => s.setRentalSignature);
+  const initialSignatureUrl = useFormStore((s) => s.rentalSignature.data.signatureUrl);
+  const referenceType = useRuntimeStore((s) => s.referenceType);
+
   const [signatureUrl, setSignatureUrl] = React.useState("");
 
   const [showRequiredMessage, setShowRequiredMessage] = React.useState(false);
 
   const handleNextState = React.useCallback(() => {
+    if (initialSignatureUrl !== "") {
+      URL.revokeObjectURL(initialSignatureUrl);
+    }
     if (signatureUrl === "") {
       setShowRequiredMessage(true);
       return;
     }
 
-    dispatch(setRentalSignatureFormData({ signatureUrl, isReadyToSubmit: true }));
-
+    setRentalSignature({ signatureUrl });
     handleSubmit();
-  }, [dispatch, handleSubmit, signatureUrl]);
+  }, [handleSubmit, initialSignatureUrl, setRentalSignature, signatureUrl]);
 
   const handleOpenModalConfirmation = React.useCallback(() => {
     if (
       signatureUrl !== "" &&
       window.confirm(t("forms.rentalSignature.goBack.title") + "\n" + t("forms.rentalSignature.goBack.message"))
     ) {
-      dispatch(clearReduxFormState("rentalSignatureForm"));
+      clearFormState("rentalSignature");
       handlePrevious();
     }
 
     if (signatureUrl === "") {
       handlePrevious();
     }
-  }, [dispatch, handlePrevious, signatureUrl, t]);
+  }, [clearFormState, handlePrevious, signatureUrl, t]);
 
   const handleSettingSignatureUrl = React.useCallback((url: string) => {
     if (url === "") {
@@ -67,17 +70,19 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
     }
   }, []);
 
-  React.useEffect(() => {
-    dispatch(setRentalSignatureFormData({ signatureUrl: "", isReadyToSubmit: false }));
-  }, [dispatch]);
+  useEffect(() => {
+    if (initialSignatureUrl !== "") {
+      setSignatureUrl(initialSignatureUrl);
+    }
+  }, [initialSignatureUrl]);
 
   return (
     <CardLayout
       title={t("forms.rentalSignature.title", {
-        context: configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+        context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
       })}
       subtitle={t("forms.rentalSignature.message", {
-        context: configState.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+        context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
       })}
     >
       <div className="mt-3 d-grid">
@@ -85,9 +90,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
 
         <DefaultSignatureCanvas
           onSignature={handleSettingSignatureUrl}
-          initialDataURL={
-            signatureFormState.data.signatureUrl !== "" ? signatureFormState.data.signatureUrl : undefined
-          }
+          initialDataURL={initialSignatureUrl !== "" ? initialSignatureUrl : undefined}
         />
         <div className="mt-6 flex">
           {isPrevPageAvailable && (

@@ -1,5 +1,5 @@
 import React from "react";
-import { urlToBlob } from "../utils/blobUtils";
+import { urlToBlob } from "../../utils/blobUtils";
 
 type UseDriverLicenseLogic = {
   frontImageDataUrl?: string | null;

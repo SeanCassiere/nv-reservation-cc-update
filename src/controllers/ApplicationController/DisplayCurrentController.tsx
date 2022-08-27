@@ -1,14 +1,10 @@
 import React, { memo, Suspense } from "react";
 import { useTranslation } from "react-i18next";
+
 import Button from "../../components/Elements/Button";
-
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
-import { APP_CONSTANTS } from "../../utils/constants";
 
-// import DefaultRentalSignatureController from "../RentalSignatureController/DefaultRentalSignatureController";
-// import DefaultCreditCardController from "../CreditCardController/DefaultCreditCardController";
-// import DefaultLicenseUploadController from "../LicenseUploadController/DefaultLicenseUploadController";
-// import DefaultCreditCardAndLicenseUploadController from "../CreditCardAndLicenseUploadController/DefaultCreditCardAndLicenseUploadController";
+import { APP_CONSTANTS } from "../../utils/constants";
 
 const DefaultRentalSignatureController = React.lazy(
   () => import("../RentalSignatureController/DefaultRentalSignatureController")

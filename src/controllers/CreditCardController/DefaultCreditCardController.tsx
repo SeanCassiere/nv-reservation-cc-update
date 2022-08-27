@@ -1,15 +1,13 @@
 import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { selectCreditCardForm } from "../../redux/store";
-import { setCreditCardFormData } from "../../redux/slices/forms/slice";
-import { useCreditCardLogic } from "../../hooks/useCreditCardLogic";
-
-import DefaultCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
+import CardLayout from "../../layouts/Card";
+import DefaultDynamicCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
 import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
 import Button from "../../components/Elements/Button";
-import CardLayout from "../../layouts/Card";
+
+import { useCreditCardLogic } from "../../hooks/logic/useCreditCardLogic";
+import { useFormStore } from "../../hooks/stores/useFormStore";
 
 interface IProps {
   handleSubmit: () => void;
@@ -24,9 +22,9 @@ const DefaultCreditCardController: React.FC<IProps> = ({
   handlePrevious,
   isPrevPageAvailable,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { data: initialFormData } = useSelector(selectCreditCardForm);
+  const initialFormData = useFormStore((s) => s.customerCreditCard.data);
+  const setCustomerCreditCardToStore = useFormStore((s) => s.setCustomerCreditCard);
 
   const {
     validateCardData,
@@ -41,16 +39,16 @@ const DefaultCreditCardController: React.FC<IProps> = ({
   // validate the form data against the schema
   const handleNextState = useCallback(async () => {
     await validateCardData((values) => {
-      dispatch(setCreditCardFormData(values));
+      setCustomerCreditCardToStore(values);
       handleSubmit();
     });
-  }, [dispatch, handleSubmit, validateCardData]);
+  }, [handleSubmit, setCustomerCreditCardToStore, validateCardData]);
 
   return (
     <CardLayout title={t("forms.creditCard.title")} subtitle={t("forms.creditCard.message")}>
       <div className="mt-4 grid grid-cols-1">
         <div className="my-4 md:my-2">
-          <DefaultCreditCard currentFocus={currentFocus} formData={formValues} />
+          <DefaultDynamicCreditCard currentFocus={currentFocus} formData={formValues} />
         </div>
         <div className="mt-4">
           <DefaultCardDetailsForm

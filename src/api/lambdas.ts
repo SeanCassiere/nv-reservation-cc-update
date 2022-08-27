@@ -1,4 +1,4 @@
-import { useRuntimeStore } from "../hooks/useRuntimeStore";
+import { useRuntimeStore } from "../hooks/stores/useRuntimeStore";
 
 const AUTH_URL = "/api/token";
 export const SUBMISSION_COMPLETION_URL = "/api/complete";
