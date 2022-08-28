@@ -1,10 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { supportedLanguages } from "../../i18n";
 import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "../../utils/constants";
+import { supportedLanguages } from "../../i18n";
 import { isValueTrue } from "../../utils/common";
 import { devConfigToQueryUrl } from "./utils";
+
+import { useConfigStore } from "../../hooks/stores/useConfigStore";
+import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 
 import TextInput from "../Elements/TextInput";
 import CheckInput from "../Elements/CheckInput";
@@ -26,7 +29,7 @@ export type DevConfigObject = {
   successSubmissionScreen: string;
 };
 
-export const initialConfigState: DevConfigObject = {
+const outsideInitialConfigState: DevConfigObject = {
   referenceId: "0",
   referenceType: "Reservation",
   lang: "en",
@@ -74,11 +77,14 @@ const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> =
 };
 
 const ConfigCreator: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const SELECT_MENU_DEFAULT_KEY = t("developer.configCreator.formSelectValue");
 
-  const [initialConfig, setInitialConfig] = React.useState<DevConfigObject>(initialConfigState);
-  const [config, setConfig] = React.useState<DevConfigObject>(initialConfigState);
+  const { referenceIdentifier, referenceType, clientId, responseTemplateId } = useRuntimeStore();
+  const { successSubmissionScreen, fromRentall, flow, qa, rawQueryString } = useConfigStore();
+
+  const [initialConfig, setInitialConfig] = React.useState<DevConfigObject>(outsideInitialConfigState);
+  const [config, setConfig] = React.useState<DevConfigObject>(outsideInitialConfigState);
 
   const [showCopiedMessage, setShowCopiedMessage] = React.useState(false);
 
@@ -118,7 +124,7 @@ const ConfigCreator: React.FC = () => {
   const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     const queryStringUrl = devConfigToQueryUrl(config);
-    window.location.href = queryStringUrl;
+    window.location.href = window.location.origin + "/?" + queryStringUrl;
   };
 
   const handleReset = (e: React.SyntheticEvent<HTMLButtonElement>) => {
@@ -127,36 +133,34 @@ const ConfigCreator: React.FC = () => {
   };
 
   React.useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    const lang = query.get("lang");
-    const qa = query.get("qa");
+    const query = new URLSearchParams(rawQueryString);
     const dev = query.get("dev");
-    const agreementId = query.get("agreementId");
-    const reservationId = query.get("reservationId");
-
-    const queryConfig = query.get("config");
-    const readConfig = JSON.parse(
-      Buffer.from(queryConfig ?? btoa(JSON.stringify(initialConfigState)), "base64").toString("ascii")
-    );
-
-    const formObject: DevConfigObject = {
-      referenceId: agreementId ?? reservationId ?? initialConfigState.clientId,
-      referenceType: agreementId ? APP_CONSTANTS.REF_TYPE_AGREEMENT : APP_CONSTANTS.REF_TYPE_RESERVATION,
-      lang: lang ?? initialConfigState.lang,
-      qa: Boolean(isValueTrue(qa)),
-      dev: Boolean(isValueTrue(dev)),
-      clientId: readConfig.clientId ? `${readConfig.clientId}` : initialConfigState.clientId,
-      emailTemplateId: readConfig.emailTemplateId
-        ? `${readConfig.emailTemplateId}`
-        : initialConfigState.emailTemplateId,
-      flow: readConfig.flow ?? initialConfigState.flow,
-      fromRentall: readConfig.fromRentall !== undefined ? readConfig.fromRentall : initialConfigState.fromRentall,
-      successSubmissionScreen: readConfig.successSubmissionScreen ?? initialConfigState.successSubmissionScreen,
+    const body = {
+      referenceId: `${referenceIdentifier || 0}`,
+      referenceType: `${referenceType}`,
+      lang: i18n.language,
+      qa: qa,
+      dev: false,
+      clientId: `${clientId || 0}`,
+      emailTemplateId: `${responseTemplateId || 0}`,
+      flow: [...flow],
+      fromRentall: fromRentall,
+      successSubmissionScreen: `${successSubmissionScreen}`,
     };
-
-    setConfig(formObject);
-    setInitialConfig(formObject);
-  }, []);
+    setConfig((prev) => ({ ...prev, ...body, dev: Boolean(isValueTrue(dev)) }));
+    setInitialConfig((prev) => ({ ...prev, ...body, dev: Boolean(isValueTrue(dev)) }));
+  }, [
+    clientId,
+    flow,
+    fromRentall,
+    i18n.language,
+    qa,
+    rawQueryString,
+    referenceIdentifier,
+    referenceType,
+    responseTemplateId,
+    successSubmissionScreen,
+  ]);
 
   return (
     <React.Fragment>
@@ -166,7 +170,7 @@ const ConfigCreator: React.FC = () => {
         </AnchorLink>
       </div>
       <div className="p-2 rounded w-full bg-yellow-50 flex flex-col gap-1" style={{ overflowWrap: "anywhere" }}>
-        <p className="m-0 text-sm text-gray-700">{devConfigToQueryUrl(config)}</p>
+        <p className="m-0 text-sm text-gray-700">{window.location.origin + "/?" + devConfigToQueryUrl(config)}</p>
         <Button
           type="button"
           color="primary"
