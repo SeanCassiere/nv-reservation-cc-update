@@ -7,6 +7,8 @@ import DefaultRentalSummary from "../../components/RentalSummary/DefaultRentalSu
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS } from "../../utils/constants";
 
+const SuccessImgUri = "/assets/undraw_make_it_rain_iwk4.svg";
+
 const RentalSummarySuccessDefaultLayout: React.FC = () => {
   const { t } = useTranslation();
 
@@ -15,8 +17,8 @@ const RentalSummarySuccessDefaultLayout: React.FC = () => {
   const referenceType = useRuntimeStore((s) => s.referenceType);
 
   return (
-    <CardLayout title={t("successSubmission.title")}>
-      <p className="mt-5 text-base text-justify">
+    <CardLayout image={SuccessImgUri} title={t("successSubmission.title")}>
+      <p className="mt-5 text-base">
         {t("successSubmission.message", {
           context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
         })}

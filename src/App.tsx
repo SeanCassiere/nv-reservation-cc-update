@@ -1,15 +1,16 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AppRoutes from "./routes/AppRoutes";
 import ErrorSubmission from "./pages/ErrorSubmission/ErrorSubmission";
-import DeveloperDebugMenu from "./components/DeveloperDebugMenu/DeveloperDebugMenu";
 import AnchorLink from "./components/Elements/AnchorLink";
 
 import { useConfigStore } from "./hooks/stores/useConfigStore";
 import { isValueTrue } from "./utils/common";
+
+const DeveloperDebugMenu = lazy(() => import("./components/DeveloperDebugMenu/DeveloperDebugMenu"));
 
 const queryClient = new QueryClient();
 
@@ -46,8 +47,12 @@ const App = () => {
         <div className="grid grid-cols-1 pt-2">
           <div>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-              <div className="flex flex-col gap-4 px-1">
-                <DeveloperDebugMenu open={isDevOpenMain} handleClose={handleCloseDeveloperDrawer} />
+              <div className="flex flex-col gap-4 px-2">
+                <Suspense fallback={<div>'Loading...'</div>}>
+                  {isDevOpenMain && (
+                    <DeveloperDebugMenu open={isDevOpenMain} handleClose={handleCloseDeveloperDrawer} />
+                  )}
+                </Suspense>
                 <AppRoutes />
               </div>
             </ErrorBoundary>

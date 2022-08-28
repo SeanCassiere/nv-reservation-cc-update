@@ -1,52 +1,38 @@
 import { APP_CONSTANTS } from "../../utils/constants";
-import { DevConfigObject, initialConfigState } from "./DeveloperDebugMenu";
+import { DevConfigObject } from "./DeveloperDebugMenu";
+import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
+import { useConfigStore } from "../../hooks/stores/useConfigStore";
 
 export function devConfigToQueryUrl(config: DevConfigObject) {
-  let queryString = "?";
+  const params = new URLSearchParams();
 
-  // use qa server
-  if (config.qa) {
-    queryString += "qa=true";
-  }
+  if (config.qa) params.append("qa", "true");
 
-  // open dev menu by default
-  if (config.dev) {
-    if (config.qa) {
-      queryString += "&";
-    }
-    queryString += "dev=true";
-  }
-
-  // based on qa or dev flags, append & into the query string
-  if (config.qa || config.dev) {
-    queryString += "&";
-  }
+  if (config.dev) params.append("dev", "true");
 
   // setting agreementId or reservationId
   if (config.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT) {
-    queryString += `agreementId=${config.referenceId}`;
+    params.append("agreementId", `${config.referenceId}`);
   } else {
-    queryString += `reservationId=${config.referenceId}`;
+    params.append("reservationId", `${config.referenceId}`);
   }
 
   // setting lang
-  queryString += `&lang=${config.lang}`;
+  params.append("lang", `${config.lang}`);
 
   // setting the config
   const hashObj = {
-    clientId: Number(config.clientId) ?? Number(initialConfigState.clientId),
-    emailTemplateId: Number(config.emailTemplateId) ?? Number(initialConfigState.emailTemplateId),
-    flow: config.flow ?? initialConfigState.flow,
-    fromRentall: config.fromRentall !== undefined ? config.fromRentall : initialConfigState.fromRentall,
-    successSubmissionScreen: config.successSubmissionScreen ?? initialConfigState.successSubmissionScreen,
+    clientId: Number(config.clientId) ?? Number(useRuntimeStore.getState().clientId),
+    emailTemplateId: Number(config.emailTemplateId) ?? Number(useRuntimeStore.getState().responseTemplateId),
+    flow: config.flow ?? useConfigStore.getState().flow,
+    fromRentall: config.fromRentall !== undefined ? config.fromRentall : useConfigStore.getState().fromRentall,
+    successSubmissionScreen: config.successSubmissionScreen ?? useConfigStore.getState().successSubmissionScreen,
   };
 
   let objJsonStr = JSON.stringify(hashObj);
   let objJsonB64 = btoa(objJsonStr);
-  queryString += "&config=" + objJsonB64;
 
-  const location = window.location.href.split("?")[0];
-  const newUrl = `${location}${queryString}`;
+  params.append("config", objJsonB64);
 
-  return newUrl;
+  return params.toString();
 }
