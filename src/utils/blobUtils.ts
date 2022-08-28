@@ -19,3 +19,14 @@ export async function createHtmlBlobDataUrl(html: string) {
   const url = URL.createObjectURL(blob);
   return url;
 }
+
+export async function dataBase64StringToBlobDataUrl(base64: string) {
+  const binary = atob(base64.split(",")[1]);
+  const array = [];
+  for (let i = 0; i < binary.length; i++) {
+    array.push(binary.charCodeAt(i));
+  }
+  const blob = new Blob([new Uint8Array(array)], { type: "image/png" });
+  const url = URL.createObjectURL(blob);
+  return url;
+}
