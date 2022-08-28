@@ -8,7 +8,7 @@ type Props = {
   image?: string;
 };
 
-export const cardTitleClassNames = cn("text-lg", "font-medium", "text-gray-600");
+export const cardTitleClassNames = cn("text-2xl", "font-medium", "text-gray-600");
 export const cardSubtitleClassNames = cn("text-sm", "text-gray-500");
 
 const CardLayout: React.FC<Props> = ({ title, subtitle, image, children }) => {
