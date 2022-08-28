@@ -75,7 +75,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
       enabled: initialSignatureUrl === "",
       refetchOnMount: true,
       refetchOnReconnect: false,
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
       onSuccess: (url) => {
         if (url) {
           setRentalSignature({ signatureUrl: url });
