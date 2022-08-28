@@ -1,6 +1,6 @@
 import { clientFetch } from "./clientV3";
 
-import { urlBlobToBase64 } from "../utils/blobUtils";
+import { dataBase64StringToBlobDataUrl, urlBlobToBase64 } from "../utils/blobUtils";
 import { APP_CONSTANTS } from "../utils/constants";
 
 export async function postUploadRentalSignature(opts: {
@@ -30,4 +30,22 @@ export async function postUploadRentalSignature(opts: {
       signatureName: opts.customerName,
     }),
   });
+}
+
+export async function reloadSavedDigitalSignatureBase64Url(opts: { referenceType: string; referenceId: string }) {
+  const body = {
+    signatureImageUrl: "",
+    ...(opts.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? { agreementId: opts.referenceId } : {}),
+    ...(opts.referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION ? { reservationID: opts.referenceId } : {}),
+  };
+  const find = await clientFetch("/DigitalSignature/ReloadSignatureImageURL", {
+    method: "POST",
+    body: JSON.stringify(body),
+  }).then((r) => r.text());
+
+  if (find === null || find.trim() === "") {
+    return null;
+  }
+
+  return await dataBase64StringToBlobDataUrl(`data:image/png;base64,${find}`);
 }

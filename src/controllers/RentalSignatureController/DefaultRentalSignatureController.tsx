@@ -9,6 +9,7 @@ import Button from "../../components/Elements/Button";
 import { APP_CONSTANTS } from "../../utils/constants";
 import { useFormStore } from "../../hooks/stores/useFormStore";
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
+import { useRentalSavedDigitalSignature } from "../../hooks/network/useRentalSavedDigitalSignature";
 
 interface IProps {
   handleSubmit: () => void;
@@ -29,15 +30,13 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
   const setRentalSignature = useFormStore((s) => s.setRentalSignature);
   const initialSignatureUrl = useFormStore((s) => s.rentalSignature.data.signatureUrl);
   const referenceType = useRuntimeStore((s) => s.referenceType);
+  const referenceId = useRuntimeStore((s) => s.referenceIdentifier);
 
   const [signatureUrl, setSignatureUrl] = React.useState("");
 
   const [showRequiredMessage, setShowRequiredMessage] = React.useState(false);
 
   const handleNextState = React.useCallback(() => {
-    if (initialSignatureUrl !== "") {
-      URL.revokeObjectURL(initialSignatureUrl);
-    }
     if (signatureUrl === "") {
       setShowRequiredMessage(true);
       return;
@@ -45,7 +44,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
 
     setRentalSignature({ signatureUrl });
     handleSubmit();
-  }, [handleSubmit, initialSignatureUrl, setRentalSignature, signatureUrl]);
+  }, [handleSubmit, setRentalSignature, signatureUrl]);
 
   const handleOpenModalConfirmation = React.useCallback(() => {
     if (
@@ -70,6 +69,21 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
     }
   }, []);
 
+  useRentalSavedDigitalSignature(
+    { referenceType, referenceId: `${referenceId}` },
+    {
+      enabled: initialSignatureUrl === "",
+      refetchOnMount: true,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: true,
+      onSuccess: (url) => {
+        if (url) {
+          setRentalSignature({ signatureUrl: url });
+        }
+      },
+    }
+  );
+
   useEffect(() => {
     if (initialSignatureUrl !== "") {
       setSignatureUrl(initialSignatureUrl);
@@ -87,7 +101,6 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
     >
       <div className="mt-3 d-grid">
         {showRequiredMessage && <Alert variant="danger">{t("forms.rentalSignature.signatureRequired")}</Alert>}
-
         <DefaultSignatureCanvas
           onSignature={handleSettingSignatureUrl}
           initialDataURL={initialSignatureUrl !== "" ? initialSignatureUrl : undefined}

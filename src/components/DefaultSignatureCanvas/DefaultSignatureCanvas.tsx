@@ -45,33 +45,40 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
     setIsDisabled(false);
   }, [onSignature]);
 
-  const handleSave = React.useCallback(async () => {
-    const signaturePad = signaturePadRef.current;
+  const handleSave = React.useCallback(
+    async (initUrl?: string) => {
+      const signaturePad = signaturePadRef.current;
 
-    if (!signaturePad) {
-      return;
-    }
+      if (!signaturePad) {
+        return;
+      }
 
-    if (signaturePad.isEmpty()) {
-      // eslint-disable-next-line no-alert
-      // alert(`${t("rental_signature.error_no_signature")}`);
-      return;
-    } else {
-      const mime = "image/png";
-      const canvas = trimmed ? signaturePad.getTrimmedCanvas() : signaturePad.getCanvas();
-      canvas.toBlob((blob) => {
-        setIsDisabled(true);
+      if (signaturePad.isEmpty()) {
+        // eslint-disable-next-line no-alert
+        // alert(`${t("rental_signature.error_no_signature")}`);
+        return;
+      } else {
+        const mime = "image/png";
+        const canvas = trimmed ? signaturePad.getTrimmedCanvas() : signaturePad.getCanvas();
+        canvas.toBlob((blob) => {
+          setIsDisabled(true);
 
-        signaturePad.off();
+          signaturePad.off();
 
-        if (!blob) return;
+          let currentUrl = initUrl ?? "";
+          if (!initUrl) {
+            if (!blob) return;
 
-        const blobRaw = new Blob([blob], { type: mime });
-        const url = URL.createObjectURL(blobRaw);
-        onSignature(url);
-      });
-    }
-  }, [onSignature, trimmed]);
+            const blobRaw = new Blob([blob], { type: mime });
+            currentUrl = URL.createObjectURL(blobRaw);
+          }
+
+          onSignature(currentUrl);
+        });
+      }
+    },
+    [onSignature, trimmed]
+  );
 
   const handleInitialUrl = React.useCallback(
     (url: string) => {
@@ -85,7 +92,7 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
         },
       });
 
-      handleSave();
+      handleSave(url);
 
       signaturePadRef.current?.off();
       onSignature(url);
@@ -126,7 +133,7 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
         <Button color="danger" variant="muted" size="sm" style={{ width: "60%" }} onClick={handleClear}>
           {clearText ?? t("forms.rentalSignature.clearInput")}
         </Button>
-        <Button color="primary" size="sm" style={{ width: "40%" }} onClick={handleSave} disabled={isDisabled}>
+        <Button color="primary" size="sm" style={{ width: "40%" }} onClick={() => handleSave()} disabled={isDisabled}>
           {saveText ?? t("forms.rentalSignature.saveInput")}
         </Button>
       </div>
