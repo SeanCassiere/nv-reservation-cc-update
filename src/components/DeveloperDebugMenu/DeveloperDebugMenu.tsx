@@ -309,8 +309,8 @@ const ConfigCreator: React.FC = () => {
           </SelectInput>
         </div>
         {/*  */}
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          <div>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="col-span-2 md:col-span-1">
             <span className="text-sm font-medium text-gray-700">
               {t("developer.configCreator.applicationBranding")}
             </span>
@@ -322,7 +322,7 @@ const ConfigCreator: React.FC = () => {
               label={config.fromRentall ? "RENTALL" : "Navotar"}
             />
           </div>
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <span className="text-sm font-medium text-gray-700">
               {t("developer.configCreator.applicationEnvironment")}
             </span>
@@ -338,8 +338,7 @@ const ConfigCreator: React.FC = () => {
               }
             />
           </div>
-
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <span className="text-sm font-medium text-gray-700">{t("developer.configCreator.openedDevMenu")}</span>
             <CheckInput
               type="checkbox"
