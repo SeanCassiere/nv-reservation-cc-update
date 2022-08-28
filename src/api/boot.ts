@@ -1,6 +1,7 @@
 import { createHtmlBlobDataUrl } from "../utils/blobUtils";
 import { isValueTrue } from "../utils/common";
 import { APP_CONSTANTS } from "../utils/constants";
+import { base64Decode } from "../utils/base64";
 
 import { fetchAgreementByIdOrNumber } from "./agreementApi";
 import { fetchComposeEmailDetails, fetchEmailTemplate, fetchEmailTemplateHtml } from "./emailsApi";
@@ -50,7 +51,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
   if (!configQuery) return null;
 
   try {
-    const readConfig = JSON.parse(Buffer.from(configQuery, "base64").toString("ascii"));
+    const readConfig = JSON.parse(base64Decode(configQuery));
     config = { ...config, ...readConfig };
   } catch (error) {
     throw new Error("Could not parse config");

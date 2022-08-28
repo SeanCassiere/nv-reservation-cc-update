@@ -1,7 +1,8 @@
-import { APP_CONSTANTS } from "../../utils/constants";
 import { DevConfigObject } from "./DeveloperDebugMenu";
+import { APP_CONSTANTS } from "../../utils/constants";
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 import { useConfigStore } from "../../hooks/stores/useConfigStore";
+import { base64Encode } from "../../utils/base64";
 
 export function devConfigToQueryUrl(config: DevConfigObject) {
   const params = new URLSearchParams();
@@ -30,7 +31,7 @@ export function devConfigToQueryUrl(config: DevConfigObject) {
   };
 
   let objJsonStr = JSON.stringify(hashObj);
-  let objJsonB64 = btoa(objJsonStr);
+  let objJsonB64 = base64Encode(objJsonStr);
 
   params.append("config", objJsonB64);
 
