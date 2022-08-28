@@ -49,7 +49,9 @@ const App = () => {
             <ErrorBoundary FallbackComponent={ErrorFallback}>
               <div className="flex flex-col gap-4 px-2">
                 <Suspense fallback={<div>'Loading...'</div>}>
-                  <DeveloperDebugMenu open={isDevOpenMain} handleClose={handleCloseDeveloperDrawer} />
+                  {isDevOpenMain && (
+                    <DeveloperDebugMenu open={isDevOpenMain} handleClose={handleCloseDeveloperDrawer} />
+                  )}
                 </Suspense>
                 <AppRoutes />
               </div>
