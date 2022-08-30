@@ -9,7 +9,7 @@
   "forms": {
     "navSubmit": "Soumettre",
     "navSubmit_next": "Prochaine",
-    "navSubmit_save": "Save",
+    "navSubmit_save": "sauvegarder",
     "creditCard": {
       "title": "Informations de carte de crédit",
       "message": "Veuillez saisir les informations de votre carte de crédit à utiliser pour votre réservation.",
