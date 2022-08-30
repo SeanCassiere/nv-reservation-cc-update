@@ -5,7 +5,7 @@ import type { CreditCardStoreType } from "../../hooks/stores/useFormStore";
 import { formatCreditCardNumber } from "../../utils/creditCardTypeFormat";
 import { YupErrorsFormatted } from "../../utils/yupSchemaErrors";
 
-import TextInput from "../Elements/TextInput";
+import TextInput from "../Elements/Default/TextInput";
 
 interface IProps {
   formData: CreditCardStoreType["data"];

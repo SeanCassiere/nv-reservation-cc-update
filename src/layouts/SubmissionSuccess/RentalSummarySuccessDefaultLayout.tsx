@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../Card";
-import DefaultRentalSummary from "../../components/RentalSummary/DefaultRentalSummary";
+import DefaultRentalSummary from "../../components/RentalSummary/Default";
 
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS } from "../../utils/constants";

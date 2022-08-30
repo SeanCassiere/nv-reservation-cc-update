@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AppRoutes from "./routes/AppRoutes";
 import ErrorSubmission from "./pages/ErrorSubmission/ErrorSubmission";
-import AnchorLink from "./components/Elements/AnchorLink";
+import AnchorLink from "./components/Elements/Default/AnchorLink";
 
 import { useConfigStore } from "./hooks/stores/useConfigStore";
 import { isValueTrue } from "./utils/common";

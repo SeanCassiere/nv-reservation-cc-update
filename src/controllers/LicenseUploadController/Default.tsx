@@ -2,24 +2,20 @@ import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
-import Alert from "../../components/Elements/Alert";
-import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
-import Button from "../../components/Elements/Button";
+import Alert from "../../components/Elements/Default/Alert";
+import ImageDropzoneWithPreviewDefault from "../../components/ImageDropzoneWithPreview/Default";
+import Button from "../../components/Elements/Default/Button";
 
 import { useDriverLicenseLogic } from "../../hooks/logic/useDriverLicenseLogic";
 import { useFormStore } from "../../hooks/stores/useFormStore";
+import type { CommonControllerProps } from "../ApplicationController/DisplayCurrentController";
 
-interface IProps {
-  handleSubmit: () => void;
-  handlePrevious: () => void;
-  isNextAvailable: boolean;
-  isPrevPageAvailable: boolean;
-}
+interface IProps extends CommonControllerProps {}
 
 const DefaultLicenseUploadController: React.FC<IProps> = ({
   handleSubmit,
   handlePrevious,
-  isNextAvailable,
+  isNextPageAvailable,
   isPrevPageAvailable,
 }) => {
   const { t } = useTranslation();
@@ -94,7 +90,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
               </Alert>
             )}
 
-            <DefaultImageDropzoneWithPreview
+            <ImageDropzoneWithPreviewDefault
               dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
               selectButtonText={t("forms.licenseUpload.frontImage.select")}
               clearButtonText={t("forms.licenseUpload.frontImage.clear")}
@@ -127,7 +123,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
                 {t("forms.licenseUpload.backImage.notSelected")}
               </Alert>
             )}
-            <DefaultImageDropzoneWithPreview
+            <ImageDropzoneWithPreviewDefault
               dragDisplayText={t("forms.licenseUpload.backImage.drag")}
               selectButtonText={t("forms.licenseUpload.backImage.select")}
               clearButtonText={t("forms.licenseUpload.backImage.clear")}
@@ -159,7 +155,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
           )}
           <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
             <Button color="primary" size="lg" onClick={handleNextState}>
-              {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+              {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
             </Button>
           </div>
         </div>

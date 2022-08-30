@@ -2,23 +2,19 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
-import Button from "../../components/Elements/Button";
-import DefaultRentalSummary from "../../components/RentalSummary/DefaultRentalSummary";
+import Button from "../../components/Elements/Default/Button";
+import DefaultRentalSummary from "../../components/RentalSummary/Default";
 
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS } from "../../utils/constants";
+import type { CommonControllerProps } from "../ApplicationController/DisplayCurrentController";
 
-interface IProps {
-  handleSubmit: () => void;
-  handlePrevious: () => void;
-  isNextAvailable: boolean;
-  isPrevPageAvailable: boolean;
-}
+interface IProps extends CommonControllerProps {}
 
 const DefaultRentalSummaryController: React.FC<IProps> = ({
   handleSubmit,
   handlePrevious,
-  isNextAvailable,
+  isNextPageAvailable,
   isPrevPageAvailable,
 }) => {
   const { t } = useTranslation();
@@ -47,7 +43,7 @@ const DefaultRentalSummaryController: React.FC<IProps> = ({
           )}
           <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
             <Button color="primary" size="lg" onClick={handleSubmit}>
-              {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+              {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
             </Button>
           </div>
         </div>

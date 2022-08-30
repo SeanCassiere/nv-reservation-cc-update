@@ -2,26 +2,22 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
-import Alert from "../../components/Elements/Alert";
-import DefaultSignatureCanvas from "../../components/DefaultSignatureCanvas/DefaultSignatureCanvas";
-import Button from "../../components/Elements/Button";
+import Alert from "../../components/Elements/Default/Alert";
+import SignatureCanvasDefault from "../../components/SignatureCanvas/Default";
+import Button from "../../components/Elements/Default/Button";
 
 import { APP_CONSTANTS } from "../../utils/constants";
 import { useFormStore } from "../../hooks/stores/useFormStore";
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 import { useRentalSavedDigitalSignature } from "../../hooks/network/useRentalSavedDigitalSignature";
+import type { CommonControllerProps } from "../ApplicationController/DisplayCurrentController";
 
-interface IProps {
-  handleSubmit: () => void;
-  handlePrevious: () => void;
-  isNextAvailable: boolean;
-  isPrevPageAvailable: boolean;
-}
+interface IProps extends CommonControllerProps {}
 
 const DefaultRentalSignatureController: React.FC<IProps> = ({
   handleSubmit,
   handlePrevious,
-  isNextAvailable,
+  isNextPageAvailable,
   isPrevPageAvailable,
 }) => {
   const { t } = useTranslation();
@@ -101,7 +97,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
     >
       <div className="mt-3 d-grid">
         {showRequiredMessage && <Alert variant="danger">{t("forms.rentalSignature.signatureRequired")}</Alert>}
-        <DefaultSignatureCanvas
+        <SignatureCanvasDefault
           onSignature={handleSettingSignatureUrl}
           initialDataURL={initialSignatureUrl !== "" ? initialSignatureUrl : undefined}
         />
@@ -115,7 +111,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
           )}
           <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
             <Button color="primary" size="lg" disabled={signatureUrl === ""} onClick={handleNextState}>
-              {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+              {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
             </Button>
           </div>
         </div>

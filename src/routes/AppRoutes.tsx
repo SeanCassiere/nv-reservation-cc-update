@@ -11,7 +11,7 @@ import ErrorSubmission from "../pages/ErrorSubmission/ErrorSubmission";
 import NavigateToNotAvailable from "./NavigateToNotAvailable";
 // import DefaultSubmitDetailsController from "../controllers/SubmitDetailsController/DefaultSubmitDetailsController";
 
-const SubmitDetailsController = lazy(() => import("../controllers/SubmitDetailsController/SubmitDetailsController"));
+const SubmitDetailsController = lazy(() => import("../controllers/SubmitDetailsController/Default"));
 
 const AppRoutes: React.FC = () => {
   const { t } = useTranslation();

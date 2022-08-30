@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
-import AnchorLink from "../../components/Elements/AnchorLink";
+import AnchorLink from "../../components/Elements/Default/AnchorLink";
 
 import { useConfigStore } from "../../hooks/stores/useConfigStore";
 

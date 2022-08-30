@@ -2,26 +2,22 @@ import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout, { cardSubtitleClassNames, cardTitleClassNames } from "../../layouts/Card";
-import Button from "../../components/Elements/Button";
-import Alert from "../../components/Elements/Alert";
-import DefaultImageDropzoneWithPreview from "../../components/DefaultImageDropzoneWithPreview/DefaultImageDropzoneWithPreview";
-import DefaultDynamicCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
-import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
+import Button from "../../components/Elements/Default/Button";
+import Alert from "../../components/Elements/Default/Alert";
+import ImageDropzoneWithPreviewDefault from "../../components/ImageDropzoneWithPreview/Default";
+import DynamicCreditCardDefault from "../../components/DynamicCreditCard/Default";
+import CreditCardFormDefault from "../../components/CreditCardForm/Default";
 
 import { useCreditCardLogic } from "../../hooks/logic/useCreditCardLogic";
 import { useDriverLicenseLogic } from "../../hooks/logic/useDriverLicenseLogic";
 import { useFormStore } from "../../hooks/stores/useFormStore";
+import type { CommonControllerProps } from "../ApplicationController/DisplayCurrentController";
 
-interface IProps {
-  handleSubmit: () => void;
-  handlePrevious: () => void;
-  isNextAvailable: boolean;
-  isPrevPageAvailable: boolean;
-}
+interface IProps extends CommonControllerProps {}
 
 const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
   handleSubmit,
-  isNextAvailable,
+  isNextPageAvailable,
   handlePrevious,
   isPrevPageAvailable,
 }) => {
@@ -119,10 +115,10 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
           <span className={cardSubtitleClassNames}>{t("forms.creditCard.message")}</span>
           <div className="mt-4 grid grid-cols-1">
             <div className="my-4 md:my-2">
-              <DefaultDynamicCreditCard currentFocus={currentFocus} formData={formValues} />
+              <DynamicCreditCardDefault currentFocus={currentFocus} formData={formValues} />
             </div>
             <div className="mt-4">
-              <DefaultCardDetailsForm
+              <CreditCardFormDefault
                 formData={formValues}
                 handleChange={handleCardInputChange}
                 handleBlur={handleCardInputBlur}
@@ -145,7 +141,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
               <div>
                 {noFrontImageError && <Alert variant="danger">{t("forms.licenseUpload.frontImage.notSelected")}</Alert>}
 
-                <DefaultImageDropzoneWithPreview
+                <ImageDropzoneWithPreviewDefault
                   dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
                   selectButtonText={t("forms.licenseUpload.frontImage.select")}
                   clearButtonText={t("forms.licenseUpload.frontImage.clear")}
@@ -171,7 +167,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
               <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.backImage.title")}</h2>
               <div>
                 {noBackImageError && <Alert variant="danger">{t("forms.licenseUpload.backImage.notSelected")}</Alert>}
-                <DefaultImageDropzoneWithPreview
+                <ImageDropzoneWithPreviewDefault
                   dragDisplayText={t("forms.licenseUpload.backImage.drag")}
                   selectButtonText={t("forms.licenseUpload.backImage.select")}
                   clearButtonText={t("forms.licenseUpload.backImage.clear")}
@@ -206,7 +202,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
           )}
           <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
             <Button color="primary" size="lg" onClick={handleNextState}>
-              {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+              {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
             </Button>
           </div>
         </div>

@@ -2,23 +2,19 @@ import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
-import DefaultDynamicCreditCard from "../../components/DynamicCreditCard/DefaultCreditCard";
-import DefaultCardDetailsForm from "../../components/DefaultCardDetailsForm/DefaultCardDetailsForm";
-import Button from "../../components/Elements/Button";
+import DynamicCreditCardDefault from "../../components/DynamicCreditCard/Default";
+import CardDetailsFormDefault from "../../components/CreditCardForm/Default";
+import Button from "../../components/Elements/Default/Button";
 
 import { useCreditCardLogic } from "../../hooks/logic/useCreditCardLogic";
 import { useFormStore } from "../../hooks/stores/useFormStore";
+import type { CommonControllerProps } from "../ApplicationController/DisplayCurrentController";
 
-interface IProps {
-  handleSubmit: () => void;
-  handlePrevious: () => void;
-  isNextAvailable: boolean;
-  isPrevPageAvailable: boolean;
-}
+interface IProps extends CommonControllerProps {}
 
 const DefaultCreditCardController: React.FC<IProps> = ({
   handleSubmit,
-  isNextAvailable,
+  isNextPageAvailable,
   handlePrevious,
   isPrevPageAvailable,
 }) => {
@@ -48,10 +44,10 @@ const DefaultCreditCardController: React.FC<IProps> = ({
     <CardLayout title={t("forms.creditCard.title")} subtitle={t("forms.creditCard.message")}>
       <div className="mt-4 grid grid-cols-1">
         <div className="my-4 md:my-2">
-          <DefaultDynamicCreditCard currentFocus={currentFocus} formData={formValues} />
+          <DynamicCreditCardDefault currentFocus={currentFocus} formData={formValues} />
         </div>
         <div className="mt-4">
-          <DefaultCardDetailsForm
+          <CardDetailsFormDefault
             formData={formValues}
             handleChange={handleCardInputChange}
             handleBlur={handleCardInputBlur}
@@ -69,7 +65,7 @@ const DefaultCreditCardController: React.FC<IProps> = ({
           )}
           <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
             <Button color="primary" size="lg" onClick={handleNextState}>
-              {isNextAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+              {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
             </Button>
           </div>
         </div>
