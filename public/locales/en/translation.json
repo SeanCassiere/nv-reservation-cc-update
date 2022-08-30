@@ -42,7 +42,7 @@
       "labels": {
         "cardNumber": "Card number",
         "nameOnCard": "Name on the card",
-        "cvv": "CVV",
+        "cvv": "CVC / CVV",
         "billingZip": "Billing zip code",
         "expMonth": "Expiry month",
         "expYear": "Expiry year",
@@ -59,13 +59,13 @@
         "yourName": "YOUR NAME HERE"
       },
       "errors": {
-        "cardNumber": "Enter the full card number",
-        "name": "Enter the name printed on the card",
-        "expMonthYear": "Enter the card expiry",
+        "cardNumber": "Card number must be valid",
+        "name": "Printed name on the card is required",
+        "expMonthYear": "Card expiry must be valid",
         "expMonth": "Enter the card expiry month",
         "expYear": "Enter the card expiry year",
-        "cvv": "Enter the PIN on the back of the card",
-        "billingZip": "Enter your billing zip code"
+        "cvv": "CVV / CVV must be valid",
+        "billingZip": "Card billing zip code is required"
       }
     },
     "licenseUpload": {

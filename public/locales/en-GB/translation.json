@@ -8,7 +8,7 @@
         }
       },
       "errors": {
-        "billingZip": "Enter your billing post code"
+        "billingZip": "Card billing post code is required"
       }
     }
   }
