@@ -9,11 +9,11 @@ import { devConfigToQueryUrl } from "./utils";
 import { useConfigStore } from "../../hooks/stores/useConfigStore";
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 
-import TextInput from "../Elements/TextInput";
-import CheckInput from "../Elements/CheckInput";
-import SelectInput from "../Elements/SelectInput";
-import AnchorLink from "../Elements/AnchorLink";
-import Button from "../Elements/Button";
+import TextInput from "../Elements/Default/TextInput";
+import CheckInput from "../Elements/Default/CheckInput";
+import SelectInput from "../Elements/Default/SelectInput";
+import AnchorLink from "../Elements/Default/AnchorLink";
+import Button from "../Elements/Default/Button";
 import CardLayout from "../../layouts/Card";
 
 export type DevConfigObject = {

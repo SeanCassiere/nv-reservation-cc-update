@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import SignatureCanvas from "react-signature-canvas";
 
-import Button from "../Elements/Button";
+import Button from "../Elements/Default/Button";
 
 interface IProps {
   onSignature?: (signatureUrl: string) => void;

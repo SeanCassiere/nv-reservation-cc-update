@@ -1,7 +1,7 @@
 import React, { useId } from "react";
 import cn from "classnames";
 
-import { ExclamationIcon } from "../Icons";
+import { ExclamationIcon } from "../../Icons";
 
 interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   label?: React.ReactNode;

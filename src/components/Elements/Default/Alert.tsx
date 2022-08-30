@@ -1,7 +1,7 @@
 import React from "react";
 import cn from "classnames";
 
-import { ExclamationIcon, SuccessIcon } from "../Icons";
+import { ExclamationIcon, SuccessIcon } from "../../Icons";
 
 type Props = {
   children?: React.ReactNode;
