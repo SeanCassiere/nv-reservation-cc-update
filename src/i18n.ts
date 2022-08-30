@@ -24,7 +24,7 @@ i18n
       let foundLang = false;
 
       for (const coreLang of languagesCore.filter((l) => l !== "dev")) {
-        if (code.startsWith(`${coreLang}-`)) {
+        if (code && String(code).startsWith(`${coreLang}-`)) {
           langsToUse = [coreLang, ...langsToUse];
           foundLang = true;
           break;
