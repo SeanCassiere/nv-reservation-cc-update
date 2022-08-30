@@ -11,18 +11,14 @@ import CreditCardFormDefault from "../../components/CreditCardForm/Default";
 import { useCreditCardLogic } from "../../hooks/logic/useCreditCardLogic";
 import { useDriverLicenseLogic } from "../../hooks/logic/useDriverLicenseLogic";
 import { useFormStore } from "../../hooks/stores/useFormStore";
-import type { CommonControllerProps } from "../ApplicationController/DisplayCurrentController";
+import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
 
-interface IProps extends CommonControllerProps {}
+interface IProps {}
 
-const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
-  handleSubmit,
-  isNextPageAvailable,
-  handlePrevious,
-  isPrevPageAvailable,
-}) => {
+const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
   const { t } = useTranslation();
   const clearFormState = useFormStore((s) => s.clearFormStateKey);
+  const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext } = useAppNavContext();
 
   const setDriversLicenseToStore = useFormStore((s) => s.setDriversLicense);
   const setCustomerCreditCardToStore = useFormStore((s) => s.setCustomerCreditCard);
@@ -66,13 +62,13 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
       window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))
     ) {
       clearFormState("driversLicense");
-      handlePrevious();
+      goPrev();
     }
 
     if (!backLicenseImage && !frontLicenseImage) {
-      handlePrevious();
+      goPrev();
     }
-  }, [backLicenseImage, clearFormState, frontLicenseImage, handlePrevious, t]);
+  }, [backLicenseImage, clearFormState, frontLicenseImage, goPrev, t]);
 
   // validate the form data against the schema
   const handleNextState = useCallback(async () => {
@@ -93,11 +89,11 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
       backImageName: backLicenseImage.name,
     });
 
-    handleSubmit();
+    goNext();
   }, [
     backLicenseImage,
     frontLicenseImage,
-    handleSubmit,
+    goNext,
     isCreditCardValid,
     validateCardData,
     setBackImageError,
@@ -193,16 +189,16 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = ({
         </div>
         {/* Navigation */}
         <div className="mt-6 flex">
-          {isPrevPageAvailable && (
+          {isPreviousAvailable && (
             <div className="pr-0">
               <Button color="primary" variant="muted" size="lg" onClick={handleOpenModalConfirmation}>
-                &#8592;
+                {prevPageText}
               </Button>
             </div>
           )}
-          <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
+          <div className={isPreviousAvailable ? "pl-2 flex-1" : "flex-1"}>
             <Button color="primary" size="lg" onClick={handleNextState}>
-              {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+              {nextPageText}
             </Button>
           </div>
         </div>

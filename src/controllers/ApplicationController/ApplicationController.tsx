@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -10,6 +10,7 @@ import DisplayCurrentController from "./DisplayCurrentController";
 import { useConfigStore } from "../../hooks/stores/useConfigStore";
 import { useAuthStore } from "../../hooks/stores/useAuthStore";
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
+import { AppNavContextProvider } from "../../hooks/logic/useAppNavContext";
 
 import { APP_CONSTANTS } from "../../utils/constants";
 import { authenticateWithLambda } from "../../api/lambdas";
@@ -100,55 +101,6 @@ const ApplicationController: React.FC = () => {
     }
   );
 
-  /*
-   * Application Controller management
-   */
-  const [previousControllers, setPreviousControllers] = useState<string[]>([]);
-  const [activeController, setActiveController] = useState<string | null>(null);
-  const [remainingFlowControllers, setRemainingFlowControllers] = useState<string[]>([]);
-
-  const isPrevPageAvailable = useMemo(() => previousControllers.length > 0, [previousControllers]);
-  const handlePrevious = useCallback(() => {
-    if (previousControllers.length <= 0) return;
-
-    const currentPrevScreens = previousControllers;
-    const currentScreen = activeController!;
-
-    const newActiveScreen = currentPrevScreens.pop() || flowScreens[0];
-
-    setActiveController(newActiveScreen);
-    setPreviousControllers(currentPrevScreens.filter((screen) => screen !== newActiveScreen));
-    setRemainingFlowControllers([currentScreen, ...remainingFlowControllers]);
-  }, [activeController, flowScreens, previousControllers, remainingFlowControllers]);
-
-  const isNextPageAvailable = useMemo(() => remainingFlowControllers.length > 0, [remainingFlowControllers]);
-  const handleSubmit = useCallback(() => {
-    if (remainingFlowControllers.length <= 0) {
-      // navigate to a protected page with a submission controller
-      return navigate("/submit-details", { replace: true });
-    } else {
-      const currentScreen = activeController!;
-      const nextScreen = remainingFlowControllers[0];
-
-      const newPreviousControllersList = [...previousControllers, currentScreen]; //correct
-
-      const newFutureControllersList = remainingFlowControllers.filter((e) => e !== nextScreen);
-
-      setPreviousControllers(newPreviousControllersList);
-      setRemainingFlowControllers(newFutureControllersList);
-      setActiveController(nextScreen);
-    }
-  }, [activeController, remainingFlowControllers, previousControllers, navigate]);
-
-  useEffect(() => {
-    const startingController = flowScreens[0];
-    // Removing the starting controller since it will automatically be shown
-    const startingControllers = flowScreens.filter((elem) => elem !== startingController);
-
-    setRemainingFlowControllers(startingControllers);
-    setActiveController(startingController);
-  }, [flowScreens]);
-
   return (
     <>
       {isLoading === false && isError && error}
@@ -168,15 +120,9 @@ const ApplicationController: React.FC = () => {
         />
       )}
       {bootStatus === "loaded" && (
-        <>
-          <DisplayCurrentController
-            selectedController={activeController}
-            handleNext={handleSubmit}
-            handlePrevious={handlePrevious}
-            isPrevPageAvailable={isPrevPageAvailable}
-            isNextPageAvailable={isNextPageAvailable}
-          />
-        </>
+        <AppNavContextProvider configFlow={flowScreens}>
+          <DisplayCurrentController />
+        </AppNavContextProvider>
       )}
     </>
   );

@@ -7,8 +7,9 @@
     "submittingYourDetailsMsg": "Soumission des informations de carte de crédit"
   },
   "forms": {
-    "navNext": "Prochaine",
     "navSubmit": "Soumettre",
+    "navSubmit_next": "Prochaine",
+    "navSubmit_save": "Save",
     "creditCard": {
       "title": "Informations de carte de crédit",
       "message": "Veuillez saisir les informations de votre carte de crédit à utiliser pour votre réservation.",

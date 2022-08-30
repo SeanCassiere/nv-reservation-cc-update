@@ -45,11 +45,12 @@ export const useConfigStore = create(
       },
 
       setConfigValues({ flow, fromRentall, qa, successSubmissionScreen }) {
+        const flowSet = new Set(flow);
         set(
           {
             fromRentall: fromRentall === false ? false : true,
             qa: qa === true ? true : false,
-            ...(flow ? { flow } : {}),
+            ...(flow ? { flow: Array.from(flowSet) } : {}),
             ...(successSubmissionScreen ? { successSubmissionScreen } : {}),
           },
           false,

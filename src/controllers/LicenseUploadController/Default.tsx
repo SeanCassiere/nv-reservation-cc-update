@@ -8,17 +8,13 @@ import Button from "../../components/Elements/Default/Button";
 
 import { useDriverLicenseLogic } from "../../hooks/logic/useDriverLicenseLogic";
 import { useFormStore } from "../../hooks/stores/useFormStore";
-import type { CommonControllerProps } from "../ApplicationController/DisplayCurrentController";
+import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
 
-interface IProps extends CommonControllerProps {}
+interface IProps {}
 
-const DefaultLicenseUploadController: React.FC<IProps> = ({
-  handleSubmit,
-  handlePrevious,
-  isNextPageAvailable,
-  isPrevPageAvailable,
-}) => {
+const DefaultLicenseUploadController: React.FC<IProps> = () => {
   const { t } = useTranslation();
+  const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext } = useAppNavContext();
 
   const clearFormState = useFormStore((s) => s.clearFormStateKey);
   const setDriversLicenseToStore = useFormStore((s) => s.setDriversLicense);
@@ -54,15 +50,8 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
       frontImageName: frontLicenseImage.name,
       backImageName: backLicenseImage.name,
     });
-    handleSubmit();
-  }, [
-    frontLicenseImage,
-    backLicenseImage,
-    setFrontImageError,
-    setBackImageError,
-    setDriversLicenseToStore,
-    handleSubmit,
-  ]);
+    goNext();
+  }, [frontLicenseImage, backLicenseImage, setFrontImageError, setBackImageError, setDriversLicenseToStore, goNext]);
 
   const handleOpenModalConfirmation = useCallback(() => {
     if (
@@ -70,13 +59,13 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
       window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))
     ) {
       clearFormState("driversLicense");
-      handlePrevious();
+      goPrev();
     }
 
     if (!backLicenseImage && !frontLicenseImage) {
-      handlePrevious();
+      goPrev();
     }
-  }, [backLicenseImage, clearFormState, frontLicenseImage, handlePrevious, t]);
+  }, [backLicenseImage, clearFormState, frontLicenseImage, goPrev, t]);
 
   return (
     <CardLayout title={t("forms.licenseUpload.title")} subtitle={t("forms.licenseUpload.message")}>
@@ -146,16 +135,16 @@ const DefaultLicenseUploadController: React.FC<IProps> = ({
           </div>
         </div>
         <div className="mt-1 flex">
-          {isPrevPageAvailable && (
+          {isPreviousAvailable && (
             <div className="pr-0">
               <Button color="primary" variant="muted" size="lg" onClick={handleOpenModalConfirmation}>
-                &#8592;
+                {prevPageText}
               </Button>
             </div>
           )}
-          <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
+          <div className={isPreviousAvailable ? "pl-2 flex-1" : "flex-1"}>
             <Button color="primary" size="lg" onClick={handleNextState}>
-              {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+              {nextPageText}
             </Button>
           </div>
         </div>

@@ -10,17 +10,13 @@ import { APP_CONSTANTS } from "../../utils/constants";
 import { useFormStore } from "../../hooks/stores/useFormStore";
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 import { useRentalSavedDigitalSignature } from "../../hooks/network/useRentalSavedDigitalSignature";
-import type { CommonControllerProps } from "../ApplicationController/DisplayCurrentController";
+import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
 
-interface IProps extends CommonControllerProps {}
+interface IProps {}
 
-const DefaultRentalSignatureController: React.FC<IProps> = ({
-  handleSubmit,
-  handlePrevious,
-  isNextPageAvailable,
-  isPrevPageAvailable,
-}) => {
+const DefaultRentalSignatureController: React.FC<IProps> = () => {
   const { t } = useTranslation();
+  const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext } = useAppNavContext();
 
   const clearFormState = useFormStore((s) => s.clearFormStateKey);
   const setRentalSignature = useFormStore((s) => s.setRentalSignature);
@@ -39,8 +35,8 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
     }
 
     setRentalSignature({ signatureUrl });
-    handleSubmit();
-  }, [handleSubmit, setRentalSignature, signatureUrl]);
+    goNext();
+  }, [goNext, setRentalSignature, signatureUrl]);
 
   const handleOpenModalConfirmation = React.useCallback(() => {
     if (
@@ -48,13 +44,13 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
       window.confirm(t("forms.rentalSignature.goBack.title") + "\n" + t("forms.rentalSignature.goBack.message"))
     ) {
       clearFormState("rentalSignature");
-      handlePrevious();
+      goPrev();
     }
 
     if (signatureUrl === "") {
-      handlePrevious();
+      goPrev();
     }
-  }, [clearFormState, handlePrevious, signatureUrl, t]);
+  }, [clearFormState, goPrev, signatureUrl, t]);
 
   const handleSettingSignatureUrl = React.useCallback((url: string) => {
     if (url === "") {
@@ -102,16 +98,16 @@ const DefaultRentalSignatureController: React.FC<IProps> = ({
           initialDataURL={initialSignatureUrl !== "" ? initialSignatureUrl : undefined}
         />
         <div className="mt-6 flex">
-          {isPrevPageAvailable && (
+          {isPreviousAvailable && (
             <div className="pr-0">
               <Button color="primary" variant="muted" size="lg" onClick={handleOpenModalConfirmation}>
-                &#8592;
+                {prevPageText}
               </Button>
             </div>
           )}
-          <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
+          <div className={isPreviousAvailable ? "pl-2 flex-1" : "flex-1"}>
             <Button color="primary" size="lg" disabled={signatureUrl === ""} onClick={handleNextState}>
-              {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+              {nextPageText}
             </Button>
           </div>
         </div>

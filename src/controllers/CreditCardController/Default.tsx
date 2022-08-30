@@ -8,17 +8,14 @@ import Button from "../../components/Elements/Default/Button";
 
 import { useCreditCardLogic } from "../../hooks/logic/useCreditCardLogic";
 import { useFormStore } from "../../hooks/stores/useFormStore";
-import type { CommonControllerProps } from "../ApplicationController/DisplayCurrentController";
+import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
 
-interface IProps extends CommonControllerProps {}
+interface IProps {}
 
-const DefaultCreditCardController: React.FC<IProps> = ({
-  handleSubmit,
-  isNextPageAvailable,
-  handlePrevious,
-  isPrevPageAvailable,
-}) => {
+const DefaultCreditCardController: React.FC<IProps> = () => {
   const { t } = useTranslation();
+  const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext } = useAppNavContext();
+
   const initialFormData = useFormStore((s) => s.customerCreditCard.data);
   const setCustomerCreditCardToStore = useFormStore((s) => s.setCustomerCreditCard);
 
@@ -36,9 +33,9 @@ const DefaultCreditCardController: React.FC<IProps> = ({
   const handleNextState = useCallback(async () => {
     await validateCardData((values) => {
       setCustomerCreditCardToStore(values);
-      handleSubmit();
+      goNext();
     });
-  }, [handleSubmit, setCustomerCreditCardToStore, validateCardData]);
+  }, [goNext, setCustomerCreditCardToStore, validateCardData]);
 
   return (
     <CardLayout title={t("forms.creditCard.title")} subtitle={t("forms.creditCard.message")}>
@@ -56,16 +53,16 @@ const DefaultCreditCardController: React.FC<IProps> = ({
           />
         </div>
         <div className="mt-6 flex">
-          {isPrevPageAvailable && (
+          {isPreviousAvailable && (
             <div>
-              <Button color="primary" variant="muted" size="lg" onClick={handlePrevious}>
-                &#8592;
+              <Button color="primary" variant="muted" size="lg" onClick={goPrev}>
+                {prevPageText}
               </Button>
             </div>
           )}
-          <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
+          <div className={isPreviousAvailable ? "pl-2 flex-1" : "flex-1"}>
             <Button color="primary" size="lg" onClick={handleNextState}>
-              {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+              {nextPageText}
             </Button>
           </div>
         </div>

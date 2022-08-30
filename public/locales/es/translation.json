@@ -7,8 +7,9 @@
     "submittingYourDetailsMsg": "Presentación de información de tarjetas de crédito"
   },
   "forms": {
-    "navNext": "Próxima",
     "navSubmit": "Enviar",
+    "navSubmit_next": "Próxima",
+    "navSubmit_save": "Save",
     "creditCard": {
       "title": "Información de la tarjeta de crédito",
       "message": "Los huéspedes deberán introducir la información de su tarjeta de crédito que desea utilizar para la reserva.",

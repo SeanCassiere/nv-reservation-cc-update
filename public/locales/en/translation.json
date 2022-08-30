@@ -7,9 +7,9 @@
     "submittingYourDetailsMsg": "Submitting your details"
   },
   "forms": {
-    "navBack": "Back",
-    "navNext": "Next",
     "navSubmit": "Submit",
+    "navSubmit_next": "Next",
+    "navSubmit_save": "Save",
     "creditCard": {
       "title": "Credit Card Information",
       "message": "Please enter in your credit card information to be used for your reservation.",
