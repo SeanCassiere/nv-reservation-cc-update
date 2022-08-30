@@ -27,7 +27,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
   const isFieldInvalid = (field: string) => {
     const findIfAvailable = schemaErrors.find((error) => error.path === field);
     if (findIfAvailable) {
-      return true;
+      return findIfAvailable;
     }
     return undefined;
   };
@@ -56,23 +56,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           autoComplete="cc-number"
           label={t("forms.creditCard.labels.cardNumber")}
           isError={Boolean(isFieldInvalid("number"))}
-          helperText={isFieldInvalid("number") && t("forms.creditCard.errors.cardNumber")}
-        />
-      </div>
-      <div className="col-span-2">
-        <TextInput
-          placeholder={t("forms.creditCard.labels.placeholders.name")}
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          required
-          type="text"
-          autoComplete="cc-name"
-          label={t("forms.creditCard.labels.nameOnCard")}
-          isError={Boolean(isFieldInvalid("name"))}
-          helperText={isFieldInvalid("name") && t("forms.creditCard.errors.name")}
+          helperText={Boolean(isFieldInvalid("number")) && isFieldInvalid("number")?.message}
         />
       </div>
       <div className="col-span-2 md:col-span-1">
@@ -88,7 +72,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           autoComplete="cc-exp"
           label={t("forms.creditCard.labels.expMonthYear")}
           isError={Boolean(isFieldInvalid("monthYearExpiry"))}
-          helperText={isFieldInvalid("monthYearExpiry") && t("forms.creditCard.errors.expMonthYear")}
+          helperText={Boolean(isFieldInvalid("monthYearExpiry")) && isFieldInvalid("monthYearExpiry")?.message}
         />
       </div>
       <div className="col-span-2 md:col-span-1">
@@ -107,7 +91,23 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           autoComplete="cc-csc"
           label={t("forms.creditCard.labels.cvv")}
           isError={Boolean(isFieldInvalid("cvv"))}
-          helperText={isFieldInvalid("cvv") && t("forms.creditCard.errors.cvv")}
+          helperText={Boolean(isFieldInvalid("cvv")) && isFieldInvalid("cvv")?.message}
+        />
+      </div>
+      <div className="col-span-2">
+        <TextInput
+          placeholder={t("forms.creditCard.labels.placeholders.name")}
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          required
+          type="text"
+          autoComplete="cc-name"
+          label={t("forms.creditCard.labels.nameOnCard")}
+          isError={Boolean(isFieldInvalid("name"))}
+          helperText={Boolean(isFieldInvalid("name")) && isFieldInvalid("name")?.message}
         />
       </div>
       <div className="col-span-2">
@@ -123,7 +123,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           autoComplete="postal-code"
           label={t("forms.creditCard.labels.placeholders.zipCode")}
           isError={Boolean(isFieldInvalid("billingZip"))}
-          helperText={isFieldInvalid("billingZip") && t("forms.creditCard.errors.billingZip")}
+          helperText={Boolean(isFieldInvalid("billingZip")) && isFieldInvalid("billingZip")?.message}
         />
       </div>
     </div>
