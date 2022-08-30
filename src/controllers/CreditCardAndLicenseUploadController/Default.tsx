@@ -18,7 +18,7 @@ interface IProps {}
 const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
   const { t } = useTranslation();
   const clearFormState = useFormStore((s) => s.clearFormStateKey);
-  const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext } = useAppNavContext();
+  const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext, mode } = useAppNavContext();
 
   const setDriversLicenseToStore = useFormStore((s) => s.setDriversLicense);
   const setCustomerCreditCardToStore = useFormStore((s) => s.setCustomerCreditCard);
@@ -57,6 +57,11 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
   });
 
   const handleOpenModalConfirmation = useCallback(() => {
+    if (mode === "save") {
+      goPrev();
+      return;
+    }
+
     if (
       (backLicenseImage || frontLicenseImage) &&
       window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))
@@ -68,7 +73,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
     if (!backLicenseImage && !frontLicenseImage) {
       goPrev();
     }
-  }, [backLicenseImage, clearFormState, frontLicenseImage, goPrev, t]);
+  }, [backLicenseImage, clearFormState, frontLicenseImage, goPrev, mode, t]);
 
   // validate the form data against the schema
   const handleNextState = useCallback(async () => {

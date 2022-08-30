@@ -1,7 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "../../utils/constants";
+import {
+  ALL_SCREEN_FLOWS,
+  ALL_SUCCESS_SCREENS,
+  APP_CONSTANTS,
+  REPO_URL,
+  ALL_FORM_SUMMARY_OPTIONS,
+} from "../../utils/constants";
 import { supportedLanguages } from "../../i18n";
 import { isValueTrue } from "../../utils/common";
 import { devConfigToQueryUrl } from "./utils";
@@ -27,6 +33,7 @@ export type DevConfigObject = {
   flow: string[];
   fromRentall: boolean;
   successSubmissionScreen: string;
+  showPreSubmitSummary: boolean;
 };
 
 const outsideInitialConfigState: DevConfigObject = {
@@ -39,7 +46,8 @@ const outsideInitialConfigState: DevConfigObject = {
   emailTemplateId: "0",
   flow: [ALL_SCREEN_FLOWS[0].value],
   fromRentall: true,
-  successSubmissionScreen: APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT,
+  showPreSubmitSummary: false,
+  successSubmissionScreen: APP_CONSTANTS.SUCCESS_DEFAULT,
 };
 
 const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> = ({ open, handleClose }) => {
@@ -81,8 +89,9 @@ const ConfigCreator: React.FC = () => {
   const SELECT_MENU_DEFAULT_KEY = t("developer.configCreator.formSelectValue");
 
   const { referenceIdentifier, referenceType, clientId, responseTemplateId } = useRuntimeStore();
-  const { successSubmissionScreen, fromRentall, flow, qa, rawQueryString } = useConfigStore();
+  const { successSubmissionScreen, fromRentall, flow, qa, rawQueryString, showPreSubmitSummary } = useConfigStore();
 
+  const [isReady, setIsReady] = React.useState(false);
   const [initialConfig, setInitialConfig] = React.useState<DevConfigObject>(outsideInitialConfigState);
   const [config, setConfig] = React.useState<DevConfigObject>(outsideInitialConfigState);
 
@@ -146,9 +155,11 @@ const ConfigCreator: React.FC = () => {
       flow: [...flow],
       fromRentall: fromRentall,
       successSubmissionScreen: `${successSubmissionScreen}`,
+      showPreSubmitSummary: showPreSubmitSummary ?? outsideInitialConfigState.showPreSubmitSummary,
     };
     setConfig((prev) => ({ ...prev, ...body, dev: Boolean(isValueTrue(dev)) }));
     setInitialConfig((prev) => ({ ...prev, ...body, dev: Boolean(isValueTrue(dev)) }));
+    setIsReady(true);
   }, [
     clientId,
     flow,
@@ -160,7 +171,12 @@ const ConfigCreator: React.FC = () => {
     referenceType,
     responseTemplateId,
     successSubmissionScreen,
+    showPreSubmitSummary,
   ]);
+
+  if (!isReady) {
+    return <div>still loading...</div>;
+  }
 
   return (
     <React.Fragment>
@@ -260,7 +276,6 @@ const ConfigCreator: React.FC = () => {
             required
           />
         </div>
-
         <div className="mb-4">
           <SelectInput
             name="flow"
@@ -312,6 +327,18 @@ const ConfigCreator: React.FC = () => {
         <div className="mt-4 grid grid-cols-2 gap-3">
           <div className="col-span-2 md:col-span-1">
             <span className="text-sm font-medium text-gray-700">
+              {t("developer.configCreator.showPreSubmitSummary")}
+            </span>
+            <CheckInput
+              type="checkbox"
+              name="showPreSubmitSummary"
+              checked={config.showPreSubmitSummary}
+              onChange={handleNormalInputChange}
+              label={config.showPreSubmitSummary ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
+            />
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <span className="text-sm font-medium text-gray-700">
               {t("developer.configCreator.applicationBranding")}
             </span>
             <CheckInput
@@ -331,11 +358,7 @@ const ConfigCreator: React.FC = () => {
               name="qa"
               checked={config.qa}
               onChange={handleNormalInputChange}
-              label={
-                config.qa
-                  ? t("developer.configCreator.environmentQa")
-                  : t("developer.configCreator.environmentProduction")
-              }
+              label={config.qa ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
             />
           </div>
           <div className="col-span-2 md:col-span-1">
@@ -345,9 +368,7 @@ const ConfigCreator: React.FC = () => {
               name="dev"
               checked={config.dev}
               onChange={handleNormalInputChange}
-              label={
-                config.dev ? t("developer.configCreator.devMenuOpened") : t("developer.configCreator.devMenuClosed")
-              }
+              label={config.dev ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
             />
           </div>
         </div>

@@ -1,6 +1,15 @@
 import { FC, ReactNode, createContext, useContext, useState, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { APP_CONSTANTS } from "../../utils/constants";
+
+type PageTypeOptions = "creditCard" | "driversLicense" | "rentalSignature";
+const pagesTyped: { page: string; type: PageTypeOptions }[] = [
+  { page: APP_CONSTANTS.FLOW_CREDIT_CARD_FORM, type: "creditCard" },
+  { page: APP_CONSTANTS.FLOW_DEFAULT_LICENSE_UPLOAD_FORM, type: "driversLicense" },
+  { page: APP_CONSTANTS.FLOW_CREDIT_CARD_LICENSE_UPLOAD_FORM, type: "creditCard" },
+  { page: APP_CONSTANTS.FLOW_RENTAL_SIGNATURE_FORM, type: "rentalSignature" },
+];
 
 type AppNavContextType = {
   mode: "navigate" | "save";
@@ -9,7 +18,7 @@ type AppNavContextType = {
   activeController: string | null;
   isPreviousAvailable: boolean;
   isNextAvailable: boolean;
-  goToEditAPage: ({ target }: { target: string }) => void;
+  goToEditAPage: (target: PageTypeOptions) => void;
   nextPageText: ReactNode;
   prevPageText: ReactNode;
 };
@@ -26,7 +35,10 @@ const AppNavContext = createContext<AppNavContextType>({
   prevPageText: "",
 });
 
-export const AppNavContextProvider: FC<{ children: ReactNode; configFlow: string[] }> = ({ children, configFlow }) => {
+export const AppNavContextProvider: FC<{
+  children: ReactNode;
+  configFlow: string[];
+}> = ({ children, configFlow }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [currentNavMode, setCurrentNavMode] = useState<AppNavContextType["mode"]>("navigate");
@@ -37,6 +49,7 @@ export const AppNavContextProvider: FC<{ children: ReactNode; configFlow: string
 
   const goNext = useCallback(() => {
     if (currentNavMode === "save") {
+      setSelectedController(configFlow[configFlow.length - 1]);
       setCurrentNavMode("navigate");
       return;
     }
@@ -54,10 +67,11 @@ export const AppNavContextProvider: FC<{ children: ReactNode; configFlow: string
     // at this stage the index is valid
     const nextScreen = configFlow[currentControllerIdx + 1];
     setSelectedController(nextScreen);
-  }, [currentNavMode, navigate, selectedController, configFlow]);
+  }, [currentNavMode, selectedController, configFlow, navigate]);
 
   const goPrev = useCallback(() => {
     if (currentNavMode === "save") {
+      setSelectedController(configFlow[configFlow.length - 1]);
       setCurrentNavMode("navigate");
       return;
     }
@@ -84,12 +98,21 @@ export const AppNavContextProvider: FC<{ children: ReactNode; configFlow: string
     return currentControllerIdx < configFlow.length - 1;
   }, [selectedController, configFlow]);
 
-  /**
-   * @todo - this is a dummy function in place of one to actually support editing a page
-   */
-  const goToEditAPage: AppNavContextType["goToEditAPage"] = useCallback(({ target }) => {
-    setCurrentNavMode("save");
-  }, []);
+  const goToEditAPage: AppNavContextType["goToEditAPage"] = useCallback(
+    (target) => {
+      setCurrentNavMode("save");
+      const pageWithTargetType = pagesTyped.filter((i) => i.type === target);
+
+      for (const flowScreen of configFlow) {
+        const find = pageWithTargetType.find((i) => i.page === flowScreen);
+        if (find) {
+          setSelectedController(find.page);
+          break;
+        }
+      }
+    },
+    [configFlow]
+  );
 
   const nextPageText = useMemo(
     () =>

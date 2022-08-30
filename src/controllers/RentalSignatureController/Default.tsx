@@ -16,7 +16,7 @@ interface IProps {}
 
 const DefaultRentalSignatureController: React.FC<IProps> = () => {
   const { t } = useTranslation();
-  const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext } = useAppNavContext();
+  const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext, mode } = useAppNavContext();
 
   const clearFormState = useFormStore((s) => s.clearFormStateKey);
   const setRentalSignature = useFormStore((s) => s.setRentalSignature);
@@ -39,6 +39,11 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
   }, [goNext, setRentalSignature, signatureUrl]);
 
   const handleOpenModalConfirmation = React.useCallback(() => {
+    if (mode === "save") {
+      goPrev();
+      return;
+    }
+
     if (
       signatureUrl !== "" &&
       window.confirm(t("forms.rentalSignature.goBack.title") + "\n" + t("forms.rentalSignature.goBack.message"))
@@ -50,7 +55,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
     if (signatureUrl === "") {
       goPrev();
     }
-  }, [clearFormState, goPrev, signatureUrl, t]);
+  }, [clearFormState, goPrev, mode, signatureUrl, t]);
 
   const handleSettingSignatureUrl = React.useCallback((url: string) => {
     if (url === "") {

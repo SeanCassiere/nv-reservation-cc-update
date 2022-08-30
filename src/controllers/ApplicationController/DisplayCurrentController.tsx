@@ -15,6 +15,8 @@ const CcAndLicenseUplControllerDefault = lazy(() => import("../CreditCardAndLice
 const RentalSignatureControllerDefault = lazy(() => import("../RentalSignatureController/Default"));
 const RentalSummaryControllerDefault = lazy(() => import("../RentalSummaryController/Default"));
 
+const PreSubmitSummaryControllerDefault = lazy(() => import("../PreSubmitSummaryController/Default"));
+
 const DisplayCurrentController: React.FC = () => {
   const { t } = useTranslation();
   const { activeController } = useAppNavContext();
@@ -22,15 +24,16 @@ const DisplayCurrentController: React.FC = () => {
   return (
     <React.Fragment>
       <Suspense fallback={<LoadingSubmission title={t("appStatusMessages.loading")} />}>
-        {activeController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_FORM && <CcControllerDefault />}
-        {activeController === APP_CONSTANTS.VIEW_DEFAULT_LICENSE_UPLOAD_FORM && <LicenseUplControllerDefault />}
-        {activeController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM && (
+        {activeController === APP_CONSTANTS.FLOW_CREDIT_CARD_FORM && <CcControllerDefault />}
+        {activeController === APP_CONSTANTS.FLOW_DEFAULT_LICENSE_UPLOAD_FORM && <LicenseUplControllerDefault />}
+        {activeController === APP_CONSTANTS.FLOW_CREDIT_CARD_LICENSE_UPLOAD_FORM && (
           <CcAndLicenseUplControllerDefault />
         )}
-        {activeController === APP_CONSTANTS.VIEW_DEFAULT_RENTAL_SIGNATURE_FORM && <RentalSignatureControllerDefault />}
-        {activeController === APP_CONSTANTS.VIEW_DEFAULT_RENTAL_CHARGES_FORM && <RentalSummaryControllerDefault />}
-        {activeController === APP_CONSTANTS.VIEW_DEV_SCREEN_1 && <DevScreen title={APP_CONSTANTS.VIEW_DEV_SCREEN_1} />}
-        {activeController === APP_CONSTANTS.VIEW_DEV_SCREEN_2 && <DevScreen title={APP_CONSTANTS.VIEW_DEV_SCREEN_2} />}
+        {activeController === APP_CONSTANTS.FLOW_RENTAL_SIGNATURE_FORM && <RentalSignatureControllerDefault />}
+        {activeController === APP_CONSTANTS.FLOW_RENTAL_CHARGES_FORM && <RentalSummaryControllerDefault />}
+        {activeController === APP_CONSTANTS.FLOW_FORMS_SUMMARY && <PreSubmitSummaryControllerDefault />}
+        {activeController === APP_CONSTANTS.FLOW_DEV_SCREEN_1 && <DevScreen title={APP_CONSTANTS.FLOW_DEV_SCREEN_1} />}
+        {activeController === APP_CONSTANTS.FLOW_DEV_SCREEN_2 && <DevScreen title={APP_CONSTANTS.FLOW_DEV_SCREEN_2} />}
       </Suspense>
     </React.Fragment>
   );

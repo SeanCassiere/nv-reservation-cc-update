@@ -14,7 +14,7 @@ interface IProps {}
 
 const DefaultLicenseUploadController: React.FC<IProps> = () => {
   const { t } = useTranslation();
-  const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext } = useAppNavContext();
+  const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext, mode } = useAppNavContext();
 
   const clearFormState = useFormStore((s) => s.clearFormStateKey);
   const setDriversLicenseToStore = useFormStore((s) => s.setDriversLicense);
@@ -54,6 +54,10 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
   }, [frontLicenseImage, backLicenseImage, setFrontImageError, setBackImageError, setDriversLicenseToStore, goNext]);
 
   const handleOpenModalConfirmation = useCallback(() => {
+    if (mode === "save") {
+      goPrev();
+      return;
+    }
     if (
       (backLicenseImage || frontLicenseImage) &&
       window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))
@@ -65,7 +69,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
     if (!backLicenseImage && !frontLicenseImage) {
       goPrev();
     }
-  }, [backLicenseImage, clearFormState, frontLicenseImage, goPrev, t]);
+  }, [backLicenseImage, clearFormState, frontLicenseImage, goPrev, mode, t]);
 
   return (
     <CardLayout title={t("forms.licenseUpload.title")} subtitle={t("forms.licenseUpload.message")}>

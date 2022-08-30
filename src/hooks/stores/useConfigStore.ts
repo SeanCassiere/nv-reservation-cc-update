@@ -4,12 +4,14 @@ import { APP_CONSTANTS } from "../../utils/constants";
 
 type ConfigStoreType = {
   flow: string[];
+  fullFlow: string[];
   successSubmissionScreen: string;
   rawConfig: string;
   rawQueryString: string;
   fromRentall: boolean;
   qa: boolean;
   isDevMenuOpen: boolean;
+  showPreSubmitSummary: boolean;
   setDevMenuState: (newState: ((value: boolean) => boolean) | boolean) => void;
   setRawQuery: (payload: { rawConfig: string; rawQueryString: string }) => void;
   setConfigValues: (payload: {
@@ -17,18 +19,21 @@ type ConfigStoreType = {
     fromRentall: boolean;
     qa: boolean;
     successSubmissionScreen?: string;
+    showPreSubmitSummary: boolean;
   }) => void;
 };
 
 export const useConfigStore = create(
   devtools<ConfigStoreType>(
     (set, get) => ({
-      flow: [APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_FORM],
-      successSubmissionScreen: APP_CONSTANTS.SUCCESS_SCREEN_DEFAULT,
+      flow: [APP_CONSTANTS.FLOW_CREDIT_CARD_FORM],
+      fullFlow: [APP_CONSTANTS.FLOW_CREDIT_CARD_FORM],
+      successSubmissionScreen: APP_CONSTANTS.SUCCESS_DEFAULT,
       rawConfig: "",
       rawQueryString: "",
       fromRentall: true,
       qa: false,
+      showPreSubmitSummary: false,
       isDevMenuOpen: false,
 
       setDevMenuState: (newState: ((value: boolean) => boolean) | boolean) => {
@@ -44,13 +49,18 @@ export const useConfigStore = create(
         set({ rawConfig, rawQueryString }, false, "setRawQuery");
       },
 
-      setConfigValues({ flow, fromRentall, qa, successSubmissionScreen }) {
+      setConfigValues({ flow, fromRentall, qa, successSubmissionScreen, showPreSubmitSummary }) {
         const flowSet = new Set(flow);
+        const fullFlowSet = new Set(flow);
+        if (showPreSubmitSummary) {
+          fullFlowSet.add(APP_CONSTANTS.FLOW_FORMS_SUMMARY);
+        }
         set(
           {
             fromRentall: fromRentall === false ? false : true,
             qa: qa === true ? true : false,
             ...(flow ? { flow: Array.from(flowSet) } : {}),
+            ...(flow ? { fullFlow: Array.from(fullFlowSet) } : {}),
             ...(successSubmissionScreen ? { successSubmissionScreen } : {}),
           },
           false,

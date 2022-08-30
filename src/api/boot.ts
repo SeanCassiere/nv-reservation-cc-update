@@ -1,6 +1,6 @@
 import { createHtmlBlobDataUrl } from "../utils/blobUtils";
 import { isValueTrue } from "../utils/common";
-import { APP_CONSTANTS } from "../utils/constants";
+import { APP_CONSTANTS, COMPAT_KEYS } from "../utils/constants";
 import { base64Decode } from "../utils/base64";
 
 import { fetchAgreementByIdOrNumber } from "./agreementApi";
@@ -28,9 +28,25 @@ import type { RentalStoreType } from "../hooks/stores/useRuntimeStore";
  */
 function normalizeFlowScreens(prev: string[], current: string) {
   let nowScreen = current;
-  if (nowScreen === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_CONTROLLER) {
-    nowScreen = APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM;
+  if (
+    nowScreen === COMPAT_KEYS.DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_CONTROLLER ||
+    nowScreen === COMPAT_KEYS.DEFAULT_LICENSE_UPLOAD_FORM
+  ) {
+    nowScreen = APP_CONSTANTS.FLOW_CREDIT_CARD_LICENSE_UPLOAD_FORM;
   }
+  if (nowScreen === COMPAT_KEYS.DEFAULT_CREDIT_CARD_FORM) {
+    nowScreen = APP_CONSTANTS.FLOW_CREDIT_CARD_FORM;
+  }
+  if (nowScreen === COMPAT_KEYS.DEFAULT_RENTAL_CHARGES_FORM) {
+    nowScreen = APP_CONSTANTS.FLOW_RENTAL_CHARGES_FORM;
+  }
+  if (nowScreen === COMPAT_KEYS.DEFAULT_RENTAL_SIGNATURE_FORM) {
+    nowScreen = APP_CONSTANTS.FLOW_RENTAL_SIGNATURE_FORM;
+  }
+  if (nowScreen === COMPAT_KEYS.DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM) {
+    nowScreen = APP_CONSTANTS.FLOW_CREDIT_CARD_LICENSE_UPLOAD_FORM;
+  }
+
   prev.push(nowScreen);
   return prev;
 }
@@ -41,6 +57,7 @@ type QueryConfigState = {
   flow: string[];
   fromRentall: boolean;
   successSubmissionScreen?: string;
+  showPreSubmitSummary?: boolean;
 };
 
 export async function bootUp({ windowQueryString }: { windowQueryString: string }) {
@@ -64,6 +81,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     emailTemplateId: null,
     flow: [],
     fromRentall: true,
+    showPreSubmitSummary: false,
   };
 
   if (!configQuery) return null;
@@ -88,6 +106,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     referenceId: reservationId ? reservationId : agreementId ? agreementId : "",
     flow: config.flow.reduce(normalizeFlowScreens, []),
     fromRentall: config.fromRentall,
+    showPreSubmitSummary: config.showPreSubmitSummary,
     successSubmissionScreen: config.successSubmissionScreen,
   };
 }

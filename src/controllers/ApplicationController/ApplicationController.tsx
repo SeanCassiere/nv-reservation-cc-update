@@ -35,7 +35,7 @@ const ApplicationController: React.FC = () => {
   const setRuntimeAdminUserId = useRuntimeStore((s) => s.setRuntimeAdminUserId);
   const setRuntimeReferenceId = useRuntimeStore((s) => s.setRuntimeReferenceId);
 
-  const flowScreens = useConfigStore((s) => s.flow);
+  const fullFlow = useConfigStore((s) => s.fullFlow);
   const referenceType = useRuntimeStore((s) => s.referenceType);
 
   const [bootStatus, setBootStatus] = useState<BootStatus>("authenticating");
@@ -87,6 +87,7 @@ const ApplicationController: React.FC = () => {
           fromRentall: data.fromRentall,
           qa: data.qa,
           successSubmissionScreen: data.successSubmissionScreen,
+          showPreSubmitSummary: data.showPreSubmitSummary ?? false,
         });
         setEmailTemplateAndClientId({ newClientId: data.clientId, newTemplateId: data.responseEmailTemplateId });
         setInitReferenceValues({ newReferenceType: data.referenceType, newReferenceIdentifier: data.referenceId });
@@ -120,7 +121,7 @@ const ApplicationController: React.FC = () => {
         />
       )}
       {bootStatus === "loaded" && (
-        <AppNavContextProvider configFlow={flowScreens}>
+        <AppNavContextProvider configFlow={fullFlow}>
           <DisplayCurrentController />
         </AppNavContextProvider>
       )}
