@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { useDropzone, Accept } from "react-dropzone";
-import Button from "../Elements/Button";
+import Button from "../Elements/Default/Button";
 
 const baseStyle = {
   flex: 1,

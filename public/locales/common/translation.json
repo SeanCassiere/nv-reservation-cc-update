@@ -1,0 +1,28 @@
+{
+  "intlCurrency": "{{value, currency}}",
+  "developer": {
+    "drawerTitle": "Developer Menu",
+    "viewProjectRepo": "GitHub Repository",
+    "configCreator": {
+      "formSelectValue": "Select",
+      "btnCopy": "Copy",
+      "btnCopiedToClipboard": "Copied to clipboard",
+      "btnSave": "Open new config",
+      "btnReset": "Clear changes",
+      "referenceType": "Reference Type",
+      "referenceId": "Reference ID",
+      "clientId": "Client ID",
+      "lang": "Language",
+      "responseTemplateId": "Response Email Template ID",
+      "applicationFlows": "Flows",
+      "applicationSuccessScreen": "Success Screen",
+      "applicationBranding": "Branding?",
+      "applicationEnvironment": "Environment?",
+      "environmentQa": "Using QA",
+      "environmentProduction": "Using Production",
+      "openedDevMenu": "Developer Menu Opened?",
+      "devMenuOpened": "Open",
+      "devMenuClosed": "Closed"
+    }
+  }
+}

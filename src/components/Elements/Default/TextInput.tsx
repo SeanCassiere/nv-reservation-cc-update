@@ -1,15 +1,15 @@
 import React, { useId } from "react";
 import cn from "classnames";
 
-import { ExclamationIcon } from "../Icons";
+import { ExclamationIcon } from "../../Icons";
 
-interface Props extends React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
+interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   label?: React.ReactNode;
   helperText?: React.ReactNode;
   isError?: boolean;
 }
 
-const SelectInput: React.FC<Props> = ({ id, label, helperText, children, isError, className, ...selectProps }) => {
+const TextInput: React.FC<Props> = ({ id, label, helperText, isError, className, ...inputProps }) => {
   const elementId = useId();
 
   const inputClassNames = cn(
@@ -39,15 +39,13 @@ const SelectInput: React.FC<Props> = ({ id, label, helperText, children, isError
       {label && (
         <label htmlFor={id ?? elementId} className="block text-sm font-medium text-gray-700">
           {label}
-          {selectProps.required && <span className="text-red-500">&nbsp;*</span>}
+          {inputProps.required && <span className="text-red-500">&nbsp;*</span>}
         </label>
       )}
       <div className="mt-1 relative">
-        <select id={id ?? elementId} className={inputClassNames} {...selectProps}>
-          {children}
-        </select>
+        <input id={id ?? elementId} className={inputClassNames} {...inputProps} />
         {isError && (
-          <div className="absolute inset-y-0 right-0 pr-8 flex items-center pointer-events-none">
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
             <ExclamationIcon className="text-red-500" />
           </div>
         )}
@@ -57,4 +55,4 @@ const SelectInput: React.FC<Props> = ({ id, label, helperText, children, isError
   );
 };
 
-export default SelectInput;
+export default TextInput;

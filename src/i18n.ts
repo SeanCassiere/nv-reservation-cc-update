@@ -3,23 +3,41 @@ import HttpApi from "i18next-http-backend";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-export const supportedLanguages = ["en", "en-GB", "de", "fr", "es"] as const;
+const common = "common";
+const en = "en";
+const languagesCore = [common, en, "de", "fr", "es"];
+const languagesExtensions = ["en-GB"];
+export const supportedLanguages = [...languagesCore, ...languagesExtensions].filter((l) => l !== common);
 
 i18n
   .use(HttpApi)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    supportedLngs: supportedLanguages,
     detection: {
       order: ["querystring"],
       lookupQuerystring: "lang",
     },
-    fallbackLng: "en",
-    debug: import.meta.env.VITE_APP_DEVELOPMENT ? true : false,
-    interpolation: {
-      escapeValue: false,
+    cleanCode: true,
+    fallbackLng: (code) => {
+      let langsToUse = [common];
+      let foundLang = false;
+
+      for (const coreLang of languagesCore.filter((l) => l !== "dev")) {
+        if (code && String(code).startsWith(`${coreLang}-`)) {
+          langsToUse = [coreLang, ...langsToUse];
+          foundLang = true;
+          break;
+        }
+      }
+
+      if (!foundLang) {
+        langsToUse = [en, ...langsToUse];
+      }
+      return langsToUse;
     },
+    interpolation: { escapeValue: false },
+    debug: import.meta.env.VITE_APP_DEVELOPMENT ? true : false,
   });
 
 export default i18n;
