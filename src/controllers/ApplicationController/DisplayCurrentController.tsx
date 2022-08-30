@@ -54,10 +54,9 @@ const DisplayCurrentController = ({
         {selectedController === APP_CONSTANTS.VIEW_DEFAULT_LICENSE_UPLOAD_FORM && (
           <LicenseUplControllerDefault {...controllerProps} />
         )}
-        {selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_CONTROLLER ||
-        selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM ? (
+        {selectedController === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM && (
           <CcAndLicenseUplControllerDefault {...controllerProps} />
-        ) : null}
+        )}
         {selectedController === APP_CONSTANTS.VIEW_DEFAULT_RENTAL_SIGNATURE_FORM && (
           <RentalSignatureControllerDefault {...controllerProps} />
         )}

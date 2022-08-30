@@ -17,6 +17,24 @@ import type {
 } from "../hooks/stores/useFormStore";
 import type { RentalStoreType } from "../hooks/stores/useRuntimeStore";
 
+/**
+ * Used to remedy a mistake made when adding the license and cc upload controller for `ClientID 251`.
+ * The config used on their account used the wording of "Controller" instead of "Form".
+ *
+ * Now it's a way for me silently fix any mistakes I may ship in the naming of the flow screens 😊.
+ * @param prev `string[]`
+ * @param current `string`
+ * @returns An array of usable flow screens. `string[]`
+ */
+function normalizeFlowScreens(prev: string[], current: string) {
+  let nowScreen = current;
+  if (nowScreen === APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_CONTROLLER) {
+    nowScreen = APP_CONSTANTS.VIEW_DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM;
+  }
+  prev.push(nowScreen);
+  return prev;
+}
+
 type QueryConfigState = {
   clientId: string | null;
   emailTemplateId: string | null;
@@ -68,7 +86,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     qa: isValueTrue(qaQuery) ? true : false,
     referenceType: agreementId ? APP_CONSTANTS.REF_TYPE_AGREEMENT : APP_CONSTANTS.REF_TYPE_RESERVATION,
     referenceId: reservationId ? reservationId : agreementId ? agreementId : "",
-    flow: config.flow,
+    flow: config.flow.reduce(normalizeFlowScreens, []),
     fromRentall: config.fromRentall,
     successSubmissionScreen: config.successSubmissionScreen,
   };

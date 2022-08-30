@@ -101,7 +101,7 @@ const ApplicationController: React.FC = () => {
   );
 
   /*
-   ** Application Controller management
+   * Application Controller management
    */
   const [previousControllers, setPreviousControllers] = useState<string[]>([]);
   const [activeController, setActiveController] = useState<string | null>(null);
