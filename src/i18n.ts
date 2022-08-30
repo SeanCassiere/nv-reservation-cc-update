@@ -23,7 +23,7 @@ i18n
       let langsToUse = [common];
       let foundLang = false;
 
-      for (const coreLang of languagesCore.filter((l) => l !== "dev")) {
+      for (const coreLang of languagesCore.filter((l) => l !== common)) {
         if (code && String(code).startsWith(`${coreLang}-`)) {
           langsToUse = [coreLang, ...langsToUse];
           foundLang = true;
