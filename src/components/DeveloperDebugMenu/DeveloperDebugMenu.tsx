@@ -193,7 +193,7 @@ const ConfigCreator: React.FC = () => {
           variant="muted"
           size="sm"
           onClick={() => {
-            navigator.clipboard.writeText(devConfigToQueryUrl(config));
+            navigator.clipboard.writeText(window.location.origin + "/?" + devConfigToQueryUrl(config));
             setShowCopiedMessage(true);
             setTimeout(() => {
               setShowCopiedMessage(false);
