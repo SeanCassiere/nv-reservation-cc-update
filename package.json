@@ -33,7 +33,8 @@
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "serve:functions": "netlify dev --targetPort 4173",
     "serve:static-serve": "concurrently \"npm run preview\" \"npm run serve:functions\"",
-    "serve": "npm run build && npm run serve:static-serve"
+    "serve": "npm run build && npm run serve:static-serve",
+    "sync-i18n": "i18next-locales-sync -c ./locales-sync.config.js"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.2",
@@ -54,6 +55,7 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-react": "7.30.1",
+    "i18next-locales-sync": "^2.0.1",
     "postcss": "^8.4.16",
     "prettier": "2.7.1",
     "tailwindcss": "^3.1.8",
