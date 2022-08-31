@@ -2,6 +2,8 @@ import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { APP_CONSTANTS } from "../../utils/constants";
 
+const PROTECTED_FLOWS: string[] = [APP_CONSTANTS.FLOW_FORMS_SUMMARY];
+
 type ConfigStoreType = {
   flow: string[];
   fullFlow: string[];
@@ -50,8 +52,9 @@ export const useConfigStore = create(
       },
 
       setConfigValues({ flow, fromRentall, qa, successSubmissionScreen, showPreSubmitSummary }) {
-        const flowSet = new Set(flow);
-        const fullFlowSet = new Set(flow);
+        const filterFlow = flow.filter((flow) => !PROTECTED_FLOWS.includes(flow));
+        const flowSet = new Set(filterFlow);
+        const fullFlowSet = new Set(filterFlow);
         if (showPreSubmitSummary) {
           fullFlowSet.add(APP_CONSTANTS.FLOW_FORMS_SUMMARY);
         }
@@ -62,6 +65,7 @@ export const useConfigStore = create(
             ...(flow ? { flow: Array.from(flowSet) } : {}),
             ...(flow ? { fullFlow: Array.from(fullFlowSet) } : {}),
             ...(successSubmissionScreen ? { successSubmissionScreen } : {}),
+            ...(showPreSubmitSummary ? { showPreSubmitSummary } : {}),
           },
           false,
           "setConfigValues"

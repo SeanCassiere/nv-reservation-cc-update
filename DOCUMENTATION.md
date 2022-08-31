@@ -1,6 +1,6 @@
 # DOCUMENTATION
 
-The application authorizes itself via a proxy lambda function hosted on Netlify, which in-turn obtains its access token from the Navotar OAuth2 Authorization server using `client credentials`. Then it obtains and updates information into the client account using the RENTALL V3 API.
+The application authorizes itself via a proxy lambda function hosted on Netlify, which in-turn obtains its access token from the Navotar OAuth2 Authorization server using `client_credentials`. Then it obtains and updates information into the client account using the RENTALL V3 API.
 
 You can view the OpenAPI documentation via this [link](https://api.apprentall.com/docs).
 
@@ -52,7 +52,7 @@ Should you wish to manually create your own config string, you will need to crea
 {
   "clientId": 1013,
   "emailTemplateId": 7388,
-  "flow": ["Default/CreditCardForm"],
+  "flow": ["CreditCardForm"],
   "fromRentall": true
 }
 

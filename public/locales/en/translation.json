@@ -43,8 +43,8 @@
       }
     },
     "licenseUpload": {
-      "title": "Driver's License",
-      "message": "Upload front and back images of your driver's license.",
+      "title": "Driving License",
+      "message": "Upload front and back images of your driving license.",
       "goBack": {
         "title": "Are you sure?",
         "message": "Going back will discard the added files.",
@@ -87,6 +87,14 @@
       "title_agreement": "Rental summary",
       "message": "Summary of charges for this booking.",
       "message_agreement": "Summary of charges for this booking."
+    },
+    "formsSummary": {
+      "title": "Information summary",
+      "message": "Please review the information you are about to submit towards your rental.",
+      "noData": "You currently will not be submitting any data towards your booking.",
+      "creditCardTitle": "Credit card",
+      "licenseUploadTitle": "Driving license",
+      "rentalSignatureTitle": "Rental signature"
     }
   },
   "errorBoundary": {

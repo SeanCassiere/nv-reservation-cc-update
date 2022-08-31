@@ -8,6 +8,7 @@ const pagesTyped: { page: string; type: PageTypeOptions }[] = [
   { page: APP_CONSTANTS.FLOW_CREDIT_CARD_FORM, type: "creditCard" },
   { page: APP_CONSTANTS.FLOW_DEFAULT_LICENSE_UPLOAD_FORM, type: "driversLicense" },
   { page: APP_CONSTANTS.FLOW_CREDIT_CARD_LICENSE_UPLOAD_FORM, type: "creditCard" },
+  { page: APP_CONSTANTS.FLOW_CREDIT_CARD_LICENSE_UPLOAD_FORM, type: "driversLicense" },
   { page: APP_CONSTANTS.FLOW_RENTAL_SIGNATURE_FORM, type: "rentalSignature" },
 ];
 
@@ -87,10 +88,12 @@ export const AppNavContextProvider: FC<{
   }, [currentNavMode, selectedController, configFlow]);
 
   const isPreviousControllerAvailable = useMemo(() => {
+    if (currentNavMode === "save") return true;
+
     if (!selectedController) return false;
     const currentControllerIdx = [...configFlow].findIndex((i) => i === selectedController);
     return currentControllerIdx > 0;
-  }, [selectedController, configFlow]);
+  }, [currentNavMode, selectedController, configFlow]);
 
   const isNextControllerAvailable = useMemo(() => {
     if (!selectedController) return false;

@@ -1,4 +1,5 @@
-import React, { useMemo } from "react";
+import React, { useMemo, lazy } from "react";
+import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
 import Button from "../../components/Elements/Default/Button";
@@ -6,7 +7,13 @@ import Button from "../../components/Elements/Default/Button";
 import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
 import { useFormStore } from "../../hooks/stores/useFormStore";
 
+const Alert = lazy(() => import("../../components/Elements/Default/Alert"));
+const CreditCardFormSummary = lazy(() => import("../../components/FormSummary/CreditCard"));
+const DriverLicenseFormSummary = lazy(() => import("../../components/FormSummary/DriverLicense"));
+const RentalSignatureFormSummary = lazy(() => import("../../components/FormSummary/RentalSignature"));
+
 const PreSubmitSummaryControllerDefault: React.FC = () => {
+  const { t } = useTranslation();
   const { nextPageText, goNext, goToEditAPage } = useAppNavContext();
 
   const { isFilled: isCreditCard, data: creditCardInfo } = useFormStore((s) => s.customerCreditCard);
@@ -19,19 +26,21 @@ const PreSubmitSummaryControllerDefault: React.FC = () => {
   );
 
   return (
-    <CardLayout
-      title="Information summary"
-      subtitle="Please review the information you are about to submit towards your rental."
-    >
+    <CardLayout title={t("forms.formsSummary.title")} subtitle={t("forms.formsSummary.message")}>
       <div className="mt-4">
-        {isEmpty && <div>is empty</div>}
-        {isCreditCard && <div>{JSON.stringify(creditCardInfo)}</div>}
-        {isDriverLicense && <div>{JSON.stringify(driversLicense)}</div>}
-        {isRentalSignature && <div className="break-words">{JSON.stringify(rentalSignature)}</div>}
-
-        {isCreditCard && <Button onClick={() => goToEditAPage("creditCard")}>credit card</Button>}
-        {isDriverLicense && <Button onClick={() => goToEditAPage("driversLicense")}>credit card</Button>}
-        {isRentalSignature && <Button onClick={() => goToEditAPage("rentalSignature")}>rental signature</Button>}
+        {isEmpty && <Alert variant="warning">{t("forms.formsSummary.noData")}</Alert>}
+        {isCreditCard && (
+          <CreditCardFormSummary creditCard={creditCardInfo} editFunc={() => goToEditAPage("creditCard")} />
+        )}
+        {isDriverLicense && (
+          <DriverLicenseFormSummary driverLicense={driversLicense} editFunc={() => goToEditAPage("driversLicense")} />
+        )}
+        {isRentalSignature && (
+          <RentalSignatureFormSummary
+            rentalSignature={rentalSignature}
+            editFunc={() => goToEditAPage("rentalSignature")}
+          />
+        )}
       </div>
       <div className="mt-6 flex">
         <div className={"flex-1"}>

@@ -87,6 +87,14 @@
       "title_agreement": "Mietübersicht",
       "message": "Zusammenfassung der Gebühren für diese Buchung.",
       "message_agreement": "Zusammenfassung der Gebühren für diese Buchung."
+    },
+    "formsSummary": {
+      "title": "Zusammenfassung der Informationen",
+      "message": "Bitte überprüfen Sie die Informationen, die Sie für Ihre Anmietung einreichen werden.",
+      "noData": "Sie übermitteln derzeit keine Daten für Ihre Buchung.",
+      "creditCardTitle": "Kreditkarte",
+      "licenseUploadTitle": "Führerschein",
+      "rentalSignatureTitle": "Mietunterschrift"
     }
   },
   "errorBoundary": {
