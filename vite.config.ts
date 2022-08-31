@@ -6,7 +6,7 @@ const commonPlugins = [react()];
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  plugins: mode === "development" ? [...commonPlugins, eslintPlugin()] : [],
+  plugins: mode === "development" ? [...commonPlugins, eslintPlugin()] : [...commonPlugins],
   optimizeDeps: {
     esbuildOptions: {
       define: {},
