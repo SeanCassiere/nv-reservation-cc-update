@@ -9,9 +9,8 @@ import ApplicationController from "../controllers/ApplicationController/Applicat
 import SuccessSubmissionPage from "../pages/SuccessSubmission/SuccessSubmission";
 import ErrorSubmission from "../pages/ErrorSubmission/ErrorSubmission";
 import NavigateToNotAvailable from "./NavigateToNotAvailable";
-// import DefaultSubmitDetailsController from "../controllers/SubmitDetailsController/DefaultSubmitDetailsController";
 
-const SubmitDetailsController = lazy(() => import("../controllers/SubmitDetailsController/Default"));
+const PostFormDataController = lazy(() => import("../controllers/PostFormDataController/Default"));
 
 const AppRoutes: React.FC = () => {
   const { t } = useTranslation();
@@ -25,7 +24,7 @@ const AppRoutes: React.FC = () => {
           element={
             <RequireAuth>
               <Suspense fallback={<LoadingSubmission title={t("appStatusMessages.loading")} />}>
-                <SubmitDetailsController />
+                <PostFormDataController />
               </Suspense>
             </RequireAuth>
           }

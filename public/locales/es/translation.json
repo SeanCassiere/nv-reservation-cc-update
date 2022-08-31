@@ -7,8 +7,9 @@
     "submittingYourDetailsMsg": "Presentación de información de tarjetas de crédito"
   },
   "forms": {
-    "navNext": "Próxima",
     "navSubmit": "Enviar",
+    "navSubmit_next": "Próxima",
+    "navSubmit_save": "Ahorrar",
     "creditCard": {
       "title": "Información de la tarjeta de crédito",
       "message": "Los huéspedes deberán introducir la información de su tarjeta de crédito que desea utilizar para la reserva.",
@@ -86,6 +87,14 @@
       "title_agreement": "Resumen de alquiler",
       "message": "Resumen de los cargos de esta reserva.",
       "message_agreement": "Resumen de los cargos de esta reserva."
+    },
+    "formsSummary": {
+      "title": "Resumen de información",
+      "message": "Revise la información que está a punto de enviar para su alquiler.",
+      "noData": "Actualmente no enviará ningún dato para su reserva.",
+      "creditCardTitle": "Tarjeta de crédito",
+      "licenseUploadTitle": "Permiso de conducir",
+      "rentalSignatureTitle": "Firma de alquiler"
     }
   },
   "errorBoundary": {

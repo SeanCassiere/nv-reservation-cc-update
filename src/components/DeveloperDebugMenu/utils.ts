@@ -28,6 +28,7 @@ export function devConfigToQueryUrl(config: DevConfigObject) {
     flow: config.flow ?? useConfigStore.getState().flow,
     fromRentall: config.fromRentall !== undefined ? config.fromRentall : useConfigStore.getState().fromRentall,
     successSubmissionScreen: config.successSubmissionScreen ?? useConfigStore.getState().successSubmissionScreen,
+    showPreSubmitSummary: config.showPreSubmitSummary ?? useConfigStore.getState().showPreSubmitSummary,
   };
 
   let objJsonStr = JSON.stringify(hashObj);

@@ -7,8 +7,9 @@
     "submittingYourDetailsMsg": "Soumission des informations de carte de crédit"
   },
   "forms": {
-    "navNext": "Prochaine",
     "navSubmit": "Soumettre",
+    "navSubmit_next": "Prochaine",
+    "navSubmit_save": "sauvegarder",
     "creditCard": {
       "title": "Informations de carte de crédit",
       "message": "Veuillez saisir les informations de votre carte de crédit à utiliser pour votre réservation.",
@@ -86,6 +87,14 @@
       "title_agreement": "Récapitulatif de la location",
       "message": "Récapitulatif des frais pour cette réservation.",
       "message_agreement": "Récapitulatif des frais pour cette réservation."
+    },
+    "formsSummary": {
+      "title": "Résumé des informations",
+      "message": "Veuillez vérifier les informations que vous êtes sur le point de soumettre pour votre location.",
+      "noData": "Vous ne soumettrez actuellement aucune donnée pour votre réservation.",
+      "creditCardTitle": "Carte de crédit",
+      "licenseUploadTitle": "Permis de conduire",
+      "rentalSignatureTitle": "Signature du locataire"
     }
   },
   "errorBoundary": {

@@ -17,12 +17,11 @@
       "applicationFlows": "Flows",
       "applicationSuccessScreen": "Success Screen",
       "applicationBranding": "Branding?",
-      "applicationEnvironment": "Environment?",
-      "environmentQa": "Using QA",
-      "environmentProduction": "Using Production",
-      "openedDevMenu": "Developer Menu Opened?",
-      "devMenuOpened": "Open",
-      "devMenuClosed": "Closed"
+      "applicationEnvironment": "Using QA?",
+      "openedDevMenu": "Dev menu opened at start?",
+      "showPreSubmitSummary": "Show form summary screen?",
+      "yes": "Yes",
+      "no": "No"
     }
   }
 }

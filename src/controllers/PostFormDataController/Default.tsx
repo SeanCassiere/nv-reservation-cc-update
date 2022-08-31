@@ -12,7 +12,7 @@ import { postConfirmationEmail } from "../../api/emailsApi";
 import { postCompletionLambda } from "../../api/lambdas";
 import { postFormDataToApi } from "../../api/boot";
 
-const DefaultSubmitDetailsController: React.FC = () => {
+const PostFormDataControllerDefault: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
@@ -103,4 +103,4 @@ const DefaultSubmitDetailsController: React.FC = () => {
   return <LoadingSubmission title={currentMessage} />;
 };
 
-export default DefaultSubmitDetailsController;
+export default PostFormDataControllerDefault;

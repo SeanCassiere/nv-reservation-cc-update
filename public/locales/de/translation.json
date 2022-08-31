@@ -7,8 +7,9 @@
     "submittingYourDetailsMsg": "Übermitteln von Kreditkarteninformationen"
   },
   "forms": {
-    "navNext": "Nächste",
     "navSubmit": "Senden",
+    "navSubmit_next": "Nächste",
+    "navSubmit_save": "Speichern",
     "creditCard": {
       "title": "Kreditkarteninformationen",
       "message": "Bitte geben Sie Ihre Kreditkarteninformationen ein, die für Ihre Reservierung verwendet werden sollen.",
@@ -86,6 +87,14 @@
       "title_agreement": "Mietübersicht",
       "message": "Zusammenfassung der Gebühren für diese Buchung.",
       "message_agreement": "Zusammenfassung der Gebühren für diese Buchung."
+    },
+    "formsSummary": {
+      "title": "Zusammenfassung der Informationen",
+      "message": "Bitte überprüfen Sie die Informationen, die Sie für Ihre Anmietung einreichen werden.",
+      "noData": "Sie übermitteln derzeit keine Daten für Ihre Buchung.",
+      "creditCardTitle": "Kreditkarte",
+      "licenseUploadTitle": "Führerschein",
+      "rentalSignatureTitle": "Mietunterschrift"
     }
   },
   "errorBoundary": {

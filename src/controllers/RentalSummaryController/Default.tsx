@@ -7,17 +7,14 @@ import DefaultRentalSummary from "../../components/RentalSummary/Default";
 
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS } from "../../utils/constants";
-import type { CommonControllerProps } from "../ApplicationController/DisplayCurrentController";
+import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
 
-interface IProps extends CommonControllerProps {}
+interface IProps {}
 
-const DefaultRentalSummaryController: React.FC<IProps> = ({
-  handleSubmit,
-  handlePrevious,
-  isNextPageAvailable,
-  isPrevPageAvailable,
-}) => {
+const DefaultRentalSummaryController: React.FC<IProps> = () => {
   const { t } = useTranslation();
+  const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext } = useAppNavContext();
+
   const clientId = useRuntimeStore((s) => s.clientId);
   const referenceId = useRuntimeStore((s) => s.referenceIdentifier);
   const referenceType = useRuntimeStore((s) => s.referenceType);
@@ -34,16 +31,16 @@ const DefaultRentalSummaryController: React.FC<IProps> = ({
       <div className="mt-3">
         <DefaultRentalSummary clientId={clientId ?? 0} referenceId={referenceId ?? 0} referenceType={referenceType} />
         <div className="mt-6 flex">
-          {isPrevPageAvailable && (
+          {isPreviousAvailable && (
             <div className="pr-0">
-              <Button color="primary" variant="muted" size="lg" onClick={handlePrevious}>
-                &#8592;
+              <Button color="primary" variant="muted" size="lg" onClick={goPrev}>
+                {prevPageText}
               </Button>
             </div>
           )}
-          <div className={isPrevPageAvailable ? "pl-2 flex-1" : "flex-1"}>
-            <Button color="primary" size="lg" onClick={handleSubmit}>
-              {isNextPageAvailable ? t("forms.navNext") : t("forms.navSubmit")}
+          <div className={isPreviousAvailable ? "pl-2 flex-1" : "flex-1"}>
+            <Button color="primary" size="lg" onClick={goNext}>
+              {nextPageText}
             </Button>
           </div>
         </div>
