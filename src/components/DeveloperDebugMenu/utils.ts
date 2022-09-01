@@ -26,15 +26,15 @@ export function devConfigToQueryUrl(config: DevConfigObject) {
     clientId: Number(config.clientId) ?? Number(useRuntimeStore.getState().clientId),
     emailTemplateId: Number(config.emailTemplateId) ?? Number(useRuntimeStore.getState().responseTemplateId),
     flow: config.flow ?? useConfigStore.getState().flow,
-    fromRentall: config.fromRentall !== undefined ? config.fromRentall : useConfigStore.getState().fromRentall,
+    ...(!useConfigStore.getState().fromRentall || !config.fromRentall ? { fromRentall: false } : {}),
     successSubmissionScreen: config.successSubmissionScreen ?? useConfigStore.getState().successSubmissionScreen,
-    showPreSubmitSummary: config.showPreSubmitSummary ?? useConfigStore.getState().showPreSubmitSummary,
+    ...(useConfigStore.getState().showPreSubmitSummary || config.showPreSubmitSummary
+      ? { showPreSubmitSummary: true }
+      : {}),
   };
 
   let objJsonStr = JSON.stringify(hashObj);
   let objJsonB64 = base64Encode(objJsonStr);
 
-  params.append("config", objJsonB64);
-
-  return params.toString();
+  return params.toString() + "&config=" + objJsonB64;
 }
