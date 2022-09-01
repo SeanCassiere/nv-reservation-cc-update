@@ -68,43 +68,40 @@ const ApplicationController: React.FC = () => {
     },
   });
 
-  const { error, isError, isLoading } = useQuery(
-    ["boot-sequence"],
-    async () => bootUp({ windowQueryString: window.location.search }),
-    {
-      enabled: true,
-      refetchOnWindowFocus: false,
-      refetchIntervalInBackground: false,
-      retry: false,
-      onSuccess: (data) => {
-        if (!data) {
-          navigate("/not-available");
-          return;
-        }
-        setRawQuery({ rawConfig: data.rawConfig, rawQueryString: window.location.search });
-        setConfigStoreValues({
-          flow: data.flow,
-          fromRentall: data.fromRentall,
-          qa: data.qa,
-          successSubmissionScreen: data.successSubmissionScreen,
-          showPreSubmitSummary: data.showPreSubmitSummary ?? false,
-        });
-        setEmailTemplateAndClientId({ newClientId: data.clientId, newTemplateId: data.responseEmailTemplateId });
-        setInitReferenceValues({ newReferenceType: data.referenceType, newReferenceIdentifier: data.referenceId });
-        authorizeApp({ clientId: data.clientId, qa: data.qa });
-      },
-      onError: (err) => {
-        function explode() {
-          throw new Error(err as any);
-        }
-        explode();
-      },
-    }
-  );
+  const {
+    error: bootError,
+    isError: isBootError,
+    isLoading: isBootLoading,
+  } = useQuery(["boot-sequence"], async () => bootUp({ windowQueryString: window.location.search }), {
+    enabled: true,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: false,
+    retry: false,
+    onSuccess: (data) => {
+      if (!data) {
+        navigate("/not-available");
+        return;
+      }
+      setRawQuery({ rawConfig: data.rawConfig, rawQueryString: window.location.search });
+      setConfigStoreValues({
+        flow: data.flow,
+        fromRentall: data.fromRentall,
+        qa: data.qa,
+        successSubmissionScreen: data.successSubmissionScreen,
+        showPreSubmitSummary: data.showPreSubmitSummary ?? false,
+      });
+      setEmailTemplateAndClientId({ newClientId: data.clientId, newTemplateId: data.responseEmailTemplateId });
+      setInitReferenceValues({ newReferenceType: data.referenceType, newReferenceIdentifier: data.referenceId });
+      authorizeApp({ clientId: data.clientId, qa: data.qa });
+    },
+  });
+
+  if (!isBootLoading && isBootError) {
+    throw bootError;
+  }
 
   return (
     <>
-      {isLoading === false && isError && error}
       {bootStatus === "authenticating" && <LoadingSubmission title={t("authenticationSubmission.title")} />}
       {bootStatus === "authentication_error" && (
         <ErrorSubmission msg={t("authenticationSubmission.message")} tryAgainButton />
