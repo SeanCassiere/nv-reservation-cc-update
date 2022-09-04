@@ -8,7 +8,7 @@ import LoadingSubmission from "./pages/LoadingSubmission/LoadingSubmission";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Suspense fallback={<LoadingSubmission title="" />}>
+    <Suspense fallback={<LoadingSubmission title=" " />}>
       <App />
     </Suspense>
   </React.StrictMode>
