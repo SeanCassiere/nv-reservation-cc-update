@@ -1,5 +1,5 @@
 import React from "react";
-import cn from "classnames";
+import classNames from "classnames";
 
 interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   loading?: boolean;
@@ -22,58 +22,60 @@ const Button: React.FC<Props> = ({
   type = "button",
   ...buttonProps
 }) => {
-  const buttonClasses = cn(
-    "inline-flex",
-    "items-center",
-    "justify-center",
-    "border",
-    "border-transparent",
-    "rounded",
-    "font-medium",
-    "focus:outline-none",
-    "focus:ring-2",
-    "focus:ring-offset-2",
-    "transition-colors",
-    "disabled:cursor-not-allowed",
-    { "py-2": size === "lg", "px-4": size === "lg", "text-lg": size === "lg" },
-    { "py-2": size === "md", "px-4": size === "md", "text-base": size === "md" },
-    { "py-2": size === "sm", "px-3": size === "sm", "text-sm": size === "sm" },
-    { "w-full": fullWidth, uppercase: uppercase },
-    {
-      // variant="filled"
-      "text-white": color === "primary" && variant === "filled",
-      "bg-indigo-600": color === "primary" && variant === "filled",
-      "hover:bg-indigo-700": color === "primary" && variant === "filled",
-      "disabled:bg-indigo-400": color === "primary" && variant === "filled",
-      // variant="muted"
-      "text-indigo-700": color === "primary" && variant === "muted",
-      "bg-indigo-100": color === "primary" && variant === "muted",
-      "hover:bg-indigo-200": color === "primary" && variant === "muted",
-      "disabled:bg-indigo-100": color === "primary" && variant === "muted",
-      "disabled:text-indigo-400": color === "primary" && variant === "muted",
-      // shared
-      "focus:ring-indigo-700": color === "primary",
-    },
-    {
-      // variant="filled"
-      "text-white": color === "danger" && variant === "filled",
-      "bg-red-500": color === "danger" && variant === "filled",
-      "hover:bg-red-600": color === "danger" && variant === "filled",
-      "disabled:bg-red-300": color === "danger" && variant === "filled",
-      // variant="muted"
-      "text-red-600": color === "danger" && variant === "muted",
-      "bg-red-100": color === "danger" && variant === "muted",
-      "hover:bg-red-200": color === "danger" && variant === "muted",
-      "disabled:bg-red-50": color === "danger" && variant === "muted",
-      "disabled:text-red-400": color === "danger" && variant === "muted",
-      // shared
-      "focus:ring-red-600": color === "danger",
-    },
-    className
-  );
-
   return (
-    <button type={type} className={buttonClasses} {...buttonProps}>
+    <button
+      type={type}
+      className={classNames(
+        "inline-flex",
+        "items-center",
+        "justify-center",
+        "border",
+        "border-transparent",
+        "rounded",
+        "font-medium",
+        "focus:outline-none",
+        "focus:ring-2",
+        "focus:ring-offset-2",
+        "transition-colors",
+        "disabled:cursor-not-allowed",
+        { "py-2": size === "lg", "px-4": size === "lg", "text-lg": size === "lg" },
+        { "py-2": size === "md", "px-4": size === "md", "text-base": size === "md" },
+        { "py-2": size === "sm", "px-3": size === "sm", "text-sm": size === "sm" },
+        { "w-full": fullWidth, uppercase: uppercase },
+        {
+          // variant="filled"
+          "text-white": color === "primary" && variant === "filled",
+          "bg-indigo-600": color === "primary" && variant === "filled",
+          "hover:bg-indigo-700": color === "primary" && variant === "filled",
+          "disabled:bg-indigo-400": color === "primary" && variant === "filled",
+          // variant="muted"
+          "text-indigo-700": color === "primary" && variant === "muted",
+          "bg-indigo-100": color === "primary" && variant === "muted",
+          "hover:bg-indigo-200": color === "primary" && variant === "muted",
+          "disabled:bg-indigo-100": color === "primary" && variant === "muted",
+          "disabled:text-indigo-400": color === "primary" && variant === "muted",
+          // shared
+          "focus:ring-indigo-700": color === "primary",
+        },
+        {
+          // variant="filled"
+          "text-white": color === "danger" && variant === "filled",
+          "bg-red-500": color === "danger" && variant === "filled",
+          "hover:bg-red-600": color === "danger" && variant === "filled",
+          "disabled:bg-red-300": color === "danger" && variant === "filled",
+          // variant="muted"
+          "text-red-600": color === "danger" && variant === "muted",
+          "bg-red-100": color === "danger" && variant === "muted",
+          "hover:bg-red-200": color === "danger" && variant === "muted",
+          "disabled:bg-red-50": color === "danger" && variant === "muted",
+          "disabled:text-red-400": color === "danger" && variant === "muted",
+          // shared
+          "focus:ring-red-600": color === "danger",
+        },
+        className
+      )}
+      {...buttonProps}
+    >
       {loading && <LoadingSpinner />}
       {children}
     </button>

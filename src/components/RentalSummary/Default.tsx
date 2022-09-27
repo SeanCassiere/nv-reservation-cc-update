@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import cn from "classnames";
+import classNames from "classnames";
 
 import { useClientProfileQuery } from "../../hooks/network/useClientProfile";
 import { useRentalSummaryQuery } from "../../hooks/network/useRentalSummary";
@@ -280,34 +280,36 @@ const DefaultRentalSummary: React.FC<Props> = (props) => {
 };
 
 const RowItem: React.FC<RowItemProps & { isLoading?: boolean }> = ({ isLoading, ...props }) => {
-  const listItemClassNames = cn(
-    "px-4",
-    "py-2",
-    "font-medium",
-    {
-      "text-gray-700": props.value && !props.highlight && !props.isRed,
-      "text-gray-500": !props.value && !props.isRed && !props.highlight,
-    },
-    {
-      "bg-indigo-400": props.highlight,
-      "text-white": props.highlight,
-      "font-semibold": props.highlight,
-    },
-    {
-      "text-red-500": props.isRed,
-    }
-  );
-
-  const labelClassNames = cn("flex-1", "pr-2", "md:text-sm");
-  const pricingClassNames = cn("flex-1", "text-right", "md:text-md", {
-    "md:text-md": props.value || props.highlight,
-    "md:text-sm": !props.value,
-  });
   return (
-    <li className={listItemClassNames}>
+    <li
+      className={classNames(
+        "px-4",
+        "py-2",
+        "font-medium",
+        {
+          "text-gray-700": props.value && !props.highlight && !props.isRed,
+          "text-gray-500": !props.value && !props.isRed && !props.highlight,
+        },
+        {
+          "bg-indigo-400": props.highlight,
+          "text-white": props.highlight,
+          "font-semibold": props.highlight,
+        },
+        {
+          "text-red-500": props.isRed,
+        }
+      )}
+    >
       <div className="flex items-center">
-        <div className={labelClassNames}>{isLoading ? <SkeletonBlock highlight={props.highlight} /> : props.label}</div>
-        <div className={pricingClassNames}>
+        <div className={classNames("flex-1", "pr-2", "md:text-sm")}>
+          {isLoading ? <SkeletonBlock highlight={props.highlight} /> : props.label}
+        </div>
+        <div
+          className={classNames("flex-1", "text-right", "md:text-md", {
+            "md:text-md": props.value || props.highlight,
+            "md:text-sm": !props.value,
+          })}
+        >
           {isLoading ? <SkeletonBlock minWidth highlight={props.highlight} /> : props.currencyAmount}
         </div>
       </div>
@@ -316,14 +318,19 @@ const RowItem: React.FC<RowItemProps & { isLoading?: boolean }> = ({ isLoading, 
 };
 
 const SkeletonBlock: React.FC<{ highlight?: boolean; minWidth?: boolean }> = ({ minWidth, highlight }) => {
-  const classNames = cn(
-    "inline-block",
-    "w-full",
-    "animate-pulse",
-    { "bg-gray-200": !highlight, "bg-indigo-300": highlight },
-    { "w-10": minWidth }
+  return (
+    <span
+      className={classNames(
+        "inline-block",
+        "w-full",
+        "animate-pulse",
+        { "bg-gray-200": !highlight, "bg-indigo-300": highlight },
+        { "w-10": minWidth }
+      )}
+    >
+      &nbsp;
+    </span>
   );
-  return <span className={classNames}>&nbsp;</span>;
 };
 
 export default DefaultRentalSummary;

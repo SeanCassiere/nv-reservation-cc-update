@@ -1,5 +1,5 @@
 import React from "react";
-import cn from "classnames";
+import classNames from "classnames";
 
 type Props = {
   title?: React.ReactNode;
@@ -8,21 +8,16 @@ type Props = {
   image?: string;
 };
 
-export const cardTitleClassNames = cn("text-2xl", "font-medium", "text-gray-600");
-export const cardSubtitleClassNames = cn("text-sm", "text-gray-500");
-
 const CardLayout: React.FC<Props> = ({ title, subtitle, image, children }) => {
-  const cardClassNames = cn("w-full", "rounded", "border", "border-gray-100", "px-5", "py-5");
-
   return (
-    <div className={cardClassNames}>
+    <div className={classNames("w-full", "rounded", "border", "border-gray-100", "px-5", "py-5")}>
       {/* title */}
-      {title && typeof title === "string" && <h1 className={cardTitleClassNames}>{title}</h1>}
-      {title && typeof title === "number" && <h1 className={cardTitleClassNames}>{title}</h1>}
+      {title && typeof title === "string" && <CardTitleHeading>{title}</CardTitleHeading>}
+      {title && typeof title === "number" && <CardTitleHeading>{title}</CardTitleHeading>}
       {title && typeof title !== "string" && typeof title !== "number" && <React.Fragment>{title}</React.Fragment>}
       {/* subtitle */}
-      {subtitle && typeof subtitle === "string" && <span className={cardSubtitleClassNames}>{subtitle}</span>}
-      {subtitle && typeof subtitle === "number" && <span className={cardSubtitleClassNames}>{subtitle}</span>}
+      {subtitle && typeof subtitle === "string" && <CardSubtitleSpan>{subtitle}</CardSubtitleSpan>}
+      {subtitle && typeof subtitle === "number" && <CardSubtitleSpan>{subtitle}</CardSubtitleSpan>}
       {subtitle && typeof subtitle !== "string" && typeof subtitle !== "number" && (
         <React.Fragment>{subtitle}</React.Fragment>
       )}
@@ -37,5 +32,25 @@ const CardLayout: React.FC<Props> = ({ title, subtitle, image, children }) => {
     </div>
   );
 };
+
+export const CardTitleHeading = React.forwardRef<HTMLHeadingElement, { children: React.ReactNode }>(
+  ({ children }, ref) => {
+    return (
+      <h1 ref={ref} className={classNames("text-2xl", "font-medium", "text-gray-600")}>
+        {children}
+      </h1>
+    );
+  }
+);
+
+export const CardSubtitleSpan = React.forwardRef<HTMLSpanElement, { children: React.ReactNode }>(
+  ({ children }, ref) => {
+    return (
+      <span ref={ref} className={classNames("text-sm", "text-gray-500")}>
+        {children}
+      </span>
+    );
+  }
+);
 
 export default CardLayout;

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout, { cardSubtitleClassNames, cardTitleClassNames } from "../../layouts/Card";
+import CardLayout, { CardTitleHeading, CardSubtitleSpan } from "../../layouts/Card";
 import Button from "../../components/Elements/Default/Button";
 import Alert from "../../components/Elements/Default/Alert";
 import ImageDropzoneWithPreviewDefault from "../../components/ImageDropzoneWithPreview/Default";
@@ -112,8 +112,8 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
       <CardLayout>
         {/* Credit card form */}
         <div>
-          <h1 className={cardTitleClassNames}>{t("forms.creditCard.title")}</h1>
-          <span className={cardSubtitleClassNames}>{t("forms.creditCard.message")}</span>
+          <CardTitleHeading>{t("forms.creditCard.title")}</CardTitleHeading>
+          <CardSubtitleSpan>{t("forms.creditCard.message")}</CardSubtitleSpan>
           <div className="mt-4 grid grid-cols-1">
             <div className="my-4 md:my-2">
               <DynamicCreditCardDefault currentFocus={currentFocus} formData={formValues} />
@@ -134,8 +134,8 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
           <hr />
         </div>
         <div className="pt-5">
-          <h1 className={cardTitleClassNames}>{t("forms.licenseUpload.title")}</h1>
-          <span className={cardSubtitleClassNames}>{t("forms.licenseUpload.message")}</span>
+          <CardTitleHeading>{t("forms.licenseUpload.title")}</CardTitleHeading>
+          <CardSubtitleSpan>{t("forms.licenseUpload.message")}</CardSubtitleSpan>
           <div className="mt-4 d-grid">
             <div>
               <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.frontImage.title")}</h2>

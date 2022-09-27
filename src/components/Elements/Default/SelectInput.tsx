@@ -1,5 +1,5 @@
 import React, { useId } from "react";
-import cn from "classnames";
+import classNames from "classnames";
 
 import { ExclamationIcon } from "../../Icons";
 
@@ -12,28 +12,6 @@ interface Props extends React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLS
 const SelectInput: React.FC<Props> = ({ id, label, helperText, children, isError, className, ...selectProps }) => {
   const elementId = useId();
 
-  const inputClassNames = cn(
-    "block",
-    "w-full",
-    "sm:text-sm",
-    "rounded",
-    "border-gray-300",
-    "focus:ring-indigo-500",
-    "focus:border-indigo-500",
-    {
-      "bg-red-50": isError,
-      "border-red-300": isError,
-      "text-red-900": isError,
-      "focus:outline-none": isError,
-      "focus:ring-red-500": isError,
-      "focus:border-red-500": isError,
-      "placeholder-red-400": isError,
-    },
-    className
-  );
-
-  const helperClassNames = cn("mt-2", "text-sm", { "text-gray-500": !isError, "text-red-600": isError });
-
   return (
     <div>
       {label && (
@@ -43,7 +21,29 @@ const SelectInput: React.FC<Props> = ({ id, label, helperText, children, isError
         </label>
       )}
       <div className="mt-1 relative">
-        <select id={id ?? elementId} className={inputClassNames} {...selectProps}>
+        <select
+          id={id ?? elementId}
+          className={classNames(
+            "block",
+            "w-full",
+            "sm:text-sm",
+            "rounded",
+            "border-gray-300",
+            "focus:ring-indigo-500",
+            "focus:border-indigo-500",
+            {
+              "bg-red-50": isError,
+              "border-red-300": isError,
+              "text-red-900": isError,
+              "focus:outline-none": isError,
+              "focus:ring-red-500": isError,
+              "focus:border-red-500": isError,
+              "placeholder-red-400": isError,
+            },
+            className
+          )}
+          {...selectProps}
+        >
           {children}
         </select>
         {isError && (
@@ -52,7 +52,11 @@ const SelectInput: React.FC<Props> = ({ id, label, helperText, children, isError
           </div>
         )}
       </div>
-      {helperText && <span className={helperClassNames}>{helperText}</span>}
+      {helperText && (
+        <span className={classNames("mt-2", "text-sm", { "text-gray-500": !isError, "text-red-600": isError })}>
+          {helperText}
+        </span>
+      )}
     </div>
   );
 };
