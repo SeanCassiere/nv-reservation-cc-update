@@ -1,3 +1,4 @@
+// @ts-check
 const { resolve } = require("path");
 
 // these are the default values being using in ./src/i18n.ts
@@ -12,6 +13,9 @@ const secondaryLanguages = languagesCore.filter((l) => l !== en && l !== common)
 
 const srcLocalesPath = resolve(__dirname, "public", "locales");
 
+/**
+ * @type {Parameters<typeof import('i18next-locales-sync').syncLocales>[0]}
+ * */
 const config = {
   primaryLanguage: "en",
   secondaryLanguages,
