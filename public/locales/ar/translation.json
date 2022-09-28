@@ -22,7 +22,7 @@
         "expYear": "سنة انتهاء الصلاحية",
         "expMonthYear": "تنتهي",
         "placeholders": {
-          "name": "John Doe",
+          "name": "فلان الفلاني",
           "zipCode": "الفواتير الرمز البريدي",
           "expMonthYear": "شهر / سنة",
           "select": "يختار"
