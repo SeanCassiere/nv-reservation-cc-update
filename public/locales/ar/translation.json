@@ -1,0 +1,158 @@
+{
+  "appStatusMessages": {
+    "loading": "جار التحميل",
+    "sendingCreditCard": "تقديم معلومات بطاقتك الائتمانية",
+    "sendingLicenseImagesBundle": "تقديم صور رخصة القيادة الخاصة بك",
+    "sendingConfirmationEmail": "إرسال بريد إلكتروني للتأكيد",
+    "submittingYourDetailsMsg": "إرسال التفاصيل الخاصة بك"
+  },
+  "forms": {
+    "navSubmit": "يُقدِّم",
+    "navSubmit_next": "التالي",
+    "navSubmit_save": "يحفظ",
+    "creditCard": {
+      "title": "معلومات بطاقة الائتمان",
+      "message": "الرجاء إدخال معلومات بطاقة الائتمان الخاصة بك لاستخدامها في الحجز الخاص بك.",
+      "labels": {
+        "cardNumber": "رقم البطاقة",
+        "nameOnCard": "الاسم على البطاقة",
+        "cvv": "رمز التحقق من البطاقة (CVC)",
+        "billingZip": "الفواتير الرمز البريدي",
+        "expMonth": "شهر انتهاء الصلاحية",
+        "expYear": "سنة انتهاء الصلاحية",
+        "expMonthYear": "تنتهي",
+        "placeholders": {
+          "name": "John Doe",
+          "zipCode": "الفواتير الرمز البريدي",
+          "expMonthYear": "شهر / سنة",
+          "select": "يختار"
+        }
+      },
+      "creditCardComponent": {
+        "validThru": "صالح من خلال",
+        "yourName": "اسمك هنا"
+      },
+      "errors": {
+        "cardNumber": "يجب أن يكون رقم البطاقة صالحًا",
+        "name": "مطلوب الاسم المطبوع على البطاقة",
+        "expMonthYear": "يجب أن يكون انتهاء صلاحية البطاقة ساري المفعول",
+        "expMonth": "أدخل شهر انتهاء صلاحية البطاقة",
+        "expYear": "أدخل سنة انتهاء البطاقة",
+        "cvv": "يجب أن يكون رمز التحقق من البطاقة (CVC) صالحًا",
+        "billingZip": "الرمز البريدي لفواتير البطاقة مطلوب"
+      }
+    },
+    "licenseUpload": {
+      "title": "رخصة قيادة",
+      "message": "قم بتحميل الصور الأمامية والخلفية لرخصة القيادة الخاصة بك.",
+      "goBack": {
+        "title": "هل أنت واثق؟",
+        "message": "ستؤدي العودة إلى تجاهل الملفات المضافة.",
+        "cancel": "يلغي",
+        "submit": "اني اتفهم"
+      },
+      "frontImage": {
+        "title": "الصورة الأمامية",
+        "drag": "قم بسحب وإسقاط الصورة الأمامية هنا",
+        "select": "حدد الصورة الأمامية",
+        "clear": "امسح الصورة الأمامية",
+        "notSelected": "يجب عليك تحديد الصورة الأمامية"
+      },
+      "backImage": {
+        "title": "الصورة الخلفية",
+        "drag": "اسحب واسقط الصورة الخلفية هنا",
+        "select": "حدد الصورة الخلفية",
+        "clear": "امسح الصورة الخلفية",
+        "notSelected": "يجب عليك تحديد الصورة الخلفية"
+      }
+    },
+    "rentalSignature": {
+      "title": "توقيع الحجز",
+      "title_agreement": "توقيع العقد",
+      "message": "ارسم توقيعك أدناه واضغط على زر حفظ.",
+      "message_agreement": "ارسم توقيعك أدناه واضغط على زر حفظ.",
+      "clearInput": "امسح التوقيع",
+      "errorNoSignature": "الرجاء تقديم توقيع.",
+      "saveInput": "إشارة",
+      "signatureRequired": "أضف توقيعك واضغط على زر حفظ قبل المتابعة",
+      "goBack": {
+        "title": "هل أنت واثق؟",
+        "message": "ستؤدي العودة إلى تجاهل التوقيع المضاف.",
+        "cancel": "يلغي",
+        "submit": "اني اتفهم"
+      }
+    },
+    "rentalSummary": {
+      "title": "ملخص الإيجار",
+      "title_agreement": "ملخص الإيجار",
+      "message": "ملخص الرسوم لهذا الحجز.",
+      "message_agreement": "ملخص الرسوم لهذا الحجز."
+    },
+    "formsSummary": {
+      "title": "ملخص المعلومات",
+      "message": "يرجى مراجعة المعلومات التي أنت على وشك تقديمها تجاه التأجير.",
+      "noData": "لن تقوم حاليًا بتقديم أي بيانات تجاه الحجز الخاص بك.",
+      "creditCardTitle": "بطاقة الائتمان",
+      "licenseUploadTitle": "رخصة قيادة",
+      "rentalSignatureTitle": "توقيع الإيجار"
+    }
+  },
+  "errorBoundary": {
+    "title": "اه اوه",
+    "message": "حدث خطأ فادح في التطبيق."
+  },
+  "successSubmission": {
+    "title": "النجاح!",
+    "message": "شكرا لك على تقديم المعلومات الخاصة بك من أجل الحجز.",
+    "message_agreement": "نشكرك على تقديم معلوماتك بخصوص عقد الإيجار.",
+    "rentalSummaryMessage": "يرجى الاطلاع على ملخص رسوم الحجز أدناه.",
+    "rentalSummaryMessage_agreement": "يرجى الاطلاع على ملخص رسوم عقد الإيجار أدناه."
+  },
+  "summaryOfCharges": {
+    "securityDeposit": "مبلغ التأمين",
+    "baseRate": "سعر الأساس",
+    "baseRate_agreement": "إجمالي رسوم السعر",
+    "discountOnBaseRate": "ترقية وظيفية",
+    "finalBaseRate": "السعر الأساسي النهائي",
+    "totalTaxMischarges": "إجمالي متفرقات. الرسوم (الخاضعة للضريبة)",
+    "totalNonTaxMischarges": "إجمالي متفرقات. رسوم (غير خاضعة للضريبة)",
+    "preTaxAdjustment": "تعديلات ما قبل الضرائب",
+    "postTaxAdjustment": "تعديلات ما بعد الضريبة",
+    "preSubtotal": "المجموع الفرعي قبل الخصم",
+    "discountOnSubtotal": "الترويج على المجموع الفرعي",
+    "subtotal": "المجموع الفرعي",
+    "totalTaxCharges": "إجمالي رسوم الضرائب",
+    "additionalCharges": "رسوم إضافية",
+    "estimatedTotalWithDeposit": "المجموع التقديري",
+    "grandTotal": "المجموع الإجمالي",
+    "balanceDue": "الرصيد المستحق",
+    "amountPaid": "المبلغ المدفوع",
+    "extraMileageCharges": "رسوم الأميال الإضافية",
+    "extraDurationCharges": "رسوم المدة الإضافية",
+    "extraFuelCharges": "رسوم الوقود الإضافية"
+  },
+  "authenticationSubmission": {
+    "title": "المصادقة",
+    "message": "واجهتنا مشكلة في مصادقة هذا الاتصال."
+  },
+  "coreDetailsFetchError": {
+    "title": "اه اوه",
+    "title_agreement": "اه اوه",
+    "message": "لم نتمكن من تحديد موقع الحجز.",
+    "message_agreement": "لم نتمكن من تحديد موقع عقد الإيجار."
+  },
+  "badSubmission": {
+    "title": "اه اوه",
+    "message": "لقد واجهت خطأ عند محاولة إرسال المعلومات الخاصة بك.",
+    "report": "الرجاء الإبلاغ عن",
+    "btnRetrySubmission": "إعادة محاولة التقديم"
+  },
+  "queryMissing": {
+    "title": "اه اوه",
+    "message": "It looks like all not all the necessary information was sent.",
+    "report": "الرجاء الإبلاغ عن"
+  },
+  "footer": {
+    "poweredBy": "مشغل بواسطة"
+  }
+}
