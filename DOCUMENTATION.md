@@ -43,6 +43,10 @@ These are the language codes supported by the application.
 | French | fr |
 | German | de |
 | Spanish | es |
+| Arabic | ar |
+| Russian | ru |
+
+`LTR` and `RTL` support is available and is applied automatically based on selected the language's requirements.
 
 ## Config params
 
