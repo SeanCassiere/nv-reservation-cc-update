@@ -280,6 +280,8 @@ const DefaultRentalSummary: React.FC<Props> = (props) => {
 };
 
 const RowItem: React.FC<RowItemProps & { isLoading?: boolean }> = ({ isLoading, ...props }) => {
+  const { i18n } = useTranslation();
+
   return (
     <li
       className={classNames(
@@ -305,7 +307,7 @@ const RowItem: React.FC<RowItemProps & { isLoading?: boolean }> = ({ isLoading, 
           {isLoading ? <SkeletonBlock highlight={props.highlight} /> : props.label}
         </div>
         <div
-          className={classNames("flex-1", "text-right", "md:text-md", {
+          className={classNames("flex-1", i18n.dir() === "ltr" ? "text-right" : "text-left", "md:text-md", {
             "md:text-md": props.value || props.highlight,
             "md:text-sm": !props.value,
           })}
