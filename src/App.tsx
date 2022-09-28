@@ -15,7 +15,8 @@ const DeveloperDebugMenu = lazy(() => import("./components/DeveloperDebugMenu/De
 const queryClient = new QueryClient();
 
 const App = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  document.body.dir = i18n.dir();
 
   const isUsingRentall = useConfigStore((s) => s.fromRentall);
   const isDevOpenMain = useConfigStore((s) => s.isDevMenuOpen);

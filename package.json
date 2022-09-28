@@ -2,9 +2,22 @@
   "name": "nav-reservation-cc-update",
   "version": "1.3.0",
   "private": true,
+  "scripts": {
+    "dev": "netlify dev",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint --max-warnings=0 src",
+    "lint:fix": "eslint --fix --max-warnings=0 src",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "serve:functions": "netlify dev --targetPort 4173",
+    "serve:static-serve": "concurrently \"npm run preview\" \"npm run serve:functions\"",
+    "serve": "npm run build && npm run serve:static-serve",
+    "sync-i18n": "i18next-locales-sync -c ./locales-sync.config.js"
+  },
   "dependencies": {
     "@netlify/functions": "^1.2.0",
-    "@tanstack/react-query": "^4.6.0",
+    "@tanstack/react-query": "^4.7.1",
     "axios": "^0.27.2",
     "classnames": "^2.3.2",
     "i18next": "^21.9.2",
@@ -23,22 +36,9 @@
     "yup": "^0.32.11",
     "zustand": "^4.1.1"
   },
-  "scripts": {
-    "dev": "netlify dev",
-    "start": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "lint": "eslint --max-warnings=0 src",
-    "lint:fix": "eslint --fix --max-warnings=0 src",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "serve:functions": "netlify dev --targetPort 4173",
-    "serve:static-serve": "concurrently \"npm run preview\" \"npm run serve:functions\"",
-    "serve": "npm run build && npm run serve:static-serve",
-    "sync-i18n": "i18next-locales-sync -c ./locales-sync.config.js"
-  },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
-    "@types/node": "^18.7.21",
+    "@types/node": "^18.7.23",
     "@types/payment": "^2.1.4",
     "@types/react": "^18.0.21",
     "@types/react-credit-cards": "^0.8.1",
@@ -59,7 +59,7 @@
     "postcss": "^8.4.16",
     "prettier": "^2.7.1",
     "tailwindcss": "^3.1.8",
-    "typescript": "^4.8.3",
+    "typescript": "^4.8.4",
     "vite": "^3.1.3",
     "vite-plugin-eslint": "^1.8.1"
   }
