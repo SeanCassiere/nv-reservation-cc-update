@@ -7,7 +7,7 @@ const common = "common";
 
 // Using language codes from https://github.com/ladjs/i18n-locales
 const en = "en";
-const languagesCore = [common, en, "de", "fr", "es", "ar"];
+const languagesCore = [common, en, "de", "fr", "es", "ar", "ru"];
 const languagesExtensions = ["en-GB"];
 export const supportedLanguages = [...languagesCore, ...languagesExtensions].filter((l) => l !== common);
 

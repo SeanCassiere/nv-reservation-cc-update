@@ -5,7 +5,7 @@ const common = "common";
 
 // Using language codes from https://github.com/ladjs/i18n-locales
 const en = "en";
-const languagesCore = [common, en, "de", "fr", "es", "ar"];
+const languagesCore = [common, en, "de", "fr", "es", "ar", "ru"];
 
 // derived to remove en and the common directory
 const secondaryLanguages = languagesCore.filter((l) => l !== en && l !== common);
