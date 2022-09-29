@@ -14,7 +14,7 @@ const RentalSignature: React.FC<Props> = ({ rentalSignature, editFunc }) => {
   const { t } = useTranslation();
   return (
     <FormSummaryItem title={t("forms.formsSummary.rentalSignatureTitle")} onEdit={editFunc}>
-      <div className="mt-2 py-2 px-3 rounded border border-gray-100 bg-gray-50 text-md text-gray-500 flex justify-center items-center">
+      <div className="text-md mt-2 flex items-center justify-center rounded border border-gray-100 bg-gray-50 py-2 px-3 text-gray-500">
         <img src={rentalSignature.signatureUrl!} className="object-contain md:max-w-xs" alt="" />
       </div>
     </FormSummaryItem>
