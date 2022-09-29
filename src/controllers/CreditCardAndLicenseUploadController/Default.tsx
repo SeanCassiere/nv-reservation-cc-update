@@ -136,9 +136,9 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
         <div className="pt-5">
           <CardTitleHeading>{t("forms.licenseUpload.title")}</CardTitleHeading>
           <CardSubtitleSpan>{t("forms.licenseUpload.message")}</CardSubtitleSpan>
-          <div className="mt-4 d-grid">
+          <div className="d-grid mt-4">
             <div>
-              <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.frontImage.title")}</h2>
+              <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.frontImage.title")}</h2>
               <div>
                 {noFrontImageError && <Alert variant="danger">{t("forms.licenseUpload.frontImage.notSelected")}</Alert>}
 
@@ -165,7 +165,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
               </div>
             </div>
             <div className="mt-6">
-              <h2 className="text-base text-gray-500 mb-2">{t("forms.licenseUpload.backImage.title")}</h2>
+              <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.backImage.title")}</h2>
               <div>
                 {noBackImageError && <Alert variant="danger">{t("forms.licenseUpload.backImage.notSelected")}</Alert>}
                 <ImageDropzoneWithPreviewDefault
@@ -201,7 +201,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
               </Button>
             </div>
           )}
-          <div className={isPreviousAvailable ? "pl-2 flex-1" : "flex-1"}>
+          <div className={isPreviousAvailable ? "flex-1 pl-2" : "flex-1"}>
             <Button color="primary" size="lg" onClick={handleNextState}>
               {nextPageText}
             </Button>

@@ -38,7 +38,7 @@ const DefaultRentalSummaryController: React.FC<IProps> = () => {
               </Button>
             </div>
           )}
-          <div className={isPreviousAvailable ? "pl-2 flex-1" : "flex-1"}>
+          <div className={isPreviousAvailable ? "flex-1 pl-2" : "flex-1"}>
             <Button color="primary" size="lg" onClick={goNext}>
               {nextPageText}
             </Button>

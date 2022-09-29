@@ -11,7 +11,7 @@ const CheckInput: React.FC<Props> = ({ id, label, helperText, className, ...inpu
   const elementId = useId();
 
   return (
-    <div className="flex items-center h-5">
+    <div className="flex h-5 items-center">
       <input
         id={id ?? elementId}
         className={classNames(
@@ -27,7 +27,7 @@ const CheckInput: React.FC<Props> = ({ id, label, helperText, className, ...inpu
       />
       {label && (
         <div className="ml-3 text-sm">
-          <label htmlFor={id ?? elementId} className="text-gray-700 font-medium">
+          <label htmlFor={id ?? elementId} className="font-medium text-gray-700">
             {label}
           </label>
         </div>

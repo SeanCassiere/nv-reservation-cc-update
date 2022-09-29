@@ -99,7 +99,7 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
       <div {...getRootProps({ style: style as any })}>
         <input {...getInputProps()} />
         {previewImage ? (
-          <figure className="w-full flex flex-col items-center">
+          <figure className="flex w-full flex-col items-center">
             <img
               alt={previewImage.fileName}
               src={previewImage.url}

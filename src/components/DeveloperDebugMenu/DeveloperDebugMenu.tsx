@@ -66,7 +66,7 @@ const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> =
     <div ref={divRef}>
       <CardLayout
         title={
-          <div className="flex align-middle justify-center">
+          <div className="flex justify-center align-middle">
             <h1 className="flex-1">{t("developer.drawerTitle")}</h1>
             <div>
               <Button color="danger" size="sm" onClick={handleClose}>
@@ -185,7 +185,7 @@ const ConfigCreator: React.FC = () => {
           {t("developer.viewProjectRepo")}
         </AnchorLink>
       </div>
-      <div className="p-2 rounded w-full bg-yellow-50 flex flex-col gap-1" style={{ overflowWrap: "anywhere" }}>
+      <div className="flex w-full flex-col gap-1 rounded bg-yellow-50 p-2" style={{ overflowWrap: "anywhere" }}>
         <p className="m-0 text-sm text-gray-700">{window.location.origin + "/?" + devConfigToQueryUrl(config)}</p>
         <Button
           type="button"
@@ -289,19 +289,19 @@ const ConfigCreator: React.FC = () => {
             ))}
           </SelectInput>
           <div>
-            <ol className="list-decimal ml-6 mt-3">
+            <ol className="ml-6 mt-3 list-decimal">
               {config.flow.map((flowItem, index) => (
                 <li key={`flow-item-${flowItem}-${index}`}>
-                  <div className="flex align-middle items-center gap-3 px-2 py-2 bg-gray-100 rounded my-1">
+                  <div className="my-1 flex items-center gap-3 rounded bg-gray-100 px-2 py-2 align-middle">
                     <button
                       type="button"
                       onClick={() => handleRemoveFlowItem(index)}
-                      className="bg-red-500 text-white text-sm h-5 aspect-square rounded-full flex align-middle justify-center"
+                      className="flex aspect-square h-5 justify-center rounded-full bg-red-500 align-middle text-sm text-white"
                     >
                       &times;
                     </button>
                     <div className="flex-1 truncate">
-                      <span className="font-medium text-sm">{flowItem}</span>
+                      <span className="text-sm font-medium">{flowItem}</span>
                     </div>
                   </div>
                 </li>
@@ -372,11 +372,11 @@ const ConfigCreator: React.FC = () => {
             />
           </div>
         </div>
-        <div className="mt-6 w-full flex gap-1">
-          <Button type="submit" className="py-2 px-4 bg-gray-300">
+        <div className="mt-6 flex w-full gap-1">
+          <Button type="submit" className="bg-gray-300 py-2 px-4">
             {t("developer.configCreator.btnSave")}
           </Button>
-          <Button type="button" color="primary" variant="muted" className="py-2 px-4 bg-teal-300" onClick={handleReset}>
+          <Button type="button" color="primary" variant="muted" className="bg-teal-300 py-2 px-4" onClick={handleReset}>
             {t("developer.configCreator.btnReset")}
           </Button>
         </div>

@@ -20,7 +20,7 @@ const SelectInput: React.FC<Props> = ({ id, label, helperText, children, isError
           {selectProps.required && <span className="text-red-500">&nbsp;*</span>}
         </label>
       )}
-      <div className="mt-1 relative">
+      <div className="relative mt-1">
         <select
           id={id ?? elementId}
           className={classNames(
@@ -47,7 +47,7 @@ const SelectInput: React.FC<Props> = ({ id, label, helperText, children, isError
           {children}
         </select>
         {isError && (
-          <div className="absolute inset-y-0 right-0 pr-8 flex items-center pointer-events-none">
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-8">
             <ExclamationIcon className="text-red-500" />
           </div>
         )}

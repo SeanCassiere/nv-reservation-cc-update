@@ -114,7 +114,7 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
     <React.Fragment>
       <div
         ref={signatureDivRef}
-        className="p-1 rounded-md border-4 border-indigo-900 flex items-center justify-center"
+        className="flex items-center justify-center rounded-md border-4 border-indigo-900 p-1"
         style={{ height: "430px" }}
       >
         {showPad && (

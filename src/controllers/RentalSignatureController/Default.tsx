@@ -96,7 +96,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
         context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
       })}
     >
-      <div className="mt-3 d-grid">
+      <div className="d-grid mt-3">
         {showRequiredMessage && <Alert variant="danger">{t("forms.rentalSignature.signatureRequired")}</Alert>}
         <SignatureCanvasDefault
           onSignature={handleSettingSignatureUrl}
@@ -110,7 +110,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
               </Button>
             </div>
           )}
-          <div className={isPreviousAvailable ? "pl-2 flex-1" : "flex-1"}>
+          <div className={isPreviousAvailable ? "flex-1 pl-2" : "flex-1"}>
             <Button color="primary" size="lg" disabled={signatureUrl === ""} onClick={handleNextState}>
               {nextPageText}
             </Button>

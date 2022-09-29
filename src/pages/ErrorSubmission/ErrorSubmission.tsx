@@ -45,7 +45,7 @@ const ErrorSubmission: React.FC<Props> = (props) => {
         <>
           <span className="mt-3 block">
             <AnchorLink
-              className="block rounded no-underline hover:no-underline text-center w-full px-3 py-3 bg-red-600 hover:bg-red-700 text-white"
+              className="block w-full rounded bg-red-600 px-3 py-3 text-center text-white no-underline hover:bg-red-700 hover:no-underline"
               href={originUrl}
             >
               {t("badSubmission.btnRetrySubmission")}

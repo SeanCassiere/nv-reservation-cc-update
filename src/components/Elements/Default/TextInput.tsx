@@ -20,7 +20,7 @@ const TextInput: React.FC<Props> = ({ id, label, helperText, isError, className,
           {inputProps.required && <span className="text-red-500">&nbsp;*</span>}
         </label>
       )}
-      <div className="mt-1 relative">
+      <div className="relative mt-1">
         <input
           id={id ?? elementId}
           className={classNames(
@@ -45,7 +45,7 @@ const TextInput: React.FC<Props> = ({ id, label, helperText, isError, className,
           {...inputProps}
         />
         {isError && (
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
             <ExclamationIcon className="text-red-500" />
           </div>
         )}

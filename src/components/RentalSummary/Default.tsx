@@ -269,7 +269,7 @@ const DefaultRentalSummary: React.FC<Props> = (props) => {
   ];
 
   return (
-    <ul className="py-3 bg-gray-50 rounded">
+    <ul className="rounded bg-gray-50 py-3">
       {[...(props.referenceType.trim().toLowerCase() === "agreement" ? agreementItems : reservationItems)]
         .filter((i) => i.isVisible)
         .map((rowItem, idx) => (

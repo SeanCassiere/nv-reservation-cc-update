@@ -23,7 +23,7 @@ const CardLayout: React.FC<Props> = ({ title, subtitle, image, children }) => {
       )}
       {/* image */}
       {image && (
-        <div className="flex align-middle justify-center py-5">
+        <div className="flex justify-center py-5 align-middle">
           <img src={image} alt="" style={{ maxWidth: "70%" }} />
         </div>
       )}

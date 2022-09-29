@@ -44,7 +44,7 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <main className="w-full max-w-xl mx-auto">
+      <main className="mx-auto w-full max-w-xl">
         <div className="grid grid-cols-1 pt-2">
           <div>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -59,7 +59,7 @@ const App = () => {
             </ErrorBoundary>
           </div>
           <div className="pt-4 pb-5">
-            <p className="text-sm text-center">
+            <p className="text-center text-sm">
               {t("footer.poweredBy")}&nbsp;
               <AnchorLink
                 href={isUsingRentall ? "https://rentallsoftware.com" : "https://navotar.com"}
