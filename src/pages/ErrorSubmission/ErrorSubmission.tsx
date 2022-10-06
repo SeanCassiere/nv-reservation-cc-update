@@ -5,6 +5,7 @@ import CardLayout from "../../layouts/Card";
 import AnchorLink from "../../components/Elements/Default/AnchorLink";
 
 import { useConfigStore } from "../../hooks/stores/useConfigStore";
+import { string } from "yup";
 
 const ErrorImgUri = "/assets/undraw_warning_cyit.svg";
 
@@ -12,6 +13,7 @@ interface Props {
   title?: string;
   msg: string | ReactNode;
   tryAgainButton?: true | undefined;
+  tryAgainButtonText?: string;
 }
 
 const ErrorSubmission: React.FC<Props> = (props) => {
@@ -41,14 +43,14 @@ const ErrorSubmission: React.FC<Props> = (props) => {
         </AnchorLink>
         .
       </p>
-      {props.tryAgainButton && (
+      {props.tryAgainButton && props.tryAgainButtonText && (
         <>
           <span className="mt-3 block">
             <AnchorLink
               className="block w-full rounded bg-red-600 px-3 py-3 text-center text-white no-underline hover:bg-red-700 hover:no-underline"
               href={originUrl}
             >
-              {t("badSubmission.btnRetrySubmission")}
+              {props.tryAgainButtonText}
             </AnchorLink>
           </span>
         </>

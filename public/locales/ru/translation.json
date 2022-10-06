@@ -139,7 +139,9 @@
     "title": "ой ой",
     "title_agreement": "ой ой",
     "message": "Мы не смогли найти бронирование.",
-    "message_agreement": "Мы не смогли найти договор аренды."
+    "message_agreement": "Мы не смогли найти договор аренды.",
+    "btnRetrySearch": "Повторить поиск",
+    "btnRetrySearch_agreement": "Повторить поиск"
   },
   "badSubmission": {
     "title": "ой ой",

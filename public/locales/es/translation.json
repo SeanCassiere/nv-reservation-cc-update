@@ -139,7 +139,9 @@
     "title": "Uh Oh",
     "title_agreement": "Uh Oh",
     "message": "No pudimos localizar la reserva.",
-    "message_agreement": "No hemos podido localizar el contrato de alquiler."
+    "message_agreement": "No hemos podido localizar el contrato de alquiler.",
+    "btnRetrySearch": "Reintentar búsqueda",
+    "btnRetrySearch_agreement": "Reintentar búsqueda"
   },
   "badSubmission": {
     "title": "Uh Oh",
