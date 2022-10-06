@@ -5,7 +5,7 @@ import { base64Decode } from "../utils/base64";
 
 import { fetchAgreementByIdOrNumberProcedure } from "./agreementApi";
 import { fetchComposeEmailDetails, fetchEmailTemplate, fetchEmailTemplateHtml } from "./emailsApi";
-import { fetchReservationByIdOrNumber, RentalSourcedDetails } from "./reservationApi";
+import { fetchReservationByIdOrNumberProcedure, RentalSourcedDetails } from "./reservationApi";
 import { fetchAdminUser } from "./usersApi";
 import { postCustomerCreditCard, postDriverLicenseImage } from "./customerApi";
 import { postUploadRentalSignature } from "./digitalSignatureApi";
@@ -134,7 +134,7 @@ export async function initDataFetch(opts: {
 
   // get the agreement or reservation
   if (opts.referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION) {
-    const reservation = await fetchReservationByIdOrNumber({
+    const reservation = await fetchReservationByIdOrNumberProcedure({
       clientId: opts.clientId,
       referenceId: `${opts.referenceIdentifier}`,
     });

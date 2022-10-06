@@ -12,67 +12,68 @@ export type RentalSourcedDetails = {
   isCheckIn: boolean;
 };
 
-export async function fetchReservationByIdOrNumber(opts: { clientId: string; referenceId: string }) {
-  let isSearching = true;
-  let reservationId = opts.referenceId;
-  let reservationSourcedDetails: RentalSourcedDetails | null = null;
+const fetchReservationById = async (opts: FetchReservationByIdOrNumberProps): Promise<RentalSourcedDetails | null> => {
+  try {
+    const params = new URLSearchParams();
+    params.append("ClientId", `${opts.clientId}`);
+    const res = await clientFetch(`/Reservations/${opts.referenceId}?` + params).then((r) => r.json());
 
-  while (isSearching) {
-    // get reservation details by id
-    try {
-      const params = new URLSearchParams();
-      params.append("ClientId", `${opts.clientId}`);
-      const res = await clientFetch(`/Reservations/${reservationId}?` + params).then((r) => r.json());
-
-      const reservationInfo = {
-        locationId: res.reservationview?.startLocationId,
-        customerId: res.reservationview?.customerId,
-        customerEmail: res.reservationview?.email,
-        locationEmail: res.reservationview?.locationEmail,
-        referenceNo: res.reservationview?.reservationNumber,
-        referenceId: Number(res.reservationview?.reserveId),
-        driverId: res.driverList[0]?.driverId ?? res.customerDetails?.customerId,
-        driverName: `${res.customerDetails?.firstName ?? ""} ${res.customerDetails?.lastName ?? ""}`,
-        isCheckIn: false,
-      };
-
-      reservationSourcedDetails = reservationInfo;
-      isSearching = false;
-    } catch (error) {
-      console.log("there was an error", error);
-    }
-
-    if (isSearching === false) {
-      break;
-    }
-
-    // find the reservation by reservation number
-    try {
-      const params = new URLSearchParams();
-      params.append("ReservationNumber", `${opts.referenceId}`);
-      params.append("clientId", `${opts.clientId}`);
-      params.append("userId", `0`);
-      const list = await clientFetch(`/Reservations?` + params).then((r) => r.json());
-      const findReservation = list.find(
-        (r: { ReserveId: number; ReservationNumber: string }) => r.ReservationNumber === opts.referenceId
-      );
-
-      if (!findReservation) {
-        isSearching = false;
-      } else {
-        reservationId = findReservation.ReserveId;
-        isSearching = true;
-      }
-    } catch (error) {
-      isSearching = false;
-    }
-
-    if (!isSearching) break;
+    const reservationInfo: RentalSourcedDetails = {
+      locationId: res.reservationview?.startLocationId ?? 0,
+      customerId: res.reservationview?.customerId ?? 0,
+      customerEmail: res.reservationview?.email ?? "",
+      locationEmail: res.reservationview?.locationEmail ?? "",
+      referenceNo: res.reservationview?.reservationNumber ?? "",
+      referenceId: Number(res.reservationview?.reserveId) ?? 0,
+      driverId: res.driverList[0]?.driverId ?? res.customerDetails?.customerId,
+      driverName: `${res.customerDetails?.firstName ?? ""} ${res.customerDetails?.lastName ?? ""}`,
+      isCheckIn: false,
+    };
+    return reservationInfo;
+  } catch (error) {
+    return null;
   }
+};
 
-  if (!reservationSourcedDetails) {
-    throw new Error("Reservation not found");
+const fetchReservationsByNumber = async (
+  opts: FetchReservationByIdOrNumberProps
+): Promise<{ ReserveId: number; ReservationNumber: string } | null> => {
+  try {
+    const params = new URLSearchParams();
+    params.append("ReservationNumber", `${opts.referenceId}`);
+    params.append("clientId", `${opts.clientId}`);
+    params.append("userId", `0`);
+    const list = await clientFetch(`/Reservations?` + params).then((r) => r.json());
+    const findReservation = list.find(
+      (r: { ReserveId: number; ReservationNumber: string }) => r.ReservationNumber === opts.referenceId
+    );
+
+    if (!findReservation) {
+      throw new Error("Not found");
+    }
+    return findReservation;
+  } catch (error) {
+    return null;
   }
+};
 
-  return reservationSourcedDetails;
+type FetchReservationByIdOrNumberProps = { clientId: string; referenceId: string };
+
+export async function fetchReservationByIdOrNumberProcedure(
+  opts: FetchReservationByIdOrNumberProps
+): Promise<RentalSourcedDetails> {
+  const initialSearchById = await fetchReservationById(opts);
+
+  // if found on first try, then return
+  if (initialSearchById) return initialSearchById;
+
+  // try finding by the number, if not found throw
+  const searchByNumber = await fetchReservationsByNumber(opts);
+  if (!searchByNumber) throw new Error("Reservation not found");
+
+  // try finding by the id again, if not found throw
+  const secondSearchById = await fetchReservationById({ ...opts, referenceId: String(searchByNumber.ReserveId) });
+  if (!secondSearchById) throw new Error("Reservation not found");
+
+  return secondSearchById;
 }
