@@ -139,7 +139,9 @@
     "title": "اه اوه",
     "title_agreement": "اه اوه",
     "message": "لم نتمكن من تحديد موقع الحجز.",
-    "message_agreement": "لم نتمكن من تحديد موقع عقد الإيجار."
+    "message_agreement": "لم نتمكن من تحديد موقع عقد الإيجار.",
+    "btnRetrySearch": "أعد محاولة البحث",
+    "btnRetrySearch_agreement": "أعد محاولة البحث"
   },
   "badSubmission": {
     "title": "اه اوه",

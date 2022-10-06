@@ -139,7 +139,9 @@
     "title": "Uh Oh",
     "title_agreement": "Uh Oh",
     "message": "Wir konnten die Reservierung nicht finden.",
-    "message_agreement": "Wir konnten den Mietvertrag nicht finden."
+    "message_agreement": "Wir konnten den Mietvertrag nicht finden.",
+    "btnRetrySearch": "Suche erneut versuchen",
+    "btnRetrySearch_agreement": "Suche erneut versuchen"
   },
   "badSubmission": {
     "title": "Oh oh",

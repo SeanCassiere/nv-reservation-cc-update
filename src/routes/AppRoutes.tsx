@@ -37,7 +37,16 @@ const AppRoutes: React.FC = () => {
             </RequireAuth>
           }
         />
-        <Route path="/error" element={<ErrorSubmission msg={t("badSubmission.message")} tryAgainButton />} />
+        <Route
+          path="/error"
+          element={
+            <ErrorSubmission
+              msg={t("badSubmission.message")}
+              tryAgainButton
+              tryAgainButtonText={t("badSubmission.btnRetrySubmission", {})}
+            />
+          }
+        />
         <Route path="/not-available" element={<NotAuthorized />} />
         <Route path="*" element={<NavigateToNotAvailable />} />
       </Routes>

@@ -115,6 +115,9 @@ const ApplicationController: React.FC = () => {
             context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
           })}
           tryAgainButton
+          tryAgainButtonText={t("coreDetailsFetchError.btnRetrySearch", {
+            context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+          })}
         />
       )}
       {bootStatus === "loaded" && (
