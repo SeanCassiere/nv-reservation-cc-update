@@ -3,7 +3,7 @@ import { isValueTrue } from "../utils/common";
 import { APP_CONSTANTS, COMPAT_KEYS } from "../utils/constants";
 import { base64Decode } from "../utils/base64";
 
-import { fetchAgreementByIdOrNumber } from "./agreementApi";
+import { fetchAgreementByIdOrNumberProcedure } from "./agreementApi";
 import { fetchComposeEmailDetails, fetchEmailTemplate, fetchEmailTemplateHtml } from "./emailsApi";
 import { fetchReservationByIdOrNumber, RentalSourcedDetails } from "./reservationApi";
 import { fetchAdminUser } from "./usersApi";
@@ -139,15 +139,15 @@ export async function initDataFetch(opts: {
       referenceId: `${opts.referenceIdentifier}`,
     });
     rentalSourcedDetails = reservation;
-    referenceIdLatest = reservation.referenceId;
+    referenceIdLatest = reservation?.referenceId ?? 0;
   } else {
-    const agreement = await fetchAgreementByIdOrNumber({
+    const agreement = await fetchAgreementByIdOrNumberProcedure({
       clientId: opts.clientId,
       referenceId: `${opts.referenceIdentifier}`,
       adminUserId: adminUser.userID,
     });
     rentalSourcedDetails = agreement;
-    referenceIdLatest = agreement.referenceId;
+    referenceIdLatest = agreement?.referenceId ?? 0;
   }
 
   if (Number(opts.responseTemplateId)) {

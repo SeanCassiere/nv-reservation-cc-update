@@ -3,69 +3,76 @@ import { RentalSourcedDetails } from "./reservationApi";
 
 const checkInIds = [3, 5, 7];
 
-export async function fetchAgreementByIdOrNumber(opts: { clientId: string; referenceId: string; adminUserId: number }) {
-  let isSearching = true;
-  let agreementId = opts.referenceId;
-  let agreementSourcedDetails: RentalSourcedDetails | null = null;
+type FetchAgreementByIdOrNumberProps = {
+  clientId: string;
+  referenceId: string;
+  adminUserId: number;
+};
 
-  while (isSearching) {
-    // get agreement details by id
-    try {
-      const params = new URLSearchParams();
-      params.append("ClientId", `${opts.clientId}`);
-      const res = await clientFetch(`/Agreements/${agreementId}?` + params).then((r) => r.json());
+const fetchAgreementById = async (opts: FetchAgreementByIdOrNumberProps): Promise<RentalSourcedDetails | null> => {
+  try {
+    const params = new URLSearchParams();
+    params.append("ClientId", `${opts.clientId}`);
+    const res = await clientFetch(`/Agreements/${opts.referenceId}?` + params).then((r) => r.json());
 
-      const agreementInfo = {
-        locationId: res.checkoutLocation,
-        customerId: res.customerId,
-        customerEmail: res.email,
-        locationEmail: res.checkoutLocationEmail,
-        referenceNo: res.agreementNumber,
-        referenceId: Number(res.agreementId),
-        driverId: Number(res.driverList[0]?.driverId) ?? res.customerId,
-        driverName: `${res.firstName ?? ""} ${res.lastName ?? ""}`,
-        isCheckIn: checkInIds.includes(res?.agreementStatusId ?? 0),
-      };
+    const agreementInfo: RentalSourcedDetails = {
+      locationId: res?.checkoutLocation ?? 0,
+      customerId: res?.customerId ?? 0,
+      customerEmail: res?.email ?? "",
+      locationEmail: res?.checkoutLocationEmail ?? "",
+      referenceNo: res?.agreementNumber ?? "",
+      referenceId: Number(res?.agreementId),
+      driverId: Number(res?.driverList[0]?.driverId) ?? res?.customerId,
+      driverName: `${res?.firstName ?? ""} ${res?.lastName ?? ""}`,
+      isCheckIn: checkInIds.includes(res?.agreementStatusId ?? 0),
+    };
+    return agreementInfo;
+  } catch (error) {
+    return null;
+  }
+};
 
-      agreementSourcedDetails = agreementInfo;
-      isSearching = false;
-    } catch (error) {}
-
-    if (!isSearching) break;
-
-    // find the reservation by reservation number
-    try {
-      if (!opts.adminUserId) {
-        console.warn("systemUserId is 0, therefore /agreements?AgreementNumber=:referenceNo will not work");
-      }
-
-      const params = new URLSearchParams();
-      params.append("AgreementNumber", `${opts.referenceId}`);
-      params.append("clientId", `${opts.clientId}`);
-      params.append("userId", `${opts.adminUserId}`);
-      const list = await clientFetch(`/Agreements?` + params).then((r) => r.json());
-      const findAgreement = list.find(
-        (r: { AgreementId: number; AgreementNumber: string }) =>
-          r.AgreementNumber.toLowerCase() === String(opts.referenceId).toLowerCase()
-      );
-
-      if (!findAgreement) {
-        isSearching = false;
-      } else {
-        agreementId = findAgreement.AgreementId;
-        isSearching = true;
-      }
-    } catch (error) {
-      isSearching = false;
+const fetchAgreementsByNumber = async (
+  opts: FetchAgreementByIdOrNumberProps
+): Promise<{ AgreementId: number; AgreementNumber: string } | null> => {
+  try {
+    if (!opts.adminUserId) {
+      console.warn("systemUserId is 0, therefore /agreements?AgreementNumber=:referenceNo will not work");
     }
 
-    if (!isSearching) break;
+    const params = new URLSearchParams();
+    params.append("AgreementNumber", `${opts.referenceId}`);
+    params.append("clientId", `${opts.clientId}`);
+    params.append("userId", `${opts.adminUserId}`);
+    const list = await clientFetch(`/Agreements?` + params).then((r) => r.json());
+    const findAgreement = list.find(
+      (r: { AgreementId: number; AgreementNumber: string }) =>
+        r.AgreementNumber.toLowerCase() === String(opts.referenceId).toLowerCase()
+    );
+    if (!findAgreement) {
+      throw new Error("Not found");
+    }
+    return findAgreement;
+  } catch (error) {
+    return null;
   }
+};
 
-  // return null if no agreement found
-  if (!agreementSourcedDetails) {
-    throw new Error("Agreement not found");
-  }
+export async function fetchAgreementByIdOrNumberProcedure(
+  opts: FetchAgreementByIdOrNumberProps
+): Promise<RentalSourcedDetails> {
+  const initialSearchById = await fetchAgreementById(opts);
 
-  return agreementSourcedDetails;
+  // if found on first try, then return
+  if (initialSearchById) return initialSearchById;
+
+  // try finding by the number, if not found throw
+  const searchByNumber = await fetchAgreementsByNumber(opts);
+  if (!searchByNumber) throw new Error("Agreement not found");
+
+  // try finding by the id again, if not found throw
+  const secondSearchById = await fetchAgreementById({ ...opts, referenceId: String(searchByNumber.AgreementId) });
+  if (!secondSearchById) throw new Error("Agreement not found");
+
+  return secondSearchById;
 }
