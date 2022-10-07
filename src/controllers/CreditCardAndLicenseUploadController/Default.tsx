@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { Fragment, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout, { CardTitleHeading, CardSubtitleSpan } from "../../layouts/Card";
@@ -7,10 +7,12 @@ import Alert from "../../components/Elements/Default/Alert";
 import ImageDropzoneWithPreviewDefault from "../../components/ImageDropzoneWithPreview/Default";
 import DynamicCreditCardDefault from "../../components/DynamicCreditCard/Default";
 import CreditCardFormDefault from "../../components/CreditCardForm/Default";
+import { GoBackConfirmationDialog } from "../../components/Dialogs";
 
 import { useCreditCardLogic } from "../../hooks/logic/useCreditCardLogic";
 import { useDriverLicenseLogic } from "../../hooks/logic/useDriverLicenseLogic";
 import { useFormStore } from "../../hooks/stores/useFormStore";
+import { useDialogStore } from "../../hooks/stores/useDialogStore";
 import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
 
 interface IProps {}
@@ -24,6 +26,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
   const setCustomerCreditCardToStore = useFormStore((s) => s.setCustomerCreditCard);
   const initialCreditCardFormData = useFormStore((s) => s.customerCreditCard.data);
   const initialDriverLicenseData = useFormStore((s) => s.driversLicense.data);
+  const { setBackConfirmationDialogState, isBackConfirmationDialogOpen } = useDialogStore();
 
   // credit card relate handlers
   const {
@@ -55,25 +58,6 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
     backImageDataUrl: initialDriverLicenseData.backImageUrl,
     backImageName: initialDriverLicenseData.backImageName,
   });
-
-  const handleOpenModalConfirmation = useCallback(() => {
-    if (mode === "save") {
-      goPrev();
-      return;
-    }
-
-    if (
-      (backLicenseImage || frontLicenseImage) &&
-      window.confirm(t("forms.licenseUpload.goBack.title") + "\n" + t("forms.licenseUpload.goBack.message"))
-    ) {
-      clearFormState("driversLicense");
-      goPrev();
-    }
-
-    if (!backLicenseImage && !frontLicenseImage) {
-      goPrev();
-    }
-  }, [backLicenseImage, clearFormState, frontLicenseImage, goPrev, mode, t]);
 
   // validate the form data against the schema
   const handleNextState = useCallback(async () => {
@@ -107,8 +91,65 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
     setDriversLicenseToStore,
   ]);
 
+  const dismissBackDialog = useCallback(() => {
+    setBackConfirmationDialogState(false);
+  }, [setBackConfirmationDialogState]);
+
+  const confirmBackDialog = useCallback(() => {
+    if (mode === "navigate") {
+      clearFormState("driversLicense");
+    }
+    setBackConfirmationDialogState(false);
+    goPrev();
+  }, [clearFormState, goPrev, mode, setBackConfirmationDialogState]);
+
+  const handleOpenModalConfirmation = useCallback(() => {
+    if (mode === "save") {
+      // if (initialDriverLicenseData.frontImageName !== frontLicenseImage.name) || (initialDriverLicenseData.backImageName !== backLicenseImage.name), then open modal
+      if (
+        initialDriverLicenseData.frontImageName !== frontLicenseImage?.name ||
+        initialDriverLicenseData.backImageName !== backLicenseImage?.name
+      ) {
+        setBackConfirmationDialogState(true);
+        return;
+      }
+
+      // if (initialDriverLicenseData.frontImageName === frontLicenseImage.name && initialDriverLicenseData.backImageName === backLicenseImage.name) then go back
+      goPrev();
+      return;
+    }
+
+    if (mode === "navigate") {
+      // if (frontImageFile || backImageFile), then open modal
+      if (backLicenseImage || frontLicenseImage) {
+        setBackConfirmationDialogState(true);
+        return;
+      }
+
+      // if (!frontImageFile && !backImageFile), then go back
+      goPrev();
+    }
+  }, [
+    backLicenseImage,
+    frontLicenseImage,
+    goPrev,
+    initialDriverLicenseData.backImageName,
+    initialDriverLicenseData.frontImageName,
+    mode,
+    setBackConfirmationDialogState,
+  ]);
+
   return (
-    <React.Fragment>
+    <Fragment>
+      <GoBackConfirmationDialog
+        isOpen={isBackConfirmationDialogOpen}
+        title={t("forms.licenseUpload.goBack.title")}
+        message={t("forms.licenseUpload.goBack.message")}
+        onCancel={dismissBackDialog}
+        onConfirm={confirmBackDialog}
+        cancelBtnText={t("forms.licenseUpload.goBack.cancel")}
+        confirmBtnText={t("forms.licenseUpload.goBack.submit")}
+      />
       <CardLayout>
         {/* Credit card form */}
         <div>
@@ -161,6 +202,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                         }
                       : null
                   }
+                  navMode={mode}
                 />
               </div>
             </div>
@@ -187,6 +229,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                         }
                       : null
                   }
+                  navMode={mode}
                 />
               </div>
             </div>
@@ -208,7 +251,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
           </div>
         </div>
       </CardLayout>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
