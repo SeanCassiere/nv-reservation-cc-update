@@ -12,8 +12,9 @@ const pagesTyped: { page: string; type: PageTypeOptions }[] = [
   { page: APP_CONSTANTS.FLOW_RENTAL_SIGNATURE_FORM, type: "rentalSignature" },
 ];
 
+export type AppNavMode = "navigate" | "save";
 type AppNavContextType = {
-  mode: "navigate" | "save";
+  mode: AppNavMode;
   goNext: () => void;
   goPrev: () => void;
   activeController: string | null;
