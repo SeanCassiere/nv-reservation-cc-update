@@ -14,7 +14,8 @@ import { AppNavContextProvider } from "../../hooks/logic/useAppNavContext";
 
 import { APP_CONSTANTS } from "../../utils/constants";
 import { authenticateWithLambda } from "../../api/lambdas";
-import { bootUp, initDataFetch } from "../../api/boot";
+import { bootUp } from "../../api/system/bootUp";
+import { initDataFetch } from "../../api/system/initDataFetch";
 
 const bootStatuses = ["authenticating", "loaded", "authentication_error", "core_details_fetch_failed"] as const;
 type BootStatus = typeof bootStatuses[number];

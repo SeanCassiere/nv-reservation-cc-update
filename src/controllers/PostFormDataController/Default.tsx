@@ -10,7 +10,7 @@ import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 import { useConfigStore } from "../../hooks/stores/useConfigStore";
 import { postConfirmationEmail } from "../../api/emailsApi";
 import { postCompletionLambda } from "../../api/lambdas";
-import { postFormDataToApi } from "../../api/boot";
+import { postFormDataToApi } from "../../api/system/postFormDataToApi";
 
 const PostFormDataControllerDefault: React.FC = () => {
   const navigate = useNavigate();

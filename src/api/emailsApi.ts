@@ -115,3 +115,15 @@ export async function postConfirmationEmail(opts: PostConfirmationEmailProps) {
   URL.revokeObjectURL(dataUrl);
   return true;
 }
+
+export async function fetchGlobalDocumentsForEmailTemplate(opts: {
+  clientId: string | number;
+  templateId: string | number;
+  templateTypeId: string | number;
+}) {
+  const params = new URLSearchParams();
+  params.append("ClientId", `${opts.clientId}`);
+  params.append("TemplateTypeId", `${opts.templateTypeId}`);
+  params.append("TemplateId", `${opts.templateId}`);
+  return await clientFetch("/Emails/AttachmentsForComposeEmail" + params.toString()).then((r) => r.json());
+}
