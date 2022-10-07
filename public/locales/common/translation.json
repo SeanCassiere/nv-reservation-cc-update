@@ -21,7 +21,8 @@
       "openedDevMenu": "Dev menu opened at start?",
       "showPreSubmitSummary": "Show form summary screen?",
       "yes": "Yes",
-      "no": "No"
+      "no": "No",
+      "disableGlobalDocumentsForConfirmationEmail": "Disable global documents when sending the confirmation email?"
     }
   }
 }

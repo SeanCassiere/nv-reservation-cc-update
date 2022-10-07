@@ -15,7 +15,7 @@ import type {
   DriversLicenseStoreType,
   RentalSignatureStoreType,
 } from "../hooks/stores/useFormStore";
-import type { RentalStoreType } from "../hooks/stores/useRuntimeStore";
+import type { EmailGlobalDocumentAttachmentType, RentalStoreType } from "../hooks/stores/useRuntimeStore";
 
 /**
  * Used to remedy a mistake made when adding the license and cc upload controller for `ClientID 251`.
@@ -58,6 +58,7 @@ type QueryConfigState = {
   fromRentall: boolean;
   successSubmissionScreen?: string;
   showPreSubmitSummary?: boolean;
+  stopEmailGlobalDocuments?: boolean;
 };
 
 export async function bootUp({ windowQueryString }: { windowQueryString: string }) {
@@ -82,6 +83,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     flow: [],
     fromRentall: true,
     showPreSubmitSummary: false,
+    stopEmailGlobalDocuments: false,
   };
 
   if (!configQuery) return null;
@@ -108,6 +110,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     fromRentall: config.fromRentall,
     showPreSubmitSummary: config.showPreSubmitSummary,
     successSubmissionScreen: config.successSubmissionScreen,
+    disableGlobalDocumentsForConfirmation: config.stopEmailGlobalDocuments ?? false,
   };
 }
 
@@ -128,6 +131,7 @@ export async function initDataFetch(opts: {
   let toEmailAddress = "";
   let responseSubject = "";
   let emailDataBlobUrl: string | null = null;
+  const emailGlobalDocuments: EmailGlobalDocumentAttachmentType[] = [];
 
   // get the admin user account
   const adminUser = await fetchAdminUser(opts.clientId);
@@ -210,6 +214,7 @@ export async function initDataFetch(opts: {
           toList: [toEmailAddress].filter((e) => e !== ""),
           subject: responseSubject,
           dataUrl: emailDataBlobUrl,
+          globalDocuments: emailGlobalDocuments,
         }
       : null,
     rental: rentalSourcedDetails,

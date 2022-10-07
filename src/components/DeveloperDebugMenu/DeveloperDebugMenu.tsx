@@ -1,13 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  ALL_SCREEN_FLOWS,
-  ALL_SUCCESS_SCREENS,
-  APP_CONSTANTS,
-  REPO_URL,
-  ALL_FORM_SUMMARY_OPTIONS,
-} from "../../utils/constants";
+import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "../../utils/constants";
 import { supportedLanguages } from "../../i18n";
 import { isValueTrue } from "../../utils/common";
 import { devConfigToQueryUrl } from "./utils";
@@ -34,6 +28,7 @@ export type DevConfigObject = {
   fromRentall: boolean;
   successSubmissionScreen: string;
   showPreSubmitSummary: boolean;
+  stopEmailGlobalDocuments: boolean;
 };
 
 const outsideInitialConfigState: DevConfigObject = {
@@ -48,6 +43,7 @@ const outsideInitialConfigState: DevConfigObject = {
   fromRentall: true,
   showPreSubmitSummary: false,
   successSubmissionScreen: APP_CONSTANTS.SUCCESS_DEFAULT,
+  stopEmailGlobalDocuments: false,
 };
 
 const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> = ({ open, handleClose }) => {
@@ -89,7 +85,15 @@ const ConfigCreator: React.FC = () => {
   const SELECT_MENU_DEFAULT_KEY = t("developer.configCreator.formSelectValue");
 
   const { referenceIdentifier, referenceType, clientId, responseTemplateId } = useRuntimeStore();
-  const { successSubmissionScreen, fromRentall, flow, qa, rawQueryString, showPreSubmitSummary } = useConfigStore();
+  const {
+    successSubmissionScreen,
+    fromRentall,
+    flow,
+    qa,
+    rawQueryString,
+    showPreSubmitSummary,
+    disableGlobalDocumentsForConfirmationEmail,
+  } = useConfigStore();
 
   const [isReady, setIsReady] = React.useState(false);
   const [initialConfig, setInitialConfig] = React.useState<DevConfigObject>(outsideInitialConfigState);
@@ -156,15 +160,16 @@ const ConfigCreator: React.FC = () => {
       fromRentall: fromRentall,
       successSubmissionScreen: `${successSubmissionScreen}`,
       showPreSubmitSummary: showPreSubmitSummary ?? outsideInitialConfigState.showPreSubmitSummary,
+      stopEmailGlobalDocuments: disableGlobalDocumentsForConfirmationEmail,
     };
     setConfig((prev) => ({ ...prev, ...body, dev: Boolean(isValueTrue(dev)) }));
     setInitialConfig((prev) => ({ ...prev, ...body, dev: Boolean(isValueTrue(dev)) }));
     setIsReady(true);
   }, [
+    i18n.language,
     clientId,
     flow,
     fromRentall,
-    i18n.language,
     qa,
     rawQueryString,
     referenceIdentifier,
@@ -172,6 +177,7 @@ const ConfigCreator: React.FC = () => {
     responseTemplateId,
     successSubmissionScreen,
     showPreSubmitSummary,
+    disableGlobalDocumentsForConfirmationEmail,
   ]);
 
   if (!isReady) {
@@ -276,6 +282,70 @@ const ConfigCreator: React.FC = () => {
             required
           />
         </div>
+        {/*  */}
+        <div className="mt-4 mb-4 grid grid-cols-2 gap-3">
+          <div className="col-span-2 md:col-span-1">
+            <span className="text-sm font-medium text-gray-700">
+              {t("developer.configCreator.showPreSubmitSummary")}
+            </span>
+            <CheckInput
+              type="checkbox"
+              name="showPreSubmitSummary"
+              checked={config.showPreSubmitSummary}
+              onChange={handleNormalInputChange}
+              label={config.showPreSubmitSummary ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
+            />
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <span className="text-sm font-medium text-gray-700">
+              {t("developer.configCreator.applicationBranding")}
+            </span>
+            <CheckInput
+              type="checkbox"
+              name="fromRentall"
+              checked={config.fromRentall}
+              onChange={handleNormalInputChange}
+              label={config.fromRentall ? "RENTALL" : "Navotar"}
+            />
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <span className="text-sm font-medium text-gray-700">
+              {t("developer.configCreator.applicationEnvironment")}
+            </span>
+            <CheckInput
+              type="checkbox"
+              name="qa"
+              checked={config.qa}
+              onChange={handleNormalInputChange}
+              label={config.qa ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
+            />
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <span className="text-sm font-medium text-gray-700">{t("developer.configCreator.openedDevMenu")}</span>
+            <CheckInput
+              type="checkbox"
+              name="dev"
+              checked={config.dev}
+              onChange={handleNormalInputChange}
+              label={config.dev ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
+            />
+          </div>
+          <div className="col-span-2 md:col-span-2">
+            <span className="text-sm font-medium text-gray-700">
+              {t("developer.configCreator.disableGlobalDocumentsForConfirmationEmail")}
+            </span>
+            <CheckInput
+              type="checkbox"
+              name="stopEmailGlobalDocuments"
+              checked={config.stopEmailGlobalDocuments}
+              onChange={handleNormalInputChange}
+              label={
+                config.stopEmailGlobalDocuments ? t("developer.configCreator.yes") : t("developer.configCreator.no")
+              }
+            />
+          </div>
+        </div>
+        {/*  */}
         <div className="mb-4">
           <SelectInput
             name="flow"
@@ -323,55 +393,7 @@ const ConfigCreator: React.FC = () => {
             ))}
           </SelectInput>
         </div>
-        {/*  */}
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">
-              {t("developer.configCreator.showPreSubmitSummary")}
-            </span>
-            <CheckInput
-              type="checkbox"
-              name="showPreSubmitSummary"
-              checked={config.showPreSubmitSummary}
-              onChange={handleNormalInputChange}
-              label={config.showPreSubmitSummary ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
-            />
-          </div>
-          <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">
-              {t("developer.configCreator.applicationBranding")}
-            </span>
-            <CheckInput
-              type="checkbox"
-              name="fromRentall"
-              checked={config.fromRentall}
-              onChange={handleNormalInputChange}
-              label={config.fromRentall ? "RENTALL" : "Navotar"}
-            />
-          </div>
-          <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">
-              {t("developer.configCreator.applicationEnvironment")}
-            </span>
-            <CheckInput
-              type="checkbox"
-              name="qa"
-              checked={config.qa}
-              onChange={handleNormalInputChange}
-              label={config.qa ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
-            />
-          </div>
-          <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">{t("developer.configCreator.openedDevMenu")}</span>
-            <CheckInput
-              type="checkbox"
-              name="dev"
-              checked={config.dev}
-              onChange={handleNormalInputChange}
-              label={config.dev ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
-            />
-          </div>
-        </div>
+
         <div className="mt-6 flex w-full gap-1">
           <Button type="submit" className="bg-gray-300 py-2 px-4">
             {t("developer.configCreator.btnSave")}

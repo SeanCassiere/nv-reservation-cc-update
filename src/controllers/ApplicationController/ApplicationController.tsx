@@ -89,6 +89,7 @@ const ApplicationController: React.FC = () => {
         qa: data.qa,
         successSubmissionScreen: data.successSubmissionScreen,
         showPreSubmitSummary: data.showPreSubmitSummary ?? false,
+        disableGlobalDocumentsForConfirmationEmail: data.disableGlobalDocumentsForConfirmation,
       });
       setEmailTemplateAndClientId({ newClientId: data.clientId, newTemplateId: data.responseEmailTemplateId });
       setInitReferenceValues({ newReferenceType: data.referenceType, newReferenceIdentifier: data.referenceId });

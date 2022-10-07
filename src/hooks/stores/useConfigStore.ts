@@ -14,6 +14,7 @@ type ConfigStoreType = {
   qa: boolean;
   isDevMenuOpen: boolean;
   showPreSubmitSummary: boolean;
+  disableGlobalDocumentsForConfirmationEmail: boolean;
   setDevMenuState: (newState: ((value: boolean) => boolean) | boolean) => void;
   setRawQuery: (payload: { rawConfig: string; rawQueryString: string }) => void;
   setConfigValues: (payload: {
@@ -22,6 +23,7 @@ type ConfigStoreType = {
     qa: boolean;
     successSubmissionScreen?: string;
     showPreSubmitSummary: boolean;
+    disableGlobalDocumentsForConfirmationEmail: boolean;
   }) => void;
 };
 
@@ -37,6 +39,7 @@ export const useConfigStore = create(
       qa: false,
       showPreSubmitSummary: false,
       isDevMenuOpen: false,
+      disableGlobalDocumentsForConfirmationEmail: false,
 
       setDevMenuState: (newState: ((value: boolean) => boolean) | boolean) => {
         if (typeof newState === "function") {
@@ -51,7 +54,14 @@ export const useConfigStore = create(
         set({ rawConfig, rawQueryString }, false, "setRawQuery");
       },
 
-      setConfigValues({ flow, fromRentall, qa, successSubmissionScreen, showPreSubmitSummary }) {
+      setConfigValues({
+        flow,
+        fromRentall,
+        qa,
+        successSubmissionScreen,
+        showPreSubmitSummary,
+        disableGlobalDocumentsForConfirmationEmail,
+      }) {
         const filterFlow = flow.filter((flow) => !PROTECTED_FLOWS.includes(flow));
         const flowSet = new Set(filterFlow);
         const fullFlowSet = new Set(filterFlow);
@@ -66,6 +76,7 @@ export const useConfigStore = create(
             ...(flow ? { fullFlow: Array.from(fullFlowSet) } : {}),
             ...(successSubmissionScreen ? { successSubmissionScreen } : {}),
             ...(showPreSubmitSummary ? { showPreSubmitSummary } : {}),
+            disableGlobalDocumentsForConfirmationEmail: disableGlobalDocumentsForConfirmationEmail,
           },
           false,
           "setConfigValues"

@@ -31,6 +31,7 @@ export function devConfigToQueryUrl(config: DevConfigObject) {
     ...(useConfigStore.getState().showPreSubmitSummary || config.showPreSubmitSummary
       ? { showPreSubmitSummary: true }
       : {}),
+    ...(config.stopEmailGlobalDocuments ? { stopEmailGlobalDocuments: true } : {}),
   };
 
   let objJsonStr = JSON.stringify(hashObj);
