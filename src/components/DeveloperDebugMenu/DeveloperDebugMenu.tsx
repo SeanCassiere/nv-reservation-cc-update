@@ -212,7 +212,9 @@ const ConfigCreator: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="mt-3">
         <div className="mb-4">
-          <span className="text-sm font-medium text-gray-700">{t("developer.configCreator.referenceType")}</span>
+          <span className="select-none text-sm font-medium text-gray-700">
+            {t("developer.configCreator.referenceType")}
+          </span>
           <div className="mt-1 flex flex-col gap-1">
             <CheckInput
               type="radio"
@@ -273,7 +275,7 @@ const ConfigCreator: React.FC = () => {
         </div>
         {/*  confirmation email settings  */}
         <div className="mb-4 rounded border border-gray-100 px-4 pt-2 pb-4">
-          <span className="text-sm font-medium text-gray-700">
+          <span className="select-none text-sm font-medium text-gray-700">
             {t("developer.configCreator.confirmationEmailSettings")}
           </span>
           <div className="mt-2 flex flex-col gap-2 px-2">
@@ -289,7 +291,7 @@ const ConfigCreator: React.FC = () => {
               />
             </div>
             <div>
-              <span className="text-sm font-medium text-gray-700">
+              <span className="select-none text-sm font-medium text-gray-700">
                 {t("developer.configCreator.disableGlobalDocumentsForConfirmationEmail")}
               </span>
               <CheckInput
@@ -306,7 +308,7 @@ const ConfigCreator: React.FC = () => {
         </div>
         {/* application flow settings */}
         <div className="mb-4 rounded border border-gray-100 px-4 pt-2 pb-4">
-          <span className="text-sm font-medium text-gray-700">
+          <span className="select-none text-sm font-medium text-gray-700">
             {t("developer.configCreator.applicationFlowSettings")}
           </span>
           <div className="mt-2 flex flex-col gap-2 px-2">
@@ -375,7 +377,7 @@ const ConfigCreator: React.FC = () => {
         {/*  */}
         <div className="mt-4 mb-4 grid grid-cols-2 gap-3">
           <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">
+            <span className="select-none text-sm font-medium text-gray-700">
               {t("developer.configCreator.applicationBranding")}
             </span>
             <CheckInput
@@ -387,7 +389,7 @@ const ConfigCreator: React.FC = () => {
             />
           </div>
           <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">
+            <span className="select-none text-sm font-medium text-gray-700">
               {t("developer.configCreator.applicationEnvironment")}
             </span>
             <CheckInput
@@ -399,7 +401,9 @@ const ConfigCreator: React.FC = () => {
             />
           </div>
           <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">{t("developer.configCreator.openedDevMenu")}</span>
+            <span className="select-none text-sm font-medium text-gray-700">
+              {t("developer.configCreator.openedDevMenu")}
+            </span>
             <CheckInput
               type="checkbox"
               name="dev"
