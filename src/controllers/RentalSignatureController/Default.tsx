@@ -65,8 +65,8 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
   // function invoked when clicking the back btn
   const handleOpenModalConfirmation = useCallback(() => {
     if (mode === "save") {
-      // if mode === save && signatureUrl !== savedSignatureUrl, then open modal
-      if (initialSignatureUrl !== signatureUrl) {
+      // signatureUrl !== '' && signatureUrl !== savedSignatureUrl, then open modal
+      if (signatureUrl !== "" && initialSignatureUrl !== signatureUrl) {
         setBackConfirmationDialogState(true);
         return;
       }
