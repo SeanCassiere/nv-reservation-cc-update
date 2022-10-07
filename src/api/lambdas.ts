@@ -1,3 +1,4 @@
+import { useConfigStore } from "../hooks/stores/useConfigStore";
 import { useRuntimeStore } from "../hooks/stores/useRuntimeStore";
 
 const AUTH_URL = "/api/token";
@@ -5,6 +6,7 @@ const SUBMISSION_COMPLETION_URL = "/api/complete";
 
 export async function authenticateWithLambda(opts: { clientId: string; qa: boolean }) {
   const { referenceType, referenceIdentifier, responseTemplateId } = useRuntimeStore.getState();
+  const { disableGlobalDocumentsForConfirmationEmail } = useConfigStore.getState();
 
   const params = new URLSearchParams();
   if (opts.qa) {
@@ -18,7 +20,14 @@ export async function authenticateWithLambda(opts: { clientId: string; qa: boole
     (res) => res.json() as Promise<{ access_token: string; token_type: string }>
   );
 
-  return { ...details, clientId: opts.clientId, referenceType, referenceIdentifier, responseTemplateId };
+  return {
+    ...details,
+    clientId: opts.clientId,
+    referenceType,
+    referenceIdentifier,
+    responseTemplateId,
+    disableGlobalDocumentsForConfirmationEmail,
+  };
 }
 
 export async function postCompletionLambda(opts: {
