@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { useDropzone, Accept } from "react-dropzone";
+import { AppNavMode } from "../../hooks/logic/useAppNavContext";
 import Button from "../Elements/Default/Button";
 
 const baseStyle = {
@@ -39,6 +40,7 @@ interface Props {
   onClearFile?: () => void;
   acceptOnly?: Accept;
   initialPreview?: { fileName: string; url: string } | null | undefined;
+  navMode: AppNavMode;
 }
 
 const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
@@ -49,6 +51,7 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
   onClearFile,
   acceptOnly = undefined,
   initialPreview = null,
+  navMode,
 }) => {
   const [previewImage, setPreviewImage] = useState<{ fileName: string; url: string } | null>(initialPreview);
 
@@ -71,10 +74,12 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
   const handleClearImage = useCallback(() => {
     if (previewImage) {
       setPreviewImage(null);
-      URL.revokeObjectURL(previewImage?.url);
+      if (navMode === "navigate") {
+        URL.revokeObjectURL(previewImage?.url);
+      }
     }
     if (onClearFile) onClearFile();
-  }, [onClearFile, previewImage]);
+  }, [navMode, onClearFile, previewImage]);
 
   const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
     accept: acceptOnly,
