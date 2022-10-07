@@ -271,31 +271,109 @@ const ConfigCreator: React.FC = () => {
             required
           />
         </div>
-        <div className="mb-3">
-          <TextInput
-            type="number"
-            value={config.emailTemplateId}
-            name="emailTemplateId"
-            onChange={handleNormalInputChange}
-            min="0"
-            label={t("developer.configCreator.responseTemplateId")}
-            required
-          />
+        {/*  confirmation email settings  */}
+        <div className="mb-4 rounded border border-gray-100 px-4 pt-2 pb-4">
+          <span className="text-sm font-medium text-gray-700">
+            {t("developer.configCreator.confirmationEmailSettings")}
+          </span>
+          <div className="mt-2 flex flex-col gap-2 px-2">
+            <div>
+              <TextInput
+                type="number"
+                value={config.emailTemplateId}
+                name="emailTemplateId"
+                onChange={handleNormalInputChange}
+                min="0"
+                label={t("developer.configCreator.responseTemplateId")}
+                required
+              />
+            </div>
+            <div>
+              <span className="text-sm font-medium text-gray-700">
+                {t("developer.configCreator.disableGlobalDocumentsForConfirmationEmail")}
+              </span>
+              <CheckInput
+                type="checkbox"
+                name="stopEmailGlobalDocuments"
+                checked={config.stopEmailGlobalDocuments}
+                onChange={handleNormalInputChange}
+                label={
+                  config.stopEmailGlobalDocuments ? t("developer.configCreator.yes") : t("developer.configCreator.no")
+                }
+              />
+            </div>
+          </div>
         </div>
+        {/* application flow settings */}
+        <div className="mb-4 rounded border border-gray-100 px-4 pt-2 pb-4">
+          <span className="text-sm font-medium text-gray-700">
+            {t("developer.configCreator.applicationFlowSettings")}
+          </span>
+          <div className="mt-2 flex flex-col gap-2 px-2">
+            <div>
+              <SelectInput
+                name="flow"
+                onChange={handleSelectFlowItem}
+                label={t("developer.configCreator.applicationFlows")}
+              >
+                {ALL_SCREEN_FLOWS.map((flowItem) => (
+                  <option value={flowItem.value} key={`select-flow-${flowItem.value}`}>
+                    {flowItem.label}
+                  </option>
+                ))}
+              </SelectInput>
+              <div>
+                <ol className="ml-6 mt-3 list-decimal">
+                  {config.flow.map((flowItem, index) => (
+                    <li key={`flow-item-${flowItem}-${index}`}>
+                      <div className="my-1 flex items-center gap-3 rounded bg-gray-100 px-2 py-2 align-middle">
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveFlowItem(index)}
+                          className="flex aspect-square h-5 justify-center rounded-full bg-red-500 align-middle text-sm text-white"
+                        >
+                          &times;
+                        </button>
+                        <div className="flex-1 truncate">
+                          <span className="text-sm font-medium">{flowItem}</span>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+            <div>
+              <SelectInput
+                name="successSubmissionScreen"
+                defaultValue={config.successSubmissionScreen}
+                onChange={handleSelectInputChange}
+                label={t("developer.configCreator.applicationSuccessScreen")}
+              >
+                {ALL_SUCCESS_SCREENS.map((successScreen) => (
+                  <option value={successScreen.value} key={`select-successSubmissionScreen-${successScreen.value}`}>
+                    {successScreen.label}
+                  </option>
+                ))}
+              </SelectInput>
+            </div>
+            <div>
+              <span className="text-sm font-medium text-gray-700">
+                {t("developer.configCreator.showPreSubmitSummary")}
+              </span>
+              <CheckInput
+                type="checkbox"
+                name="showPreSubmitSummary"
+                checked={config.showPreSubmitSummary}
+                onChange={handleNormalInputChange}
+                label={config.showPreSubmitSummary ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
+              />
+            </div>
+          </div>
+        </div>
+
         {/*  */}
         <div className="mt-4 mb-4 grid grid-cols-2 gap-3">
-          <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">
-              {t("developer.configCreator.showPreSubmitSummary")}
-            </span>
-            <CheckInput
-              type="checkbox"
-              name="showPreSubmitSummary"
-              checked={config.showPreSubmitSummary}
-              onChange={handleNormalInputChange}
-              label={config.showPreSubmitSummary ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
-            />
-          </div>
           <div className="col-span-2 md:col-span-1">
             <span className="text-sm font-medium text-gray-700">
               {t("developer.configCreator.applicationBranding")}
@@ -330,68 +408,6 @@ const ConfigCreator: React.FC = () => {
               label={config.dev ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
             />
           </div>
-          <div className="col-span-2 md:col-span-2">
-            <span className="text-sm font-medium text-gray-700">
-              {t("developer.configCreator.disableGlobalDocumentsForConfirmationEmail")}
-            </span>
-            <CheckInput
-              type="checkbox"
-              name="stopEmailGlobalDocuments"
-              checked={config.stopEmailGlobalDocuments}
-              onChange={handleNormalInputChange}
-              label={
-                config.stopEmailGlobalDocuments ? t("developer.configCreator.yes") : t("developer.configCreator.no")
-              }
-            />
-          </div>
-        </div>
-        {/*  */}
-        <div className="mb-4">
-          <SelectInput
-            name="flow"
-            onChange={handleSelectFlowItem}
-            label={t("developer.configCreator.applicationFlows")}
-          >
-            {ALL_SCREEN_FLOWS.map((flowItem) => (
-              <option value={flowItem.value} key={`select-flow-${flowItem.value}`}>
-                {flowItem.label}
-              </option>
-            ))}
-          </SelectInput>
-          <div>
-            <ol className="ml-6 mt-3 list-decimal">
-              {config.flow.map((flowItem, index) => (
-                <li key={`flow-item-${flowItem}-${index}`}>
-                  <div className="my-1 flex items-center gap-3 rounded bg-gray-100 px-2 py-2 align-middle">
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveFlowItem(index)}
-                      className="flex aspect-square h-5 justify-center rounded-full bg-red-500 align-middle text-sm text-white"
-                    >
-                      &times;
-                    </button>
-                    <div className="flex-1 truncate">
-                      <span className="text-sm font-medium">{flowItem}</span>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-        <div className="mb-4">
-          <SelectInput
-            name="successSubmissionScreen"
-            defaultValue={config.successSubmissionScreen}
-            onChange={handleSelectInputChange}
-            label={t("developer.configCreator.applicationSuccessScreen")}
-          >
-            {ALL_SUCCESS_SCREENS.map((successScreen) => (
-              <option value={successScreen.value} key={`select-successSubmissionScreen-${successScreen.value}`}>
-                {successScreen.label}
-              </option>
-            ))}
-          </SelectInput>
         </div>
 
         <div className="mt-6 flex w-full gap-1">
