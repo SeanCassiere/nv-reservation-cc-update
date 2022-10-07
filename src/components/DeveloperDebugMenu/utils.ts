@@ -31,6 +31,8 @@ export function devConfigToQueryUrl(config: DevConfigObject) {
     ...(useConfigStore.getState().showPreSubmitSummary || config.showPreSubmitSummary
       ? { showPreSubmitSummary: true }
       : {}),
+    ...(config.stopEmailGlobalDocuments ? { stopEmailGlobalDocuments: true } : {}),
+    ...(config.stopAttachingDriverLicenseFiles ? { stopAttachingDriverLicenseFiles: true } : {}),
   };
 
   let objJsonStr = JSON.stringify(hashObj);

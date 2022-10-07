@@ -1,5 +1,4 @@
 import { clientFetch } from "./clientV3";
-import { urlBlobToBase64 } from "../utils/blobUtils";
 import type { CreditCardStoreType } from "../hooks/stores/useFormStore";
 
 export async function postDriverLicenseImage(opts: {
@@ -7,15 +6,15 @@ export async function postDriverLicenseImage(opts: {
   customerId: string;
   imageUrl: string;
   imageName: string;
+  imageBase64: string;
   side: string;
 }) {
   const customerId = opts.customerId;
-  const imageUrl = opts.imageUrl;
   const imageName = opts.imageName;
   const clientId = opts.clientId;
   const side = opts.side;
 
-  const imageBase64 = await urlBlobToBase64(imageUrl);
+  const imageBase64 = opts.imageBase64;
   const mimeType = imageBase64.split(";")[0].split(":")[1];
 
   return await clientFetch(`/Customers/${customerId}/Documents`, {

@@ -21,7 +21,11 @@
       "openedDevMenu": "Dev menu opened at start?",
       "showPreSubmitSummary": "Show form summary screen?",
       "yes": "Yes",
-      "no": "No"
+      "no": "No",
+      "disableGlobalDocumentsForConfirmationEmail": "Stop attaching the global documents",
+      "disableLicenseAttachmentsForConfirmationEmail": "Stop attaching the uploaded driver's license images",
+      "confirmationEmailSettings": "Confirmation email settings",
+      "applicationFlowSettings": "Application flow settings"
     }
   }
 }

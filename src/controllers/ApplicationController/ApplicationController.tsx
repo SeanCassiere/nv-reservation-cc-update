@@ -14,7 +14,8 @@ import { AppNavContextProvider } from "../../hooks/logic/useAppNavContext";
 
 import { APP_CONSTANTS } from "../../utils/constants";
 import { authenticateWithLambda } from "../../api/lambdas";
-import { bootUp, initDataFetch } from "../../api/boot";
+import { bootUp } from "../../api/system/bootUp";
+import { initDataFetch } from "../../api/system/initDataFetch";
 
 const bootStatuses = ["authenticating", "loaded", "authentication_error", "core_details_fetch_failed"] as const;
 type BootStatus = typeof bootStatuses[number];
@@ -61,6 +62,7 @@ const ApplicationController: React.FC = () => {
         referenceType: `${data.referenceType}`,
         referenceIdentifier: `${data.referenceIdentifier}`,
         responseTemplateId: `${data.responseTemplateId}`,
+        stopEmailGlobalDocuments: data.disableGlobalDocumentsForConfirmationEmail,
       });
     },
     onError: (err) => {
@@ -89,6 +91,8 @@ const ApplicationController: React.FC = () => {
         qa: data.qa,
         successSubmissionScreen: data.successSubmissionScreen,
         showPreSubmitSummary: data.showPreSubmitSummary ?? false,
+        disableGlobalDocumentsForConfirmationEmail: data.stopEmailGlobalDocuments,
+        disableEmailAttachingDriverLicense: data.stopAttachingDriverLicenseFiles,
       });
       setEmailTemplateAndClientId({ newClientId: data.clientId, newTemplateId: data.responseEmailTemplateId });
       setInitReferenceValues({ newReferenceType: data.referenceType, newReferenceIdentifier: data.referenceId });

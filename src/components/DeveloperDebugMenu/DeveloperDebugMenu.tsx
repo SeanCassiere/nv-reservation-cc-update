@@ -1,13 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  ALL_SCREEN_FLOWS,
-  ALL_SUCCESS_SCREENS,
-  APP_CONSTANTS,
-  REPO_URL,
-  ALL_FORM_SUMMARY_OPTIONS,
-} from "../../utils/constants";
+import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "../../utils/constants";
 import { supportedLanguages } from "../../i18n";
 import { isValueTrue } from "../../utils/common";
 import { devConfigToQueryUrl } from "./utils";
@@ -34,6 +28,8 @@ export type DevConfigObject = {
   fromRentall: boolean;
   successSubmissionScreen: string;
   showPreSubmitSummary: boolean;
+  stopEmailGlobalDocuments: boolean;
+  stopAttachingDriverLicenseFiles: boolean;
 };
 
 const outsideInitialConfigState: DevConfigObject = {
@@ -48,6 +44,8 @@ const outsideInitialConfigState: DevConfigObject = {
   fromRentall: true,
   showPreSubmitSummary: false,
   successSubmissionScreen: APP_CONSTANTS.SUCCESS_DEFAULT,
+  stopEmailGlobalDocuments: false,
+  stopAttachingDriverLicenseFiles: false,
 };
 
 const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> = ({ open, handleClose }) => {
@@ -89,7 +87,16 @@ const ConfigCreator: React.FC = () => {
   const SELECT_MENU_DEFAULT_KEY = t("developer.configCreator.formSelectValue");
 
   const { referenceIdentifier, referenceType, clientId, responseTemplateId } = useRuntimeStore();
-  const { successSubmissionScreen, fromRentall, flow, qa, rawQueryString, showPreSubmitSummary } = useConfigStore();
+  const {
+    successSubmissionScreen,
+    fromRentall,
+    flow,
+    qa,
+    rawQueryString,
+    showPreSubmitSummary,
+    disableGlobalDocumentsForConfirmationEmail,
+    disableEmailAttachingDriverLicense,
+  } = useConfigStore();
 
   const [isReady, setIsReady] = React.useState(false);
   const [initialConfig, setInitialConfig] = React.useState<DevConfigObject>(outsideInitialConfigState);
@@ -156,15 +163,17 @@ const ConfigCreator: React.FC = () => {
       fromRentall: fromRentall,
       successSubmissionScreen: `${successSubmissionScreen}`,
       showPreSubmitSummary: showPreSubmitSummary ?? outsideInitialConfigState.showPreSubmitSummary,
+      stopEmailGlobalDocuments: disableGlobalDocumentsForConfirmationEmail,
+      stopAttachingDriverLicenseFiles: disableEmailAttachingDriverLicense,
     };
     setConfig((prev) => ({ ...prev, ...body, dev: Boolean(isValueTrue(dev)) }));
     setInitialConfig((prev) => ({ ...prev, ...body, dev: Boolean(isValueTrue(dev)) }));
     setIsReady(true);
   }, [
+    i18n.language,
     clientId,
     flow,
     fromRentall,
-    i18n.language,
     qa,
     rawQueryString,
     referenceIdentifier,
@@ -172,6 +181,8 @@ const ConfigCreator: React.FC = () => {
     responseTemplateId,
     successSubmissionScreen,
     showPreSubmitSummary,
+    disableGlobalDocumentsForConfirmationEmail,
+    disableEmailAttachingDriverLicense,
   ]);
 
   if (!isReady) {
@@ -206,7 +217,9 @@ const ConfigCreator: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="mt-3">
         <div className="mb-4">
-          <span className="text-sm font-medium text-gray-700">{t("developer.configCreator.referenceType")}</span>
+          <span className="select-none text-sm font-medium text-gray-700">
+            {t("developer.configCreator.referenceType")}
+          </span>
           <div className="mt-1 flex flex-col gap-1">
             <CheckInput
               type="radio"
@@ -265,80 +278,127 @@ const ConfigCreator: React.FC = () => {
             required
           />
         </div>
-        <div className="mb-3">
-          <TextInput
-            type="number"
-            value={config.emailTemplateId}
-            name="emailTemplateId"
-            onChange={handleNormalInputChange}
-            min="0"
-            label={t("developer.configCreator.responseTemplateId")}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <SelectInput
-            name="flow"
-            onChange={handleSelectFlowItem}
-            label={t("developer.configCreator.applicationFlows")}
-          >
-            {ALL_SCREEN_FLOWS.map((flowItem) => (
-              <option value={flowItem.value} key={`select-flow-${flowItem.value}`}>
-                {flowItem.label}
-              </option>
-            ))}
-          </SelectInput>
-          <div>
-            <ol className="ml-6 mt-3 list-decimal">
-              {config.flow.map((flowItem, index) => (
-                <li key={`flow-item-${flowItem}-${index}`}>
-                  <div className="my-1 flex items-center gap-3 rounded bg-gray-100 px-2 py-2 align-middle">
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveFlowItem(index)}
-                      className="flex aspect-square h-5 justify-center rounded-full bg-red-500 align-middle text-sm text-white"
-                    >
-                      &times;
-                    </button>
-                    <div className="flex-1 truncate">
-                      <span className="text-sm font-medium">{flowItem}</span>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ol>
+        {/*  confirmation email settings  */}
+        <div className="mb-4 rounded border border-gray-100 px-4 pt-2 pb-4">
+          <span className="select-none text-sm font-medium text-gray-700">
+            {t("developer.configCreator.confirmationEmailSettings")}
+          </span>
+          <div className="mt-2 flex flex-col gap-2 px-2">
+            <div>
+              <TextInput
+                type="number"
+                value={config.emailTemplateId}
+                name="emailTemplateId"
+                onChange={handleNormalInputChange}
+                min="0"
+                label={t("developer.configCreator.responseTemplateId")}
+                required
+              />
+            </div>
+            <div>
+              <span className="select-none text-sm font-medium text-gray-700">
+                {t("developer.configCreator.disableGlobalDocumentsForConfirmationEmail")}
+              </span>
+              <CheckInput
+                type="checkbox"
+                name="stopEmailGlobalDocuments"
+                checked={config.stopEmailGlobalDocuments}
+                onChange={handleNormalInputChange}
+                label={
+                  config.stopEmailGlobalDocuments ? t("developer.configCreator.yes") : t("developer.configCreator.no")
+                }
+              />
+            </div>
+            <div>
+              <span className="select-none text-sm font-medium text-gray-700">
+                {t("developer.configCreator.disableLicenseAttachmentsForConfirmationEmail")}
+              </span>
+              <CheckInput
+                type="checkbox"
+                name="stopAttachingDriverLicenseFiles"
+                checked={config.stopAttachingDriverLicenseFiles}
+                onChange={handleNormalInputChange}
+                label={
+                  config.stopAttachingDriverLicenseFiles
+                    ? t("developer.configCreator.yes")
+                    : t("developer.configCreator.no")
+                }
+              />
+            </div>
           </div>
         </div>
-        <div className="mb-4">
-          <SelectInput
-            name="successSubmissionScreen"
-            defaultValue={config.successSubmissionScreen}
-            onChange={handleSelectInputChange}
-            label={t("developer.configCreator.applicationSuccessScreen")}
-          >
-            {ALL_SUCCESS_SCREENS.map((successScreen) => (
-              <option value={successScreen.value} key={`select-successSubmissionScreen-${successScreen.value}`}>
-                {successScreen.label}
-              </option>
-            ))}
-          </SelectInput>
+        {/* application flow settings */}
+        <div className="mb-4 rounded border border-gray-100 px-4 pt-2 pb-4">
+          <span className="select-none text-sm font-medium text-gray-700">
+            {t("developer.configCreator.applicationFlowSettings")}
+          </span>
+          <div className="mt-2 flex flex-col gap-2 px-2">
+            <div>
+              <SelectInput
+                name="flow"
+                onChange={handleSelectFlowItem}
+                label={t("developer.configCreator.applicationFlows")}
+              >
+                {ALL_SCREEN_FLOWS.map((flowItem) => (
+                  <option value={flowItem.value} key={`select-flow-${flowItem.value}`}>
+                    {flowItem.label}
+                  </option>
+                ))}
+              </SelectInput>
+              <div>
+                <ol className="ml-6 mt-3 list-decimal">
+                  {config.flow.map((flowItem, index) => (
+                    <li key={`flow-item-${flowItem}-${index}`}>
+                      <div className="my-1 flex items-center gap-3 rounded bg-gray-100 px-2 py-2 align-middle">
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveFlowItem(index)}
+                          className="flex aspect-square h-5 justify-center rounded-full bg-red-500 align-middle text-sm text-white"
+                        >
+                          &times;
+                        </button>
+                        <div className="flex-1 truncate">
+                          <span className="text-sm font-medium">{flowItem}</span>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+            <div>
+              <SelectInput
+                name="successSubmissionScreen"
+                defaultValue={config.successSubmissionScreen}
+                onChange={handleSelectInputChange}
+                label={t("developer.configCreator.applicationSuccessScreen")}
+              >
+                {ALL_SUCCESS_SCREENS.map((successScreen) => (
+                  <option value={successScreen.value} key={`select-successSubmissionScreen-${successScreen.value}`}>
+                    {successScreen.label}
+                  </option>
+                ))}
+              </SelectInput>
+            </div>
+            <div>
+              <span className="text-sm font-medium text-gray-700">
+                {t("developer.configCreator.showPreSubmitSummary")}
+              </span>
+              <CheckInput
+                type="checkbox"
+                name="showPreSubmitSummary"
+                checked={config.showPreSubmitSummary}
+                onChange={handleNormalInputChange}
+                label={config.showPreSubmitSummary ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
+              />
+            </div>
+          </div>
         </div>
+
         {/*  */}
-        <div className="mt-4 grid grid-cols-2 gap-3">
+        <div className="mt-4 mb-4 grid grid-cols-2 gap-3">
           <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">
-              {t("developer.configCreator.showPreSubmitSummary")}
-            </span>
-            <CheckInput
-              type="checkbox"
-              name="showPreSubmitSummary"
-              checked={config.showPreSubmitSummary}
-              onChange={handleNormalInputChange}
-              label={config.showPreSubmitSummary ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
-            />
-          </div>
-          <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">
+            <span className="select-none text-sm font-medium text-gray-700">
               {t("developer.configCreator.applicationBranding")}
             </span>
             <CheckInput
@@ -350,7 +410,7 @@ const ConfigCreator: React.FC = () => {
             />
           </div>
           <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">
+            <span className="select-none text-sm font-medium text-gray-700">
               {t("developer.configCreator.applicationEnvironment")}
             </span>
             <CheckInput
@@ -362,7 +422,9 @@ const ConfigCreator: React.FC = () => {
             />
           </div>
           <div className="col-span-2 md:col-span-1">
-            <span className="text-sm font-medium text-gray-700">{t("developer.configCreator.openedDevMenu")}</span>
+            <span className="select-none text-sm font-medium text-gray-700">
+              {t("developer.configCreator.openedDevMenu")}
+            </span>
             <CheckInput
               type="checkbox"
               name="dev"
@@ -372,6 +434,7 @@ const ConfigCreator: React.FC = () => {
             />
           </div>
         </div>
+
         <div className="mt-6 flex w-full gap-1">
           <Button type="submit" className="bg-gray-300 py-2 px-4">
             {t("developer.configCreator.btnSave")}

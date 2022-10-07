@@ -27,7 +27,7 @@ const CheckInput: React.FC<Props> = ({ id, label, helperText, className, ...inpu
       />
       {label && (
         <div className="ml-3 text-sm">
-          <label htmlFor={id ?? elementId} className="font-medium text-gray-700">
+          <label htmlFor={id ?? elementId} className="select-none font-medium text-gray-700">
             {label}
           </label>
         </div>

@@ -15,7 +15,7 @@ const TextInput: React.FC<Props> = ({ id, label, helperText, isError, className,
   return (
     <div>
       {label && (
-        <label htmlFor={id ?? elementId} className="block text-sm font-medium text-gray-700">
+        <label htmlFor={id ?? elementId} className="block select-none text-sm font-medium text-gray-700">
           {label}
           {inputProps.required && <span className="text-red-500">&nbsp;*</span>}
         </label>
@@ -45,7 +45,7 @@ const TextInput: React.FC<Props> = ({ id, label, helperText, isError, className,
           {...inputProps}
         />
         {isError && (
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex select-none items-center pr-3">
             <ExclamationIcon className="text-red-500" />
           </div>
         )}
