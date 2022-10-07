@@ -36,6 +36,8 @@ const ApplicationController: React.FC = () => {
   const setRuntimeAdminUserId = useRuntimeStore((s) => s.setRuntimeAdminUserId);
   const setRuntimeReferenceId = useRuntimeStore((s) => s.setRuntimeReferenceId);
 
+  const { disableGlobalDocumentsForConfirmationEmail } = useConfigStore();
+
   const fullFlow = useConfigStore((s) => s.fullFlow);
   const referenceType = useRuntimeStore((s) => s.referenceType);
 
@@ -62,6 +64,7 @@ const ApplicationController: React.FC = () => {
         referenceType: `${data.referenceType}`,
         referenceIdentifier: `${data.referenceIdentifier}`,
         responseTemplateId: `${data.responseTemplateId}`,
+        stopEmailGlobalDocuments: disableGlobalDocumentsForConfirmationEmail,
       });
     },
     onError: (err) => {

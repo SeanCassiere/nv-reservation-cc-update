@@ -2,7 +2,12 @@ import { createHtmlBlobDataUrl } from "../../utils/blobUtils";
 import { APP_CONSTANTS } from "../../utils/constants";
 
 import { fetchAgreementByIdOrNumberProcedure } from "../agreementApi";
-import { fetchComposeEmailDetails, fetchEmailTemplate, fetchEmailTemplateHtml } from "../emailsApi";
+import {
+  fetchComposeEmailDetails,
+  fetchEmailTemplate,
+  fetchEmailTemplateHtml,
+  fetchGlobalDocumentsForEmailTemplate,
+} from "../emailsApi";
 import { fetchReservationByIdOrNumberProcedure, RentalSourcedDetails } from "../reservationApi";
 import { fetchAdminUser } from "../usersApi";
 
@@ -15,6 +20,7 @@ export async function initDataFetch(opts: {
   responseTemplateId: RandomAll;
   referenceType: string;
   referenceIdentifier: RandomAll;
+  stopEmailGlobalDocuments: boolean;
 }) {
   let referenceIdLatest = opts.referenceIdentifier;
   let rentalSourcedDetails: RentalSourcedDetails | null = null;
@@ -25,7 +31,7 @@ export async function initDataFetch(opts: {
   let toEmailAddress = "";
   let responseSubject = "";
   let emailDataBlobUrl: string | null = null;
-  const emailGlobalDocuments: EmailGlobalDocumentAttachmentType[] = [];
+  let emailGlobalDocuments: EmailGlobalDocumentAttachmentType[] = [];
 
   // get the admin user account
   const adminUser = await fetchAdminUser(opts.clientId);
@@ -92,6 +98,18 @@ export async function initDataFetch(opts: {
       });
       if (html) {
         emailDataBlobUrl = await createHtmlBlobDataUrl(html);
+      }
+    }
+
+    // get global documents
+    if (emailTemplateTypeId && opts.stopEmailGlobalDocuments !== true) {
+      const documents = await fetchGlobalDocumentsForEmailTemplate({
+        clientId: opts.clientId,
+        templateId: Number(opts.responseTemplateId),
+        templateTypeId: Number(emailTemplateTypeId),
+      });
+      if (documents && Array.isArray(documents)) {
+        emailGlobalDocuments = documents.filter((document) => document.checked);
       }
     }
   }

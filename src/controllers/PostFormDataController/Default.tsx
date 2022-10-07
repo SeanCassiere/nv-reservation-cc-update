@@ -18,6 +18,8 @@ const PostFormDataControllerDefault: React.FC = () => {
   const { t } = useTranslation();
 
   const isQa = useConfigStore((s) => s.qa);
+  const isGlobalDocumentsStopped = useConfigStore((s) => s.disableGlobalDocumentsForConfirmationEmail);
+
   const adminUserId = useRuntimeStore((s) => s.adminUserId);
   const clientId = useRuntimeStore((s) => s.clientId);
   const responseTemplateId = useRuntimeStore((s) => s.responseTemplateId);
@@ -26,6 +28,7 @@ const PostFormDataControllerDefault: React.FC = () => {
   const confirmationEmail = useRuntimeStore((s) => s.confirmationEmail);
   const rentalData = useRuntimeStore((s) => s.rental);
   const customerId = useRuntimeStore((s) => s.rental?.customerId);
+  const fetchedGlobalDocuments = useRuntimeStore((s) => s.confirmationEmail?.globalDocuments);
   const setSubmissionCompleteState = useRuntimeStore((s) => s.setSubmissionCompleteState);
 
   const creditCardState = useFormStore((s) => s.customerCreditCard);
@@ -88,6 +91,7 @@ const PostFormDataControllerDefault: React.FC = () => {
             templateId: confirmationEmail.templateId,
             templateTypeId: confirmationEmail.templateTypeId,
             fromEmail: confirmationEmail.fromEmail,
+            globalDocuments: isGlobalDocumentsStopped === false && fetchedGlobalDocuments ? fetchedGlobalDocuments : [],
           });
           return;
         }

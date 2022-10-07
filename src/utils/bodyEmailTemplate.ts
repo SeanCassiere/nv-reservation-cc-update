@@ -1,3 +1,4 @@
+import type { EmailGlobalDocumentAttachmentType } from "../hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS } from "./constants";
 
 export type CreateBodyForEmail = {
@@ -12,9 +13,10 @@ export type CreateBodyForEmail = {
   userId: number;
   clientId: number;
   emailBody?: string;
+  globalDocuments?: EmailGlobalDocumentAttachmentType[];
 };
 
-export function createBodyForEmail({ emailBody = "", ...opts }: CreateBodyForEmail) {
+export function createBodyForEmail({ emailBody = "", globalDocuments = [], ...opts }: CreateBodyForEmail) {
   return {
     subject: opts.subject,
     clientId: opts.clientId,
@@ -35,7 +37,7 @@ export function createBodyForEmail({ emailBody = "", ...opts }: CreateBodyForEma
     creditNoteId: null,
     depositId: 0,
     depositType: "",
-    docListForAttach: [],
+    docListForAttach: globalDocuments,
     isUpdate: false,
   };
 }
