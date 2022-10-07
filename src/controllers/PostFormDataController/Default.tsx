@@ -19,7 +19,7 @@ const PostFormDataControllerDefault: React.FC = () => {
 
   const isQa = useConfigStore((s) => s.qa);
   const isGlobalDocumentsStopped = useConfigStore((s) => s.disableGlobalDocumentsForConfirmationEmail);
-
+  const isDriverLicenseAttachmentsStopped = useConfigStore((s) => s.disableEmailAttachingDriverLicense);
   const adminUserId = useRuntimeStore((s) => s.adminUserId);
   const clientId = useRuntimeStore((s) => s.clientId);
   const responseTemplateId = useRuntimeStore((s) => s.responseTemplateId);
@@ -73,9 +73,12 @@ const PostFormDataControllerDefault: React.FC = () => {
         referenceId: referenceId ?? 0,
         referenceType,
         rental: rentalData,
+        attachmentOptions: {
+          stopAttachingDriverLicenseFiles: isDriverLicenseAttachmentsStopped,
+        },
       }),
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
         if (responseTemplateId && confirmationEmail && confirmationEmail?.dataUrl) {
           const dataUrl = confirmationEmail.dataUrl;
           setCurrentMessage(t("appStatusMessages.sendingConfirmationEmail"));
@@ -92,6 +95,7 @@ const PostFormDataControllerDefault: React.FC = () => {
             templateTypeId: confirmationEmail.templateTypeId,
             fromEmail: confirmationEmail.fromEmail,
             globalDocuments: isGlobalDocumentsStopped === false && fetchedGlobalDocuments ? fetchedGlobalDocuments : [],
+            attachments: data.oneOffAttachmentsToUpload,
           });
           return;
         }

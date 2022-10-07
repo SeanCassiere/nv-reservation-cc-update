@@ -10,6 +10,7 @@ type QueryConfigState = {
   successSubmissionScreen?: string;
   showPreSubmitSummary?: boolean;
   stopEmailGlobalDocuments?: boolean;
+  stopAttachingDriverLicenseFiles?: boolean;
 };
 
 export async function bootUp({ windowQueryString }: { windowQueryString: string }) {
@@ -35,6 +36,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     fromRentall: true,
     showPreSubmitSummary: false,
     stopEmailGlobalDocuments: false,
+    stopAttachingDriverLicenseFiles: false,
   };
 
   if (!configQuery) return null;
@@ -61,7 +63,8 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     fromRentall: config.fromRentall,
     showPreSubmitSummary: config.showPreSubmitSummary,
     successSubmissionScreen: config.successSubmissionScreen,
-    disableGlobalDocumentsForConfirmation: config.stopEmailGlobalDocuments ?? false,
+    stopEmailGlobalDocuments: config.stopEmailGlobalDocuments ?? false,
+    stopAttachingDriverLicenseFiles: config.stopAttachingDriverLicenseFiles ?? false,
   };
 }
 

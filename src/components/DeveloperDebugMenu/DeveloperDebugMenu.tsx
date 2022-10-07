@@ -29,6 +29,7 @@ export type DevConfigObject = {
   successSubmissionScreen: string;
   showPreSubmitSummary: boolean;
   stopEmailGlobalDocuments: boolean;
+  stopAttachingDriverLicenseFiles: boolean;
 };
 
 const outsideInitialConfigState: DevConfigObject = {
@@ -44,6 +45,7 @@ const outsideInitialConfigState: DevConfigObject = {
   showPreSubmitSummary: false,
   successSubmissionScreen: APP_CONSTANTS.SUCCESS_DEFAULT,
   stopEmailGlobalDocuments: false,
+  stopAttachingDriverLicenseFiles: false,
 };
 
 const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> = ({ open, handleClose }) => {
@@ -93,6 +95,7 @@ const ConfigCreator: React.FC = () => {
     rawQueryString,
     showPreSubmitSummary,
     disableGlobalDocumentsForConfirmationEmail,
+    disableEmailAttachingDriverLicense,
   } = useConfigStore();
 
   const [isReady, setIsReady] = React.useState(false);
@@ -161,6 +164,7 @@ const ConfigCreator: React.FC = () => {
       successSubmissionScreen: `${successSubmissionScreen}`,
       showPreSubmitSummary: showPreSubmitSummary ?? outsideInitialConfigState.showPreSubmitSummary,
       stopEmailGlobalDocuments: disableGlobalDocumentsForConfirmationEmail,
+      stopAttachingDriverLicenseFiles: disableEmailAttachingDriverLicense,
     };
     setConfig((prev) => ({ ...prev, ...body, dev: Boolean(isValueTrue(dev)) }));
     setInitialConfig((prev) => ({ ...prev, ...body, dev: Boolean(isValueTrue(dev)) }));
@@ -178,6 +182,7 @@ const ConfigCreator: React.FC = () => {
     successSubmissionScreen,
     showPreSubmitSummary,
     disableGlobalDocumentsForConfirmationEmail,
+    disableEmailAttachingDriverLicense,
   ]);
 
   if (!isReady) {
@@ -301,6 +306,22 @@ const ConfigCreator: React.FC = () => {
                 onChange={handleNormalInputChange}
                 label={
                   config.stopEmailGlobalDocuments ? t("developer.configCreator.yes") : t("developer.configCreator.no")
+                }
+              />
+            </div>
+            <div>
+              <span className="select-none text-sm font-medium text-gray-700">
+                {t("developer.configCreator.disableLicenseAttachmentsForConfirmationEmail")}
+              </span>
+              <CheckInput
+                type="checkbox"
+                name="stopAttachingDriverLicenseFiles"
+                checked={config.stopAttachingDriverLicenseFiles}
+                onChange={handleNormalInputChange}
+                label={
+                  config.stopAttachingDriverLicenseFiles
+                    ? t("developer.configCreator.yes")
+                    : t("developer.configCreator.no")
                 }
               />
             </div>

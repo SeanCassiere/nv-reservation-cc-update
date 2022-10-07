@@ -1,3 +1,4 @@
+import { OneOffUploadAttachment } from "../api/emailsApi";
 import type { EmailGlobalDocumentAttachmentType } from "../hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS } from "./constants";
 
@@ -14,9 +15,15 @@ export type CreateBodyForEmail = {
   clientId: number;
   emailBody?: string;
   globalDocuments?: EmailGlobalDocumentAttachmentType[];
+  oneOffAttachments?: OneOffUploadAttachment[];
 };
 
-export function createBodyForEmail({ emailBody = "", globalDocuments = [], ...opts }: CreateBodyForEmail) {
+export function createBodyForEmail({
+  emailBody = "",
+  globalDocuments = [],
+  oneOffAttachments = [],
+  ...opts
+}: CreateBodyForEmail) {
   return {
     subject: opts.subject,
     clientId: opts.clientId,
@@ -33,7 +40,7 @@ export function createBodyForEmail({ emailBody = "", globalDocuments = [], ...op
     //
     agreementTemplates: [],
     attachmentPath: "",
-    attachments: [],
+    attachments: oneOffAttachments,
     creditNoteId: null,
     depositId: 0,
     depositType: "",

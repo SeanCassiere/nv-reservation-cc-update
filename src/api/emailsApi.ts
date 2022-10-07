@@ -2,6 +2,8 @@ import { EmailGlobalDocumentAttachmentType } from "../hooks/stores/useRuntimeSto
 import { createBodyForEmail, CreateBodyForEmail } from "../utils/bodyEmailTemplate";
 import { clientFetch } from "./clientV3";
 
+export type OneOffUploadAttachment = { fileName: string; blob: string };
+
 type ComposeTemplateArrayItem = {
   clientId: number;
   contentId: number | null;
@@ -103,6 +105,7 @@ export async function fetchEmailTemplateHtml(opts: CreateBodyForEmail) {
 interface PostConfirmationEmailProps extends CreateBodyForEmail {
   dataUrl: string;
   globalDocuments: EmailGlobalDocumentAttachmentType[];
+  attachments: OneOffUploadAttachment[];
 }
 
 export async function postConfirmationEmail(opts: PostConfirmationEmailProps) {
@@ -113,7 +116,12 @@ export async function postConfirmationEmail(opts: PostConfirmationEmailProps) {
   await clientFetch("/Emails", {
     method: "POST",
     body: JSON.stringify(
-      createBodyForEmail({ ...opts, emailBody: emailBodyHtml, globalDocuments: opts.globalDocuments })
+      createBodyForEmail({
+        ...opts,
+        emailBody: emailBodyHtml,
+        globalDocuments: opts.globalDocuments,
+        oneOffAttachments: opts.attachments,
+      })
     ),
   });
   URL.revokeObjectURL(dataUrl);
