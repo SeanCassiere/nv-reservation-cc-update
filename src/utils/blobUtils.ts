@@ -14,6 +14,11 @@ export async function urlBlobToBase64(url: string): Promise<string> {
   });
 }
 
+export function splitMimeTypeFromBase64String(base64String: string): `${string}/${string}` {
+  const [mimeA, mimeB] = base64String.split(";")[0].split(":")[1].split("/");
+  return `${mimeA}/${mimeB}`;
+}
+
 export async function createHtmlBlobDataUrl(html: string) {
   const blob = new Blob([html], { type: "text/html" });
   const url = URL.createObjectURL(blob);

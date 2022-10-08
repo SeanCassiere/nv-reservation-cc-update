@@ -8,7 +8,7 @@ import type {
 } from "../../hooks/stores/useFormStore";
 import type { RentalStoreType } from "../../hooks/stores/useRuntimeStore";
 import { OneOffUploadAttachment } from "../emailsApi";
-import { urlBlobToBase64 } from "../../utils/blobUtils";
+import { splitMimeTypeFromBase64String, urlBlobToBase64 } from "../../utils/blobUtils";
 
 export async function postFormDataToApi(stores: {
   clientId: string | number;
@@ -45,12 +45,13 @@ export async function postFormDataToApi(stores: {
   if (driversLicense.isFilled) {
     if (driversLicense.data.frontImageName && driversLicense.data.frontImageUrl) {
       const frontImageBase64 = await urlBlobToBase64(driversLicense.data.frontImageUrl);
+      const frontImageMimeType = splitMimeTypeFromBase64String(frontImageBase64);
       promisesToRun.push(
         postDriverLicenseImage({
           clientId: Number(clientId),
           customerId: `${customerId}`,
-          imageUrl: driversLicense.data.frontImageUrl,
           imageName: driversLicense.data.frontImageName,
+          imageMimeType: frontImageMimeType,
           imageBase64: frontImageBase64,
           side: "Front",
         })
@@ -58,6 +59,7 @@ export async function postFormDataToApi(stores: {
       if (attachmentOptions.stopAttachingDriverLicenseFiles !== true) {
         oneOffAttachmentsToUpload.push({
           fileName: driversLicense.data.frontImageName,
+          mimeType: frontImageMimeType,
           blob: frontImageBase64,
         });
       }
@@ -65,12 +67,13 @@ export async function postFormDataToApi(stores: {
     //
     if (driversLicense.data.backImageName && driversLicense.data.backImageUrl) {
       const backImageBase64 = await urlBlobToBase64(driversLicense.data.backImageUrl);
+      const backImageMimeType = splitMimeTypeFromBase64String(backImageBase64);
       promisesToRun.push(
         postDriverLicenseImage({
           clientId: Number(clientId),
           customerId: `${customerId}`,
-          imageUrl: driversLicense.data.backImageUrl,
           imageName: driversLicense.data.backImageName,
+          imageMimeType: backImageMimeType,
           imageBase64: backImageBase64,
           side: "Back",
         })
@@ -78,6 +81,7 @@ export async function postFormDataToApi(stores: {
       if (attachmentOptions.stopAttachingDriverLicenseFiles !== true) {
         oneOffAttachmentsToUpload.push({
           fileName: driversLicense.data.backImageName,
+          mimeType: backImageMimeType,
           blob: backImageBase64,
         });
       }

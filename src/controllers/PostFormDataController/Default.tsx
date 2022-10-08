@@ -94,6 +94,7 @@ const PostFormDataControllerDefault: React.FC = () => {
             templateId: confirmationEmail.templateId,
             templateTypeId: confirmationEmail.templateTypeId,
             fromEmail: confirmationEmail.fromEmail,
+            fromName: confirmationEmail.fromName,
             globalDocuments: isGlobalDocumentsStopped === false && fetchedGlobalDocuments ? fetchedGlobalDocuments : [],
             attachments: data.oneOffAttachmentsToUpload,
           });

@@ -4,18 +4,17 @@ import type { CreditCardStoreType } from "../hooks/stores/useFormStore";
 export async function postDriverLicenseImage(opts: {
   clientId: number;
   customerId: string;
-  imageUrl: string;
   imageName: string;
   imageBase64: string;
+  imageMimeType: string;
   side: string;
 }) {
   const customerId = opts.customerId;
   const imageName = opts.imageName;
   const clientId = opts.clientId;
   const side = opts.side;
-
   const imageBase64 = opts.imageBase64;
-  const mimeType = imageBase64.split(";")[0].split(":")[1];
+  const imageMineType = opts.imageMimeType;
 
   return await clientFetch(`/Customers/${customerId}/Documents`, {
     method: "POST",
@@ -23,7 +22,7 @@ export async function postDriverLicenseImage(opts: {
       clientId,
       blob: imageBase64,
       fileName: imageName,
-      contentType: mimeType,
+      contentType: imageMineType,
       docTypeId: 5,
       videoDetails: null,
       imageSide: side,

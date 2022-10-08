@@ -76,7 +76,7 @@ export async function initDataFetch(opts: {
       if (templateDetails) {
         emailTemplateCcEmails = templateDetails.ccEmails;
         fromEmailAddress = templateDetails.fromAddress;
-        fromEmailName = templateDetails.mailName;
+        fromEmailName = templateDetails.mailName ?? templateDetails.fromAddress;
         toEmailAddress = templateDetails.toAddress;
         responseSubject = templateDetails.selectedTemplate?.subjectLine ?? "";
       }
@@ -95,6 +95,7 @@ export async function initDataFetch(opts: {
         clientId: Number(opts.clientId),
         userId: adminUser.userID,
         fromEmail: fromEmailAddress,
+        fromName: fromEmailName,
       });
       if (html) {
         emailDataBlobUrl = await createHtmlBlobDataUrl(html);

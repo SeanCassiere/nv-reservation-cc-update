@@ -2,7 +2,7 @@ import { EmailGlobalDocumentAttachmentType } from "../hooks/stores/useRuntimeSto
 import { createBodyForEmail, CreateBodyForEmail } from "../utils/bodyEmailTemplate";
 import { clientFetch } from "./clientV3";
 
-export type OneOffUploadAttachment = { fileName: string; blob: string };
+export type OneOffUploadAttachment = { fileName: string; blob: string; mimeType: string };
 
 type ComposeTemplateArrayItem = {
   clientId: number;

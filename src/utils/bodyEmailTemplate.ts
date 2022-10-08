@@ -1,4 +1,4 @@
-import { OneOffUploadAttachment } from "../api/emailsApi";
+import type { OneOffUploadAttachment } from "../api/emailsApi";
 import type { EmailGlobalDocumentAttachmentType } from "../hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS } from "./constants";
 
@@ -11,6 +11,7 @@ export type CreateBodyForEmail = {
   templateId: number;
   templateTypeId: number;
   fromEmail: string;
+  fromName: string;
   userId: number;
   clientId: number;
   emailBody?: string;
@@ -31,13 +32,13 @@ export function createBodyForEmail({
     agreementId: opts.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? opts.referenceId : null,
     reservationId: opts.referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION ? opts.referenceId : null,
     fromEmail: opts.fromEmail,
+    fromName: opts.fromName,
     to: opts.toEmails,
     cc: opts.ccEmails,
     emailBody: emailBody,
     sentDate: new Date().toISOString(),
     templateTypeId: opts.templateTypeId,
     templateId: opts.templateId,
-    //
     agreementTemplates: [],
     attachmentPath: "",
     attachments: oneOffAttachments,
