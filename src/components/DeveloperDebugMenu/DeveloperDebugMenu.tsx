@@ -303,6 +303,7 @@ const ConfigCreator: React.FC = () => {
                 onChange={handleNormalInputChange}
                 min="0"
                 label={t("developer.configCreator.userId")}
+                helperText={t("developer.configCreator.userIdHelperText")}
               />
             </div>
             {/*  */}
