@@ -5,7 +5,6 @@ import CardLayout from "../../layouts/Card";
 import AnchorLink from "../../components/Elements/Default/AnchorLink";
 
 import { useConfigStore } from "../../hooks/stores/useConfigStore";
-import { string } from "yup";
 
 const ErrorImgUri = "/assets/undraw_warning_cyit.svg";
 
