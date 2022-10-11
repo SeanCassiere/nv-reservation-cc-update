@@ -66,6 +66,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
     if (!backLicenseImage) setBackImageError(true);
 
     if (!backLicenseImage || !frontLicenseImage || !formValid) {
+      await validateCardData(() => {});
       return;
     }
     await validateCardData((values) => {
