@@ -12,6 +12,8 @@
       "referenceType": "Reference Type",
       "referenceId": "Reference ID",
       "clientId": "Client ID",
+      "userId": "User ID",
+      "userIdHelperText": "Navotar UserId used for api (optional)",
       "lang": "Language",
       "responseTemplateId": "Response Email Template ID",
       "applicationFlows": "Flows",
@@ -25,7 +27,9 @@
       "disableGlobalDocumentsForConfirmationEmail": "Stop attaching the global documents",
       "disableLicenseAttachmentsForConfirmationEmail": "Stop attaching the uploaded driver's license images",
       "confirmationEmailSettings": "Confirmation email settings",
-      "applicationFlowSettings": "Application flow settings"
+      "applicationFlowSettings": "Application flow settings",
+      "generalApplicationConfiguration": "General application configuration",
+      "runtimeConfiguration": "Runtime configuration"
     }
   }
 }

@@ -17,6 +17,7 @@ type RandomAll = string | number | null;
 
 export async function initDataFetch(opts: {
   clientId: string;
+  adminUserId: number;
   responseTemplateId: RandomAll;
   referenceType: string;
   referenceIdentifier: RandomAll;
@@ -32,9 +33,13 @@ export async function initDataFetch(opts: {
   let responseSubject = "";
   let emailDataBlobUrl: string | null = null;
   let emailGlobalDocuments: EmailGlobalDocumentAttachmentType[] = [];
+  let adminUserId = opts.adminUserId;
 
-  // get the admin user account
-  const adminUser = await fetchAdminUser(opts.clientId);
+  // get the admin user account if the predefined admin user id is not set
+  if (adminUserId <= 0) {
+    const adminUser = await fetchAdminUser(opts.clientId);
+    adminUserId = adminUser.userID;
+  }
 
   // get the agreement or reservation
   if (opts.referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION) {
@@ -48,7 +53,7 @@ export async function initDataFetch(opts: {
     const agreement = await fetchAgreementByIdOrNumberProcedure({
       clientId: opts.clientId,
       referenceId: `${opts.referenceIdentifier}`,
-      adminUserId: adminUser.userID,
+      adminUserId: adminUserId,
     });
     rentalSourcedDetails = agreement;
     referenceIdLatest = agreement?.referenceId ?? 0;
@@ -68,7 +73,7 @@ export async function initDataFetch(opts: {
     if (emailTemplateTypeId) {
       const templateDetails = await fetchComposeEmailDetails({
         clientId: `${opts.clientId}`,
-        adminUserId: adminUser.userID,
+        adminUserId: adminUserId,
         responseTemplateId: `${opts.responseTemplateId}`,
         referenceType: opts.referenceType,
         referenceId: `${referenceIdLatest}`,
@@ -93,7 +98,7 @@ export async function initDataFetch(opts: {
         templateId: Number(opts.responseTemplateId),
         templateTypeId: Number(emailTemplateTypeId),
         clientId: Number(opts.clientId),
-        userId: adminUser.userID,
+        userId: adminUserId,
         fromEmail: fromEmailAddress,
         fromName: fromEmailName,
       });
@@ -116,7 +121,7 @@ export async function initDataFetch(opts: {
   }
 
   return {
-    adminUserId: adminUser.userID,
+    adminUserId: adminUserId,
     confirmationEmail: Number(opts.responseTemplateId)
       ? {
           templateId: Number(opts.responseTemplateId),

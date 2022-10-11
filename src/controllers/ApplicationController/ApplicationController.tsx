@@ -63,6 +63,7 @@ const ApplicationController: React.FC = () => {
         referenceIdentifier: `${data.referenceIdentifier}`,
         responseTemplateId: `${data.responseTemplateId}`,
         stopEmailGlobalDocuments: data.disableGlobalDocumentsForConfirmationEmail,
+        adminUserId: data.userId,
       });
     },
     onError: (err) => {
@@ -89,6 +90,7 @@ const ApplicationController: React.FC = () => {
         flow: data.flow,
         fromRentall: data.fromRentall,
         qa: data.qa,
+        predefinedAdminUserId: data.userId,
         successSubmissionScreen: data.successSubmissionScreen,
         showPreSubmitSummary: data.showPreSubmitSummary ?? false,
         disableGlobalDocumentsForConfirmationEmail: data.stopEmailGlobalDocuments,

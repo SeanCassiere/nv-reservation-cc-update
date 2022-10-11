@@ -24,6 +24,7 @@ export type DevConfigObject = {
   dev: boolean;
   clientId: string;
   emailTemplateId: string;
+  userId: number;
   flow: string[];
   fromRentall: boolean;
   successSubmissionScreen: string;
@@ -39,6 +40,7 @@ const outsideInitialConfigState: DevConfigObject = {
   qa: false,
   dev: true,
   clientId: "0",
+  userId: 0,
   emailTemplateId: "0",
   flow: [ALL_SCREEN_FLOWS[0].value],
   fromRentall: true,
@@ -67,7 +69,7 @@ const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> =
           <div className="flex justify-center align-middle">
             <h1 className="flex-1">{t("developer.drawerTitle")}</h1>
             <div>
-              <Button color="danger" size="sm" onClick={handleClose}>
+              <Button color="danger" size="sm" variant="muted" onClick={handleClose}>
                 &times;
               </Button>
             </div>
@@ -96,6 +98,7 @@ const ConfigCreator: React.FC = () => {
     showPreSubmitSummary,
     disableGlobalDocumentsForConfirmationEmail,
     disableEmailAttachingDriverLicense,
+    predefinedAdminUserId,
   } = useConfigStore();
 
   const [isReady, setIsReady] = React.useState(false);
@@ -158,6 +161,7 @@ const ConfigCreator: React.FC = () => {
       qa: qa,
       dev: false,
       clientId: `${clientId || 0}`,
+      userId: predefinedAdminUserId,
       emailTemplateId: `${responseTemplateId || 0}`,
       flow: [...flow],
       fromRentall: fromRentall,
@@ -172,6 +176,7 @@ const ConfigCreator: React.FC = () => {
   }, [
     i18n.language,
     clientId,
+    predefinedAdminUserId,
     flow,
     fromRentall,
     qa,
@@ -196,7 +201,7 @@ const ConfigCreator: React.FC = () => {
           {t("developer.viewProjectRepo")}
         </AnchorLink>
       </div>
-      <div className="flex w-full flex-col gap-1 rounded bg-yellow-50 p-2" style={{ overflowWrap: "anywhere" }}>
+      <div className="flex w-full flex-col gap-1 rounded bg-yellow-50 p-3" style={{ overflowWrap: "anywhere" }}>
         <p className="m-0 text-sm text-gray-700">{window.location.origin + "/?" + devConfigToQueryUrl(config)}</p>
         <Button
           type="button"
@@ -215,75 +220,140 @@ const ConfigCreator: React.FC = () => {
         </Button>
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-3">
-        <div className="mb-4">
-          <span className="select-none text-sm font-medium text-gray-700">
-            {t("developer.configCreator.referenceType")}
+      <form onSubmit={handleSubmit} className="mt-4">
+        {/*  runtime reference configuration  */}
+        <div className="mb-3 rounded border border-gray-100 px-4 pt-2 pb-4">
+          <span className="select-none text-base font-semibold text-gray-600">
+            {t("developer.configCreator.runtimeConfiguration")}
           </span>
-          <div className="mt-1 flex flex-col gap-1">
-            <CheckInput
-              type="radio"
-              name="referenceType"
-              value={APP_CONSTANTS.REF_TYPE_RESERVATION}
-              checked={config.referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION}
-              onChange={handleNormalInputChange}
-              label={APP_CONSTANTS.REF_TYPE_RESERVATION}
-            />
-            <CheckInput
-              type="radio"
-              name="referenceType"
-              value={APP_CONSTANTS.REF_TYPE_AGREEMENT}
-              checked={config.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT}
-              onChange={handleNormalInputChange}
-              label={APP_CONSTANTS.REF_TYPE_AGREEMENT}
-            />
+          <div className="mt-4 flex flex-col gap-2 px-1">
+            <div>
+              <TextInput
+                type="text"
+                value={config.referenceId}
+                name="referenceId"
+                onChange={handleNormalInputChange}
+                label={t("developer.configCreator.referenceId")}
+                required
+              />
+            </div>
+            <div className="mt-1">
+              <span className="select-none text-sm font-medium text-gray-700">
+                {t("developer.configCreator.referenceType")}
+              </span>
+              <div className="mt-1 flex flex-col gap-1">
+                <CheckInput
+                  type="radio"
+                  name="referenceType"
+                  value={APP_CONSTANTS.REF_TYPE_RESERVATION}
+                  checked={config.referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION}
+                  onChange={handleNormalInputChange}
+                  label={APP_CONSTANTS.REF_TYPE_RESERVATION}
+                />
+                <CheckInput
+                  type="radio"
+                  name="referenceType"
+                  value={APP_CONSTANTS.REF_TYPE_AGREEMENT}
+                  checked={config.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT}
+                  onChange={handleNormalInputChange}
+                  label={APP_CONSTANTS.REF_TYPE_AGREEMENT}
+                />
+              </div>
+            </div>
           </div>
         </div>
-        <div className="mb-4">
-          <TextInput
-            type="text"
-            value={config.referenceId}
-            name="referenceId"
-            onChange={handleNormalInputChange}
-            label={t("developer.configCreator.referenceId")}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <div>
-            <SelectInput
-              value={config.lang}
-              name="lang"
-              required
-              label={t("developer.configCreator.lang")}
-              onChange={handleSelectInputChange}
-            >
-              <option>{SELECT_MENU_DEFAULT_KEY}</option>
-              {supportedLanguages.map((langItem) => (
-                <option value={langItem} key={`language-${langItem}`}>
-                  {langItem}
-                </option>
-              ))}
-            </SelectInput>
+        {/*  general application configuration  */}
+        <div className="mb-3 rounded border border-gray-100 px-4 pt-2 pb-4">
+          <span className="select-none text-base font-semibold text-gray-600">
+            {t("developer.configCreator.generalApplicationConfiguration")}
+          </span>
+          <div className="mt-4 flex flex-col gap-2 px-1">
+            <div>
+              <TextInput
+                type="number"
+                value={config.clientId}
+                name="clientId"
+                onChange={handleNormalInputChange}
+                min="0"
+                label={t("developer.configCreator.clientId")}
+                required
+              />
+            </div>
+            <div>
+              <SelectInput
+                value={config.lang}
+                name="lang"
+                required
+                label={t("developer.configCreator.lang")}
+                onChange={handleSelectInputChange}
+              >
+                <option>{SELECT_MENU_DEFAULT_KEY}</option>
+                {supportedLanguages.map((langItem) => (
+                  <option value={langItem} key={`language-${langItem}`}>
+                    {langItem}
+                  </option>
+                ))}
+              </SelectInput>
+            </div>
+            <div>
+              <TextInput
+                type="number"
+                value={config.userId}
+                name="userId"
+                onChange={handleNormalInputChange}
+                min="0"
+                label={t("developer.configCreator.userId")}
+                helperText={t("developer.configCreator.userIdHelperText")}
+              />
+            </div>
+            {/*  */}
+            <div className="mt-2 mb-2 grid grid-cols-2 gap-3">
+              <div className="col-span-2 md:col-span-1">
+                <span className="select-none text-sm font-medium text-gray-700">
+                  {t("developer.configCreator.applicationBranding")}
+                </span>
+                <CheckInput
+                  type="checkbox"
+                  name="fromRentall"
+                  checked={config.fromRentall}
+                  onChange={handleNormalInputChange}
+                  label={config.fromRentall ? "RENTALL" : "Navotar"}
+                />
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                <span className="select-none text-sm font-medium text-gray-700">
+                  {t("developer.configCreator.applicationEnvironment")}
+                </span>
+                <CheckInput
+                  type="checkbox"
+                  name="qa"
+                  checked={config.qa}
+                  onChange={handleNormalInputChange}
+                  label={config.qa ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
+                />
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                <span className="select-none text-sm font-medium text-gray-700">
+                  {t("developer.configCreator.openedDevMenu")}
+                </span>
+                <CheckInput
+                  type="checkbox"
+                  name="dev"
+                  checked={config.dev}
+                  onChange={handleNormalInputChange}
+                  label={config.dev ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
+                />
+              </div>
+            </div>
+            {/*  */}
           </div>
-        </div>
-        <div className="mb-4">
-          <TextInput
-            type="number"
-            value={config.clientId}
-            name="clientId"
-            onChange={handleNormalInputChange}
-            min="0"
-            label={t("developer.configCreator.clientId")}
-            required
-          />
         </div>
         {/*  confirmation email settings  */}
-        <div className="mb-4 rounded border border-gray-100 px-4 pt-2 pb-4">
-          <span className="select-none text-sm font-medium text-gray-700">
+        <div className="mb-3 rounded border border-gray-100 px-4 pt-2 pb-4">
+          <span className="select-none text-base font-semibold text-gray-600">
             {t("developer.configCreator.confirmationEmailSettings")}
           </span>
-          <div className="mt-2 flex flex-col gap-2 px-2">
+          <div className="mt-4 flex flex-col gap-2 px-1">
             <div>
               <TextInput
                 type="number"
@@ -328,11 +398,11 @@ const ConfigCreator: React.FC = () => {
           </div>
         </div>
         {/* application flow settings */}
-        <div className="mb-4 rounded border border-gray-100 px-4 pt-2 pb-4">
-          <span className="select-none text-sm font-medium text-gray-700">
+        <div className="mb-3 rounded border border-gray-100 px-4 pt-2 pb-4">
+          <span className="select-none text-base font-semibold text-gray-600">
             {t("developer.configCreator.applicationFlowSettings")}
           </span>
-          <div className="mt-2 flex flex-col gap-2 px-2">
+          <div className="mt-4 flex flex-col gap-2 px-1">
             <div>
               <SelectInput
                 name="flow"
@@ -395,47 +465,7 @@ const ConfigCreator: React.FC = () => {
           </div>
         </div>
 
-        {/*  */}
-        <div className="mt-4 mb-4 grid grid-cols-2 gap-3">
-          <div className="col-span-2 md:col-span-1">
-            <span className="select-none text-sm font-medium text-gray-700">
-              {t("developer.configCreator.applicationBranding")}
-            </span>
-            <CheckInput
-              type="checkbox"
-              name="fromRentall"
-              checked={config.fromRentall}
-              onChange={handleNormalInputChange}
-              label={config.fromRentall ? "RENTALL" : "Navotar"}
-            />
-          </div>
-          <div className="col-span-2 md:col-span-1">
-            <span className="select-none text-sm font-medium text-gray-700">
-              {t("developer.configCreator.applicationEnvironment")}
-            </span>
-            <CheckInput
-              type="checkbox"
-              name="qa"
-              checked={config.qa}
-              onChange={handleNormalInputChange}
-              label={config.qa ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
-            />
-          </div>
-          <div className="col-span-2 md:col-span-1">
-            <span className="select-none text-sm font-medium text-gray-700">
-              {t("developer.configCreator.openedDevMenu")}
-            </span>
-            <CheckInput
-              type="checkbox"
-              name="dev"
-              checked={config.dev}
-              onChange={handleNormalInputChange}
-              label={config.dev ? t("developer.configCreator.yes") : t("developer.configCreator.no")}
-            />
-          </div>
-        </div>
-
-        <div className="mt-6 flex w-full gap-1">
+        <div className="mt-5 flex w-full gap-1">
           <Button type="submit" className="bg-gray-300 py-2 px-4">
             {t("developer.configCreator.btnSave")}
           </Button>
