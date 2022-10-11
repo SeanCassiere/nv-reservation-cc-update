@@ -6,6 +6,7 @@ type QueryConfigState = {
   clientId: string | null;
   emailTemplateId: string | null;
   flow: string[];
+  userId?: number;
   fromRentall: boolean;
   successSubmissionScreen?: string;
   showPreSubmitSummary?: boolean;
@@ -33,6 +34,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     clientId: null,
     emailTemplateId: null,
     flow: [],
+    userId: 0,
     fromRentall: true,
     showPreSubmitSummary: false,
     stopEmailGlobalDocuments: false,
@@ -55,6 +57,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
   return {
     rawConfig: configQuery ?? "",
     clientId: config.clientId,
+    userId: config.userId ?? 0,
     responseEmailTemplateId: config.emailTemplateId,
     qa: isValueTrue(qaQuery) ? true : false,
     referenceType: agreementId ? APP_CONSTANTS.REF_TYPE_AGREEMENT : APP_CONSTANTS.REF_TYPE_RESERVATION,

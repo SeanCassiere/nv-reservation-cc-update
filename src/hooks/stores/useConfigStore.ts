@@ -13,15 +13,18 @@ type ConfigStoreType = {
   fromRentall: boolean;
   qa: boolean;
   isDevMenuOpen: boolean;
+  predefinedAdminUserId: number;
   showPreSubmitSummary: boolean;
   disableGlobalDocumentsForConfirmationEmail: boolean;
   disableEmailAttachingDriverLicense: boolean;
+
   setDevMenuState: (newState: ((value: boolean) => boolean) | boolean) => void;
   setRawQuery: (payload: { rawConfig: string; rawQueryString: string }) => void;
   setConfigValues: (payload: {
     flow: string[];
     fromRentall: boolean;
     qa: boolean;
+    predefinedAdminUserId: number;
     successSubmissionScreen?: string;
     showPreSubmitSummary: boolean;
     disableGlobalDocumentsForConfirmationEmail: boolean;
@@ -41,6 +44,7 @@ export const useConfigStore = create(
       qa: false,
       showPreSubmitSummary: false,
       isDevMenuOpen: false,
+      predefinedAdminUserId: 0,
       disableGlobalDocumentsForConfirmationEmail: false,
       disableEmailAttachingDriverLicense: false,
 
@@ -65,6 +69,7 @@ export const useConfigStore = create(
         showPreSubmitSummary,
         disableGlobalDocumentsForConfirmationEmail,
         disableEmailAttachingDriverLicense,
+        predefinedAdminUserId,
       }) {
         const filterFlow = flow.filter((flow) => !PROTECTED_FLOWS.includes(flow));
         const flowSet = new Set(filterFlow);
@@ -82,6 +87,7 @@ export const useConfigStore = create(
             ...(showPreSubmitSummary ? { showPreSubmitSummary } : {}),
             disableGlobalDocumentsForConfirmationEmail: disableGlobalDocumentsForConfirmationEmail,
             disableEmailAttachingDriverLicense: disableEmailAttachingDriverLicense,
+            predefinedAdminUserId: predefinedAdminUserId,
           },
           false,
           "setConfigValues"

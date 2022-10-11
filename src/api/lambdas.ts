@@ -6,7 +6,7 @@ const SUBMISSION_COMPLETION_URL = "/api/complete";
 
 export async function authenticateWithLambda(opts: { clientId: string; qa: boolean }) {
   const { referenceType, referenceIdentifier, responseTemplateId } = useRuntimeStore.getState();
-  const { disableGlobalDocumentsForConfirmationEmail } = useConfigStore.getState();
+  const { disableGlobalDocumentsForConfirmationEmail, predefinedAdminUserId } = useConfigStore.getState();
 
   const params = new URLSearchParams();
   if (opts.qa) {
@@ -27,6 +27,7 @@ export async function authenticateWithLambda(opts: { clientId: string; qa: boole
     referenceIdentifier,
     responseTemplateId,
     disableGlobalDocumentsForConfirmationEmail,
+    userId: predefinedAdminUserId,
   };
 }
 

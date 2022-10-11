@@ -24,6 +24,7 @@ export function devConfigToQueryUrl(config: DevConfigObject) {
   // setting the config
   const hashObj = {
     clientId: Number(config.clientId) ?? Number(useRuntimeStore.getState().clientId),
+    ...(config.userId > 0 ? { userId: Number(config.userId) } : {}),
     emailTemplateId: Number(config.emailTemplateId) ?? Number(useRuntimeStore.getState().responseTemplateId),
     flow: config.flow ?? useConfigStore.getState().flow,
     ...(!useConfigStore.getState().fromRentall || !config.fromRentall ? { fromRentall: false } : {}),
