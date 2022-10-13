@@ -18,7 +18,6 @@
       "responseTemplateId": "Response Email Template ID",
       "applicationFlows": "Flows",
       "applicationSuccessScreen": "Success Screen",
-      "applicationBranding": "Branding?",
       "applicationEnvironment": "Using QA?",
       "openedDevMenu": "Dev menu opened at start?",
       "showPreSubmitSummary": "Show form summary screen?",
