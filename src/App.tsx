@@ -18,7 +18,6 @@ const App = () => {
   const { t, i18n } = useTranslation();
   document.body.dir = i18n.dir();
 
-  const isUsingRentall = useConfigStore((s) => s.fromRentall);
   const isDevOpenMain = useConfigStore((s) => s.isDevMenuOpen);
   const setDevOpenState = useConfigStore((s) => s.setDevMenuState);
 
@@ -62,12 +61,12 @@ const App = () => {
             <p className="text-center text-sm">
               {t("footer.poweredBy")}&nbsp;
               <AnchorLink
-                href={isUsingRentall ? "https://rentallsoftware.com" : "https://navotar.com"}
+                href="https://rentallsoftware.com"
                 target="_blank"
                 rel="noreferrer"
                 className="text-sm text-indigo-600"
               >
-                {isUsingRentall ? "RENTALL" : "Navotar"}
+                RENTALL
               </AnchorLink>
             </p>
           </div>

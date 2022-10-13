@@ -88,7 +88,6 @@ const ApplicationController: React.FC = () => {
       setRawQuery({ rawConfig: data.rawConfig, rawQueryString: window.location.search });
       setConfigStoreValues({
         flow: data.flow,
-        fromRentall: data.fromRentall,
         qa: data.qa,
         predefinedAdminUserId: data.userId,
         successSubmissionScreen: data.successSubmissionScreen,

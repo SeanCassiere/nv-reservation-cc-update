@@ -26,7 +26,6 @@ export type DevConfigObject = {
   emailTemplateId: string;
   userId: number;
   flow: string[];
-  fromRentall: boolean;
   successSubmissionScreen: string;
   showPreSubmitSummary: boolean;
   stopEmailGlobalDocuments: boolean;
@@ -43,7 +42,6 @@ const outsideInitialConfigState: DevConfigObject = {
   userId: 0,
   emailTemplateId: "0",
   flow: [ALL_SCREEN_FLOWS[0].value],
-  fromRentall: true,
   showPreSubmitSummary: false,
   successSubmissionScreen: APP_CONSTANTS.SUCCESS_DEFAULT,
   stopEmailGlobalDocuments: false,
@@ -91,7 +89,6 @@ const ConfigCreator: React.FC = () => {
   const { referenceIdentifier, referenceType, clientId, responseTemplateId } = useRuntimeStore();
   const {
     successSubmissionScreen,
-    fromRentall,
     flow,
     qa,
     rawQueryString,
@@ -164,7 +161,6 @@ const ConfigCreator: React.FC = () => {
       userId: predefinedAdminUserId,
       emailTemplateId: `${responseTemplateId || 0}`,
       flow: [...flow],
-      fromRentall: fromRentall,
       successSubmissionScreen: `${successSubmissionScreen}`,
       showPreSubmitSummary: showPreSubmitSummary ?? outsideInitialConfigState.showPreSubmitSummary,
       stopEmailGlobalDocuments: disableGlobalDocumentsForConfirmationEmail,
@@ -178,7 +174,6 @@ const ConfigCreator: React.FC = () => {
     clientId,
     predefinedAdminUserId,
     flow,
-    fromRentall,
     qa,
     rawQueryString,
     referenceIdentifier,
@@ -308,18 +303,6 @@ const ConfigCreator: React.FC = () => {
             </div>
             {/*  */}
             <div className="mt-2 mb-2 grid grid-cols-2 gap-3">
-              <div className="col-span-2 md:col-span-1">
-                <span className="select-none text-sm font-medium text-gray-700">
-                  {t("developer.configCreator.applicationBranding")}
-                </span>
-                <CheckInput
-                  type="checkbox"
-                  name="fromRentall"
-                  checked={config.fromRentall}
-                  onChange={handleNormalInputChange}
-                  label={config.fromRentall ? "RENTALL" : "Navotar"}
-                />
-              </div>
               <div className="col-span-2 md:col-span-1">
                 <span className="select-none text-sm font-medium text-gray-700">
                   {t("developer.configCreator.applicationEnvironment")}
