@@ -10,7 +10,6 @@ type ConfigStoreType = {
   successSubmissionScreen: string;
   rawConfig: string;
   rawQueryString: string;
-  fromRentall: boolean;
   qa: boolean;
   isDevMenuOpen: boolean;
   predefinedAdminUserId: number;
@@ -22,7 +21,6 @@ type ConfigStoreType = {
   setRawQuery: (payload: { rawConfig: string; rawQueryString: string }) => void;
   setConfigValues: (payload: {
     flow: string[];
-    fromRentall: boolean;
     qa: boolean;
     predefinedAdminUserId: number;
     successSubmissionScreen?: string;
@@ -40,7 +38,6 @@ export const useConfigStore = create(
       successSubmissionScreen: APP_CONSTANTS.SUCCESS_DEFAULT,
       rawConfig: "",
       rawQueryString: "",
-      fromRentall: true,
       qa: false,
       showPreSubmitSummary: false,
       isDevMenuOpen: false,
@@ -63,7 +60,6 @@ export const useConfigStore = create(
 
       setConfigValues({
         flow,
-        fromRentall,
         qa,
         successSubmissionScreen,
         showPreSubmitSummary,
@@ -79,7 +75,6 @@ export const useConfigStore = create(
         }
         set(
           {
-            fromRentall: fromRentall === false ? false : true,
             qa: qa === true ? true : false,
             ...(flow ? { flow: Array.from(flowSet) } : {}),
             ...(flow ? { fullFlow: Array.from(fullFlowSet) } : {}),

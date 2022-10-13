@@ -27,7 +27,6 @@ export function devConfigToQueryUrl(config: DevConfigObject) {
     ...(config.userId > 0 ? { userId: Number(config.userId) } : {}),
     emailTemplateId: Number(config.emailTemplateId) ?? Number(useRuntimeStore.getState().responseTemplateId),
     flow: config.flow ?? useConfigStore.getState().flow,
-    ...(!useConfigStore.getState().fromRentall || !config.fromRentall ? { fromRentall: false } : {}),
     successSubmissionScreen: config.successSubmissionScreen ?? useConfigStore.getState().successSubmissionScreen,
     ...(useConfigStore.getState().showPreSubmitSummary || config.showPreSubmitSummary
       ? { showPreSubmitSummary: true }

@@ -18,7 +18,6 @@ interface Props {
 const ErrorSubmission: React.FC<Props> = (props) => {
   const { t } = useTranslation();
 
-  const isUsingRentall = useConfigStore((s) => s.fromRentall);
   const rawInitUrlQueryString = useConfigStore((s) => s.rawQueryString);
 
   const originUrl = useMemo(() => {
@@ -33,12 +32,12 @@ const ErrorSubmission: React.FC<Props> = (props) => {
       <p className="mt-2">
         {t("badSubmission.report")}&nbsp;
         <AnchorLink
-          href={isUsingRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
+          href="mailto:support@rentallsoftware.com"
           target="_blank"
           rel="noreferrer"
           className="text-indigo-600"
         >
-          {isUsingRentall ? "support@rentallsoftware.com" : "support@navotar.com"}
+          {"support@rentallsoftware.com"}
         </AnchorLink>
         .
       </p>

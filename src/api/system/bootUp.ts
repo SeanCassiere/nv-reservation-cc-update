@@ -7,7 +7,6 @@ type QueryConfigState = {
   emailTemplateId: string | null;
   flow: string[];
   userId?: number;
-  fromRentall: boolean;
   successSubmissionScreen?: string;
   showPreSubmitSummary?: boolean;
   stopEmailGlobalDocuments?: boolean;
@@ -35,7 +34,6 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     emailTemplateId: null,
     flow: [],
     userId: 0,
-    fromRentall: true,
     showPreSubmitSummary: false,
     stopEmailGlobalDocuments: false,
     stopAttachingDriverLicenseFiles: false,
@@ -63,7 +61,6 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     referenceType: agreementId ? APP_CONSTANTS.REF_TYPE_AGREEMENT : APP_CONSTANTS.REF_TYPE_RESERVATION,
     referenceId: reservationId ? reservationId : agreementId ? agreementId : "",
     flow: config.flow.reduce(normalizeFlowScreens, []),
-    fromRentall: config.fromRentall,
     showPreSubmitSummary: config.showPreSubmitSummary,
     successSubmissionScreen: config.successSubmissionScreen,
     stopEmailGlobalDocuments: config.stopEmailGlobalDocuments ?? false,

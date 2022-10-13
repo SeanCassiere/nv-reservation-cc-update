@@ -56,8 +56,7 @@ Should you wish to manually create your own config string, you will need to crea
 {
   "clientId": 1013,
   "emailTemplateId": 7388,
-  "flow": ["CreditCardForm"],
-  "fromRentall": true
+  "flow": ["CreditCardForm"]
 }
 
 // Example Base64 --> eyJjbGllbnRJZCI6MTAxMywiZW1haWxUZW1wbGF0ZUlkIjo3Mzg4LCJmbG93IjpbIkRlZmF1bHQvQ3JlZGl0Q2FyZEZvcm0iXSwiZnJvbVJlbnRhbGwiOnRydWV9
@@ -72,7 +71,6 @@ These are the parameters supported in the configuration object.
 | userId                          | number?    | Existing RENTALL/Navotar User ID to be used when accessing information from the API.<br /> **_Important_**: Please note, that this user's ID must have the necessary privileges in their account. <br /><br /> **_Default_** `0`                                 |
 | flow                            | string[]?  | Ordered array of the screens/views to be gone through. See all the [available flow screens](#available-flow-screens). <br /><br /> **_Default_** `["CreditCardForm"]`                                                                                            |
 | successSubmissionScreen         | string?    | The key of the success screen to be shown to the user once the details have been successfully submitted. See all the [available success screens](#available-success-screens). <br /><br /> **_Default_** `"SuccessSubmission"`                                   |
-| fromRentall                     | boolean?   | Boolean value indicating if this user's primary account is RENTALL or Navotar. Based on this the link at the bottom of the page will be changed, along with the support email. <br /><br /> **_Default_** `true`                                                 |
 | showPreSubmitSummary            | boolean?   | Boolean value indicating whether a screen is shown to the user prior to submission allowing them to go back and edit their entered details. <br /><br /> **_Default_** `false`                                                                                   |
 | stopEmailGlobalDocuments        | boolean?   | Boolean value, when if `true`, it will prevent attaching any configured global documents for the confirmation email template. <br /><br /> **_Default_** `false`                                                                                                 |
 | stopAttachingDriverLicenseFiles | boolean?   | Boolean value, when if `true`, it will prevent attaching the uploaded driver's license images in the confirmation email. <br /><br /> **_Default_** `false`                                                                                                      |

@@ -11,20 +11,18 @@ const NotFoundImgUri = "/assets/undraw_page_not_found_su7k.svg";
 const NotAuthorized: React.FC = () => {
   const { t } = useTranslation();
 
-  const isUsingRentall = useConfigStore((s) => s.fromRentall);
-
   return (
     <CardLayout image={NotFoundImgUri} title={t("queryMissing.title")}>
       <p>{t("queryMissing.message")}</p>
       <p className="mt-2">
         {t("queryMissing.report")}&nbsp;
         <AnchorLink
-          href={isUsingRentall ? "mailto:support@rentallsoftware.com" : "mailto:support@navotar.com"}
+          href="mailto:support@rentallsoftware.com"
           target="_blank"
           rel="noreferrer"
           className="text-indigo-600"
         >
-          {isUsingRentall ? "support@rentallsoftware.com" : "support@navotar.com"}
+          {"support@rentallsoftware.com"}
         </AnchorLink>
       </p>
     </CardLayout>
