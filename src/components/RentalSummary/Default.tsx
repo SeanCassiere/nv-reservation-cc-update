@@ -8,7 +8,7 @@ import { useRentalSummaryQuery } from "../../hooks/network/useRentalSummary";
 type RowItemProps = {
   label: string;
   value: number;
-  currencyAmount: number | string;
+  currencyAmount: any;
   highlight?: boolean;
   isVisible: boolean;
   isRed?: boolean;

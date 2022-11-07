@@ -21,20 +21,20 @@ export const useCreditCardLogic = (initialData: StateStorage) => {
   const schema = React.useMemo(
     () =>
       yup.object().shape({
-        name: yup.string().required(t("forms.creditCard.errors.name")),
+        name: yup.string().required(t("forms.creditCard.errors.name") as unknown as string),
         type: yup.string().required(),
         number: yup
           .string()
-          .test("test-number", t("forms.creditCard.errors.cardNumber"), (value) =>
+          .test("test-number", t("forms.creditCard.errors.cardNumber") as unknown as string, (value) =>
             Payment.fns.validateCardNumber(`${value}`)
           )
-          .required(t("forms.creditCard.errors.cardNumber")),
-        cvv: yup.string().required(t("forms.creditCard.errors.cvv")),
+          .required(t("forms.creditCard.errors.cardNumber") as unknown as string),
+        cvv: yup.string().required(t("forms.creditCard.errors.cvv") as unknown as string),
         monthYearExpiry: yup
           .string()
           .test("test", "Enter a valid expiration date", (value) => Payment.fns.validateCardExpiry(`${value}`))
           .required(),
-        billingZip: yup.string().required(t("forms.creditCard.errors.billingZip")),
+        billingZip: yup.string().required(t("forms.creditCard.errors.billingZip") as unknown as string),
       }),
     [t]
   );
