@@ -43,7 +43,7 @@ const AppRoutes: React.FC = () => {
             <ErrorSubmission
               msg={t("badSubmission.message")}
               tryAgainButton
-              tryAgainButtonText={t("badSubmission.btnRetrySubmission", {})}
+              tryAgainButtonText={t("badSubmission.btnRetrySubmission", {}) as string}
             />
           }
         />

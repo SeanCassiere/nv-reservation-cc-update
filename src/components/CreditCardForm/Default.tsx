@@ -61,7 +61,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
       </div>
       <div className="col-span-2 md:col-span-1">
         <TextInput
-          placeholder={t("forms.creditCard.labels.placeholders.expMonthYear")}
+          placeholder={t("forms.creditCard.labels.placeholders.expMonthYear") as string}
           name="monthYearExpiry"
           value={formData.monthYearExpiry}
           onChange={handleChange}
@@ -96,7 +96,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
       </div>
       <div className="col-span-2">
         <TextInput
-          placeholder={t("forms.creditCard.labels.placeholders.name")}
+          placeholder={t("forms.creditCard.labels.placeholders.name") as string}
           name="name"
           value={formData.name}
           onChange={handleChange}
@@ -112,7 +112,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
       </div>
       <div className="col-span-2">
         <TextInput
-          placeholder={t("forms.creditCard.labels.placeholders.zipCode")}
+          placeholder={t("forms.creditCard.labels.placeholders.zipCode") as string}
           name="billingZip"
           value={formData.billingZip}
           onChange={handleChange}
