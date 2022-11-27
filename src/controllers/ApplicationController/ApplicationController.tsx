@@ -113,16 +113,20 @@ const ApplicationController: React.FC = () => {
       )}
       {bootStatus === "core_details_fetch_failed" && (
         <ErrorSubmission
-          title={t("coreDetailsFetchError.title", {
-            context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
-          })}
+          title={
+            t("coreDetailsFetchError.title", {
+              context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+            }) as string
+          }
           msg={t("coreDetailsFetchError.message", {
             context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
           })}
           tryAgainButton
-          tryAgainButtonText={t("coreDetailsFetchError.btnRetrySearch", {
-            context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
-          })}
+          tryAgainButtonText={
+            t("coreDetailsFetchError.btnRetrySearch", {
+              context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
+            }) as string
+          }
         />
       )}
       {bootStatus === "loaded" && (
