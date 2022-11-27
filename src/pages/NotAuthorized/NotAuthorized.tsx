@@ -4,8 +4,6 @@ import { useTranslation } from "react-i18next";
 import CardLayout from "../../layouts/Card";
 import AnchorLink from "../../components/Elements/Default/AnchorLink";
 
-import { useConfigStore } from "../../hooks/stores/useConfigStore";
-
 const NotFoundImgUri = "/assets/undraw_page_not_found_su7k.svg";
 
 const NotAuthorized: React.FC = () => {
