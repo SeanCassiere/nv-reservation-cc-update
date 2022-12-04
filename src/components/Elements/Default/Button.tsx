@@ -1,95 +1,114 @@
 import React from "react";
 import classNames from "classnames";
+import { cva, VariantProps } from "class-variance-authority";
 
-interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+const buttonStyles = cva(
+  [
+    "inline-flex",
+    "items-center",
+    "justify-center",
+    "border",
+    "border-transparent",
+    "rounded",
+    "font-medium",
+    "focus:outline-none",
+    "focus:ring-2",
+    "focus:ring-offset-2",
+    "transition-colors",
+    "disabled:cursor-not-allowed",
+  ],
+  {
+    variants: {
+      color: {
+        primary: ["focus:ring-indigo-700"],
+        danger: ["focus:ring-red-600"],
+      },
+      variant: {
+        filled: [],
+        muted: [],
+        text: [],
+      },
+      size: {
+        sm: ["py-2", "px-3", "text-sm"],
+        md: ["py-2", "px-4", "text-base"],
+        lg: ["py-2", "px-4", "text-lg"],
+      },
+      fullWidth: {
+        true: ["w-full"],
+        false: [],
+      },
+      uppercase: {
+        true: ["uppercase"],
+        false: [],
+      },
+    },
+    compoundVariants: [
+      // color=danger
+      {
+        variant: "text",
+        color: "danger",
+        className: "text-red-600 disabled:text-red-400",
+      },
+      {
+        variant: "muted",
+        color: "danger",
+        className: "text-red-600 bg-red-100 hover:bg-red-200 disabled:bg-red-50 disabled:text-red-400",
+      },
+      {
+        variant: "filled",
+        color: "danger",
+        className: "text-white bg-red-500 hover:bg-red-600 disabled:bg-red-300",
+      },
+      // color=primary
+      {
+        variant: "text",
+        color: "primary",
+        className: "text-indigo-600 disabled:text-indigo-400",
+      },
+      {
+        variant: "muted",
+        color: "primary",
+        className: "text-indigo-700 bg-indigo-100 hover:bg-indigo-200 disabled:bg-indigo-100 disabled:text-indigo-400",
+      },
+      {
+        variant: "filled",
+        color: "primary",
+        className: "text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400",
+      },
+    ],
+    defaultVariants: {
+      color: "primary",
+      uppercase: false,
+      size: "md",
+      fullWidth: true,
+      variant: "filled",
+    },
+  }
+);
+
+interface CustomButtonProps
+  extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   loading?: boolean;
-  color?: "primary" | "secondary" | "success" | "danger" | "warning";
-  variant?: "filled" | "muted" | "text";
-  fullWidth?: boolean;
-  size?: "sm" | "md" | "lg";
-  uppercase?: boolean;
 }
 
-const Button: React.FC<Props> = ({
+type ButtonProps = CustomButtonProps & VariantProps<typeof buttonStyles>;
+
+const Button: React.FC<ButtonProps> = ({
   children,
   className,
-  color = "primary",
-  variant = "filled",
-  fullWidth = true,
-  size = "md",
-  uppercase = false,
   loading = false,
   type = "button",
+  color,
+  variant,
+  fullWidth,
+  size,
+  uppercase,
   ...buttonProps
 }) => {
   return (
     <button
       type={type}
-      className={classNames(
-        "inline-flex",
-        "items-center",
-        "justify-center",
-        "border",
-        "border-transparent",
-        "rounded",
-        "font-medium",
-        "focus:outline-none",
-        "focus:ring-2",
-        "focus:ring-offset-2",
-        "transition-colors",
-        "disabled:cursor-not-allowed",
-        { "py-2": size === "lg", "px-4": size === "lg", "text-lg": size === "lg" },
-        { "py-2": size === "md", "px-4": size === "md", "text-base": size === "md" },
-        { "py-2": size === "sm", "px-3": size === "sm", "text-sm": size === "sm" },
-        { "w-full": fullWidth, uppercase: uppercase },
-        // color='primary'
-        {
-          // variant="filled"
-          "text-white": color === "primary" && variant === "filled",
-          "bg-indigo-600": color === "primary" && variant === "filled",
-          "hover:bg-indigo-700": color === "primary" && variant === "filled",
-          "disabled:bg-indigo-400": color === "primary" && variant === "filled",
-          // shared across color='primary'
-          "focus:ring-indigo-700": color === "primary",
-        },
-        {
-          // variant="muted"
-          "text-indigo-700": color === "primary" && variant === "muted",
-          "bg-indigo-100": color === "primary" && variant === "muted",
-          "hover:bg-indigo-200": color === "primary" && variant === "muted",
-          "disabled:bg-indigo-100": color === "primary" && variant === "muted",
-          "disabled:text-indigo-400": color === "primary" && variant === "muted",
-        },
-        {
-          // variant="text"
-          "text-indigo-700": color === "primary" && variant === "text",
-          "disabled:text-indigo-400": color === "primary" && variant === "text",
-        },
-        // color='danger'
-        {
-          // variant="filled"
-          "text-white": color === "danger" && variant === "filled",
-          "bg-red-500": color === "danger" && variant === "filled",
-          "hover:bg-red-600": color === "danger" && variant === "filled",
-          "disabled:bg-red-300": color === "danger" && variant === "filled",
-          // shared across color='danger'
-          "focus:ring-red-600": color === "danger",
-        },
-        {
-          // variant="muted"
-          "text-red-600": color === "danger" && variant === "muted",
-          "bg-red-100": color === "danger" && variant === "muted",
-          "hover:bg-red-200": color === "danger" && variant === "muted",
-          "disabled:bg-red-50": color === "danger" && variant === "muted",
-          "disabled:text-red-400": color === "danger" && variant === "muted",
-        },
-        {
-          // variant="text"
-          "text-red-600": color === "danger" && variant === "text",
-          "disabled:text-red-400": color === "danger" && variant === "text",
-        },
-        className
-      )}
+      className={classNames(buttonStyles({ color, variant, fullWidth, size, uppercase }), className)}
       {...buttonProps}
     >
       {loading && <LoadingSpinner />}
