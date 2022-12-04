@@ -1,44 +1,34 @@
 import React from "react";
 import classNames from "classnames";
+import { cva, VariantProps } from "class-variance-authority";
 
 import { ExclamationIcon, SuccessIcon } from "../../Icons";
 
-type Props = {
-  children?: React.ReactNode;
-  fullWidth?: boolean;
-  variant?: "success" | "warning" | "danger";
-  className?: string;
-};
+const alertStyles = cva(["my-2", "p-4", "border-l-4", "rounded", "text-sm", "font-medium"], {
+  variants: {
+    fullWidth: { true: ["w-full"], false: [] },
+    variant: {
+      success: ["bg-yellow-50", "text-yellow-500", "border-yellow-500"],
+      warning: ["bg-green-50", "text-green-600", "border-green-600"],
+      danger: ["bg-red-50", "text-red-600", "border-red-600"],
+    },
+  },
+  defaultVariants: {
+    fullWidth: false,
+    variant: "warning",
+  },
+});
 
-const Alert: React.FC<Props> = ({ children, fullWidth = false, variant = "warning", className }) => {
+interface CustomAlertProps {
+  children?: React.ReactNode;
+  className?: string;
+}
+
+type AlertProps = CustomAlertProps & VariantProps<typeof alertStyles>;
+
+const Alert: React.FC<AlertProps> = ({ children, fullWidth, variant, className }) => {
   return (
-    <div
-      className={classNames(
-        "my-2",
-        "p-4",
-        "border-l-4",
-        "rounded",
-        "text-sm",
-        "font-medium",
-        { "w-full": fullWidth },
-        {
-          "bg-yellow-50": variant === "warning",
-          "text-yellow-500": variant === "warning",
-          "border-yellow-500": variant === "warning",
-        },
-        {
-          "bg-green-50": variant === "success",
-          "text-green-600": variant === "success",
-          "border-green-600": variant === "success",
-        },
-        {
-          "bg-red-50": variant === "danger",
-          "text-red-600": variant === "danger",
-          "border-red-600": variant === "danger",
-        },
-        className
-      )}
-    >
+    <div className={classNames(alertStyles({ fullWidth, variant }), className)}>
       <div className="flex">
         <div className="flex-shrink-0">
           {variant === "danger" && <ExclamationIcon />}
