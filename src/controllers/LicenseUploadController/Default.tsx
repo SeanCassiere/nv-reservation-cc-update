@@ -121,7 +121,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
             <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.frontImage.title")}</h2>
             <div>
               {noFrontImageError && (
-                <Alert variant="danger" fullWidth>
+                <Alert color="danger" fullWidth>
                   {t("forms.licenseUpload.frontImage.notSelected")}
                 </Alert>
               )}
@@ -155,7 +155,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
             <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.backImage.title")}</h2>
             <div>
               {noBackImageError && (
-                <Alert variant="danger" fullWidth>
+                <Alert color="danger" fullWidth>
                   {t("forms.licenseUpload.backImage.notSelected")}
                 </Alert>
               )}

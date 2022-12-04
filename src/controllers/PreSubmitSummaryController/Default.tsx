@@ -28,7 +28,7 @@ const PreSubmitSummaryControllerDefault: React.FC = () => {
   return (
     <CardLayout title={t("forms.formsSummary.title")} subtitle={t("forms.formsSummary.message")}>
       <div className="mt-4">
-        {isEmpty && <Alert variant="warning">{t("forms.formsSummary.noData")}</Alert>}
+        {isEmpty && <Alert color="warning">{t("forms.formsSummary.noData")}</Alert>}
         {isCreditCard && (
           <CreditCardFormSummary creditCard={creditCardInfo} editFunc={() => goToEditAPage("creditCard")} />
         )}

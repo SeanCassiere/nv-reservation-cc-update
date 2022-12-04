@@ -130,7 +130,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
         })}
       >
         <div className="d-grid mt-3">
-          {showRequiredMessage && <Alert variant="danger">{t("forms.rentalSignature.signatureRequired")}</Alert>}
+          {showRequiredMessage && <Alert color="danger">{t("forms.rentalSignature.signatureRequired")}</Alert>}
           <SignatureCanvasDefault
             onSignature={handleSettingSignatureUrl}
             initialDataURL={initialSignatureUrl !== "" ? initialSignatureUrl : undefined}
