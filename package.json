@@ -32,7 +32,7 @@
     "react-dropzone": "^14.2.3",
     "react-error-boundary": "^3.1.4",
     "react-i18next": "^12.1.1",
-    "react-router-dom": "^6.4.4",
+    "react-router-dom": "^6.6.1",
     "react-signature-canvas": "^1.0.6",
     "util": "^0.12.5",
     "yup": "^0.32.11",
