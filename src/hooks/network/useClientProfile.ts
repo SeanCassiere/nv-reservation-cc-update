@@ -5,5 +5,9 @@ export const useClientProfileQuery = (
   { clientId }: { clientId: string | number },
   queryOpts?: QueryOptions<FetchClientProfile>
 ) => {
-  return useQuery(["client", "profile"], () => fetchClientProfile({ clientId }), queryOpts);
+  return useQuery({
+    queryKey: ["client", "profile"],
+    queryFn: async () => fetchClientProfile({ clientId }),
+    ...queryOpts,
+  });
 };

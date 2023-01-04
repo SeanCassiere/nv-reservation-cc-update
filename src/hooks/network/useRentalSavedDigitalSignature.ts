@@ -5,9 +5,9 @@ export const useRentalSavedDigitalSignature = <T = Awaited<ReturnType<typeof rel
   opts: { referenceType: string; referenceId: string },
   queryOpts?: Omit<UseQueryOptions<T>, "queryKey" | "queryFn" | "initialData">
 ) => {
-  return useQuery<T>(
-    ["rental", "digital-signature"],
-    async () => (await reloadSavedDigitalSignatureBase64Url(opts)) as unknown as T,
-    queryOpts
-  );
+  return useQuery<T>({
+    queryKey: ["rental", "digital-signature"],
+    queryFn: async () => (await reloadSavedDigitalSignatureBase64Url(opts)) as unknown as T,
+    ...queryOpts,
+  });
 };

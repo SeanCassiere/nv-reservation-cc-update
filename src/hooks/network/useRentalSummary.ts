@@ -13,14 +13,14 @@ export const useRentalSummaryQuery = (
   },
   queryOpts?: QueryOptions<SummaryCharges>
 ) => {
-  return useQuery(
-    ["rental", "summary-of-charges"],
-    () =>
+  return useQuery({
+    queryKey: ["rental", "summary-of-charges"],
+    queryFn: async () =>
       fetchRentalSummary({
         clientId: clientId,
         referenceId: referenceId,
         referenceType: referenceType.trim().toLowerCase() === "agreement" ? "Agreement" : "Reservation",
       }),
-    queryOpts
-  );
+    ...queryOpts,
+  });
 };

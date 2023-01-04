@@ -46,7 +46,9 @@ const PostFormDataControllerDefault: React.FC = () => {
     referenceId: referenceId ?? 0,
   });
 
-  const { mutate: markCompletionStatus } = useMutation(["submission", "completed"], postCompletionLambda, {
+  const { mutate: markCompletionStatus } = useMutation({
+    mutationKey: ["submission", "completed"],
+    mutationFn: postCompletionLambda,
     onSuccess: () => {
       navigate("/success", { replace: true, state: { from: location } });
       setSubmissionCompleteState(true);
@@ -54,16 +56,18 @@ const PostFormDataControllerDefault: React.FC = () => {
     onError: () => navigate("/error", { replace: true, state: { from: location } }),
   });
 
-  const { mutate: sendConfirmationEmail } = useMutation(["submission", "confirmation-email"], postConfirmationEmail, {
+  const { mutate: sendConfirmationEmail } = useMutation({
+    mutationKey: ["submission", "confirmation-email"],
+    mutationFn: postConfirmationEmail,
     onSuccess: () => {
       markCompletionStatus(getOpsForCompleteStatus("success"));
     },
     onError: () => markCompletionStatus(getOpsForCompleteStatus("failed")),
   });
 
-  useQuery(
-    ["submission", "form-data"],
-    () =>
+  useQuery({
+    queryKey: ["submission", "form-data"],
+    queryFn: async () =>
       postFormDataToApi({
         clientId: clientId ?? 0,
         creditCard: creditCardState,
@@ -77,37 +81,36 @@ const PostFormDataControllerDefault: React.FC = () => {
           stopAttachingDriverLicenseFiles: isDriverLicenseAttachmentsStopped,
         },
       }),
-    {
-      onSuccess: (data) => {
-        if (responseTemplateId && confirmationEmail && confirmationEmail?.dataUrl) {
-          const dataUrl = confirmationEmail.dataUrl;
-          setCurrentMessage(t("appStatusMessages.sendingConfirmationEmail"));
-          sendConfirmationEmail({
-            dataUrl,
-            clientId: Number(clientId),
-            userId: adminUserId,
-            referenceId: Number(referenceId),
-            referenceType,
-            subject: confirmationEmail.subject,
-            toEmails: confirmationEmail.toList,
-            ccEmails: confirmationEmail.ccList,
-            templateId: confirmationEmail.templateId,
-            templateTypeId: confirmationEmail.templateTypeId,
-            fromEmail: confirmationEmail.fromEmail,
-            fromName: confirmationEmail.fromName,
-            globalDocuments: isGlobalDocumentsStopped === false && fetchedGlobalDocuments ? fetchedGlobalDocuments : [],
-            attachments: data.oneOffAttachmentsToUpload,
-          });
-          return;
-        }
-        markCompletionStatus(getOpsForCompleteStatus("success"));
-      },
-      onError: () => markCompletionStatus(getOpsForCompleteStatus("failed")),
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      retry: false,
-    }
-  );
+
+    onSuccess: (data) => {
+      if (responseTemplateId && confirmationEmail && confirmationEmail?.dataUrl) {
+        const dataUrl = confirmationEmail.dataUrl;
+        setCurrentMessage(t("appStatusMessages.sendingConfirmationEmail"));
+        sendConfirmationEmail({
+          dataUrl,
+          clientId: Number(clientId),
+          userId: adminUserId,
+          referenceId: Number(referenceId),
+          referenceType,
+          subject: confirmationEmail.subject,
+          toEmails: confirmationEmail.toList,
+          ccEmails: confirmationEmail.ccList,
+          templateId: confirmationEmail.templateId,
+          templateTypeId: confirmationEmail.templateTypeId,
+          fromEmail: confirmationEmail.fromEmail,
+          fromName: confirmationEmail.fromName,
+          globalDocuments: isGlobalDocumentsStopped === false && fetchedGlobalDocuments ? fetchedGlobalDocuments : [],
+          attachments: data.oneOffAttachmentsToUpload,
+        });
+        return;
+      }
+      markCompletionStatus(getOpsForCompleteStatus("success"));
+    },
+    onError: () => markCompletionStatus(getOpsForCompleteStatus("failed")),
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    retry: false,
+  });
 
   return <LoadingSubmission title={currentMessage} />;
 };
