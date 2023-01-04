@@ -41,7 +41,9 @@ const ApplicationController: React.FC = () => {
 
   const [bootStatus, setBootStatus] = useState<BootStatus>("authenticating");
 
-  const { mutate: callInitDataFetch } = useMutation(["app-init-details"], initDataFetch, {
+  const { mutate: callInitDataFetch } = useMutation({
+    mutationKey: ["app-init-details"],
+    mutationFn: initDataFetch,
     onSuccess: (data) => {
       setRuntimeReferenceId(data.referenceId);
       setRuntimeConfirmationEmail(data.confirmationEmail);
@@ -54,7 +56,9 @@ const ApplicationController: React.FC = () => {
     },
   });
 
-  const { mutate: authorizeApp } = useMutation(["app-authorization"], authenticateWithLambda, {
+  const { mutate: authorizeApp } = useMutation({
+    mutationKey: ["app-authorization"],
+    mutationFn: authenticateWithLambda,
     onSuccess: (data) => {
       setAuthValues(data);
       callInitDataFetch({
@@ -75,7 +79,9 @@ const ApplicationController: React.FC = () => {
     error: bootError,
     isError: isBootError,
     isLoading: isBootLoading,
-  } = useQuery(["boot-sequence"], async () => bootUp({ windowQueryString: window.location.search }), {
+  } = useQuery({
+    queryKey: ["boot-sequence"],
+    queryFn: async () => bootUp({ windowQueryString: window.location.search }),
     enabled: true,
     refetchOnWindowFocus: false,
     refetchIntervalInBackground: false,
