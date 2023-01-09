@@ -22,7 +22,7 @@ export async function logAction({ loggerUri, loggerServiceId }: LoggerAuthType, 
   };
 
   return await axios
-    .post(`${loggerUri}/api/services/${loggerServiceId}/logs`, body)
+    .post(`${loggerUri}/api/service/${loggerServiceId}/log`, body)
     .then((res) => {
       return { success: true, data: res.data };
     })
