@@ -73,7 +73,7 @@ export const useConfigStore = create(
         if (showPreSubmitSummary) {
           fullFlowSet.add(APP_CONSTANTS.FLOW_FORMS_SUMMARY);
         }
-        console.log("flow", flow);
+
         set(
           {
             qa: qa === true ? true : false,
