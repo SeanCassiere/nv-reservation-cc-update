@@ -73,11 +73,12 @@ export const useConfigStore = create(
         if (showPreSubmitSummary) {
           fullFlowSet.add(APP_CONSTANTS.FLOW_FORMS_SUMMARY);
         }
+        console.log("flow", flow);
         set(
           {
             qa: qa === true ? true : false,
-            ...(flow ? { flow: Array.from(flowSet) } : {}),
-            ...(flow ? { fullFlow: Array.from(fullFlowSet) } : {}),
+            ...(flow && flow.length > 0 ? { flow: Array.from(flowSet) } : {}),
+            ...(flow && flow.length > 0 ? { fullFlow: Array.from(fullFlowSet) } : {}),
             ...(successSubmissionScreen ? { successSubmissionScreen } : {}),
             ...(showPreSubmitSummary ? { showPreSubmitSummary } : {}),
             disableGlobalDocumentsForConfirmationEmail: disableGlobalDocumentsForConfirmationEmail,
