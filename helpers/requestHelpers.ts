@@ -14,4 +14,5 @@ export const isValueTrue = (value: string | undefined | null | boolean): boolean
 
 export const responseHeaders = {
   "Content-Type": "application/json",
+  "Cache-Control": "no-store",
 };
