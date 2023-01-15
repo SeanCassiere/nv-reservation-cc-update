@@ -3,14 +3,14 @@ import { APP_CONSTANTS, COMPAT_KEYS } from "../../utils/constants";
 import { base64Decode } from "../../utils/base64";
 
 type QueryConfigState = {
-  clientId: string | null;
-  emailTemplateId: string | null;
+  clientid: string | null;
+  emailtemplateid: string | null;
   flow: string[];
-  userId?: number;
-  successSubmissionScreen?: string;
-  showPreSubmitSummary?: boolean;
-  stopEmailGlobalDocuments?: boolean;
-  stopAttachingDriverLicenseFiles?: boolean;
+  userid?: number;
+  successsubmissionscreen?: string;
+  showpresubmitsummary?: boolean;
+  stopemailglobaldocuments?: boolean;
+  stopattachingdriverlicensefiles?: boolean;
 };
 
 export async function bootUp({ windowQueryString }: { windowQueryString: string }) {
@@ -30,41 +30,44 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
   const qaQuery = query.get("qa");
 
   let config: QueryConfigState = {
-    clientId: null,
-    emailTemplateId: null,
+    clientid: null,
+    emailtemplateid: null,
     flow: [],
-    userId: 0,
-    showPreSubmitSummary: false,
-    stopEmailGlobalDocuments: false,
-    stopAttachingDriverLicenseFiles: false,
+    userid: 0,
+    showpresubmitsummary: false,
+    stopemailglobaldocuments: false,
+    stopattachingdriverlicensefiles: false,
   };
 
   if (!configQuery) return null;
 
   try {
     const readConfig = JSON.parse(base64Decode(configQuery));
-    config = { ...config, ...readConfig };
+    const configToLowerCaseKeys = Object.entries(readConfig).reduce((prev, [key, value]) => {
+      return { ...prev, [key.toLowerCase()]: value };
+    }, {});
+    config = { ...config, ...configToLowerCaseKeys };
   } catch (error) {
     throw new Error("Could not parse config");
   }
 
-  if (!config.clientId) {
+  if (!config.clientid) {
     return null;
   }
 
   return {
     rawConfig: configQuery ?? "",
-    clientId: config.clientId,
-    userId: config.userId ?? 0,
-    responseEmailTemplateId: config.emailTemplateId,
+    clientId: config.clientid,
+    userId: config.userid ?? 0,
+    responseEmailTemplateId: config.emailtemplateid,
     qa: isValueTrue(qaQuery) ? true : false,
     referenceType: agreementId ? APP_CONSTANTS.REF_TYPE_AGREEMENT : APP_CONSTANTS.REF_TYPE_RESERVATION,
     referenceId: reservationId ? reservationId : agreementId ? agreementId : "",
     flow: config.flow.reduce(normalizeFlowScreens, []),
-    showPreSubmitSummary: config.showPreSubmitSummary,
-    successSubmissionScreen: config.successSubmissionScreen,
-    stopEmailGlobalDocuments: config.stopEmailGlobalDocuments ?? false,
-    stopAttachingDriverLicenseFiles: config.stopAttachingDriverLicenseFiles ?? false,
+    showPreSubmitSummary: config.showpresubmitsummary,
+    successSubmissionScreen: config.successsubmissionscreen,
+    stopEmailGlobalDocuments: config.stopemailglobaldocuments ?? false,
+    stopAttachingDriverLicenseFiles: config.stopattachingdriverlicensefiles ?? false,
   };
 }
 
