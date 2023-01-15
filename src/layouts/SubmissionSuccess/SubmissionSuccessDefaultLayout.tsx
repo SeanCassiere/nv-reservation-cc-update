@@ -4,9 +4,7 @@ import { useTranslation } from "react-i18next";
 import CardLayout from "../Card";
 
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { APP_CONSTANTS } from "../../utils/constants";
-
-const SuccessImgUri = "/assets/undraw_make_it_rain_iwk4.svg";
+import { APP_CONSTANTS, SuccessImgUri } from "../../utils/constants";
 
 const SubmissionSuccessDefaultLayout: React.FC = () => {
   const { t } = useTranslation();

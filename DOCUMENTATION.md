@@ -89,8 +89,9 @@ Afterwards, you can encode this JSON object using Base64 to formulate the final 
 
 ## Available success screens
 
-| Key                          | Description                                                                                                                                                                |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| SuccessSubmission            | The default generic application success screen                                                                                                                             |
-| SuccessRentalChargesSummary  | Application success screen with the same message shown in the _SuccessSubmission_ screen, as well as the summary of charges table shown in the _RentalSummaryForm_ screen. |
-| SuccessSubmittedFormsSummary | Application success screen with the same message shown in the _SuccessSubmission_ screen, as well as a summary of form data submitted.                                     |
+| Key                                           | Description                                                                                                                                                                                  |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SuccessSubmission                             | The default generic application success screen                                                                                                                                               |
+| SuccessRentalChargesSummary                   | Application success screen with the same message shown in the _SuccessSubmission_ screen, as well as the summary of charges table shown in the _RentalSummaryForm_ screen.                   |
+| SuccessSubmittedFormsSummary                  | Application success screen with a message similar to the _PreSubmission_ screen (changed for the submitted context), as well as a summary of the submitted form data.                        |
+| SuccessSubmittedFormsWithRentalChargesSummary | Application success screen with a message similar to the _PreSubmission_ screen (changed for the submitted context), as well as a summary of the submitted form data and the rental charges. |

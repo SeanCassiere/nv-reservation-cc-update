@@ -5,12 +5,16 @@ import LoadingSubmission from "../LoadingSubmission/LoadingSubmission";
 
 import { useConfigStore } from "../../hooks/stores/useConfigStore";
 import { APP_CONSTANTS } from "../../utils/constants";
+import type { SubmittedFormsSummaryDefaultLayoutProps } from "../../layouts/SubmissionSuccess/SubmittedFormsSummaryDefaultLayout";
 
 const SubmissionSuccessDefaultLayout = lazy(
   () => import("../../layouts/SubmissionSuccess/SubmissionSuccessDefaultLayout")
 );
-const RentalSummarySuccessDefaultLayout = lazy(
-  () => import("../../layouts/SubmissionSuccess/RentalSummarySuccessDefaultLayout")
+const RentalChargesSummarySuccessDefaultLayout = lazy(
+  () => import("../../layouts/SubmissionSuccess/RentalChargesSummarySuccessDefaultLayout")
+);
+const SubmittedFormsSummaryDefaultLayout = lazy<React.FC<SubmittedFormsSummaryDefaultLayoutProps>>(
+  () => import("../../layouts/SubmissionSuccess/SubmittedFormsSummaryDefaultLayout")
 );
 
 const SuccessSubmissionPage: React.FC = () => {
@@ -21,10 +25,15 @@ const SuccessSubmissionPage: React.FC = () => {
     <React.Fragment>
       <Suspense fallback={<LoadingSubmission title={t("appStatusMessages.loading")} />}>
         {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_TEST && <TestSubmissionLayout />}
-        {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_SUBMITTED_FORMS_SUMMARY && <TestSubmissionLayout />}
+        {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_SUBMITTED_FORMS_SUMMARY && (
+          <SubmittedFormsSummaryDefaultLayout />
+        )}
+        {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_SUBMITTED_FORMS_WITH_RENTAL_CHARGES_SUMMARY && (
+          <SubmittedFormsSummaryDefaultLayout includeRentalChargesSummary />
+        )}
         {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_DEFAULT && <SubmissionSuccessDefaultLayout />}
         {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_RENTAL_CHARGES_SUMMARY && (
-          <RentalSummarySuccessDefaultLayout />
+          <RentalChargesSummarySuccessDefaultLayout />
         )}
       </Suspense>
     </React.Fragment>

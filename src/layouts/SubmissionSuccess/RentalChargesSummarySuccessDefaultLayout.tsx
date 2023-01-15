@@ -5,11 +5,9 @@ import CardLayout from "../Card";
 import DefaultRentalSummary from "../../components/RentalSummary/Default";
 
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { APP_CONSTANTS } from "../../utils/constants";
+import { APP_CONSTANTS, SuccessImgUri } from "../../utils/constants";
 
-const SuccessImgUri = "/assets/undraw_make_it_rain_iwk4.svg";
-
-const RentalSummarySuccessDefaultLayout: React.FC = () => {
+const RentalChargesSummarySuccessDefaultLayout: React.FC = () => {
   const { t } = useTranslation();
 
   const clientId = useRuntimeStore((s) => s.clientId);
@@ -34,4 +32,4 @@ const RentalSummarySuccessDefaultLayout: React.FC = () => {
   );
 };
 
-export default RentalSummarySuccessDefaultLayout;
+export default RentalChargesSummarySuccessDefaultLayout;

@@ -91,7 +91,9 @@
     "formsSummary": {
       "title": "Information summary",
       "message": "Please review the information you are about to submit towards your rental.",
+      "message_submitted": "Please view the information you have submitted towards your rental.",
       "noData": "You currently will not be submitting any data towards your booking.",
+      "noData_submitted": "You have not submitted any information towards your rental.",
       "creditCardTitle": "Credit card",
       "licenseUploadTitle": "Driving license",
       "rentalSignatureTitle": "Rental signature"

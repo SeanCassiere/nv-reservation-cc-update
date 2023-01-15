@@ -1,5 +1,5 @@
 export const REPO_URL = import.meta.env.VITE_APP_REPO_URL ?? "https://github.com/SeanCassiere/nv-reservation-cc-update";
-
+export const SuccessImgUri = "/assets/undraw_make_it_rain_iwk4.svg";
 export const APP_CONSTANTS = {
   REF_TYPE_AGREEMENT: "Agreement",
   REF_TYPE_RESERVATION: "Reservation",
@@ -16,6 +16,7 @@ export const APP_CONSTANTS = {
   SUCCESS_DEFAULT: "SuccessSubmission",
   SUCCESS_RENTAL_CHARGES_SUMMARY: "SuccessRentalChargesSummary",
   SUCCESS_SUBMITTED_FORMS_SUMMARY: "SuccessSubmittedFormsSummary",
+  SUCCESS_SUBMITTED_FORMS_WITH_RENTAL_CHARGES_SUMMARY: "SuccessSubmittedFormsWithRentalChargesSummary",
   SUCCESS_TEST: "test/test",
 
   FORM_SUMMARY_OFF: "off",
@@ -79,5 +80,9 @@ export const ALL_SUCCESS_SCREENS = [
   {
     label: APP_CONSTANTS.SUCCESS_SUBMITTED_FORMS_SUMMARY,
     value: APP_CONSTANTS.SUCCESS_SUBMITTED_FORMS_SUMMARY,
+  },
+  {
+    label: APP_CONSTANTS.SUCCESS_SUBMITTED_FORMS_WITH_RENTAL_CHARGES_SUMMARY,
+    value: APP_CONSTANTS.SUCCESS_SUBMITTED_FORMS_WITH_RENTAL_CHARGES_SUMMARY,
   },
 ];
