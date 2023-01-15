@@ -89,7 +89,7 @@ Afterwards, you can encode this JSON object using Base64 to formulate the final 
 
 ## Available success screens
 
-| Key                  | Description                                                                                                                                                                |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| SuccessSubmission    | The default generic application success screen                                                                                                                             |
-| SuccessRentalSummary | Application success screen with the same message shown in the _SuccessSubmission_ screen, as well as the summary of charges table shown in the _RentalSummaryForm_ screen. |
+| Key                         | Description                                                                                                                                                                |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SuccessSubmission           | The default generic application success screen                                                                                                                             |
+| SuccessRentalChargesSummary | Application success screen with the same message shown in the _SuccessSubmission_ screen, as well as the summary of charges table shown in the _RentalSummaryForm_ screen. |

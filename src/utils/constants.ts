@@ -14,7 +14,7 @@ export const APP_CONSTANTS = {
   FLOW_FORMS_SUMMARY: "FormSummary",
 
   SUCCESS_DEFAULT: "SuccessSubmission",
-  SUCCESS_RENTAL_SUMMARY: "SuccessRentalSummary",
+  SUCCESS_RENTAL_CHARGES_SUMMARY: "SuccessRentalChargesSummary",
   SUCCESS_TEST: "test/test",
 
   FORM_SUMMARY_OFF: "off",
@@ -27,6 +27,8 @@ export const COMPAT_KEYS = {
   DEFAULT_CREDIT_CARD_FORM: "Default/CreditCardForm",
   DEFAULT_RENTAL_CHARGES_FORM: "Default/RentalSummaryForm",
   DEFAULT_RENTAL_SIGNATURE_FORM: "Default/RentalSignatureForm",
+
+  SUCCESS_RENTAL_SUMMARY: "SuccessRentalSummary",
 };
 
 export const ALL_SCREEN_FLOWS = [
@@ -70,8 +72,8 @@ export const ALL_SUCCESS_SCREENS = [
     value: APP_CONSTANTS.SUCCESS_DEFAULT,
   },
   {
-    label: APP_CONSTANTS.SUCCESS_RENTAL_SUMMARY,
-    value: APP_CONSTANTS.SUCCESS_RENTAL_SUMMARY,
+    label: APP_CONSTANTS.SUCCESS_RENTAL_CHARGES_SUMMARY,
+    value: APP_CONSTANTS.SUCCESS_RENTAL_CHARGES_SUMMARY,
   },
 ];
 
