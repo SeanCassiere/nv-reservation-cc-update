@@ -21,6 +21,7 @@ const SuccessSubmissionPage: React.FC = () => {
     <React.Fragment>
       <Suspense fallback={<LoadingSubmission title={t("appStatusMessages.loading")} />}>
         {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_TEST && <TestSubmissionLayout />}
+        {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_SUBMITTED_FORMS_SUMMARY && <TestSubmissionLayout />}
         {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_DEFAULT && <SubmissionSuccessDefaultLayout />}
         {submissionSuccessScreen === APP_CONSTANTS.SUCCESS_RENTAL_CHARGES_SUMMARY && (
           <RentalSummarySuccessDefaultLayout />
