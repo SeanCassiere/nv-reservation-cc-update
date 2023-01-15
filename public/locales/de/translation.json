@@ -91,7 +91,9 @@
     "formsSummary": {
       "title": "Zusammenfassung der Informationen",
       "message": "Bitte überprüfen Sie die Informationen, die Sie für Ihre Anmietung einreichen werden.",
+      "message_submitted": "Bitte sehen Sie sich die Informationen an, die Sie für Ihre Anmietung eingereicht haben.",
       "noData": "Sie übermitteln derzeit keine Daten für Ihre Buchung.",
+      "noData_submitted": "Sie haben keine Informationen zu Ihrer Anmietung übermittelt.",
       "creditCardTitle": "Kreditkarte",
       "licenseUploadTitle": "Führerschein",
       "rentalSignatureTitle": "Mietunterschrift"

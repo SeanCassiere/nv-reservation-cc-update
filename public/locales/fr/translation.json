@@ -91,7 +91,9 @@
     "formsSummary": {
       "title": "Résumé des informations",
       "message": "Veuillez vérifier les informations que vous êtes sur le point de soumettre pour votre location.",
+      "message_submitted": "Veuillez consulter les informations que vous avez soumises concernant votre location.",
       "noData": "Vous ne soumettrez actuellement aucune donnée pour votre réservation.",
+      "noData_submitted": "Vous n'avez fourni aucune information concernant votre location.",
       "creditCardTitle": "Carte de crédit",
       "licenseUploadTitle": "Permis de conduire",
       "rentalSignatureTitle": "Signature du locataire"

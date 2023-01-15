@@ -8,8 +8,8 @@ const alertStyles = cva(["my-2", "p-4", "border-l-4", "rounded", "text-sm", "fon
   variants: {
     fullWidth: { true: ["w-full"], false: [] },
     color: {
-      success: ["bg-yellow-50", "text-yellow-500", "border-yellow-500"],
-      warning: ["bg-green-50", "text-green-600", "border-green-600"],
+      success: ["bg-green-50", "text-green-600", "border-green-600"],
+      warning: ["bg-yellow-50", "text-yellow-500", "border-yellow-500"],
       danger: ["bg-red-50", "text-red-600", "border-red-600"],
     },
   },

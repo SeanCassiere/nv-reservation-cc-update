@@ -7,7 +7,7 @@ import type { RentalSignatureStoreType } from "../../hooks/stores/useFormStore";
 
 type Props = {
   rentalSignature: RentalSignatureStoreType["data"];
-  editFunc: () => void;
+  editFunc?: () => void;
 };
 
 const RentalSignature: React.FC<Props> = ({ rentalSignature, editFunc }) => {

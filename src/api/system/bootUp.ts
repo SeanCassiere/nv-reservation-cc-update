@@ -3,14 +3,14 @@ import { APP_CONSTANTS, COMPAT_KEYS } from "../../utils/constants";
 import { base64Decode } from "../../utils/base64";
 
 type QueryConfigState = {
-  clientId: string | null;
-  emailTemplateId: string | null;
+  clientid: string | null;
+  emailtemplateid: string | null;
   flow: string[];
-  userId?: number;
-  successSubmissionScreen?: string;
-  showPreSubmitSummary?: boolean;
-  stopEmailGlobalDocuments?: boolean;
-  stopAttachingDriverLicenseFiles?: boolean;
+  userid?: number;
+  successsubmissionscreen?: string;
+  showpresubmitsummary?: boolean;
+  stopemailglobaldocuments?: boolean;
+  stopattachingdriverlicensefiles?: boolean;
 };
 
 export async function bootUp({ windowQueryString }: { windowQueryString: string }) {
@@ -30,41 +30,44 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
   const qaQuery = query.get("qa");
 
   let config: QueryConfigState = {
-    clientId: null,
-    emailTemplateId: null,
+    clientid: null,
+    emailtemplateid: null,
     flow: [],
-    userId: 0,
-    showPreSubmitSummary: false,
-    stopEmailGlobalDocuments: false,
-    stopAttachingDriverLicenseFiles: false,
+    userid: 0,
+    showpresubmitsummary: false,
+    stopemailglobaldocuments: false,
+    stopattachingdriverlicensefiles: false,
   };
 
   if (!configQuery) return null;
 
   try {
     const readConfig = JSON.parse(base64Decode(configQuery));
-    config = { ...config, ...readConfig };
+    const configToLowerCaseKeys = Object.entries(readConfig).reduce((prev, [key, value]) => {
+      return { ...prev, [key.toLowerCase()]: value };
+    }, {});
+    config = { ...config, ...configToLowerCaseKeys };
   } catch (error) {
     throw new Error("Could not parse config");
   }
 
-  if (!config.clientId) {
+  if (!config.clientid) {
     return null;
   }
 
   return {
     rawConfig: configQuery ?? "",
-    clientId: config.clientId,
-    userId: config.userId ?? 0,
-    responseEmailTemplateId: config.emailTemplateId,
+    clientId: config.clientid,
+    userId: config.userid ?? 0,
+    responseEmailTemplateId: config.emailtemplateid,
     qa: isValueTrue(qaQuery) ? true : false,
     referenceType: agreementId ? APP_CONSTANTS.REF_TYPE_AGREEMENT : APP_CONSTANTS.REF_TYPE_RESERVATION,
     referenceId: reservationId ? reservationId : agreementId ? agreementId : "",
     flow: config.flow.reduce(normalizeFlowScreens, []),
-    showPreSubmitSummary: config.showPreSubmitSummary,
-    successSubmissionScreen: config.successSubmissionScreen,
-    stopEmailGlobalDocuments: config.stopEmailGlobalDocuments ?? false,
-    stopAttachingDriverLicenseFiles: config.stopAttachingDriverLicenseFiles ?? false,
+    showPreSubmitSummary: config.showpresubmitsummary,
+    successSubmissionScreen: normalizeSuccessSubmissionScreen(config.successsubmissionscreen),
+    stopEmailGlobalDocuments: config.stopemailglobaldocuments ?? false,
+    stopAttachingDriverLicenseFiles: config.stopattachingdriverlicensefiles ?? false,
   };
 }
 
@@ -100,4 +103,30 @@ function normalizeFlowScreens(prev: string[], current: string) {
 
   prev.push(nowScreen);
   return prev;
+}
+
+/**
+ * Used to remedy a mistake made when adding the license and cc upload controller for `ClientID 251`.
+ * The config used on their account used the wording of "Controller" instead of "Form".
+ *
+ * Now it's a way for me silently fix any mistakes I may ship in the naming of the flow screens 😊.
+ * @param prev `string[]`
+ * @param current `string`
+ * @returns An array of usable flow screens. `string[]`
+ */
+function normalizeSuccessSubmissionScreen(configScreenName?: string) {
+  let actualScreenName: string = configScreenName || APP_CONSTANTS.SUCCESS_DEFAULT;
+
+  if (configScreenName) {
+    switch (configScreenName) {
+      case COMPAT_KEYS.SUCCESS_RENTAL_SUMMARY:
+        actualScreenName = APP_CONSTANTS.SUCCESS_RENTAL_CHARGES_SUMMARY;
+        break;
+      default:
+        actualScreenName = configScreenName;
+        break;
+    }
+  }
+
+  return actualScreenName;
 }
