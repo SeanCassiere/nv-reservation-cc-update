@@ -7,7 +7,7 @@ import type { DriversLicenseStoreType } from "../../hooks/stores/useFormStore";
 
 type Props = {
   driverLicense: DriversLicenseStoreType["data"];
-  editFunc: () => void;
+  editFunc?: () => void;
 };
 
 const DriverLicense: React.FC<Props> = ({ driverLicense, editFunc }) => {

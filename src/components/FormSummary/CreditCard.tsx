@@ -8,7 +8,7 @@ import { CreditCardIcon, MapIcon, PersonIcon } from "../Icons";
 
 type Props = {
   creditCard: CreditCardStoreType["data"];
-  editFunc: () => void;
+  editFunc?: () => void;
 };
 
 const CreditCardFormSummary: React.FC<Props> = ({ editFunc, creditCard }) => {

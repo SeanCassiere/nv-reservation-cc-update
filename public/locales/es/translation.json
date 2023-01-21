@@ -91,7 +91,9 @@
     "formsSummary": {
       "title": "Resumen de información",
       "message": "Revise la información que está a punto de enviar para su alquiler.",
+      "message_submitted": "Consulte la información que ha enviado para su alquiler.",
       "noData": "Actualmente no enviará ningún dato para su reserva.",
+      "noData_submitted": "No ha enviado ninguna información para su alquiler.",
       "creditCardTitle": "Tarjeta de crédito",
       "licenseUploadTitle": "Permiso de conducir",
       "rentalSignatureTitle": "Firma de alquiler"
