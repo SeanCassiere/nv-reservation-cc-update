@@ -43,7 +43,7 @@ export const useCreditCardLogic = (initialData: StateStorage) => {
     (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
       if (!storeKeys.includes(evt.target.name)) return;
 
-      let obj = {} as StateStorage;
+      const obj = {} as StateStorage;
 
       if (evt.target.name === "name") {
         obj.name = evt.target.value;

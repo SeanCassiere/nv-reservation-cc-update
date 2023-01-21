@@ -18,8 +18,8 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
 
   let findingRefsMissing = false;
 
-  let reservationId = query.get("reservationId");
-  let agreementId = query.get("agreementId");
+  const reservationId = query.get("reservationId");
+  const agreementId = query.get("agreementId");
 
   findingRefsMissing = Boolean(reservationId || agreementId);
   if (!findingRefsMissing) {

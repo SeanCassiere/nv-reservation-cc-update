@@ -196,9 +196,9 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                     "image/png": [".png"],
                   }}
                   initialPreview={
-                    initialDriverLicenseData.frontImageUrl
+                    initialDriverLicenseData.frontImageUrl && initialDriverLicenseData.frontImageName
                       ? {
-                          fileName: initialDriverLicenseData.frontImageName!,
+                          fileName: initialDriverLicenseData.frontImageName,
                           url: initialDriverLicenseData.frontImageUrl,
                         }
                       : null
@@ -223,9 +223,9 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                     "image/png": [".png"],
                   }}
                   initialPreview={
-                    initialDriverLicenseData.backImageUrl
+                    initialDriverLicenseData.backImageUrl && initialDriverLicenseData.backImageName
                       ? {
-                          fileName: initialDriverLicenseData.backImageName!,
+                          fileName: initialDriverLicenseData.backImageName,
                           url: initialDriverLicenseData.backImageUrl,
                         }
                       : null

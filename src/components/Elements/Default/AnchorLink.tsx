@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 
-interface Props extends React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> {}
+type Props = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 
 const AnchorLink: React.FC<Props> = ({ className, children, ...props }) => {
   return (

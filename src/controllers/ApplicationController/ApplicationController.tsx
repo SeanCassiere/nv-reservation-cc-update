@@ -18,7 +18,7 @@ import { bootUp } from "../../api/system/bootUp";
 import { initDataFetch } from "../../api/system/initDataFetch";
 
 const bootStatuses = ["authenticating", "loaded", "authentication_error", "core_details_fetch_failed"] as const;
-type BootStatus = typeof bootStatuses[number];
+type BootStatus = (typeof bootStatuses)[number];
 
 const ApplicationController: React.FC = () => {
   const navigate = useNavigate();

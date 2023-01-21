@@ -48,18 +48,18 @@ export const useDriverLicenseLogic = ({
 
   // On init, if data urls are available, convert them to blobs -> file and then set them to the state
   React.useEffect(() => {
-    if (frontImageDataUrl) {
+    if (frontImageDataUrl && frontImageName) {
       (async () => {
         const blob = await urlToBlob(frontImageDataUrl);
-        const file = new File([blob], frontImageName!);
+        const file = new File([blob], frontImageName);
         setFrontImageFile(file);
       })();
     }
 
-    if (backImageDataUrl) {
+    if (backImageDataUrl && backImageName) {
       (async () => {
         const blob = await urlToBlob(backImageDataUrl);
-        const file = new File([blob], backImageName!);
+        const file = new File([blob], backImageName);
         setBackImageFile(file);
       })();
     }

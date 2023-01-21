@@ -35,8 +35,8 @@ export function devConfigToQueryUrl(config: DevConfigObject) {
     ...(config.stopAttachingDriverLicenseFiles ? { stopAttachingDriverLicenseFiles: true } : {}),
   };
 
-  let objJsonStr = JSON.stringify(hashObj);
-  let objJsonB64 = base64Encode(objJsonStr);
+  const objJsonStr = JSON.stringify(hashObj);
+  const objJsonB64 = base64Encode(objJsonStr);
 
   return params.toString() + "&config=" + objJsonB64;
 }

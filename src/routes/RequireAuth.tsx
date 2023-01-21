@@ -5,7 +5,7 @@ import { useAuthStore } from "../hooks/stores/useAuthStore";
 import { useRuntimeStore } from "../hooks/stores/useRuntimeStore";
 
 const RequireAuth: React.FC<{ children: JSX.Element }> = ({ children }) => {
-  let location = useLocation();
+  const location = useLocation();
 
   const access_token = useAuthStore((s) => s.access_token);
   const detailsHaveBeenSubmitted = useRuntimeStore((s) => s.detailsHaveBeenSubmitted);

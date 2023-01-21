@@ -6,7 +6,13 @@ import App from "./App";
 import "./i18n";
 import LoadingSubmission from "./pages/LoadingSubmission/LoadingSubmission";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+const documentElement = document.getElementById("root");
+
+if (!documentElement) {
+  throw new Error('Could not find document element with id "root"');
+}
+
+ReactDOM.createRoot(documentElement).render(
   <React.StrictMode>
     <Suspense fallback={<LoadingSubmission title=" " />}>
       <App />
