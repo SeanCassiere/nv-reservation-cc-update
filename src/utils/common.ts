@@ -1,5 +1,5 @@
 export const range = (start: any, end: any) => {
-  let ans = [];
+  const ans = [];
   for (let i = start; i <= end; i++) {
     ans.push(i);
   }

@@ -15,10 +15,14 @@ const DriverLicense: React.FC<Props> = ({ driverLicense, editFunc }) => {
   return (
     <FormSummaryItem title={t("forms.formsSummary.licenseUploadTitle")} onEdit={editFunc}>
       <div className="text-md mt-2 flex items-center justify-center rounded border border-gray-100 bg-gray-50 py-2 px-3 text-gray-500">
-        <img src={driverLicense.frontImageUrl!} className="object-contain md:max-w-xs" alt="" />
+        {driverLicense.frontImageUrl && (
+          <img src={driverLicense.frontImageUrl} className="object-contain md:max-w-xs" alt="" />
+        )}
       </div>
       <div className="text-md mt-2 flex items-center justify-center rounded border border-gray-100 bg-gray-50 py-2 px-3 text-gray-500">
-        <img src={driverLicense.backImageUrl!} className="object-contain md:max-w-xs" alt="" />
+        {driverLicense.backImageUrl && (
+          <img src={driverLicense.backImageUrl} className="object-contain md:max-w-xs" alt="" />
+        )}
       </div>
     </FormSummaryItem>
   );

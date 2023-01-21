@@ -15,7 +15,9 @@ const RentalSignature: React.FC<Props> = ({ rentalSignature, editFunc }) => {
   return (
     <FormSummaryItem title={t("forms.formsSummary.rentalSignatureTitle")} onEdit={editFunc}>
       <div className="text-md mt-2 flex items-center justify-center rounded border border-gray-100 bg-gray-50 py-2 px-3 text-gray-500">
-        <img src={rentalSignature.signatureUrl!} className="object-contain md:max-w-xs" alt="" />
+        {rentalSignature.signatureUrl && (
+          <img src={rentalSignature.signatureUrl} className="object-contain md:max-w-xs" alt="" />
+        )}
       </div>
     </FormSummaryItem>
   );
