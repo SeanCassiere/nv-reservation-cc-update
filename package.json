@@ -16,7 +16,7 @@
     "sync-i18n": "i18next-locales-sync -c ./locales-sync.config.js"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.7",
+    "@headlessui/react": "^1.7.10",
     "@netlify/functions": "^1.4.0",
     "@tanstack/react-query": "^4.22.0",
     "axios": "^1.2.3",
