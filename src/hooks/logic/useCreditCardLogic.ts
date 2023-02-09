@@ -11,6 +11,8 @@ const storeKeys = Object.keys(formsInitialState.customerCreditCard.data);
 
 type StateStorage = CreditCardStoreType["data"];
 
+const formKeys = ["name", "type", "number", "cvv", "monthYearExpiry", "billingZip"] as const;
+
 export const useCreditCardLogic = (initialData: StateStorage) => {
   const { t } = useTranslation();
 
@@ -102,11 +104,14 @@ export const useCreditCardLogic = (initialData: StateStorage) => {
     async (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
       setCurrentFocus("");
       try {
-        const pickedSchema = schema.pick([e.target.name]);
-        if (e.target.name === "number") {
-          await pickedSchema.validate({ [e.target.name]: e.target.value.replaceAll(" ", "") }, { abortEarly: false });
-        } else {
-          await pickedSchema.validate({ [e.target.name]: e.target.value }, { abortEarly: false });
+        if (formKeys.includes(e.target.name as any)) {
+          const fieldName = e.target.name as (typeof formKeys)[number];
+          const pickedSchema = schema.pick([fieldName]);
+          if (fieldName === "number") {
+            await pickedSchema.validate({ [fieldName]: e.target.value.replaceAll(" ", "") }, { abortEarly: false });
+          } else {
+            await pickedSchema.validate({ [fieldName]: e.target.value }, { abortEarly: false });
+          }
         }
         setSchemaErrors((prev) => prev.filter((item) => item.path !== e.target.name));
       } catch (error) {
