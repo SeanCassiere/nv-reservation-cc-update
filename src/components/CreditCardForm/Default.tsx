@@ -57,6 +57,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           label={t("forms.creditCard.labels.cardNumber")}
           isError={Boolean(isFieldInvalid("number"))}
           helperText={Boolean(isFieldInvalid("number")) && isFieldInvalid("number")?.message}
+          inputMode="numeric"
         />
       </div>
       <div className="col-span-2 md:col-span-1">
@@ -73,6 +74,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           label={t("forms.creditCard.labels.expMonthYear")}
           isError={Boolean(isFieldInvalid("monthYearExpiry"))}
           helperText={Boolean(isFieldInvalid("monthYearExpiry")) && isFieldInvalid("monthYearExpiry")?.message}
+          inputMode="numeric"
         />
       </div>
       <div className="col-span-2 md:col-span-1">
@@ -92,6 +94,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({
           label={t("forms.creditCard.labels.cvv")}
           isError={Boolean(isFieldInvalid("cvv"))}
           helperText={Boolean(isFieldInvalid("cvv")) && isFieldInvalid("cvv")?.message}
+          inputMode="numeric"
         />
       </div>
       <div className="col-span-2">
