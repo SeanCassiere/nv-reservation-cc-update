@@ -10,9 +10,6 @@
     "lint": "eslint --max-warnings=0 src",
     "lint:fix": "eslint --fix --max-warnings=0 src",
     "format": "prettier --write './src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.cjs",
-    "serve:functions": "netlify dev --targetPort 4173",
-    "serve:static-serve": "concurrently \"npm run preview\" \"npm run serve:functions\"",
-    "serve": "npm run build && npm run serve:static-serve",
     "sync-i18n": "i18next-locales-sync -c ./locales-sync.config.js"
   },
   "dependencies": {
@@ -48,7 +45,6 @@
     "@types/react-signature-canvas": "^1.0.2",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.13",
-    "concurrently": "^7.6.0",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-config-react-app": "^7.0.1",
