@@ -57,7 +57,7 @@ const App = () => {
               </div>
             </ErrorBoundary>
           </div>
-          <div className="pt-4 pb-5">
+          <div className="pb-5 pt-4">
             <p className="text-center text-sm">
               {t("footer.poweredBy")}&nbsp;
               <AnchorLink
