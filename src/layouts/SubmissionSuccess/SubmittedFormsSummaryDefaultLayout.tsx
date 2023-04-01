@@ -36,10 +36,10 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
         {isEmpty && <Alert color="warning">{t("forms.formsSummary.noData", { context: "submitted" })}</Alert>}
         {!isEmpty && (
           <>
-            <div className="text-md pt-2 pb-1 font-medium text-gray-600">
+            <div className="text-md pb-1 pt-2 font-medium text-gray-600">
               {t("forms.formsSummary.title", { context: "submitted" })}
             </div>
-            <div className="pt-1 pb-4 text-sm text-gray-500">
+            <div className="pb-4 pt-1 text-sm text-gray-500">
               {t("forms.formsSummary.message", { context: "submitted" })}
             </div>
           </>
@@ -55,7 +55,7 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
               context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
             })}
           </h3>
-          <div className="pt-2 pb-4 text-sm text-gray-500">
+          <div className="pb-4 pt-2 text-sm text-gray-500">
             {t("forms.rentalSummary.message", {
               context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
             })}

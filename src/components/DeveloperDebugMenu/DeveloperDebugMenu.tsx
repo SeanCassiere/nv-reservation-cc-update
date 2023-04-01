@@ -191,7 +191,7 @@ const ConfigCreator: React.FC = () => {
 
   return (
     <React.Fragment>
-      <div className="pt-1 pb-3">
+      <div className="pb-3 pt-1">
         <AnchorLink href={REPO_URL} rel="noreferrer" target="_blank" className="text-indigo-600">
           {t("developer.viewProjectRepo")}
         </AnchorLink>
@@ -217,7 +217,7 @@ const ConfigCreator: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="mt-4">
         {/*  runtime reference configuration  */}
-        <div className="mb-3 rounded border border-gray-100 px-4 pt-2 pb-4">
+        <div className="mb-3 rounded border border-gray-100 px-4 pb-4 pt-2">
           <span className="select-none text-base font-semibold text-gray-600">
             {t("developer.configCreator.runtimeConfiguration")}
           </span>
@@ -258,7 +258,7 @@ const ConfigCreator: React.FC = () => {
           </div>
         </div>
         {/*  general application configuration  */}
-        <div className="mb-3 rounded border border-gray-100 px-4 pt-2 pb-4">
+        <div className="mb-3 rounded border border-gray-100 px-4 pb-4 pt-2">
           <span className="select-none text-base font-semibold text-gray-600">
             {t("developer.configCreator.generalApplicationConfiguration")}
           </span>
@@ -302,7 +302,7 @@ const ConfigCreator: React.FC = () => {
               />
             </div>
             {/*  */}
-            <div className="mt-2 mb-2 grid grid-cols-2 gap-3">
+            <div className="mb-2 mt-2 grid grid-cols-2 gap-3">
               <div className="col-span-2 md:col-span-1">
                 <span className="select-none text-sm font-medium text-gray-700">
                   {t("developer.configCreator.applicationEnvironment")}
@@ -332,7 +332,7 @@ const ConfigCreator: React.FC = () => {
           </div>
         </div>
         {/*  confirmation email settings  */}
-        <div className="mb-3 rounded border border-gray-100 px-4 pt-2 pb-4">
+        <div className="mb-3 rounded border border-gray-100 px-4 pb-4 pt-2">
           <span className="select-none text-base font-semibold text-gray-600">
             {t("developer.configCreator.confirmationEmailSettings")}
           </span>
@@ -381,7 +381,7 @@ const ConfigCreator: React.FC = () => {
           </div>
         </div>
         {/* application flow settings */}
-        <div className="mb-3 rounded border border-gray-100 px-4 pt-2 pb-4">
+        <div className="mb-3 rounded border border-gray-100 px-4 pb-4 pt-2">
           <span className="select-none text-base font-semibold text-gray-600">
             {t("developer.configCreator.applicationFlowSettings")}
           </span>
@@ -449,10 +449,10 @@ const ConfigCreator: React.FC = () => {
         </div>
 
         <div className="mt-5 flex w-full gap-1">
-          <Button type="submit" className="bg-gray-300 py-2 px-4">
+          <Button type="submit" className="bg-gray-300 px-4 py-2">
             {t("developer.configCreator.btnSave")}
           </Button>
-          <Button type="button" color="primary" variant="muted" className="bg-teal-300 py-2 px-4" onClick={handleReset}>
+          <Button type="button" color="primary" variant="muted" className="bg-teal-300 px-4 py-2" onClick={handleReset}>
             {t("developer.configCreator.btnReset")}
           </Button>
         </div>

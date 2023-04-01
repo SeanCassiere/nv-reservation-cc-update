@@ -16,7 +16,7 @@ const CreditCardFormSummary: React.FC<Props> = ({ editFunc, creditCard }) => {
   const [showCvv, setShowCvv] = React.useState(false);
   return (
     <FormSummaryItem title={t("forms.formsSummary.creditCardTitle")} onEdit={editFunc}>
-      <div className="text-md mt-2 grid grid-cols-6 gap-2 rounded border border-gray-100 bg-gray-50 py-2 px-3 text-gray-500">
+      <div className="text-md mt-2 grid grid-cols-6 gap-2 rounded border border-gray-100 bg-gray-50 px-3 py-2 text-gray-500">
         <div className="col-span-4 flex flex-row items-center gap-2 md:col-span-4">
           <span>
             <CreditCardIcon />
@@ -40,7 +40,7 @@ const CreditCardFormSummary: React.FC<Props> = ({ editFunc, creditCard }) => {
           </button>
         </div>
       </div>
-      <div className="text-md mt-2 grid grid-cols-6 gap-2 rounded border border-gray-100 bg-gray-50 py-2 px-3 text-gray-500">
+      <div className="text-md mt-2 grid grid-cols-6 gap-2 rounded border border-gray-100 bg-gray-50 px-3 py-2 text-gray-500">
         <div className="col-span-6 md:col-span-4">
           <div className="col-span-4 flex flex-row items-center gap-2">
             <span>
