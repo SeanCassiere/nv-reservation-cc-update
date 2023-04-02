@@ -2,6 +2,7 @@ import React from "react";
 import Payment from "payment";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
+import type { ReactCreditCardsProps } from "react-credit-cards-2";
 
 import { creditCardTypeFormat, getFormattedExpirationDate } from "../../utils/creditCardTypeFormat";
 import { YupErrorsFormatted, yupFormatSchemaErrors } from "../../utils/yupSchemaErrors";
@@ -16,7 +17,7 @@ const formKeys = ["name", "type", "number", "cvv", "monthYearExpiry", "billingZi
 export const useCreditCardLogic = (initialData: StateStorage) => {
   const { t } = useTranslation();
 
-  const [currentFocus, setCurrentFocus] = React.useState("");
+  const [currentFocus, setCurrentFocus] = React.useState<NonNullable<ReactCreditCardsProps["focused"]>>("");
   const [values, setValues] = React.useState<StateStorage>(initialData);
   const [schemaErrors, setSchemaErrors] = React.useState<YupErrorsFormatted>([]);
 
@@ -83,8 +84,6 @@ export const useCreditCardLogic = (initialData: StateStorage) => {
 
   const handleCardInputFocus = React.useCallback(
     (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-      if (!storeKeys.includes(evt.target.name)) return;
-
       if (
         evt.target.name === "monthExpiry" ||
         evt.target.name === "yearExpiry" ||
@@ -93,8 +92,8 @@ export const useCreditCardLogic = (initialData: StateStorage) => {
         setCurrentFocus("expiry");
       } else if (evt.target.name === "cvv") {
         setCurrentFocus("cvc");
-      } else {
-        setCurrentFocus(evt.target.name);
+      } else if (["name", "number"].includes(evt.target.name)) {
+        setCurrentFocus(evt.target.name as any);
       }
     },
     []

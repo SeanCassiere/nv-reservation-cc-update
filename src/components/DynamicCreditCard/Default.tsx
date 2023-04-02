@@ -1,12 +1,12 @@
 import React, { memo } from "react";
-import Cards from "react-credit-cards-2";
+import Cards, { type ReactCreditCardsProps } from "react-credit-cards-2";
 import { useTranslation } from "react-i18next";
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 
 import type { CreditCardStoreType } from "../../hooks/stores/useFormStore";
 
 interface IProps {
-  currentFocus: string;
+  currentFocus: NonNullable<ReactCreditCardsProps["focused"]>;
   formData: CreditCardStoreType["data"];
 }
 
