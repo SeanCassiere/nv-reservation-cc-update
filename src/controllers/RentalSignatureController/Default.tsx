@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useCallback } from "react";
+import React, { Fragment, useEffect, useState, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
@@ -25,7 +25,10 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
   const initialSignatureUrl = useFormStore((s) => s.rentalSignature.data.signatureUrl);
   const referenceType = useRuntimeStore((s) => s.referenceType);
   const referenceId = useRuntimeStore((s) => s.referenceIdentifier);
+  const isCheckInStoreValue = useRuntimeStore((s) => s.rental?.isCheckIn);
   const { setBackConfirmationDialogState, isBackConfirmationDialogOpen } = useDialogStore();
+
+  const isCheckIn = useMemo(() => isCheckInStoreValue ?? false, [isCheckInStoreValue]);
 
   const [signatureUrl, setSignatureUrl] = useState("");
 
@@ -90,7 +93,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
   }, [goPrev, initialSignatureUrl, mode, setBackConfirmationDialogState, signatureUrl]);
 
   useRentalSavedDigitalSignature(
-    { referenceType, referenceId: `${referenceId}` },
+    { referenceType, referenceId: `${referenceId}`, isCheckIn },
     {
       enabled: initialSignatureUrl === "",
       refetchOnMount: true,

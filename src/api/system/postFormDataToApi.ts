@@ -95,6 +95,7 @@ export async function postFormDataToApi(stores: {
         imageUrl: rentalSignature.data.signatureUrl,
         referenceType,
         referenceId: `${referenceId}`,
+        isCheckedIn: rental.isCheckIn,
       })
     );
   }
