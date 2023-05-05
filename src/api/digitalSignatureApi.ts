@@ -8,6 +8,7 @@ export async function postUploadRentalSignature(opts: {
   customerName: string;
   referenceType: string;
   referenceId: string;
+  isCheckedIn: boolean;
 }) {
   const imageBase64 = await urlBlobToBase64(opts.imageUrl);
 
@@ -23,7 +24,7 @@ export async function postUploadRentalSignature(opts: {
       imageName,
       base64String: imageBase64,
       imageType,
-      isCheckIn: false,
+      isCheckIn: opts.isCheckedIn,
       isDamageView: false,
       signatureDate: new Date().toISOString(),
       signatureImage: null,
