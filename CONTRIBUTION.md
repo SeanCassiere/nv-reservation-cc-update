@@ -31,4 +31,4 @@ If you have added any new keys, you may run `npm run sync-i18n` to find the othe
 
 ## Code-style
 
-Please set up your code style with [prettier](https://prettier.io/). This project has a [.prettierrc](.prettierrc) file that can be used for code style.
+Please set up your code style with [prettier](https://prettier.io/). This project has a [.prettierrc.cjs](.prettierrc.cj) file that can be used for code style.

@@ -32,9 +32,9 @@ Please adhere to this project's [CODE OF CONDUCT](CODE_OF_CONDUCT.md).
 ## Development
 
 1. Clone the repository.
-2. Install dependencies `yarn install`.
+2. Install dependencies `npm run install`.
 3. Create a `.env` file and add the necessary `secrets` into it. You can use the `.env.example` file as a reference.
-4. Run the development server using `yarn dev`.
+4. Run the development server using `npm run dev`.
 
 ## Authors
 
