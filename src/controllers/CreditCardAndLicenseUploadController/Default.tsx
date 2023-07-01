@@ -3,17 +3,17 @@ import { useTranslation } from "react-i18next";
 
 import CardLayout, { CardTitleHeading, CardSubtitleSpan } from "../../layouts/Card";
 import { Button as UIButton } from "@/components/ui/button";
-import Alert from "../../components/Elements/Default/Alert";
-import ImageDropzoneWithPreviewDefault from "../../components/ImageDropzoneWithPreview/Default";
-import DynamicCreditCardDefault from "../../components/DynamicCreditCard/Default";
-import CreditCardFormDefault from "../../components/CreditCardForm/Default";
-import { GoBackConfirmationDialog } from "../../components/Dialogs";
+import Alert from "@/components/Elements/Default/Alert";
+import ImageDropzoneWithPreviewDefault from "@/components/ImageDropzoneWithPreview/Default";
+import DynamicCreditCardDefault from "@/components/DynamicCreditCard/Default";
+import CreditCardFormDefault from "@/components/CreditCardForm/Default";
+import { GoBackConfirmationDialog } from "@/components/Dialogs";
 
-import { useCreditCardLogic } from "../../hooks/logic/useCreditCardLogic";
-import { useDriverLicenseLogic } from "../../hooks/logic/useDriverLicenseLogic";
-import { useFormStore } from "../../hooks/stores/useFormStore";
-import { useDialogStore } from "../../hooks/stores/useDialogStore";
-import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
+import { useCreditCardLogic } from "@/hooks/logic/useCreditCardLogic";
+import { useDriverLicenseLogic } from "@/hooks/logic/useDriverLicenseLogic";
+import { useFormStore } from "@/hooks/stores/useFormStore";
+import { useDialogStore } from "@/hooks/stores/useDialogStore";
+import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
 
 interface IProps {}
 
@@ -29,16 +29,8 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
   const { setBackConfirmationDialogState, isBackConfirmationDialogOpen } = useDialogStore();
 
   // credit card relate handlers
-  const {
-    validateCardData,
-    handleCardInputChange,
-    handleCardInputBlur,
-    handleCardInputFocus,
-    isValidCheck: isCreditCardValid,
-    currentFocus,
-    schemaErrors,
-    formValues,
-  } = useCreditCardLogic(initialCreditCardFormData);
+  const { form, currentFocus, changeCurrentFocus } = useCreditCardLogic(initialCreditCardFormData);
+  const cardValues = form.watch();
 
   // license related handlers
   const {
@@ -60,18 +52,14 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
   });
 
   // validate the form data against the schema
-  const handleNextState = useCallback(async () => {
-    const formValid = await isCreditCardValid();
+  const handleNextState = form.handleSubmit((values) => {
     if (!frontLicenseImage) setFrontImageError(true);
     if (!backLicenseImage) setBackImageError(true);
-
-    if (!backLicenseImage || !frontLicenseImage || !formValid) {
-      await validateCardData(() => {});
+    if (!backLicenseImage || !frontLicenseImage) {
       return;
     }
-    await validateCardData((values) => {
-      setCustomerCreditCardToStore(values);
-    });
+
+    setCustomerCreditCardToStore(values);
     setDriversLicenseToStore({
       frontImageUrl: URL.createObjectURL(frontLicenseImage),
       backImageUrl: URL.createObjectURL(backLicenseImage),
@@ -80,17 +68,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
     });
 
     goNext();
-  }, [
-    backLicenseImage,
-    frontLicenseImage,
-    goNext,
-    isCreditCardValid,
-    validateCardData,
-    setBackImageError,
-    setFrontImageError,
-    setCustomerCreditCardToStore,
-    setDriversLicenseToStore,
-  ]);
+  });
 
   const dismissBackDialog = useCallback(() => {
     setBackConfirmationDialogState(false);
@@ -158,16 +136,10 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
           <CardSubtitleSpan>{t("forms.creditCard.message")}</CardSubtitleSpan>
           <div className="mt-4 grid grid-cols-1">
             <div className="my-4 md:my-2">
-              <DynamicCreditCardDefault currentFocus={currentFocus} formData={formValues} />
+              <DynamicCreditCardDefault currentFocus={currentFocus} formData={cardValues} />
             </div>
             <div className="mt-4">
-              <CreditCardFormDefault
-                formData={formValues}
-                handleChange={handleCardInputChange}
-                handleBlur={handleCardInputBlur}
-                handleFocus={handleCardInputFocus}
-                schemaErrors={schemaErrors}
-              />
+              <CreditCardFormDefault form={form} changeCurrentFocus={changeCurrentFocus} />
             </div>
           </div>
         </div>

@@ -12,7 +12,7 @@ interface IProps {
 
 const DefaultCreditCard: React.FC<IProps> = ({ currentFocus, formData }) => {
   const { t } = useTranslation();
-  const expiry = `${formData.monthExpiry}/${formData.yearExpiry}`;
+  const expiry = `${formData.monthYearExpiry}`;
   return (
     <Cards
       number={formData.number.replaceAll(" ", "").trim()}
