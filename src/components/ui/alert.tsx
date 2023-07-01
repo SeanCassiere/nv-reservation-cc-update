@@ -41,11 +41,4 @@ const AlertDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttrib
 );
 AlertDescription.displayName = "AlertDescription";
 
-const defaultExport = {
-  Alert,
-  AlertTitle,
-  AlertDescription,
-};
-
 export { Alert, AlertTitle, AlertDescription };
-export default defaultExport;
