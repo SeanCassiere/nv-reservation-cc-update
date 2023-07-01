@@ -1,20 +1,19 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "@/utils/constants";
-import { supportedLanguages } from "@/i18n";
-import { isValueTrue } from "@/utils/common";
-import { devConfigToQueryUrl } from "./utils";
+import CardLayout from "../../layouts/Card";
+import { Button as UIButton } from "@/components/ui/button";
+import AnchorLink from "@/components/ui/anchor-link";
 
 import { useConfigStore } from "@/hooks/stores/useConfigStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
-import { TextInput } from "./helpers";
-import CheckInput from "../Elements/Default/CheckInput";
-import SelectInput from "../Elements/Default/SelectInput";
-import AnchorLink from "@/components/ui/anchor-link";
-import { Button as UIButton } from "@/components/ui/button";
-import CardLayout from "../../layouts/Card";
+import { supportedLanguages } from "@/i18n";
+import { isValueTrue } from "@/utils/common";
+import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "@/utils/constants";
+
+import { TextInput, SelectInput, CheckInput } from "./helpers";
+import { devConfigToQueryUrl } from "./utils";
 
 export type DevConfigObject = {
   referenceId: string;
