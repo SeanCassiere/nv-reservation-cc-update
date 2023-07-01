@@ -47,7 +47,7 @@ const DevScreen = memo((props: { title: string }) => {
     <div>
       <h5>{props.title}</h5>
       <div className="flex gap-1">
-        <UIButton type="button" variant="secondary" disabled={!isPreviousAvailable} onClick={goPrev}>
+        <UIButton type="button" variant="outline" disabled={!isPreviousAvailable} onClick={goPrev}>
           {prevPageText}
         </UIButton>
         <UIButton type="button" className="w-full" onClick={goNext}>

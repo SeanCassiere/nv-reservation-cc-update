@@ -293,7 +293,7 @@ const RowItem: React.FC<RowItemProps & { isLoading?: boolean }> = ({ isLoading, 
           "text-gray-500": !props.value && !props.isRed && !props.highlight,
         },
         {
-          "bg-indigo-400": props.highlight,
+          "bg-slate-800": props.highlight,
           "text-white": props.highlight,
           "font-semibold": props.highlight,
         },
@@ -326,7 +326,7 @@ const SkeletonBlock: React.FC<{ highlight?: boolean; minWidth?: boolean }> = ({ 
         "inline-block",
         "w-full",
         "animate-pulse",
-        { "bg-gray-200": !highlight, "bg-indigo-300": highlight },
+        { "bg-gray-200": !highlight, "bg-slate-300": highlight },
         { "w-10": minWidth }
       )}
     >

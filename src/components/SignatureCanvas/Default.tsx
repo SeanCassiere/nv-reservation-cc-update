@@ -133,7 +133,13 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
         <UIButton variant="destructive" size="sm" style={{ width: "60%" }} onClick={handleClear}>
           {clearText ?? t("forms.rentalSignature.clearInput")}
         </UIButton>
-        <UIButton size="sm" style={{ width: "40%" }} onClick={() => handleSave()} disabled={isDisabled}>
+        <UIButton
+          size="sm"
+          variant="secondary"
+          style={{ width: "40%" }}
+          onClick={() => handleSave()}
+          disabled={isDisabled}
+        >
           {saveText ?? t("forms.rentalSignature.saveInput")}
         </UIButton>
       </div>

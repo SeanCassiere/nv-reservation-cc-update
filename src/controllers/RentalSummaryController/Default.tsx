@@ -33,7 +33,7 @@ const DefaultRentalSummaryController: React.FC<IProps> = () => {
         <div className="mt-6 flex">
           {isPreviousAvailable && (
             <div className="pr-0">
-              <UIButton variant="secondary" onClick={goPrev}>
+              <UIButton variant="outline" onClick={goPrev}>
                 {prevPageText}
               </UIButton>
             </div>

@@ -141,7 +141,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
           <div className="mt-6 flex">
             {isPreviousAvailable && (
               <div className="pr-0">
-                <UIButton variant="secondary" onClick={handleOpenModalConfirmation}>
+                <UIButton variant="outline" onClick={handleOpenModalConfirmation}>
                   {prevPageText}
                 </UIButton>
               </div>
