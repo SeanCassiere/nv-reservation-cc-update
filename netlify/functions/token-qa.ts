@@ -1,24 +1,26 @@
-import { builder, type Handler } from "@netlify/functions";
+import { type Handler } from "@netlify/functions";
 
 import { getAccessTokenHandler } from "../../helpers/getAccessTokenHandler";
+import { responseHeaders } from "../../helpers/requestHelpers";
 
-const tokenHandlerQa: Handler = async (event, ctx) => {
-  const requestParams = new URLSearchParams(event.rawQuery);
+const tokenHandlerQa: Handler = async (event) => {
+  if (event.httpMethod.toLowerCase() !== "post") {
+    return {
+      statusCode: 405,
+      body: "Method Not Allowed",
+      headers: responseHeaders,
+    };
+  }
 
-  const requestClientIds = requestParams.getAll("client_id");
-  const requestBookingTypes = requestParams.getAll("reference_type");
-  const requestBookingIds = requestParams.getAll("reference_id");
-  const requestIp = event.headers["x-nf-client-connection-ip"] ?? event.headers["client-ip"] ?? "";
+  const requestIp = event.headers["x-nf-client-connection-ip"] ?? event.headers["client-ip"];
 
   return await getAccessTokenHandler({
-    qa: true,
-    clientIdSet: requestClientIds,
-    referenceTypeSet: requestBookingTypes,
-    referenceIdSet: requestBookingIds,
     requestIp,
+    body: event.body,
+    qa: true,
   });
 };
 
-const handler = builder(tokenHandlerQa);
+const handler = tokenHandlerQa;
 
 export { handler };
