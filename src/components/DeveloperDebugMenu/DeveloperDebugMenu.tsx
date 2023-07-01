@@ -9,7 +9,7 @@ import { devConfigToQueryUrl } from "./utils";
 import { useConfigStore } from "@/hooks/stores/useConfigStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
-import TextInput from "../Elements/Default/TextInput";
+import { TextInput } from "./helpers";
 import CheckInput from "../Elements/Default/CheckInput";
 import SelectInput from "../Elements/Default/SelectInput";
 import AnchorLink from "../Elements/Default/AnchorLink";
@@ -297,8 +297,8 @@ const ConfigCreator: React.FC = () => {
                 onChange={handleNormalInputChange}
                 min="0"
                 label={t("developer.configCreator.userId")}
-                helperText={t("developer.configCreator.userIdHelperText")}
               />
+              <span className="text-sm text-slate-800">{t("developer.configCreator.userIdHelperText")}</span>
             </div>
             {/*  */}
             <div className="mb-2 mt-2 grid grid-cols-2 gap-3">
