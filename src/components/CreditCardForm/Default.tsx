@@ -67,7 +67,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({ form, changeCurrentFocus }) 
               <FormLabel>{t("forms.creditCard.labels.expMonthYear")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t("forms.creditCard.labels.placeholders.expMonthYear")}
+                  placeholder={t("forms.creditCard.labels.placeholders.expMonthYear") as any}
                   autoComplete="cc-exp"
                   inputMode="numeric"
                   onFocus={onFocus("expiry")}
@@ -125,7 +125,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({ form, changeCurrentFocus }) 
               <FormLabel>{t("forms.creditCard.labels.nameOnCard")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t("forms.creditCard.labels.placeholders.name")}
+                  placeholder={t("forms.creditCard.labels.placeholders.name") as any}
                   autoComplete="cc-name"
                   onFocus={onFocus("name")}
                   {...field}
@@ -149,7 +149,7 @@ const DefaultCardDetailsForm: React.FC<IProps> = ({ form, changeCurrentFocus }) 
               <FormLabel>{t("forms.creditCard.labels.billingZip")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t("forms.creditCard.labels.placeholders.zipCode")}
+                  placeholder={t("forms.creditCard.labels.placeholders.zipCode") as any}
                   autoComplete="postal-code"
                   {...field}
                 />

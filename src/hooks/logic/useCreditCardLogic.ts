@@ -12,17 +12,20 @@ type StateStorage = CreditCardStoreType["data"];
 
 const creditCardSchema = z.object({
   name: z
-    .string({ required_error: i18n.t("forms.creditCard.errors.name") })
-    .min(1, i18n.t("forms.creditCard.errors.name")),
+    .string({ required_error: i18n.t("forms.creditCard.errors.name") as unknown as string })
+    .min(1, i18n.t("forms.creditCard.errors.name") as unknown as string),
   type: z.string(),
   number: z
     .string()
-    .refine((value) => Payment.fns.validateCardNumber(`${value}`), i18n.t("forms.creditCard.errors.cardNumber")),
+    .refine(
+      (value) => Payment.fns.validateCardNumber(`${value}`),
+      i18n.t("forms.creditCard.errors.cardNumber") as unknown as string
+    ),
   cvv: z
     .string({
-      required_error: i18n.t("forms.creditCard.errors.cvv"),
+      required_error: i18n.t("forms.creditCard.errors.cvv") as unknown as string,
     })
-    .min(1, i18n.t("forms.creditCard.errors.cvv")),
+    .min(1, i18n.t("forms.creditCard.errors.cvv") as unknown as string),
   monthYearExpiry: z
     .string()
     .refine((value) => Payment.fns.validateCardExpiry(`${value}`), "Enter a valid expiration date"),
@@ -30,7 +33,7 @@ const creditCardSchema = z.object({
     .string({
       required_error: i18n.t("forms.creditCard.errors.billingZip"),
     })
-    .min(1, i18n.t("forms.creditCard.errors.billingZip")),
+    .min(1, i18n.t("forms.creditCard.errors.billingZip") as unknown as string),
 });
 
 type CreditCardSchema = z.infer<typeof creditCardSchema>;
