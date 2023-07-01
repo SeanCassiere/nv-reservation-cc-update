@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import SignatureCanvas from "react-signature-canvas";
 
-import Button from "../Elements/Default/Button";
+import { Button as UIButton } from "@/components/ui/button";
 
 interface IProps {
   onSignature?: (signatureUrl: string) => void;
@@ -114,7 +114,7 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
     <React.Fragment>
       <div
         ref={signatureDivRef}
-        className="flex items-center justify-center rounded-md border-4 border-indigo-900 p-1"
+        className="flex items-center justify-center rounded-md border-4 border-slate-700 p-1"
         style={{ height: "430px" }}
       >
         {showPad && (
@@ -130,12 +130,18 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
         )}
       </div>
       <div className="mx-5 mt-2 flex gap-2">
-        <Button color="danger" variant="muted" size="sm" style={{ width: "60%" }} onClick={handleClear}>
+        <UIButton variant="destructive" size="sm" style={{ width: "60%" }} onClick={handleClear}>
           {clearText ?? t("forms.rentalSignature.clearInput")}
-        </Button>
-        <Button color="primary" size="sm" style={{ width: "40%" }} onClick={() => handleSave()} disabled={isDisabled}>
+        </UIButton>
+        <UIButton
+          size="sm"
+          variant="secondary"
+          style={{ width: "40%" }}
+          onClick={() => handleSave()}
+          disabled={isDisabled}
+        >
           {saveText ?? t("forms.rentalSignature.saveInput")}
-        </Button>
+        </UIButton>
       </div>
     </React.Fragment>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 
 type IconProps = {
   className?: string;
@@ -11,7 +11,7 @@ export const ExclamationIcon: React.FC<IconProps> = ({ className }) => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={classNames("w-5", "h-5", className)}
+      className={clsx("w-5", "h-5", className)}
     >
       <path
         fillRule="evenodd"
@@ -28,7 +28,7 @@ export const SuccessIcon: React.FC<IconProps> = ({ className }) => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={classNames("w-5", "h-5", className)}
+      className={clsx("w-5", "h-5", className)}
     >
       <path
         fillRule="evenodd"
@@ -47,7 +47,7 @@ export const PencilIcon: React.FC<IconProps> = ({ className }) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={classNames("w-5", "h-5", className)}
+      className={clsx("w-5", "h-5", className)}
     >
       <path
         strokeLinecap="round"
@@ -66,7 +66,7 @@ export const CreditCardIcon: React.FC<IconProps> = ({ className }) => {
       strokeWidth={0}
       viewBox="0 0 16 16"
       xmlns="http://www.w3.org/2000/svg"
-      className={classNames("w-5", "h-5", className)}
+      className={clsx("w-5", "h-5", className)}
     >
       <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-2zm0 3a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"></path>
     </svg>
@@ -81,7 +81,7 @@ export const MapIcon: React.FC<IconProps> = ({ className }) => {
       strokeWidth={0}
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className={classNames("w-5", "h-5", className)}
+      className={clsx("w-5", "h-5", className)}
     >
       <g>
         <path fill="none" d="M0 0h24v24H0z"></path>
@@ -99,7 +99,7 @@ export const PersonIcon: React.FC<IconProps> = ({ className }) => {
       strokeWidth={0}
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className={classNames("w-5", "h-5", className)}
+      className={clsx("w-5", "h-5", className)}
     >
       <path fill="none" d="M0 0h24v24H0z"></path>
       <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
@@ -115,7 +115,7 @@ export const ExclamationTriangleIcon: React.FC<IconProps> = ({ className }) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={classNames("w-5", "h-5", className)}
+      className={clsx("w-5", "h-5", className)}
     >
       <path
         strokeLinecap="round"

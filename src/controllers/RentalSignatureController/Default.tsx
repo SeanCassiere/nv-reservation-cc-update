@@ -2,17 +2,18 @@ import React, { Fragment, useEffect, useState, useCallback, useMemo } from "reac
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
-import Alert from "../../components/Elements/Default/Alert";
-import SignatureCanvasDefault from "../../components/SignatureCanvas/Default";
-import Button from "../../components/Elements/Default/Button";
-import { GoBackConfirmationDialog } from "../../components/Dialogs";
+import SignatureCanvasDefault from "@/components/SignatureCanvas/Default";
+import { Button as UIButton } from "@/components/ui/button";
+import { GoBackConfirmationDialog } from "@/components/Dialogs";
+import { ExclamationIcon } from "@/components/Icons";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-import { APP_CONSTANTS } from "../../utils/constants";
-import { useFormStore } from "../../hooks/stores/useFormStore";
-import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { useRentalSavedDigitalSignature } from "../../hooks/network/useRentalSavedDigitalSignature";
-import { useDialogStore } from "../../hooks/stores/useDialogStore";
-import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
+import { APP_CONSTANTS } from "@/utils/constants";
+import { useRentalSavedDigitalSignature } from "@/hooks/network/useRentalSavedDigitalSignature";
+import { useFormStore } from "@/hooks/stores/useFormStore";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { useDialogStore } from "@/hooks/stores/useDialogStore";
+import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
 
 interface IProps {}
 
@@ -133,7 +134,13 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
         })}
       >
         <div className="d-grid mt-3">
-          {showRequiredMessage && <Alert color="danger">{t("forms.rentalSignature.signatureRequired")}</Alert>}
+          {showRequiredMessage && (
+            <Alert className="mb-1" variant="destructive">
+              <ExclamationIcon />
+              <AlertTitle>Missing</AlertTitle>
+              <AlertDescription>{t("forms.rentalSignature.signatureRequired")}</AlertDescription>
+            </Alert>
+          )}
           <SignatureCanvasDefault
             onSignature={handleSettingSignatureUrl}
             initialDataURL={initialSignatureUrl !== "" ? initialSignatureUrl : undefined}
@@ -141,15 +148,15 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
           <div className="mt-6 flex">
             {isPreviousAvailable && (
               <div className="pr-0">
-                <Button color="primary" variant="muted" size="lg" onClick={handleOpenModalConfirmation}>
+                <UIButton variant="outline" onClick={handleOpenModalConfirmation}>
                   {prevPageText}
-                </Button>
+                </UIButton>
               </div>
             )}
             <div className={isPreviousAvailable ? "flex-1 pl-2" : "flex-1"}>
-              <Button color="primary" size="lg" disabled={signatureUrl === ""} onClick={handleNextState}>
+              <UIButton disabled={signatureUrl === ""} className="w-full" onClick={handleNextState}>
                 {nextPageText}
-              </Button>
+              </UIButton>
             </div>
           </div>
         </div>

@@ -2,11 +2,13 @@ import React, { lazy, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../Card";
-import { useFormStore } from "../../hooks/stores/useFormStore";
-import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { APP_CONSTANTS, SuccessImgUri } from "../../utils/constants";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
-const Alert = lazy(() => import("../../components/Elements/Default/Alert"));
+import { useFormStore } from "@/hooks/stores/useFormStore";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
+import { ExclamationIcon } from "@/components/Icons";
+
 const DefaultRentalSummary = lazy(() => import("../../components/RentalSummary/Default"));
 const CreditCardFormSummary = lazy(() => import("../../components/FormSummary/CreditCard"));
 const DriverLicenseFormSummary = lazy(() => import("../../components/FormSummary/DriverLicense"));
@@ -33,7 +35,13 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
   return (
     <CardLayout title={t("successSubmission.title")} image={SuccessImgUri}>
       <div className="mt-4">
-        {isEmpty && <Alert color="warning">{t("forms.formsSummary.noData", { context: "submitted" })}</Alert>}
+        {isEmpty && (
+          <Alert className="mb-1" variant="destructive">
+            <ExclamationIcon />
+            <AlertTitle>Missing</AlertTitle>
+            <AlertDescription>{t("forms.formsSummary.noData", { context: "submitted" })}</AlertDescription>
+          </Alert>
+        )}
         {!isEmpty && (
           <>
             <div className="text-md pb-1 pt-2 font-medium text-gray-600">

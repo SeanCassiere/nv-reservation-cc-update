@@ -1,11 +1,11 @@
 import React from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 
 type Props = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 
 const AnchorLink: React.FC<Props> = ({ className, children, ...props }) => {
   return (
-    <a className={classNames("underline", className ? [...className.split(" ")] : undefined)} {...props}>
+    <a className={clsx("underline", className ? [...className.split(" ")] : undefined)} {...props}>
       {children}
     </a>
   );

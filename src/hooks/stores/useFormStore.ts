@@ -12,8 +12,6 @@ export type CreditCardStoreType = GenericFormStoreType<{
   number: string;
   cvv: string;
   billingZip: string;
-  monthExpiry: string;
-  yearExpiry: string;
   monthYearExpiry: string;
 }>;
 
@@ -48,8 +46,6 @@ export const formsInitialState: ApplicationFormsStoreType = {
       number: "",
       cvv: "",
       billingZip: "",
-      monthExpiry: "",
-      yearExpiry: "",
       monthYearExpiry: "",
     },
   },

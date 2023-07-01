@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import classNames from "classnames";
+import clsx from "clsx";
 
 import { useClientProfileQuery } from "../../hooks/network/useClientProfile";
 import { useRentalSummaryQuery } from "../../hooks/network/useRentalSummary";
@@ -284,7 +284,7 @@ const RowItem: React.FC<RowItemProps & { isLoading?: boolean }> = ({ isLoading, 
 
   return (
     <li
-      className={classNames(
+      className={clsx(
         "px-4",
         "py-2",
         "font-medium",
@@ -293,7 +293,7 @@ const RowItem: React.FC<RowItemProps & { isLoading?: boolean }> = ({ isLoading, 
           "text-gray-500": !props.value && !props.isRed && !props.highlight,
         },
         {
-          "bg-indigo-400": props.highlight,
+          "bg-slate-800": props.highlight,
           "text-white": props.highlight,
           "font-semibold": props.highlight,
         },
@@ -303,11 +303,11 @@ const RowItem: React.FC<RowItemProps & { isLoading?: boolean }> = ({ isLoading, 
       )}
     >
       <div className="flex items-center">
-        <div className={classNames("flex-1", "pr-2", "md:text-sm")}>
+        <div className={clsx("flex-1", "pr-2", "md:text-sm")}>
           {isLoading ? <SkeletonBlock highlight={props.highlight} /> : props.label}
         </div>
         <div
-          className={classNames("flex-1", i18n.dir() === "ltr" ? "text-right" : "text-left", "md:text-md", {
+          className={clsx("flex-1", i18n.dir() === "ltr" ? "text-right" : "text-left", "md:text-md", {
             "md:text-md": props.value || props.highlight,
             "md:text-sm": !props.value,
           })}
@@ -322,11 +322,11 @@ const RowItem: React.FC<RowItemProps & { isLoading?: boolean }> = ({ isLoading, 
 const SkeletonBlock: React.FC<{ highlight?: boolean; minWidth?: boolean }> = ({ minWidth, highlight }) => {
   return (
     <span
-      className={classNames(
+      className={clsx(
         "inline-block",
         "w-full",
         "animate-pulse",
-        { "bg-gray-200": !highlight, "bg-indigo-300": highlight },
+        { "bg-gray-200": !highlight, "bg-slate-300": highlight },
         { "w-10": minWidth }
       )}
     >

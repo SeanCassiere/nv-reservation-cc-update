@@ -3,7 +3,12 @@
     "composite": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "allowSyntheticDefaultImports": true
   },
   "include": ["vite.config.ts"]
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
-import AnchorLink from "../../components/Elements/Default/AnchorLink";
+import AnchorLink from "@/components/ui/anchor-link";
 
 const NotFoundImgUri = "/assets/undraw_page_not_found_su7k.svg";
 
@@ -18,7 +18,7 @@ const NotAuthorized: React.FC = () => {
           href="mailto:support@rentallsoftware.com"
           target="_blank"
           rel="noreferrer"
-          className="text-indigo-600"
+          className="font-bold text-slate-900"
         >
           {"support@rentallsoftware.com"}
         </AnchorLink>
