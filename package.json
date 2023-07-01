@@ -3,7 +3,7 @@
   "version": "1.5.1",
   "private": true,
   "scripts": {
-    "dev": "netlify dev",
+    "dev": "netlify dev --targetPort 3000",
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
