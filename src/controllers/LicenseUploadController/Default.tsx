@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import CardLayout from "../../layouts/Card";
 import Alert from "../../components/Elements/Default/Alert";
 import ImageDropzoneWithPreviewDefault from "../../components/ImageDropzoneWithPreview/Default";
-import Button from "../../components/Elements/Default/Button";
+import { Button as UIButton } from "@/components/ui/button";
 import { GoBackConfirmationDialog } from "../../components/Dialogs";
 
 import { useDriverLicenseLogic } from "../../hooks/logic/useDriverLicenseLogic";
@@ -185,15 +185,15 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
           <div className="mt-1 flex">
             {isPreviousAvailable && (
               <div className="pr-0">
-                <Button color="primary" variant="muted" size="lg" onClick={handleOpenModalConfirmation}>
+                <UIButton variant="secondary" onClick={handleOpenModalConfirmation}>
                   {prevPageText}
-                </Button>
+                </UIButton>
               </div>
             )}
             <div className={isPreviousAvailable ? "flex-1 pl-2" : "flex-1"}>
-              <Button color="primary" size="lg" onClick={handleNextState}>
+              <UIButton onClick={handleNextState} className="w-full">
                 {nextPageText}
-              </Button>
+              </UIButton>
             </div>
           </div>
         </div>

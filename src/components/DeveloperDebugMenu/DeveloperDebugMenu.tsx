@@ -1,19 +1,19 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "../../utils/constants";
-import { supportedLanguages } from "../../i18n";
-import { isValueTrue } from "../../utils/common";
+import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "@/utils/constants";
+import { supportedLanguages } from "@/i18n";
+import { isValueTrue } from "@/utils/common";
 import { devConfigToQueryUrl } from "./utils";
 
-import { useConfigStore } from "../../hooks/stores/useConfigStore";
-import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
+import { useConfigStore } from "@/hooks/stores/useConfigStore";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
 import TextInput from "../Elements/Default/TextInput";
 import CheckInput from "../Elements/Default/CheckInput";
 import SelectInput from "../Elements/Default/SelectInput";
 import AnchorLink from "../Elements/Default/AnchorLink";
-import Button from "../Elements/Default/Button";
+import { Button as UIButton } from "@/components/ui/button";
 import CardLayout from "../../layouts/Card";
 
 export type DevConfigObject = {
@@ -67,9 +67,9 @@ const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> =
           <div className="flex justify-center align-middle">
             <h1 className="flex-1">{t("developer.drawerTitle")}</h1>
             <div>
-              <Button color="danger" size="sm" variant="muted" onClick={handleClose}>
+              <UIButton size="icon" variant="destructive" onClick={handleClose}>
                 &times;
-              </Button>
+              </UIButton>
             </div>
           </div>
         }
@@ -198,10 +198,9 @@ const ConfigCreator: React.FC = () => {
       </div>
       <div className="flex w-full flex-col gap-1 rounded bg-yellow-50 p-3" style={{ overflowWrap: "anywhere" }}>
         <p className="m-0 text-sm text-gray-700">{window.location.origin + "/?" + devConfigToQueryUrl(config)}</p>
-        <Button
+        <UIButton
           type="button"
-          color="primary"
-          variant="muted"
+          variant="secondary"
           size="sm"
           onClick={() => {
             navigator.clipboard.writeText(window.location.origin + "/?" + devConfigToQueryUrl(config));
@@ -212,7 +211,7 @@ const ConfigCreator: React.FC = () => {
           }}
         >
           {showCopiedMessage ? t("developer.configCreator.btnCopiedToClipboard") : t("developer.configCreator.btnCopy")}
-        </Button>
+        </UIButton>
       </div>
 
       <form onSubmit={handleSubmit} className="mt-4">
@@ -449,12 +448,10 @@ const ConfigCreator: React.FC = () => {
         </div>
 
         <div className="mt-5 flex w-full gap-1">
-          <Button type="submit" className="bg-gray-300 px-4 py-2">
-            {t("developer.configCreator.btnSave")}
-          </Button>
-          <Button type="button" color="primary" variant="muted" className="bg-teal-300 px-4 py-2" onClick={handleReset}>
+          <UIButton type="submit">{t("developer.configCreator.btnSave")}</UIButton>
+          <UIButton type="button" color="primary" variant="secondary" onClick={handleReset}>
             {t("developer.configCreator.btnReset")}
-          </Button>
+          </UIButton>
         </div>
       </form>
     </React.Fragment>

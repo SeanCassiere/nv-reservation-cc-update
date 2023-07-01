@@ -2,7 +2,7 @@ import React, { useMemo, lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
-import Button from "../../components/Elements/Default/Button";
+import { Button as UIButton } from "@/components/ui/button";
 
 import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
 import { useFormStore } from "../../hooks/stores/useFormStore";
@@ -44,9 +44,9 @@ const PreSubmitSummaryControllerDefault: React.FC = () => {
       </div>
       <div className="mt-6 flex">
         <div className={"flex-1"}>
-          <Button color="primary" size="lg" onClick={goNext}>
+          <UIButton className="w-full" size="lg" onClick={goNext}>
             {nextPageText}
-          </Button>
+          </UIButton>
         </div>
       </div>
     </CardLayout>

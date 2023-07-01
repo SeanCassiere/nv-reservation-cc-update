@@ -1,7 +1,7 @@
 import React, { memo, Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
 
-import Button from "../../components/Elements/Default/Button";
+import { Button as UIButton } from "@/components/ui/button";
 import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 
 import { APP_CONSTANTS } from "../../utils/constants";
@@ -47,12 +47,12 @@ const DevScreen = memo((props: { title: string }) => {
     <div>
       <h5>{props.title}</h5>
       <div className="flex gap-1">
-        <Button type="button" color="primary" variant="muted" disabled={!isPreviousAvailable} onClick={goPrev}>
+        <UIButton type="button" variant="secondary" disabled={!isPreviousAvailable} onClick={goPrev}>
           {prevPageText}
-        </Button>
-        <Button type="button" onClick={goNext}>
+        </UIButton>
+        <UIButton type="button" className="w-full" onClick={goNext}>
           {nextPageText}
-        </Button>
+        </UIButton>
       </div>
     </div>
   );

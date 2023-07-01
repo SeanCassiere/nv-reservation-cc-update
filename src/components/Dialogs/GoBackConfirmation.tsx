@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "../Icons";
-import Button from "../Elements/Default/Button";
+import { Button as UIButton } from "@/components/ui/button";
 
 interface Props {
   isOpen: boolean;
@@ -55,12 +55,12 @@ export const GoBackConfirmationDialog: React.FC<Props> = React.memo((props) => {
                     <p className="text-sm text-gray-500">{props.message}</p>
                   </div>
                   <div className="mt-10 flex flex-col gap-2">
-                    <Button type="button" onClick={props.onConfirm} size="sm" autoFocus>
+                    <UIButton type="button" onClick={props.onConfirm} size="sm" autoFocus>
                       {props.confirmBtnText}
-                    </Button>
-                    <Button type="button" onClick={props.onCancel} size="sm" variant="text" color="danger">
+                    </UIButton>
+                    <UIButton type="button" onClick={props.onCancel} size="sm" variant="ghost">
                       {props.cancelBtnText}
-                    </Button>
+                    </UIButton>
                   </div>
                 </div>
               </div>

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import CardLayout from "../../layouts/Card";
 import Alert from "../../components/Elements/Default/Alert";
 import SignatureCanvasDefault from "../../components/SignatureCanvas/Default";
-import Button from "../../components/Elements/Default/Button";
+import { Button as UIButton } from "@/components/ui/button";
 import { GoBackConfirmationDialog } from "../../components/Dialogs";
 
 import { APP_CONSTANTS } from "../../utils/constants";
@@ -141,15 +141,15 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
           <div className="mt-6 flex">
             {isPreviousAvailable && (
               <div className="pr-0">
-                <Button color="primary" variant="muted" size="lg" onClick={handleOpenModalConfirmation}>
+                <UIButton variant="secondary" onClick={handleOpenModalConfirmation}>
                   {prevPageText}
-                </Button>
+                </UIButton>
               </div>
             )}
             <div className={isPreviousAvailable ? "flex-1 pl-2" : "flex-1"}>
-              <Button color="primary" size="lg" disabled={signatureUrl === ""} onClick={handleNextState}>
+              <UIButton disabled={signatureUrl === ""} className="w-full" onClick={handleNextState}>
                 {nextPageText}
-              </Button>
+              </UIButton>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
-import Button from "../../components/Elements/Default/Button";
+import { Button as UIButton } from "@/components/ui/button";
 import DefaultRentalSummary from "../../components/RentalSummary/Default";
 
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
@@ -33,15 +33,15 @@ const DefaultRentalSummaryController: React.FC<IProps> = () => {
         <div className="mt-6 flex">
           {isPreviousAvailable && (
             <div className="pr-0">
-              <Button color="primary" variant="muted" size="lg" onClick={goPrev}>
+              <UIButton variant="secondary" onClick={goPrev}>
                 {prevPageText}
-              </Button>
+              </UIButton>
             </div>
           )}
           <div className={isPreviousAvailable ? "flex-1 pl-2" : "flex-1"}>
-            <Button color="primary" size="lg" onClick={goNext}>
+            <UIButton className="w-full" onClick={goNext}>
               {nextPageText}
-            </Button>
+            </UIButton>
           </div>
         </div>
       </div>

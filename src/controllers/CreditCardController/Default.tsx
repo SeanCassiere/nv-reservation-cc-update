@@ -1,10 +1,10 @@
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
+import { Button as UIButton } from "@/components/ui/button";
 import CardLayout from "../../layouts/Card";
 import DynamicCreditCardDefault from "../../components/DynamicCreditCard/Default";
 import CardDetailsFormDefault from "../../components/CreditCardForm/Default";
-import Button from "../../components/Elements/Default/Button";
 
 import { useCreditCardLogic } from "../../hooks/logic/useCreditCardLogic";
 import { useFormStore } from "../../hooks/stores/useFormStore";
@@ -55,15 +55,15 @@ const DefaultCreditCardController: React.FC<IProps> = () => {
         <div className="mt-6 flex">
           {isPreviousAvailable && (
             <div>
-              <Button color="primary" variant="muted" size="lg" onClick={goPrev}>
+              <UIButton variant="secondary" onClick={goPrev}>
                 {prevPageText}
-              </Button>
+              </UIButton>
             </div>
           )}
           <div className={isPreviousAvailable ? "flex-1 pl-2" : "flex-1"}>
-            <Button color="primary" size="lg" onClick={handleNextState}>
+            <UIButton className="w-full" onClick={handleNextState}>
               {nextPageText}
-            </Button>
+            </UIButton>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { useDropzone, Accept } from "react-dropzone";
-import { AppNavMode } from "../../hooks/logic/useAppNavContext";
-import Button from "../Elements/Default/Button";
+import { AppNavMode } from "@/hooks/logic/useAppNavContext";
+import { Button as UIButton } from "@/components/ui/button";
 
 const baseStyle = {
   flex: 1,
@@ -119,13 +119,13 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
       </div>
       <div className="mt-2 px-4">
         {previewImage ? (
-          <Button color="danger" variant="muted" size="sm" onClick={handleClearImage}>
+          <UIButton variant="secondary" size="sm" onClick={handleClearImage}>
             {clearButtonText}
-          </Button>
+          </UIButton>
         ) : (
-          <Button color="primary" variant="muted" size="sm" onClick={open}>
+          <UIButton variant="secondary" size="sm" onClick={open}>
             {selectButtonText}
-          </Button>
+          </UIButton>
         )}
       </div>
     </React.Fragment>
