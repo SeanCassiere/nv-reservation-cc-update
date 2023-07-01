@@ -3,11 +3,12 @@ import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
 import { Button as UIButton } from "@/components/ui/button";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { ExclamationIcon } from "@/components/Icons";
 
-import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
-import { useFormStore } from "../../hooks/stores/useFormStore";
+import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
+import { useFormStore } from "@/hooks/stores/useFormStore";
 
-const Alert = lazy(() => import("../../components/Elements/Default/Alert"));
 const CreditCardFormSummary = lazy(() => import("../../components/FormSummary/CreditCard"));
 const DriverLicenseFormSummary = lazy(() => import("../../components/FormSummary/DriverLicense"));
 const RentalSignatureFormSummary = lazy(() => import("../../components/FormSummary/RentalSignature"));
@@ -28,6 +29,13 @@ const PreSubmitSummaryControllerDefault: React.FC = () => {
   return (
     <CardLayout title={t("forms.formsSummary.title")} subtitle={t("forms.formsSummary.message")}>
       <div className="mt-4">
+        {isEmpty && (
+          <Alert className="mb-1" variant="destructive">
+            <ExclamationIcon />
+            <AlertTitle>Missing</AlertTitle>
+            <AlertDescription>{t("forms.formsSummary.noData")}</AlertDescription>
+          </Alert>
+        )}
         {isEmpty && <Alert color="warning">{t("forms.formsSummary.noData")}</Alert>}
         {isCreditCard && (
           <CreditCardFormSummary creditCard={creditCardInfo} editFunc={() => goToEditAPage("creditCard")} />

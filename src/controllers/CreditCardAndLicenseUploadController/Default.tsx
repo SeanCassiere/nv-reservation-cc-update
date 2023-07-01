@@ -2,19 +2,21 @@ import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout, { CardTitleHeading, CardSubtitleSpan } from "../../layouts/Card";
-import { Button as UIButton } from "@/components/ui/button";
-import Alert from "@/components/Elements/Default/Alert";
 import ImageDropzoneWithPreviewDefault from "@/components/ImageDropzoneWithPreview/Default";
 import DynamicCreditCardDefault from "@/components/DynamicCreditCard/Default";
 import CreditCardFormDefault from "@/components/CreditCardForm/Default";
+
+import { Button as UIButton } from "@/components/ui/button";
 import { GoBackConfirmationDialog } from "@/components/Dialogs";
+import { Form } from "@/components/ui/form";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { ExclamationIcon } from "@/components/Icons";
 
 import { useCreditCardLogic } from "@/hooks/logic/useCreditCardLogic";
 import { useDriverLicenseLogic } from "@/hooks/logic/useDriverLicenseLogic";
+import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
 import { useFormStore } from "@/hooks/stores/useFormStore";
 import { useDialogStore } from "@/hooks/stores/useDialogStore";
-import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
-import { Form } from "@/components/ui/form";
 
 interface IProps {}
 
@@ -165,7 +167,13 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
               <div>
                 <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.frontImage.title")}</h2>
                 <div>
-                  {noFrontImageError && <Alert color="danger">{t("forms.licenseUpload.frontImage.notSelected")}</Alert>}
+                  {noFrontImageError && (
+                    <Alert className="mb-1" variant="destructive">
+                      <ExclamationIcon />
+                      <AlertTitle>Missing</AlertTitle>
+                      <AlertDescription>{t("forms.licenseUpload.frontImage.notSelected")}</AlertDescription>
+                    </Alert>
+                  )}
 
                   <ImageDropzoneWithPreviewDefault
                     dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
@@ -193,7 +201,13 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
               <div className="mt-6">
                 <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.backImage.title")}</h2>
                 <div>
-                  {noBackImageError && <Alert color="danger">{t("forms.licenseUpload.backImage.notSelected")}</Alert>}
+                  {noBackImageError && (
+                    <Alert className="mb-1" variant="destructive">
+                      <ExclamationIcon />
+                      <AlertTitle>Missing</AlertTitle>
+                      <AlertDescription>{t("forms.licenseUpload.backImage.notSelected")}</AlertDescription>
+                    </Alert>
+                  )}
                   <ImageDropzoneWithPreviewDefault
                     dragDisplayText={t("forms.licenseUpload.backImage.drag")}
                     selectButtonText={t("forms.licenseUpload.backImage.select")}
