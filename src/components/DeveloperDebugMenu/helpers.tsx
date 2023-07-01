@@ -106,9 +106,9 @@ export const CheckInput: React.FC<CheckInputProps> = ({ id, label, helperText, c
           "w-4",
           "h-4",
           "rounded",
-          "text-indigo-600",
+          "text-slate-700",
           "border-gray-300",
-          "focus:ring-indigo-600",
+          "focus:ring-slate-600",
           className
         )}
         {...inputProps}
