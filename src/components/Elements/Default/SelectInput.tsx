@@ -1,5 +1,5 @@
 import React, { useId } from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 
 import { ExclamationIcon } from "../../Icons";
 
@@ -23,7 +23,7 @@ const SelectInput: React.FC<Props> = ({ id, label, helperText, children, isError
       <div className="relative mt-1">
         <select
           id={id ?? elementId}
-          className={classNames(
+          className={clsx(
             "block",
             "w-full",
             "sm:text-sm",
@@ -53,7 +53,7 @@ const SelectInput: React.FC<Props> = ({ id, label, helperText, children, isError
         )}
       </div>
       {helperText && (
-        <span className={classNames("mt-2", "text-sm", { "text-gray-500": !isError, "text-red-600": isError })}>
+        <span className={clsx("mt-2", "text-sm", { "text-gray-500": !isError, "text-red-600": isError })}>
           {helperText}
         </span>
       )}

@@ -1,5 +1,5 @@
 import React from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 import { cva, VariantProps } from "class-variance-authority";
 
 import { ExclamationIcon, SuccessIcon } from "../../Icons";
@@ -28,7 +28,7 @@ type AlertProps = CustomAlertProps & VariantProps<typeof alertStyles>;
 
 const Alert: React.FC<AlertProps> = ({ children, fullWidth, color: variant, className }) => {
   return (
-    <div className={classNames(alertStyles({ fullWidth, color: variant }), className)}>
+    <div className={clsx(alertStyles({ fullWidth, color: variant }), className)}>
       <div className="flex">
         <div className="flex-shrink-0">
           {variant === "danger" && <ExclamationIcon />}

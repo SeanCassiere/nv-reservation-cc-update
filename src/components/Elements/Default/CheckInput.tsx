@@ -1,5 +1,5 @@
 import React, { useId } from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 
 interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   label?: React.ReactNode;
@@ -14,7 +14,7 @@ const CheckInput: React.FC<Props> = ({ id, label, helperText, className, ...inpu
     <div className="flex h-5 items-center">
       <input
         id={id ?? elementId}
-        className={classNames(
+        className={clsx(
           "w-4",
           "h-4",
           "rounded",
