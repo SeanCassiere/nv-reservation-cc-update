@@ -9,15 +9,17 @@ export async function authenticateWithLambda(opts: { clientId: string; qa: boole
   const { referenceType, referenceIdentifier, responseTemplateId } = useRuntimeStore.getState();
   const { disableGlobalDocumentsForConfirmationEmail, predefinedAdminUserId } = useConfigStore.getState();
 
-  const params = new URLSearchParams();
-  params.append("client_id", `${opts.clientId}`);
-  params.append("reference_type", `${referenceType}`);
-  params.append("reference_id", `${referenceIdentifier}`);
-
   const authUrl = opts.qa ? QA_AUTH_URL : AUTH_URL;
 
   let isError = false;
-  const details = await fetch(authUrl + "?" + params.toString())
+  const details = await fetch(authUrl, {
+    method: "POST",
+    body: JSON.stringify({
+      client_id: `${opts.clientId}`,
+      reference_type: `${referenceType}`,
+      reference_id: `${referenceIdentifier}`,
+    }),
+  })
     .then((res) => res.json() as Promise<{ access_token: string; token_type: string }>)
     .catch((err) => {
       console.error("Auth Error", err);
