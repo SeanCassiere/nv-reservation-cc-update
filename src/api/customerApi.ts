@@ -39,13 +39,16 @@ export async function postCustomerCreditCard(opts: {
   const customerId = opts.customerId;
   const creditCard = opts.creditCard;
 
+  const expiryMonth = creditCard.monthYearExpiry.split("/")[0];
+  const expiryYear = creditCard.monthYearExpiry.split("/")[1];
+
   return await clientFetch(`/Customers/${customerId}/CreditCards`, {
     method: "POST",
     body: JSON.stringify({
       creditCardType: creditCard.type,
       creditCardNumber: creditCard.number?.replaceAll(" ", "")?.trim(),
-      creditCardExpiryMonth: parseInt(creditCard.monthExpiry),
-      creditCardExpiryYear: parseInt(`20${creditCard.yearExpiry}`),
+      creditCardExpiryMonth: parseInt(expiryMonth),
+      creditCardExpiryYear: parseInt(`20${expiryYear}`),
       creditCardCVSNumber: creditCard.cvv?.trim(),
       nameOnCard: creditCard.name?.trim(),
       creditCardBillingZipCode: creditCard.billingZip?.trim(),
