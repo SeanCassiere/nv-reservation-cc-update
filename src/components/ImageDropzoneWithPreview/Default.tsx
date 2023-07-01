@@ -119,11 +119,11 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
       </div>
       <div className="mt-2 px-4">
         {previewImage ? (
-          <UIButton variant="secondary" size="sm" onClick={handleClearImage}>
+          <UIButton variant="secondary" size="sm" className="w-full" onClick={handleClearImage}>
             {clearButtonText}
           </UIButton>
         ) : (
-          <UIButton variant="secondary" size="sm" onClick={open}>
+          <UIButton variant="secondary" size="sm" className="w-full" onClick={open}>
             {selectButtonText}
           </UIButton>
         )}
