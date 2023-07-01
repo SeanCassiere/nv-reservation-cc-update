@@ -1,4 +1,5 @@
 // @ts-check
+/* eslint-disable */
 const { resolve } = require("path");
 
 // these are the default values being using in ./src/i18n.ts
