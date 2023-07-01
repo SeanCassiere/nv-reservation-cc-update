@@ -7,6 +7,8 @@ const defaultAndDev = { ...translationEn, ...translationCommon };
 declare module "i18next" {
   interface CustomTypeOptions {
     defaultNS: "translation";
-    resources: typeof defaultAndDev;
+    resources: {
+      translation: typeof defaultAndDev;
+    };
   }
 }
