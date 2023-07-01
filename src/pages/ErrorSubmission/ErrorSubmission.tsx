@@ -2,9 +2,9 @@ import React, { ReactNode, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "../../layouts/Card";
-import AnchorLink from "../../components/Elements/Default/AnchorLink";
+import AnchorLink from "@/components/ui/anchor-link";
 
-import { useConfigStore } from "../../hooks/stores/useConfigStore";
+import { useConfigStore } from "@/hooks/stores/useConfigStore";
 
 const ErrorImgUri = "/assets/undraw_warning_cyit.svg";
 
@@ -35,7 +35,7 @@ const ErrorSubmission: React.FC<Props> = (props) => {
           href="mailto:support@rentallsoftware.com"
           target="_blank"
           rel="noreferrer"
-          className="text-indigo-600"
+          className="font-bold text-slate-900"
         >
           {"support@rentallsoftware.com"}
         </AnchorLink>

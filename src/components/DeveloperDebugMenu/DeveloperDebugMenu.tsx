@@ -12,7 +12,7 @@ import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 import { TextInput } from "./helpers";
 import CheckInput from "../Elements/Default/CheckInput";
 import SelectInput from "../Elements/Default/SelectInput";
-import AnchorLink from "../Elements/Default/AnchorLink";
+import AnchorLink from "@/components/ui/anchor-link";
 import { Button as UIButton } from "@/components/ui/button";
 import CardLayout from "../../layouts/Card";
 
@@ -192,11 +192,14 @@ const ConfigCreator: React.FC = () => {
   return (
     <React.Fragment>
       <div className="pb-3 pt-1">
-        <AnchorLink href={REPO_URL} rel="noreferrer" target="_blank" className="text-indigo-600">
+        <AnchorLink href={REPO_URL} rel="noreferrer" target="_blank" className="font-bold text-slate-700">
           {t("developer.viewProjectRepo")}
         </AnchorLink>
       </div>
-      <div className="flex w-full flex-col gap-1 rounded bg-yellow-50 p-3" style={{ overflowWrap: "anywhere" }}>
+      <div
+        className="flex w-full flex-col gap-1 rounded border border-slate-100 p-3"
+        style={{ overflowWrap: "anywhere" }}
+      >
         <p className="m-0 text-sm text-gray-700">{window.location.origin + "/?" + devConfigToQueryUrl(config)}</p>
         <UIButton
           type="button"

@@ -4,6 +4,9 @@
 
 @layer base {
   :root {
+    --loading-spinner: #0f172a;
+    --loading-spinner-foreground: #dedede;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -37,6 +40,9 @@
   }
 
   .dark {
+    --loading-spinner: #fff;
+    --loading-spinner-foreground: #475569;
+
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
@@ -75,22 +81,22 @@
   body {
     @apply bg-background text-foreground;
   }
-}
 
-.custom-loader {
-  border: 6px solid #dedede; /* Light grey */
-  border-top: 6px solid #4f46e5; /* Blue */
-  border-radius: 50%;
-  width: 200px;
-  height: 200px;
-  animation: spin 0.75s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+  .custom-loader {
+    border: 6px solid var(--loading-spinner-foreground); /* Light grey */
+    border-top: 6px solid var(--loading-spinner);
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    animation: spin 0.75s linear infinite;
   }
-  100% {
-    transform: rotate(360deg);
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }
