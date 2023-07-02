@@ -100,6 +100,7 @@ const ApplicationController: React.FC = () => {
         showPreSubmitSummary: data.showPreSubmitSummary ?? false,
         disableGlobalDocumentsForConfirmationEmail: data.stopEmailGlobalDocuments,
         disableEmailAttachingDriverLicense: data.stopAttachingDriverLicenseFiles,
+        theme: data.theme,
       });
       setEmailTemplateAndClientId({ newClientId: data.clientId, newTemplateId: data.responseEmailTemplateId });
       setInitReferenceValues({ newReferenceType: data.referenceType, newReferenceIdentifier: data.referenceId });

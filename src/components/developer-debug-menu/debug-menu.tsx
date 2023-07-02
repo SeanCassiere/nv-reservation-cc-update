@@ -17,6 +17,7 @@ import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
 import { supportedLanguages } from "@/i18n";
 import { isValueTrue } from "@/utils/common";
+import { setHtmlDocumentClass } from "@/utils";
 import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "@/utils/constants";
 
 import { configObjectFormSchema, ConfigObjectFormValues, makeUrlQueryFromConfigObject } from "./utils";
@@ -70,7 +71,7 @@ const ConfigCreator = () => {
   const queryParams = new URLSearchParams(cs.rawQueryString);
   const queryDev = queryParams.get("dev");
 
-  const form = useForm<ConfigObjectFormValues & { flowName: string }>({
+  const form = useForm<ConfigObjectFormValues>({
     resolver: zodResolver(configObjectFormSchema),
     defaultValues: {
       referenceId: rs.referenceIdentifier ? String(rs.referenceIdentifier) : "0",
@@ -86,7 +87,7 @@ const ConfigCreator = () => {
       successSubmissionScreen: cs.successSubmissionScreen,
       stopEmailGlobalDocuments: cs.disableGlobalDocumentsForConfirmationEmail,
       stopAttachingDriverLicenseFiles: cs.disableEmailAttachingDriverLicense,
-      flowName: "",
+      theme: cs.theme,
     },
   });
   const formValues = form.watch();
@@ -184,19 +185,6 @@ const ConfigCreator = () => {
         <DevGroupCard title={t("developer.configCreator.generalApplicationConfiguration")}>
           <FormField
             control={form.control}
-            name="clientId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("developer.configCreator.clientId")}</FormLabel>
-                <FormControl>
-                  <Input type="number" min={0} placeholder="eg: 1013" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="lang"
             render={({ field }) => (
               <FormItem>
@@ -215,6 +203,46 @@ const ConfigCreator = () => {
                     ))}
                   </SelectContent>
                 </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="theme"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("developer.configCreator.theme")}</FormLabel>
+                <Select
+                  onValueChange={(value) => {
+                    setHtmlDocumentClass(value);
+                    field.onChange(value);
+                  }}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("developer.configCreator.formSelectValue")} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={APP_CONSTANTS.THEME_DEFAULT_CLASS}>Default</SelectItem>
+                    <SelectItem value={APP_CONSTANTS.THEME_DARK_CLASS}>Dark</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="clientId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("developer.configCreator.clientId")}</FormLabel>
+                <FormControl>
+                  <Input type="number" min={0} placeholder="eg: 1013" {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -418,9 +446,6 @@ const ConfigCreator = () => {
 
         <div className="flex w-full gap-2">
           <Button type="submit">{t("developer.configCreator.btnSave")}</Button>
-          <Button type="reset" color="primary" variant="secondary">
-            {t("developer.configCreator.btnReset")}
-          </Button>
         </div>
       </form>
     </Form>

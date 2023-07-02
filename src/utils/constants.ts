@@ -20,7 +20,12 @@ export const APP_CONSTANTS = {
   SUCCESS_TEST: "test/test",
 
   FORM_SUMMARY_OFF: "off",
+
+  THEME_DEFAULT_CLASS: "",
+  THEME_DARK_CLASS: "dark",
 } as const;
+
+export const ALL_THEME_CLASS_NAMES = [APP_CONSTANTS.THEME_DEFAULT_CLASS, APP_CONSTANTS.THEME_DARK_CLASS];
 
 export const COMPAT_KEYS = {
   DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM: "Default/CreditCardAndLicenseUploadForm",

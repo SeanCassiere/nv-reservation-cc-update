@@ -1,6 +1,7 @@
 import { isValueTrue } from "../../utils/common";
 import { APP_CONSTANTS, COMPAT_KEYS } from "../../utils/constants";
 import { base64Decode } from "../../utils/base64";
+import { setHtmlDocumentClass } from "@/utils";
 
 type QueryConfigState = {
   clientid: string | null;
@@ -11,6 +12,7 @@ type QueryConfigState = {
   showpresubmitsummary?: boolean;
   stopemailglobaldocuments?: boolean;
   stopattachingdriverlicensefiles?: boolean;
+  theme?: string;
 };
 
 export async function bootUp({ windowQueryString }: { windowQueryString: string }) {
@@ -37,6 +39,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     showpresubmitsummary: false,
     stopemailglobaldocuments: false,
     stopattachingdriverlicensefiles: false,
+    theme: "",
   };
 
   if (!configQuery) return null;
@@ -49,6 +52,10 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     config = { ...config, ...configToLowerCaseKeys };
   } catch (error) {
     throw new Error("Could not parse config");
+  }
+
+  if (config.theme) {
+    setHtmlDocumentClass(config.theme);
   }
 
   if (!config.clientid) {
@@ -68,6 +75,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     successSubmissionScreen: normalizeSuccessSubmissionScreen(config.successsubmissionscreen),
     stopEmailGlobalDocuments: config.stopemailglobaldocuments ?? false,
     stopAttachingDriverLicenseFiles: config.stopattachingdriverlicensefiles ?? false,
+    theme: config.theme ?? "",
   };
 }
 

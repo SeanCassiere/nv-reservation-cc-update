@@ -21,6 +21,7 @@ export const configObjectFormSchema = z.object({
   showPreSubmitSummary: z.boolean().default(false),
   stopEmailGlobalDocuments: z.boolean().default(false),
   stopAttachingDriverLicenseFiles: z.boolean().default(false),
+  theme: z.string(),
 });
 
 export type ConfigObjectFormValues = z.infer<typeof configObjectFormSchema>;
@@ -52,6 +53,7 @@ export function makeUrlQueryFromConfigObject(config: ConfigObjectFormValues): st
       : {}),
     ...(config.stopEmailGlobalDocuments ? { stopEmailGlobalDocuments: true } : {}),
     ...(config.stopAttachingDriverLicenseFiles ? { stopAttachingDriverLicenseFiles: true } : {}),
+    ...(config.theme ? { theme: config.theme } : {}),
   };
 
   // JSON stringify and base64 encode the config object
