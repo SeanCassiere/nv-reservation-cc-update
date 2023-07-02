@@ -1,14 +1,33 @@
-import { DevConfigObject } from "./DeveloperDebugMenu";
-import { APP_CONSTANTS } from "../../utils/constants";
-import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { useConfigStore } from "../../hooks/stores/useConfigStore";
-import { base64Encode } from "../../utils/base64";
+import { z } from "zod";
 
-export function devConfigToQueryUrl(config: DevConfigObject) {
+import { APP_CONSTANTS } from "@/utils/constants";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { useConfigStore } from "@/hooks/stores/useConfigStore";
+import { base64Encode } from "@/utils/base64";
+
+const REQUIRED = "Required";
+
+export const configObjectFormSchema = z.object({
+  referenceId: z.string().min(1, REQUIRED),
+  referenceType: z.string().min(1, REQUIRED),
+  lang: z.string().min(1, REQUIRED),
+  qa: z.boolean().default(false),
+  dev: z.boolean().default(false),
+  clientId: z.string().min(1, REQUIRED),
+  userId: z.string().min(1, REQUIRED),
+  emailTemplateId: z.string().min(1, REQUIRED),
+  flow: z.array(z.string()),
+  successSubmissionScreen: z.string().min(1, REQUIRED),
+  showPreSubmitSummary: z.boolean().default(false),
+  stopEmailGlobalDocuments: z.boolean().default(false),
+  stopAttachingDriverLicenseFiles: z.boolean().default(false),
+});
+
+export type ConfigObjectFormValues = z.infer<typeof configObjectFormSchema>;
+
+export function makeUrlQueryFromConfigObject(config: ConfigObjectFormValues): string {
   const params = new URLSearchParams();
-
   if (config.qa) params.append("qa", "true");
-
   if (config.dev) params.append("dev", "true");
 
   // setting agreementId or reservationId
@@ -24,7 +43,7 @@ export function devConfigToQueryUrl(config: DevConfigObject) {
   // setting the config
   const hashObj = {
     clientId: Number(config.clientId) ?? Number(useRuntimeStore.getState().clientId),
-    ...(config.userId > 0 ? { userId: Number(config.userId) } : {}),
+    ...(Number(config.userId) > 0 ? { userId: Number(config.userId) } : {}),
     emailTemplateId: Number(config.emailTemplateId) ?? Number(useRuntimeStore.getState().responseTemplateId),
     flow: config.flow ?? useConfigStore.getState().flow,
     successSubmissionScreen: config.successSubmissionScreen ?? useConfigStore.getState().successSubmissionScreen,
@@ -35,6 +54,7 @@ export function devConfigToQueryUrl(config: DevConfigObject) {
     ...(config.stopAttachingDriverLicenseFiles ? { stopAttachingDriverLicenseFiles: true } : {}),
   };
 
+  // JSON stringify and base64 encode the config object
   const objJsonStr = JSON.stringify(hashObj);
   const objJsonB64 = base64Encode(objJsonStr);
 

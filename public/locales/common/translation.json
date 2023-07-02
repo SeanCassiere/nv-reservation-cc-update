@@ -18,17 +18,16 @@
       "responseTemplateId": "Response Email Template ID",
       "applicationFlows": "Flows",
       "applicationSuccessScreen": "Success Screen",
-      "applicationEnvironment": "Using QA?",
-      "openedDevMenu": "Dev menu opened at start?",
-      "showPreSubmitSummary": "Show form summary screen?",
-      "yes": "Yes",
-      "no": "No",
-      "disableGlobalDocumentsForConfirmationEmail": "Stop attaching the global documents",
+      "useQaEnvironment": "Use the QA environment?",
+      "onLoadOpenDevMenu": "Open the dev menu onload",
+      "showPreSubmitSummary": "Show the form summary screen before submission?",
+      "disableGlobalDocumentsForConfirmationEmail": "Stop attaching the configured global documents",
       "disableLicenseAttachmentsForConfirmationEmail": "Stop attaching the uploaded driver's license images",
       "confirmationEmailSettings": "Confirmation email settings",
       "applicationFlowSettings": "Application flow settings",
       "generalApplicationConfiguration": "General application configuration",
-      "runtimeConfiguration": "Runtime configuration"
+      "runtimeConfiguration": "Runtime configuration",
+      "newUrl": "New URL"
     }
   }
 }
