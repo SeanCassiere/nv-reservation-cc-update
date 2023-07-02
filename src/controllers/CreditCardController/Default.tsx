@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
 import { Button as UIButton } from "@/components/ui/button";
-import DynamicCreditCardDefault from "@/components/DynamicCreditCard/Default";
-import CardDetailsFormDefault from "@/components/CreditCardForm/Default";
+import DynamicCreditCard from "@/components/dynamic-credit-card";
+import CreditCardDetailsForm from "@/components/credit-card-details-form";
 import { Form } from "@/components/ui/form";
 
 import { useFormStore } from "@/hooks/stores/useFormStore";
@@ -34,10 +34,10 @@ const DefaultCreditCardController: React.FC<IProps> = () => {
         <form onSubmit={handleSubmit}>
           <div className="mt-4 grid grid-cols-1">
             <div className="my-4 md:my-2">
-              <DynamicCreditCardDefault currentFocus={currentFocus} formData={values} />
+              <DynamicCreditCard currentFocus={currentFocus} formData={values} />
             </div>
             <div className="mt-4">
-              <CardDetailsFormDefault form={form} changeCurrentFocus={changeCurrentFocus} />
+              <CreditCardDetailsForm form={form} changeCurrentFocus={changeCurrentFocus} />
             </div>
             <div className="mt-6 flex">
               {isPreviousAvailable && (

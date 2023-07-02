@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import SignatureCanvas from "react-signature-canvas";
+import ReactSignatureCanvas from "react-signature-canvas";
 
 import { Button as UIButton } from "@/components/ui/button";
 
@@ -12,7 +12,7 @@ interface IProps {
   initialDataURL?: string;
 }
 
-const DefaultSignatureCanvas: React.FC<IProps> = ({
+const SignatureCanvas: React.FC<IProps> = ({
   onSignature = (url: string) => {
     console.log("Signature URL: ", url);
   },
@@ -25,7 +25,7 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
 
   const [showPad, setShowPad] = React.useState(false);
   const signatureDivRef = React.useRef<HTMLDivElement>(null);
-  const signaturePadRef = React.useRef<SignatureCanvas>(null);
+  const signaturePadRef = React.useRef<ReactSignatureCanvas>(null);
 
   const [isDisabled, setIsDisabled] = React.useState(false);
   const canvasHeight = signatureDivRef?.current?.getBoundingClientRect().height
@@ -118,7 +118,7 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
         style={{ height: "430px" }}
       >
         {showPad && (
-          <SignatureCanvas
+          <ReactSignatureCanvas
             ref={signaturePadRef}
             dotSize={4}
             clearOnResize={true}
@@ -147,4 +147,4 @@ const DefaultSignatureCanvas: React.FC<IProps> = ({
   );
 };
 
-export default DefaultSignatureCanvas;
+export default SignatureCanvas;

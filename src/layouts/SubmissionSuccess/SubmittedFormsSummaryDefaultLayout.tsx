@@ -7,12 +7,12 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { useFormStore } from "@/hooks/stores/useFormStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
-import { ExclamationIcon } from "@/components/Icons";
+import { ExclamationIcon } from "@/components/icons";
 
-const DefaultRentalSummary = lazy(() => import("../../components/RentalSummary/Default"));
-const CreditCardFormSummary = lazy(() => import("../../components/FormSummary/CreditCard"));
-const DriverLicenseFormSummary = lazy(() => import("../../components/FormSummary/DriverLicense"));
-const RentalSignatureFormSummary = lazy(() => import("../../components/FormSummary/RentalSignature"));
+const RentalChargesSummaryList = lazy(() => import("../../components/rental-charges-summary-list"));
+const CreditCardSummary = lazy(() => import("../../components/form-details-summary/credit-card-summary"));
+const DriverLicenseSummary = lazy(() => import("../../components/form-details-summary/driver-license-summary"));
+const RentalSignatureSummary = lazy(() => import("../../components/form-details-summary/rental-signature-summary"));
 
 export type SubmittedFormsSummaryDefaultLayoutProps = {
   includeRentalChargesSummary?: boolean;
@@ -52,9 +52,9 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
             </div>
           </>
         )}
-        {isCreditCard && <CreditCardFormSummary creditCard={creditCardInfo} />}
-        {isDriverLicense && <DriverLicenseFormSummary driverLicense={driversLicense} />}
-        {isRentalSignature && <RentalSignatureFormSummary rentalSignature={rentalSignature} />}
+        {isCreditCard && <CreditCardSummary creditCard={creditCardInfo} />}
+        {isDriverLicense && <DriverLicenseSummary driverLicense={driversLicense} />}
+        {isRentalSignature && <RentalSignatureSummary rentalSignature={rentalSignature} />}
       </div>
       {props.includeRentalChargesSummary && clientId && referenceIdentifier && (
         <div className="mt-4 border-t border-t-gray-100 pt-4">
@@ -68,7 +68,11 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
               context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
             })}
           </div>
-          <DefaultRentalSummary clientId={clientId} referenceType={referenceType} referenceId={referenceIdentifier} />
+          <RentalChargesSummaryList
+            clientId={clientId}
+            referenceType={referenceType}
+            referenceId={referenceIdentifier}
+          />
         </div>
       )}
     </CardLayout>

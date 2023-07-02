@@ -3,14 +3,14 @@ import Cards, { type ReactCreditCardsProps } from "react-credit-cards-2";
 import { useTranslation } from "react-i18next";
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 
-import type { CreditCardStoreType } from "../../hooks/stores/useFormStore";
+import type { CreditCardStoreType } from "@/hooks/stores/useFormStore";
 
 interface IProps {
   currentFocus: NonNullable<ReactCreditCardsProps["focused"]>;
   formData: CreditCardStoreType["data"];
 }
 
-const DefaultCreditCard: React.FC<IProps> = ({ currentFocus, formData }) => {
+const DynamicCreditCard: React.FC<IProps> = ({ currentFocus, formData }) => {
   const { t } = useTranslation();
   const expiry = `${formData.monthYearExpiry}`;
   return (
@@ -26,4 +26,4 @@ const DefaultCreditCard: React.FC<IProps> = ({ currentFocus, formData }) => {
   );
 };
 
-export default memo(DefaultCreditCard);
+export default memo(DynamicCreditCard);

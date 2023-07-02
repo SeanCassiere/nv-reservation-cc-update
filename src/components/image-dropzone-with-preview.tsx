@@ -1,7 +1,8 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { useDropzone, Accept } from "react-dropzone";
-import { AppNavMode } from "@/hooks/logic/useAppNavContext";
+
 import { Button as UIButton } from "@/components/ui/button";
+import { AppNavMode } from "@/hooks/logic/useAppNavContext";
 
 const baseStyle = {
   flex: 1,
@@ -43,7 +44,7 @@ interface Props {
   navMode: AppNavMode;
 }
 
-const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
+const ImageDropzoneWithPreview: React.FC<Props> = ({
   dragDisplayText,
   clearButtonText,
   selectButtonText,
@@ -132,4 +133,4 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
   );
 };
 
-export default memo(DefaultImageDropzoneWithPreview);
+export default memo(ImageDropzoneWithPreview);

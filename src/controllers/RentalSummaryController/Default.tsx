@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
 import { Button as UIButton } from "@/components/ui/button";
-import DefaultRentalSummary from "../../components/RentalSummary/Default";
+import RentalChargesSummaryList from "../../components/rental-charges-summary-list";
 
 import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS } from "../../utils/constants";
@@ -29,7 +29,11 @@ const DefaultRentalSummaryController: React.FC<IProps> = () => {
       })}
     >
       <div className="mt-3">
-        <DefaultRentalSummary clientId={clientId ?? 0} referenceId={referenceId ?? 0} referenceType={referenceType} />
+        <RentalChargesSummaryList
+          clientId={clientId ?? 0}
+          referenceId={referenceId ?? 0}
+          referenceType={referenceType}
+        />
         <div className="mt-6 flex">
           {isPreviousAvailable && (
             <div className="pr-0">

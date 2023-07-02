@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import FormSummaryItem from "./FormSummaryItem";
+import FormSummaryItem from "./form-summary-item";
 
-import type { RentalSignatureStoreType } from "../../hooks/stores/useFormStore";
+import type { RentalSignatureStoreType } from "@/hooks/stores/useFormStore";
 
 type Props = {
   rentalSignature: RentalSignatureStoreType["data"];

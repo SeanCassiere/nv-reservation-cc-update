@@ -2,8 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
-import { useClientProfileQuery } from "../../hooks/network/useClientProfile";
-import { useRentalSummaryQuery } from "../../hooks/network/useRentalSummary";
+import { useClientProfileQuery } from "../hooks/network/useClientProfile";
+import { useRentalSummaryQuery } from "../hooks/network/useRentalSummary";
 
 type RowItemProps = {
   label: string;
@@ -20,7 +20,7 @@ type Props = {
   referenceType: string;
 };
 
-const DefaultRentalSummary: React.FC<Props> = (props) => {
+const RentalChargesSummaryList: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const rentalSummary = useRentalSummaryQuery(props);
   const clientProfile = useClientProfileQuery(props);
@@ -333,4 +333,4 @@ const SkeletonBlock: React.FC<{ highlight?: boolean; minWidth?: boolean }> = ({ 
   );
 };
 
-export default DefaultRentalSummary;
+export default RentalChargesSummaryList;

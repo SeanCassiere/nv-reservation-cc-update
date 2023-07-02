@@ -1,7 +1,7 @@
 import { useId } from "react";
 import clsx from "clsx";
 
-import { ExclamationIcon } from "@/components/Icons";
+import { ExclamationIcon } from "@/components/icons";
 import { Input, InputProps } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 

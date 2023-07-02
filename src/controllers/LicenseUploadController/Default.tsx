@@ -2,12 +2,12 @@ import React, { Fragment, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
-import ImageDropzoneWithPreviewDefault from "@/components/ImageDropzoneWithPreview/Default";
+import ImageDropzoneWithPreview from "@/components/image-dropzone-with-preview";
+import { ExclamationIcon } from "@/components/icons";
+import { GoBackConfirmationDialog } from "@/components/dialogs";
 
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { ExclamationIcon } from "@/components/Icons";
 import { Button as UIButton } from "@/components/ui/button";
-import { GoBackConfirmationDialog } from "@/components/Dialogs";
 
 import { useDriverLicenseLogic } from "@/hooks/logic/useDriverLicenseLogic";
 import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
@@ -130,7 +130,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
                 </Alert>
               )}
 
-              <ImageDropzoneWithPreviewDefault
+              <ImageDropzoneWithPreview
                 dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
                 selectButtonText={t("forms.licenseUpload.frontImage.select")}
                 clearButtonText={t("forms.licenseUpload.frontImage.clear")}
@@ -166,7 +166,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
                   <AlertDescription>{t("forms.licenseUpload.backImage.notSelected")}</AlertDescription>
                 </Alert>
               )}
-              <ImageDropzoneWithPreviewDefault
+              <ImageDropzoneWithPreview
                 dragDisplayText={t("forms.licenseUpload.backImage.drag")}
                 selectButtonText={t("forms.licenseUpload.backImage.select")}
                 clearButtonText={t("forms.licenseUpload.backImage.clear")}

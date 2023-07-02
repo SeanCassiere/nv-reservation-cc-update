@@ -1,5 +1,5 @@
 import { EmailGlobalDocumentAttachmentType } from "../hooks/stores/useRuntimeStore";
-import { createBodyForEmail, CreateBodyForEmail } from "../utils/bodyEmailTemplate";
+import { createBodyForEmail, CreateBodyForEmail } from "../utils/body-email-template";
 import { clientFetch } from "./clientV3";
 
 export type OneOffUploadAttachment = { fileName: string; blob: string; mimeType: string };

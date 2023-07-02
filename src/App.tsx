@@ -3,14 +3,14 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import AppRoutes from "./routes/AppRoutes";
+import AppRoutes from "./routes/app-routes";
 import ErrorSubmission from "./pages/ErrorSubmission/ErrorSubmission";
 import AnchorLink from "@/components/anchor-link";
 
 import { useConfigStore } from "./hooks/stores/useConfigStore";
 import { isValueTrue } from "./utils/common";
 
-const DeveloperDebugMenu = lazy(() => import("./components/DeveloperDebugMenu/DeveloperDebugMenu"));
+const DeveloperDebugMenu = lazy(() => import("./components/developer-debug-menu"));
 
 const queryClient = new QueryClient();
 

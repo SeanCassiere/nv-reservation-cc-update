@@ -2,15 +2,15 @@ import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout, { CardTitleHeading, CardSubtitleSpan } from "@/components/card-layout";
-import ImageDropzoneWithPreviewDefault from "@/components/ImageDropzoneWithPreview/Default";
-import DynamicCreditCardDefault from "@/components/DynamicCreditCard/Default";
-import CreditCardFormDefault from "@/components/CreditCardForm/Default";
+import ImageDropzoneWithPreview from "@/components/image-dropzone-with-preview";
+import DynamicCreditCard from "@/components/dynamic-credit-card";
+import CreditCardDetailsForm from "@/components/credit-card-details-form";
 
 import { Button as UIButton } from "@/components/ui/button";
-import { GoBackConfirmationDialog } from "@/components/Dialogs";
+import { GoBackConfirmationDialog } from "@/components/dialogs";
 import { Form } from "@/components/ui/form";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { ExclamationIcon } from "@/components/Icons";
+import { ExclamationIcon } from "@/components/icons";
 
 import { useCreditCardLogic } from "@/hooks/logic/useCreditCardLogic";
 import { useDriverLicenseLogic } from "@/hooks/logic/useDriverLicenseLogic";
@@ -149,10 +149,10 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
             <CardSubtitleSpan>{t("forms.creditCard.message")}</CardSubtitleSpan>
             <div className="mt-4 grid grid-cols-1">
               <div className="my-4 md:my-2">
-                <DynamicCreditCardDefault currentFocus={currentFocus} formData={cardValues} />
+                <DynamicCreditCard currentFocus={currentFocus} formData={cardValues} />
               </div>
               <div className="mt-4">
-                <CreditCardFormDefault form={form} changeCurrentFocus={changeCurrentFocus} />
+                <CreditCardDetailsForm form={form} changeCurrentFocus={changeCurrentFocus} />
               </div>
             </div>
           </div>
@@ -175,7 +175,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                     </Alert>
                   )}
 
-                  <ImageDropzoneWithPreviewDefault
+                  <ImageDropzoneWithPreview
                     dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
                     selectButtonText={t("forms.licenseUpload.frontImage.select")}
                     clearButtonText={t("forms.licenseUpload.frontImage.clear")}
@@ -208,7 +208,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                       <AlertDescription>{t("forms.licenseUpload.backImage.notSelected")}</AlertDescription>
                     </Alert>
                   )}
-                  <ImageDropzoneWithPreviewDefault
+                  <ImageDropzoneWithPreview
                     dragDisplayText={t("forms.licenseUpload.backImage.drag")}
                     selectButtonText={t("forms.licenseUpload.backImage.select")}
                     clearButtonText={t("forms.licenseUpload.backImage.clear")}

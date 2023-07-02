@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "../Icons";
+
+import { ExclamationTriangleIcon } from "@/components/icons";
 import { Button as UIButton } from "@/components/ui/button";
 
 interface Props {

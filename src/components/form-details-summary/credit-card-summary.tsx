@@ -1,17 +1,17 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import FormSummaryItem from "./FormSummaryItem";
+import FormSummaryItem from "./form-summary-item";
 
-import type { CreditCardStoreType } from "../../hooks/stores/useFormStore";
-import { CreditCardIcon, MapIcon, PersonIcon } from "../Icons";
+import { CreditCardIcon, MapIcon, PersonIcon } from "@/components/icons";
+import type { CreditCardStoreType } from "@/hooks/stores/useFormStore";
 
 type Props = {
   creditCard: CreditCardStoreType["data"];
   editFunc?: () => void;
 };
 
-const CreditCardFormSummary: React.FC<Props> = ({ editFunc, creditCard }) => {
+const CreditCardSummary: React.FC<Props> = ({ editFunc, creditCard }) => {
   const { t } = useTranslation();
   const [showCvv, setShowCvv] = React.useState(false);
   return (
@@ -62,4 +62,4 @@ const CreditCardFormSummary: React.FC<Props> = ({ editFunc, creditCard }) => {
   );
 };
 
-export default CreditCardFormSummary;
+export default CreditCardSummary;

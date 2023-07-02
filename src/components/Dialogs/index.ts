@@ -1,1 +1,1 @@
-export * from "./GoBackConfirmation";
+export * from "./go-back-confirmation";

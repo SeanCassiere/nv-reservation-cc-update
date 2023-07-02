@@ -4,14 +4,14 @@ import { useTranslation } from "react-i18next";
 import CardLayout from "@/components/card-layout";
 import { Button as UIButton } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { ExclamationIcon } from "@/components/Icons";
+import { ExclamationIcon } from "@/components/icons";
 
 import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
 import { useFormStore } from "@/hooks/stores/useFormStore";
 
-const CreditCardFormSummary = lazy(() => import("../../components/FormSummary/CreditCard"));
-const DriverLicenseFormSummary = lazy(() => import("../../components/FormSummary/DriverLicense"));
-const RentalSignatureFormSummary = lazy(() => import("../../components/FormSummary/RentalSignature"));
+const CreditCardFormSummary = lazy(() => import("../../components/form-details-summary/credit-card-summary"));
+const DriverLicenseFormSummary = lazy(() => import("../../components/form-details-summary/driver-license-summary"));
+const RentalSignatureFormSummary = lazy(() => import("../../components/form-details-summary/rental-signature-summary"));
 
 const PreSubmitSummaryControllerDefault: React.FC = () => {
   const { t } = useTranslation();
