@@ -39,7 +39,7 @@ const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> =
       <CardLayout
         title={
           <div className="flex justify-center align-middle">
-            <h1 className="flex-1">{t("developer.drawerTitle")}</h1>
+            <h2 className="flex-1">{t("developer.drawerTitle")}</h2>
             <div>
               <Button size="icon" variant="secondary" onClick={handleClose}>
                 &times;

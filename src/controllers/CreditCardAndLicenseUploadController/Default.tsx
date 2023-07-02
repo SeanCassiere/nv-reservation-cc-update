@@ -168,7 +168,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                 <h2 className="mb-2 text-base text-primary/90">{t("forms.licenseUpload.frontImage.title")}</h2>
                 <div>
                   {noFrontImageError && (
-                    <Alert className="mb-1" variant="destructive">
+                    <Alert className="mb-1" variant="warning">
                       <ExclamationIcon />
                       <AlertTitle>Missing</AlertTitle>
                       <AlertDescription>{t("forms.licenseUpload.frontImage.notSelected")}</AlertDescription>
@@ -202,7 +202,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                 <h2 className="mb-2 text-base text-primary/90">{t("forms.licenseUpload.backImage.title")}</h2>
                 <div>
                   {noBackImageError && (
-                    <Alert className="mb-1" variant="destructive">
+                    <Alert className="mb-1" variant="warning">
                       <ExclamationIcon />
                       <AlertTitle>Missing</AlertTitle>
                       <AlertDescription>{t("forms.licenseUpload.backImage.notSelected")}</AlertDescription>

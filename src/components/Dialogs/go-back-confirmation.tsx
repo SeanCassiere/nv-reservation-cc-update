@@ -49,11 +49,11 @@ export const GoBackConfirmationDialog: React.FC<Props> = React.memo((props) => {
                   <ExclamationTriangleIcon />
                 </div>
                 <div className="mt-3 text-center sm:mt-5">
-                  <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-primary">
+                  <Dialog.Title as="h3" className="text-2xl font-medium leading-6 text-primary">
                     {props.title}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-primary/80">{props.message}</p>
+                    <p className="text-primary/80">{props.message}</p>
                   </div>
                   <div className="mt-10 flex flex-col gap-2">
                     <UIButton type="button" onClick={props.onConfirm} size="sm" autoFocus>
