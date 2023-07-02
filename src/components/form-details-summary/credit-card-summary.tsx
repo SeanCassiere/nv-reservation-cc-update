@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import FormSummaryItem from "./form-summary-item";
 
-import { CreditCardIcon, MapIcon, PersonIcon } from "@/components/icons";
+import { CreditCardIcon, MapIcon, PersonIcon } from "@/components/Icons";
 import type { CreditCardStoreType } from "@/hooks/stores/useFormStore";
 
 type Props = {

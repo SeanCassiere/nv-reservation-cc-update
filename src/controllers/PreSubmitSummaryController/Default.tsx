@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import CardLayout from "@/components/card-layout";
 import { Button as UIButton } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { ExclamationIcon } from "@/components/icons";
+import { ExclamationIcon } from "@/components/Icons";
 
 import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
 import { useFormStore } from "@/hooks/stores/useFormStore";

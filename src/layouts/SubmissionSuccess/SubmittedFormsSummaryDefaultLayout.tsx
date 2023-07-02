@@ -7,7 +7,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { useFormStore } from "@/hooks/stores/useFormStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
-import { ExclamationIcon } from "@/components/icons";
+import { ExclamationIcon } from "@/components/Icons";
 
 const RentalChargesSummaryList = lazy(() => import("../../components/rental-charges-summary-list"));
 const CreditCardSummary = lazy(() => import("../../components/form-details-summary/credit-card-summary"));

@@ -1,5 +1,5 @@
 import React from "react";
-import { PencilIcon } from "@/components/icons";
+import { PencilIcon } from "@/components/Icons";
 
 type Props = {
   title: string;
