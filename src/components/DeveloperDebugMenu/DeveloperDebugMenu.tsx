@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "../../layouts/Card";
+import CardLayout from "@/components/card-layout";
+import AnchorLink from "@/components/anchor-link";
 import { Button as UIButton } from "@/components/ui/button";
-import AnchorLink from "@/components/ui/anchor-link";
 
 import { useConfigStore } from "@/hooks/stores/useConfigStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";

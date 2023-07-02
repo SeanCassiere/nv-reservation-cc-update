@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "../../layouts/Card";
+import CardLayout from "@/components/card-layout";
 import ImageDropzoneWithPreviewDefault from "@/components/ImageDropzoneWithPreview/Default";
 
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -123,7 +123,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
             <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.frontImage.title")}</h2>
             <div>
               {noFrontImageError && (
-                <Alert className="mb-1" variant="destructive">
+                <Alert className="mb-1" variant="warning">
                   <ExclamationIcon />
                   <AlertTitle>Missing</AlertTitle>
                   <AlertDescription>{t("forms.licenseUpload.frontImage.notSelected")}</AlertDescription>
@@ -160,7 +160,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
             <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.backImage.title")}</h2>
             <div>
               {noBackImageError && (
-                <Alert className="mb-1" variant="destructive">
+                <Alert className="mb-1" variant="warning">
                   <ExclamationIcon />
                   <AlertTitle>Missing</AlertTitle>
                   <AlertDescription>{t("forms.licenseUpload.backImage.notSelected")}</AlertDescription>

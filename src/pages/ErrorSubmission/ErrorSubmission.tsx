@@ -1,8 +1,8 @@
 import React, { ReactNode, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "../../layouts/Card";
-import AnchorLink from "@/components/ui/anchor-link";
+import CardLayout from "@/components/card-layout";
+import AnchorLink from "@/components/anchor-link";
 
 import { useConfigStore } from "@/hooks/stores/useConfigStore";
 

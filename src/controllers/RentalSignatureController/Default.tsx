@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "../../layouts/Card";
+import CardLayout from "@/components/card-layout";
 import SignatureCanvasDefault from "@/components/SignatureCanvas/Default";
 import { Button as UIButton } from "@/components/ui/button";
 import { GoBackConfirmationDialog } from "@/components/Dialogs";

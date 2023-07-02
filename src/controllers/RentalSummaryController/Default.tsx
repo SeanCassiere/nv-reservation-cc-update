@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "../../layouts/Card";
+import CardLayout from "@/components/card-layout";
 import { Button as UIButton } from "@/components/ui/button";
 import DefaultRentalSummary from "../../components/RentalSummary/Default";
 

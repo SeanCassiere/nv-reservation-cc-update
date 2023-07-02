@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AppRoutes from "./routes/AppRoutes";
 import ErrorSubmission from "./pages/ErrorSubmission/ErrorSubmission";
-import AnchorLink from "@/components/ui/anchor-link";
+import AnchorLink from "@/components/anchor-link";
 
 import { useConfigStore } from "./hooks/stores/useConfigStore";
 import { isValueTrue } from "./utils/common";
@@ -64,7 +64,7 @@ const App = () => {
                 href="https://rentallsoftware.com"
                 target="_blank"
                 rel="noreferrer"
-                className="text-sm font-bold text-slate-900"
+                className="text-sm font-bold text-primary underline"
               >
                 RENTALL
               </AnchorLink>

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout, { CardTitleHeading, CardSubtitleSpan } from "../../layouts/Card";
+import CardLayout, { CardTitleHeading, CardSubtitleSpan } from "@/components/card-layout";
 import ImageDropzoneWithPreviewDefault from "@/components/ImageDropzoneWithPreview/Default";
 import DynamicCreditCardDefault from "@/components/DynamicCreditCard/Default";
 import CreditCardFormDefault from "@/components/CreditCardForm/Default";

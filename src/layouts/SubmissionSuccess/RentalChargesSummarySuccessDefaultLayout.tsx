@@ -1,11 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "../Card";
-import DefaultRentalSummary from "../../components/RentalSummary/Default";
+import CardLayout from "@/components/card-layout";
+import DefaultRentalSummary from "@/components/RentalSummary/Default";
 
-import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { APP_CONSTANTS, SuccessImgUri } from "../../utils/constants";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
 
 const RentalChargesSummarySuccessDefaultLayout: React.FC = () => {
   const { t } = useTranslation();

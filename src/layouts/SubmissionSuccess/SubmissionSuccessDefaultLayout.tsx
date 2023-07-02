@@ -1,10 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "../Card";
+import CardLayout from "@/components/card-layout";
 
-import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { APP_CONSTANTS, SuccessImgUri } from "../../utils/constants";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
 
 const SubmissionSuccessDefaultLayout: React.FC = () => {
   const { t } = useTranslation();
