@@ -7,7 +7,7 @@ import DynamicCreditCard from "@/components/dynamic-credit-card";
 import CreditCardDetailsForm from "@/components/credit-card-details-form";
 
 import { Button as UIButton } from "@/components/ui/button";
-import { GoBackConfirmationDialog } from "../../components/dialogs";
+import { GoBackConfirmationDialog } from "../../components/Dialogs";
 import { Form } from "@/components/ui/form";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { ExclamationIcon } from "@/components/Icons";

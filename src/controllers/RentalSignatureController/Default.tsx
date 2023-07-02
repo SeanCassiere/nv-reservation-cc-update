@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import CardLayout from "@/components/card-layout";
 import SignatureCanvas from "@/components/signature-canvas";
 import { Button as UIButton } from "@/components/ui/button";
-import { GoBackConfirmationDialog } from "../../components/dialogs";
+import { GoBackConfirmationDialog } from "../../components/Dialogs";
 import { ExclamationIcon } from "@/components/Icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
