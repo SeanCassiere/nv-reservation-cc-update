@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import CardLayout from "@/components/card-layout";
 import AnchorLink from "@/components/anchor-link";
 
@@ -151,28 +150,21 @@ const ConfigCreator = () => {
             control={form.control}
             name="referenceType"
             render={({ field }) => (
-              <FormItem className="mt-1 space-y-3">
+              <FormItem>
                 <FormLabel>{t("developer.configCreator.referenceType")}</FormLabel>
-                <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="flex flex-col space-y-1"
-                  >
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value={APP_CONSTANTS.REF_TYPE_RESERVATION} />
-                      </FormControl>
-                      <FormLabel className="font-normal">{APP_CONSTANTS.REF_TYPE_RESERVATION}</FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value={APP_CONSTANTS.REF_TYPE_AGREEMENT} />
-                      </FormControl>
-                      <FormLabel className="font-normal">{APP_CONSTANTS.REF_TYPE_AGREEMENT}</FormLabel>
-                    </FormItem>
-                  </RadioGroup>
-                </FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("developer.configCreator.formSelectValue")} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={APP_CONSTANTS.REF_TYPE_RESERVATION}>
+                      {APP_CONSTANTS.REF_TYPE_RESERVATION}
+                    </SelectItem>
+                    <SelectItem value={APP_CONSTANTS.REF_TYPE_AGREEMENT}>{APP_CONSTANTS.REF_TYPE_AGREEMENT}</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
