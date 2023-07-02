@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import CardLayout from "@/components/card-layout";
 import AnchorLink from "@/components/anchor-link";
 
@@ -17,7 +16,7 @@ import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
 import { supportedLanguages } from "@/i18n";
 import { isValueTrue } from "@/utils/common";
-import { setHtmlDocumentClass } from "@/utils";
+import { cn, setHtmlDocumentClass } from "@/utils";
 import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "@/utils/constants";
 
 import { configObjectFormSchema, ConfigObjectFormValues, makeUrlQueryFromConfigObject } from "./utils";
@@ -82,7 +81,7 @@ const ConfigCreator = () => {
       clientId: rs.clientId ? String(rs.clientId) : "0",
       userId: cs.predefinedAdminUserId ? String(cs.predefinedAdminUserId) : "0",
       emailTemplateId: rs.responseTemplateId ? String(rs.responseTemplateId) : "0",
-      flow: [...cs.flow],
+      flow: cs.flow.map((item) => ({ value: item })),
       showPreSubmitSummary: cs.showPreSubmitSummary,
       successSubmissionScreen: cs.successSubmissionScreen,
       stopEmailGlobalDocuments: cs.disableGlobalDocumentsForConfirmationEmail,
@@ -92,17 +91,14 @@ const ConfigCreator = () => {
   });
   const formValues = form.watch();
 
-  // handle selecting the flow items
-  const handleSelectFlowItem = (newFlow: string, prevFlow: string[]) => {
-    form.setValue("flow", [...prevFlow, newFlow]);
-  };
-  const handleRemoveFlowItem = (idx: number, prevFlow: string[]) => {
-    if (prevFlow.length === 1) {
-      form.setValue("flow", [ALL_SCREEN_FLOWS[0].value]);
-    } else {
-      form.setValue("flow", [...prevFlow.slice(0, idx), ...prevFlow.slice(idx + 1)]);
-    }
-  };
+  const {
+    fields: flowFields,
+    append: appendFlowField,
+    remove: removeFlowField,
+  } = useFieldArray({
+    control: form.control,
+    name: "flow",
+  });
 
   const newQueryString = makeUrlQueryFromConfigObject(formValues);
 
@@ -154,28 +150,21 @@ const ConfigCreator = () => {
             control={form.control}
             name="referenceType"
             render={({ field }) => (
-              <FormItem className="mt-1 space-y-3">
+              <FormItem>
                 <FormLabel>{t("developer.configCreator.referenceType")}</FormLabel>
-                <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="flex flex-col space-y-1"
-                  >
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value={APP_CONSTANTS.REF_TYPE_RESERVATION} />
-                      </FormControl>
-                      <FormLabel className="font-normal">{APP_CONSTANTS.REF_TYPE_RESERVATION}</FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value={APP_CONSTANTS.REF_TYPE_AGREEMENT} />
-                      </FormControl>
-                      <FormLabel className="font-normal">{APP_CONSTANTS.REF_TYPE_AGREEMENT}</FormLabel>
-                    </FormItem>
-                  </RadioGroup>
-                </FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("developer.configCreator.formSelectValue")} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={APP_CONSTANTS.REF_TYPE_RESERVATION}>
+                      {APP_CONSTANTS.REF_TYPE_RESERVATION}
+                    </SelectItem>
+                    <SelectItem value={APP_CONSTANTS.REF_TYPE_AGREEMENT}>{APP_CONSTANTS.REF_TYPE_AGREEMENT}</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
@@ -350,55 +339,6 @@ const ConfigCreator = () => {
         <DevGroupCard title={t("developer.configCreator.applicationFlowSettings")}>
           <FormField
             control={form.control}
-            name="flow"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("developer.configCreator.applicationFlows")}</FormLabel>
-                <Select
-                  onValueChange={(value) => {
-                    handleSelectFlowItem(value, field.value);
-                  }}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder={t("developer.configCreator.formSelectValue")} />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {ALL_SCREEN_FLOWS.map((flowItem) => (
-                      <SelectItem key={`dev-select-flow-${flowItem.value}`} value={flowItem.value}>
-                        {flowItem.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-                <div>
-                  <ol className="ml-6 mt-3 list-decimal text-sm">
-                    {field.value.map((flowItem, index) => (
-                      <li key={`dev-flow-item-${flowItem}-${index}`}>
-                        <div className="my-1 flex items-center gap-3 rounded bg-primary-foreground px-2 py-2 align-middle">
-                          <button
-                            type="button"
-                            onClick={() => handleRemoveFlowItem(index, field.value)}
-                            className="flex aspect-square h-5 justify-center rounded-full bg-destructive align-middle text-sm text-destructive-foreground"
-                          >
-                            &times;
-                          </button>
-                          <div className="flex-1 truncate">
-                            <span className="text-sm font-medium">{flowItem}</span>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
             name="successSubmissionScreen"
             render={({ field }) => (
               <FormItem>
@@ -442,6 +382,65 @@ const ConfigCreator = () => {
               </FormItem>
             )}
           />
+
+          <div>
+            {flowFields.map((fieldItem, index) => (
+              <FormField
+                control={form.control}
+                key={fieldItem.id}
+                name={`flow.${index}.value`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className={cn(index !== 0 && "sr-only")}>
+                      {t("developer.configCreator.applicationFlows")}
+                    </FormLabel>
+                    <FormDescription className={cn(index !== 0 && "sr-only")}>
+                      {t("developer.configCreator.applicationFlowsDescription")}
+                    </FormDescription>
+                    <FormControl>
+                      <div className="flex space-x-2">
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder={t("developer.configCreator.formSelectValue")} />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {ALL_SCREEN_FLOWS.map((screenFlow, idx) => (
+                              <SelectItem key={`${index}-screen-opt-${idx}`} value={screenFlow.value}>
+                                {screenFlow.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => {
+                            removeFlowField(index);
+                          }}
+                          disabled={flowFields.length === 1}
+                        >
+                          &times;
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ))}
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="mt-2"
+              onClick={() => appendFlowField({ value: ALL_SCREEN_FLOWS[0].value })}
+            >
+              Add screen
+            </Button>
+          </div>
         </DevGroupCard>
 
         <div className="flex w-full gap-2">
