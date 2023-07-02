@@ -32,7 +32,7 @@ const PreSubmitSummaryControllerDefault: React.FC = () => {
         {isEmpty && (
           <Alert className="mb-1" variant="warning">
             <ExclamationIcon />
-            <AlertTitle>Missing</AlertTitle>
+            <AlertTitle>{t("forms.formsSummary.missing")}</AlertTitle>
             <AlertDescription>{t("forms.formsSummary.noData")}</AlertDescription>
           </Alert>
         )}

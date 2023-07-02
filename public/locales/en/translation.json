@@ -45,6 +45,7 @@
     "licenseUpload": {
       "title": "Driving License",
       "message": "Upload front and back images of your driving license.",
+      "missing": "Missing",
       "goBack": {
         "title": "Are you sure?",
         "message": "Going back will discard the added files.",
@@ -71,6 +72,7 @@
       "title_agreement": "Contract Signature",
       "message": "Draw your signature below and press the Save button.",
       "message_agreement": "Draw your signature below and press the Save button.",
+      "missing": "Missing",
       "clearInput": "Clear the signature",
       "errorNoSignature": "Please provide a signature.",
       "saveInput": "Sign",
@@ -94,6 +96,7 @@
       "message_submitted": "Please view the information you have submitted towards your rental.",
       "noData": "You currently will not be submitting any data towards your booking.",
       "noData_submitted": "You have not submitted any information towards your rental.",
+      "missing": "Missing",
       "creditCardTitle": "Credit card",
       "licenseUploadTitle": "Driving license",
       "rentalSignatureTitle": "Rental signature"

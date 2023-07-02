@@ -45,6 +45,7 @@
     "licenseUpload": {
       "title": "Le permis de conduire",
       "message": "Téléchargez des images recto et verso de votre permis de conduire.",
+      "missing": "Manquant",
       "goBack": {
         "title": "Es-tu sûr?",
         "message": "Revenir en arrière supprimera les fichiers ajoutés.",
@@ -71,6 +72,7 @@
       "title_agreement": "Signature du contrat",
       "message": "Dessinez votre signature ci-dessous et appuyez sur le bouton Enregistrer.",
       "message_agreement": "Dessinez votre signature ci-dessous et appuyez sur le bouton Enregistrer.",
+      "missing": "Manquant",
       "clearInput": "Effacer la signature",
       "errorNoSignature": "Veuillez fournir une signature.",
       "saveInput": "Pancarte",
@@ -94,6 +96,7 @@
       "message_submitted": "Veuillez consulter les informations que vous avez soumises concernant votre location.",
       "noData": "Vous ne soumettrez actuellement aucune donnée pour votre réservation.",
       "noData_submitted": "Vous n'avez fourni aucune information concernant votre location.",
+      "missing": "Manquant",
       "creditCardTitle": "Carte de crédit",
       "licenseUploadTitle": "Permis de conduire",
       "rentalSignatureTitle": "Signature du locataire"

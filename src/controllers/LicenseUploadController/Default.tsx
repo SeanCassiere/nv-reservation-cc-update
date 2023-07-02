@@ -125,7 +125,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
               {noFrontImageError && (
                 <Alert className="mb-1" variant="warning">
                   <ExclamationIcon />
-                  <AlertTitle>Missing</AlertTitle>
+                  <AlertTitle>{t("forms.licenseUpload.missing")}</AlertTitle>
                   <AlertDescription>{t("forms.licenseUpload.frontImage.notSelected")}</AlertDescription>
                 </Alert>
               )}
@@ -162,7 +162,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
               {noBackImageError && (
                 <Alert className="mb-1" variant="warning">
                   <ExclamationIcon />
-                  <AlertTitle>Missing</AlertTitle>
+                  <AlertTitle>{t("forms.licenseUpload.missing")}</AlertTitle>
                   <AlertDescription>{t("forms.licenseUpload.backImage.notSelected")}</AlertDescription>
                 </Alert>
               )}
