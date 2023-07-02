@@ -16,7 +16,7 @@ export const configObjectFormSchema = z.object({
   clientId: z.string().min(1, REQUIRED),
   userId: z.string().min(1, REQUIRED),
   emailTemplateId: z.string().min(1, REQUIRED),
-  flow: z.array(z.string()),
+  flow: z.array(z.object({ value: z.string() })),
   successSubmissionScreen: z.string().min(1, REQUIRED),
   showPreSubmitSummary: z.boolean().default(false),
   stopEmailGlobalDocuments: z.boolean().default(false),
@@ -46,7 +46,7 @@ export function makeUrlQueryFromConfigObject(config: ConfigObjectFormValues): st
     clientId: Number(config.clientId) ?? Number(useRuntimeStore.getState().clientId),
     ...(Number(config.userId) > 0 ? { userId: Number(config.userId) } : {}),
     emailTemplateId: Number(config.emailTemplateId) ?? Number(useRuntimeStore.getState().responseTemplateId),
-    flow: config.flow ?? useConfigStore.getState().flow,
+    flow: config.flow ? config.flow.map((i) => i.value) : useConfigStore.getState().flow,
     successSubmissionScreen: config.successSubmissionScreen ?? useConfigStore.getState().successSubmissionScreen,
     ...(useConfigStore.getState().showPreSubmitSummary || config.showPreSubmitSummary
       ? { showPreSubmitSummary: true }
