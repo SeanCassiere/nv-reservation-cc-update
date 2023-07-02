@@ -10,10 +10,6 @@ Example: [https://rentall-customer.pingstash.com/?agreementId=640904&lang=en&con
 
 Once the customer accesses the application via the provided custom URL, they would then be able to add details requested by the client, directly against their booking.
 
-## Technologies used
-
-This project uses React and is written in Typescript. The reason I (Sean) chose React and Typescript is that I am very comfortable with using the library and the language respectively.
-
 ## Documentation
 
 See [DOCUMENTATION](DOCUMENTATION.md) for information and configuration options for the application.
