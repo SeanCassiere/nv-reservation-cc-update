@@ -120,7 +120,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
       <CardLayout title={t("forms.licenseUpload.title")} subtitle={t("forms.licenseUpload.message")}>
         <div className="mt-3 grid grid-cols-1 gap-4">
           <div>
-            <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.frontImage.title")}</h2>
+            <h2 className="mb-2 text-base text-primary">{t("forms.licenseUpload.frontImage.title")}</h2>
             <div>
               {noFrontImageError && (
                 <Alert className="mb-1" variant="warning">
@@ -157,7 +157,7 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
             <hr />
           </div>
           <div className="mt-2">
-            <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.backImage.title")}</h2>
+            <h2 className="mb-2 text-base text-primary">{t("forms.licenseUpload.backImage.title")}</h2>
             <div>
               {noBackImageError && (
                 <Alert className="mb-1" variant="warning">

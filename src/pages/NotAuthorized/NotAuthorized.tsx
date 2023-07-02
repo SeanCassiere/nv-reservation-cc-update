@@ -18,7 +18,7 @@ const NotAuthorized: React.FC = () => {
           href="mailto:support@rentallsoftware.com"
           target="_blank"
           rel="noreferrer"
-          className="font-bold text-slate-900"
+          className="text-sm font-bold text-primary underline"
         >
           {"support@rentallsoftware.com"}
         </AnchorLink>

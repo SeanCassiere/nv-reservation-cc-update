@@ -28,7 +28,7 @@ export const GoBackConfirmationDialog: React.FC<Props> = React.memo((props) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-75 transition-opacity" />
+            <Dialog.Overlay className="fixed inset-0 bg-background/75 transition-opacity" />
           </Transition.Child>
 
           <span className="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">
@@ -43,17 +43,17 @@ export const GoBackConfirmationDialog: React.FC<Props> = React.memo((props) => {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative inline-block transform overflow-hidden rounded bg-white px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
+            <div className="relative inline-block transform overflow-hidden rounded border border-accent bg-background px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
               <div>
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 text-amber-500">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-warning-foreground text-warning">
                   <ExclamationTriangleIcon />
                 </div>
                 <div className="mt-3 text-center sm:mt-5">
-                  <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-600">
+                  <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-primary">
                     {props.title}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">{props.message}</p>
+                    <p className="text-sm text-primary/80">{props.message}</p>
                   </div>
                   <div className="mt-10 flex flex-col gap-2">
                     <UIButton type="button" onClick={props.onConfirm} size="sm" autoFocus>

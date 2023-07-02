@@ -57,7 +57,7 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
         {isRentalSignature && <RentalSignatureSummary rentalSignature={rentalSignature} />}
       </div>
       {props.includeRentalChargesSummary && clientId && referenceIdentifier && (
-        <div className="mt-4 border-t border-t-gray-100 pt-4">
+        <div className="mt-4 border-t border-t-muted pt-4">
           <h3 className="text-md font-medium text-primary">
             {t("forms.rentalSummary.title", {
               context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
