@@ -45,6 +45,7 @@
     "licenseUpload": {
       "title": "Licencia de conducir",
       "message": "Sube imágenes de anverso y reverso de tu licencia de conducir.",
+      "missing": "Desaparecido",
       "goBack": {
         "title": "Estas segura",
         "message": "Regresar descartará los archivos agregados.",
@@ -71,6 +72,7 @@
       "title_agreement": "Firma del contrato",
       "message": "Dibuje su firma a continuación y presione el botón Guardar.",
       "message_agreement": "Dibuje su firma a continuación y presione el botón Guardar.",
+      "missing": "Desaparecido",
       "clearInput": "Borrar la firma",
       "errorNoSignature": "Proporcione una firma.",
       "saveInput": "Señal",
@@ -94,6 +96,7 @@
       "message_submitted": "Consulte la información que ha enviado para su alquiler.",
       "noData": "Actualmente no enviará ningún dato para su reserva.",
       "noData_submitted": "No ha enviado ninguna información para su alquiler.",
+      "missing": "Desaparecido",
       "creditCardTitle": "Tarjeta de crédito",
       "licenseUploadTitle": "Permiso de conducir",
       "rentalSignatureTitle": "Firma de alquiler"

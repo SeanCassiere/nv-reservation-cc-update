@@ -10,7 +10,7 @@ type Props = {
 
 const CardLayout: React.FC<Props> = ({ title, subtitle, image, children }) => {
   return (
-    <div className={clsx("w-full", "rounded", "border", "border-gray-100", "px-5", "py-5")}>
+    <div className={clsx("w-full", "rounded", "border", "border-muted", "px-5", "py-5")}>
       {/* title */}
       {title && typeof title === "string" && <CardTitleHeading>{title}</CardTitleHeading>}
       {title && typeof title === "number" && <CardTitleHeading>{title}</CardTitleHeading>}
@@ -36,7 +36,7 @@ const CardLayout: React.FC<Props> = ({ title, subtitle, image, children }) => {
 export const CardTitleHeading = React.forwardRef<HTMLHeadingElement, { children: React.ReactNode }>(
   ({ children }, ref) => {
     return (
-      <h1 ref={ref} className={clsx("text-2xl", "font-medium", "text-gray-600")}>
+      <h1 ref={ref} className="pb-2 text-2xl font-semibold  text-primary transition-colors">
         {children}
       </h1>
     );
@@ -46,7 +46,7 @@ export const CardTitleHeading = React.forwardRef<HTMLHeadingElement, { children:
 export const CardSubtitleSpan = React.forwardRef<HTMLSpanElement, { children: React.ReactNode }>(
   ({ children }, ref) => {
     return (
-      <span ref={ref} className={clsx("text-sm", "text-gray-500")}>
+      <span ref={ref} className="text-base leading-7 text-primary">
         {children}
       </span>
     );

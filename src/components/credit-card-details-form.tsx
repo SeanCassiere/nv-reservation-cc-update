@@ -5,7 +5,11 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/comp
 import { Input } from "@/components/ui/input";
 
 import { useCreditCardLogic } from "@/hooks/logic/useCreditCardLogic";
-import { formatCreditCardNumber, getFormattedExpirationDate, creditCardTypeFormat } from "@/utils/creditCardTypeFormat";
+import {
+  formatCreditCardNumber,
+  getFormattedExpirationDate,
+  creditCardTypeFormat,
+} from "@/utils/credit-card-type-format";
 
 type CreditCardFormHook = ReturnType<typeof useCreditCardLogic>["form"];
 type ChangeCurrentFocusFn = ReturnType<typeof useCreditCardLogic>["changeCurrentFocus"];

@@ -1,13 +1,13 @@
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout, { CardTitleHeading, CardSubtitleSpan } from "../../layouts/Card";
-import ImageDropzoneWithPreviewDefault from "@/components/ImageDropzoneWithPreview/Default";
-import DynamicCreditCardDefault from "@/components/DynamicCreditCard/Default";
-import CreditCardFormDefault from "@/components/CreditCardForm/Default";
+import CardLayout, { CardTitleHeading, CardSubtitleSpan } from "@/components/card-layout";
+import ImageDropzoneWithPreview from "@/components/image-dropzone-with-preview";
+import DynamicCreditCard from "@/components/dynamic-credit-card";
+import CreditCardDetailsForm from "@/components/credit-card-details-form";
 
 import { Button as UIButton } from "@/components/ui/button";
-import { GoBackConfirmationDialog } from "@/components/Dialogs";
+import { GoBackConfirmationDialog } from "@/components/go-back-confirmation-dialog";
 import { Form } from "@/components/ui/form";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { ExclamationIcon } from "@/components/Icons";
@@ -149,10 +149,10 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
             <CardSubtitleSpan>{t("forms.creditCard.message")}</CardSubtitleSpan>
             <div className="mt-4 grid grid-cols-1">
               <div className="my-4 md:my-2">
-                <DynamicCreditCardDefault currentFocus={currentFocus} formData={cardValues} />
+                <DynamicCreditCard currentFocus={currentFocus} formData={cardValues} />
               </div>
               <div className="mt-4">
-                <CreditCardFormDefault form={form} changeCurrentFocus={changeCurrentFocus} />
+                <CreditCardDetailsForm form={form} changeCurrentFocus={changeCurrentFocus} />
               </div>
             </div>
           </div>
@@ -165,17 +165,17 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
             <CardSubtitleSpan>{t("forms.licenseUpload.message")}</CardSubtitleSpan>
             <div className="d-grid mt-4">
               <div>
-                <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.frontImage.title")}</h2>
+                <h2 className="mb-2 text-base text-primary/90">{t("forms.licenseUpload.frontImage.title")}</h2>
                 <div>
                   {noFrontImageError && (
-                    <Alert className="mb-1" variant="destructive">
+                    <Alert className="mb-1" variant="warning">
                       <ExclamationIcon />
-                      <AlertTitle>Missing</AlertTitle>
+                      <AlertTitle>{t("forms.licenseUpload.missing")}</AlertTitle>
                       <AlertDescription>{t("forms.licenseUpload.frontImage.notSelected")}</AlertDescription>
                     </Alert>
                   )}
 
-                  <ImageDropzoneWithPreviewDefault
+                  <ImageDropzoneWithPreview
                     dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
                     selectButtonText={t("forms.licenseUpload.frontImage.select")}
                     clearButtonText={t("forms.licenseUpload.frontImage.clear")}
@@ -199,16 +199,16 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                 </div>
               </div>
               <div className="mt-6">
-                <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.backImage.title")}</h2>
+                <h2 className="mb-2 text-base text-primary/90">{t("forms.licenseUpload.backImage.title")}</h2>
                 <div>
                   {noBackImageError && (
-                    <Alert className="mb-1" variant="destructive">
+                    <Alert className="mb-1" variant="warning">
                       <ExclamationIcon />
-                      <AlertTitle>Missing</AlertTitle>
+                      <AlertTitle>{t("forms.licenseUpload.missing")}</AlertTitle>
                       <AlertDescription>{t("forms.licenseUpload.backImage.notSelected")}</AlertDescription>
                     </Alert>
                   )}
-                  <ImageDropzoneWithPreviewDefault
+                  <ImageDropzoneWithPreview
                     dragDisplayText={t("forms.licenseUpload.backImage.drag")}
                     selectButtonText={t("forms.licenseUpload.backImage.select")}
                     clearButtonText={t("forms.licenseUpload.backImage.clear")}

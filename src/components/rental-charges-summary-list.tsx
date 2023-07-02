@@ -2,8 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
-import { useClientProfileQuery } from "../../hooks/network/useClientProfile";
-import { useRentalSummaryQuery } from "../../hooks/network/useRentalSummary";
+import { useClientProfileQuery } from "../hooks/network/useClientProfile";
+import { useRentalSummaryQuery } from "../hooks/network/useRentalSummary";
 
 type RowItemProps = {
   label: string;
@@ -20,7 +20,7 @@ type Props = {
   referenceType: string;
 };
 
-const DefaultRentalSummary: React.FC<Props> = (props) => {
+const RentalChargesSummaryList: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const rentalSummary = useRentalSummaryQuery(props);
   const clientProfile = useClientProfileQuery(props);
@@ -269,7 +269,7 @@ const DefaultRentalSummary: React.FC<Props> = (props) => {
   ];
 
   return (
-    <ul className="rounded bg-gray-50 py-3">
+    <ul className="rounded bg-muted py-3">
       {[...(props.referenceType.trim().toLowerCase() === "agreement" ? agreementItems : reservationItems)]
         .filter((i) => i.isVisible)
         .map((rowItem, idx) => (
@@ -289,16 +289,14 @@ const RowItem: React.FC<RowItemProps & { isLoading?: boolean }> = ({ isLoading, 
         "py-2",
         "font-medium",
         {
-          "text-gray-700": props.value && !props.highlight && !props.isRed,
-          "text-gray-500": !props.value && !props.isRed && !props.highlight,
+          "text-primary": props.value && !props.highlight && !props.isRed, // not special or red and above 0
+          "text-primary/60": !props.value && !props.highlight && !props.isRed, // not special or red but 0
+          "text-destructive": props.isRed, // red
+          "text-primary-foreground": props.highlight, // special
         },
         {
-          "bg-slate-800": props.highlight,
-          "text-white": props.highlight,
+          "bg-muted-foreground": props.highlight,
           "font-semibold": props.highlight,
-        },
-        {
-          "text-red-500": props.isRed,
         }
       )}
     >
@@ -326,7 +324,7 @@ const SkeletonBlock: React.FC<{ highlight?: boolean; minWidth?: boolean }> = ({ 
         "inline-block",
         "w-full",
         "animate-pulse",
-        { "bg-gray-200": !highlight, "bg-slate-300": highlight },
+        { "bg-muted": !highlight, "bg-primary-foreground": highlight },
         { "w-10": minWidth }
       )}
     >
@@ -335,4 +333,4 @@ const SkeletonBlock: React.FC<{ highlight?: boolean; minWidth?: boolean }> = ({ 
   );
 };
 
-export default DefaultRentalSummary;
+export default RentalChargesSummaryList;

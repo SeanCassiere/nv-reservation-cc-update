@@ -1,36 +1,9 @@
-import React, { memo, useCallback, useMemo, useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { useDropzone, Accept } from "react-dropzone";
-import { AppNavMode } from "@/hooks/logic/useAppNavContext";
+
 import { Button as UIButton } from "@/components/ui/button";
-
-const baseStyle = {
-  flex: 1,
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: "20px 20px",
-  borderWidth: 2,
-  borderRadius: 2,
-  borderColor: "#eeeeee",
-  borderStyle: "dashed",
-  backgroundColor: "#fafafa",
-  color: "#bdbdbd",
-  outline: "none",
-  transition: "border .24s ease-in-out",
-};
-
-const activeStyle = {
-  borderColor: "#2196f3",
-};
-
-const acceptStyle = {
-  borderColor: "#00e676",
-};
-
-const rejectStyle = {
-  borderColor: "#ff1744",
-};
+import { AppNavMode } from "@/hooks/logic/useAppNavContext";
+import { cn } from "@/utils";
 
 interface Props {
   dragDisplayText: string;
@@ -43,7 +16,7 @@ interface Props {
   navMode: AppNavMode;
 }
 
-const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
+const ImageDropzoneWithPreview: React.FC<Props> = ({
   dragDisplayText,
   clearButtonText,
   selectButtonText,
@@ -89,19 +62,21 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
     onDrop,
   });
 
-  const style = useMemo(
-    () => ({
-      ...baseStyle,
-      ...(isDragActive ? activeStyle : {}),
-      ...(isDragAccept ? acceptStyle : {}),
-      ...(isDragReject ? rejectStyle : {}),
-    }),
-    [isDragActive, isDragAccept, isDragReject]
-  );
-
   return (
     <React.Fragment>
-      <div {...getRootProps({ style: style as any })}>
+      <div
+        {...getRootProps({
+          className: cn(
+            "flex flex-1 flex-col items-center justify-center p-6 border-2 border-dashed border-primary-foreground rounded outline-none bg-muted-foreground/10 text-primary/75",
+            isDragActive ? "border-accent" : undefined,
+            isDragAccept ? "border-success" : undefined,
+            isDragReject ? "border-destructive" : undefined
+          ),
+          style: {
+            transition: "border .24s ease-in-out",
+          },
+        })}
+      >
         <input {...getInputProps()} />
         {previewImage ? (
           <figure className="flex w-full flex-col items-center">
@@ -132,4 +107,4 @@ const DefaultImageDropzoneWithPreview: React.FC<Props> = ({
   );
 };
 
-export default memo(DefaultImageDropzoneWithPreview);
+export default memo(ImageDropzoneWithPreview);

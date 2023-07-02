@@ -1,13 +1,13 @@
 import React, { Fragment, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "../../layouts/Card";
-import ImageDropzoneWithPreviewDefault from "@/components/ImageDropzoneWithPreview/Default";
+import CardLayout from "@/components/card-layout";
+import ImageDropzoneWithPreview from "@/components/image-dropzone-with-preview";
+import { ExclamationIcon } from "@/components/Icons";
+import { GoBackConfirmationDialog } from "@/components/go-back-confirmation-dialog";
 
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { ExclamationIcon } from "@/components/Icons";
 import { Button as UIButton } from "@/components/ui/button";
-import { GoBackConfirmationDialog } from "@/components/Dialogs";
 
 import { useDriverLicenseLogic } from "@/hooks/logic/useDriverLicenseLogic";
 import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
@@ -120,17 +120,17 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
       <CardLayout title={t("forms.licenseUpload.title")} subtitle={t("forms.licenseUpload.message")}>
         <div className="mt-3 grid grid-cols-1 gap-4">
           <div>
-            <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.frontImage.title")}</h2>
+            <h2 className="mb-2 text-base text-primary">{t("forms.licenseUpload.frontImage.title")}</h2>
             <div>
               {noFrontImageError && (
-                <Alert className="mb-1" variant="destructive">
+                <Alert className="mb-1" variant="warning">
                   <ExclamationIcon />
-                  <AlertTitle>Missing</AlertTitle>
+                  <AlertTitle>{t("forms.licenseUpload.missing")}</AlertTitle>
                   <AlertDescription>{t("forms.licenseUpload.frontImage.notSelected")}</AlertDescription>
                 </Alert>
               )}
 
-              <ImageDropzoneWithPreviewDefault
+              <ImageDropzoneWithPreview
                 dragDisplayText={t("forms.licenseUpload.frontImage.drag")}
                 selectButtonText={t("forms.licenseUpload.frontImage.select")}
                 clearButtonText={t("forms.licenseUpload.frontImage.clear")}
@@ -157,16 +157,16 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
             <hr />
           </div>
           <div className="mt-2">
-            <h2 className="mb-2 text-base text-gray-500">{t("forms.licenseUpload.backImage.title")}</h2>
+            <h2 className="mb-2 text-base text-primary">{t("forms.licenseUpload.backImage.title")}</h2>
             <div>
               {noBackImageError && (
-                <Alert className="mb-1" variant="destructive">
+                <Alert className="mb-1" variant="warning">
                   <ExclamationIcon />
-                  <AlertTitle>Missing</AlertTitle>
+                  <AlertTitle>{t("forms.licenseUpload.missing")}</AlertTitle>
                   <AlertDescription>{t("forms.licenseUpload.backImage.notSelected")}</AlertDescription>
                 </Alert>
               )}
-              <ImageDropzoneWithPreviewDefault
+              <ImageDropzoneWithPreview
                 dragDisplayText={t("forms.licenseUpload.backImage.drag")}
                 selectButtonText={t("forms.licenseUpload.backImage.select")}
                 clearButtonText={t("forms.licenseUpload.backImage.clear")}

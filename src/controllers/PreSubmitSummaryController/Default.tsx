@@ -1,7 +1,7 @@
 import React, { useMemo, lazy } from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "../../layouts/Card";
+import CardLayout from "@/components/card-layout";
 import { Button as UIButton } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { ExclamationIcon } from "@/components/Icons";
@@ -9,9 +9,9 @@ import { ExclamationIcon } from "@/components/Icons";
 import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
 import { useFormStore } from "@/hooks/stores/useFormStore";
 
-const CreditCardFormSummary = lazy(() => import("../../components/FormSummary/CreditCard"));
-const DriverLicenseFormSummary = lazy(() => import("../../components/FormSummary/DriverLicense"));
-const RentalSignatureFormSummary = lazy(() => import("../../components/FormSummary/RentalSignature"));
+const CreditCardFormSummary = lazy(() => import("../../components/form-details-summary/credit-card-summary"));
+const DriverLicenseFormSummary = lazy(() => import("../../components/form-details-summary/driver-license-summary"));
+const RentalSignatureFormSummary = lazy(() => import("../../components/form-details-summary/rental-signature-summary"));
 
 const PreSubmitSummaryControllerDefault: React.FC = () => {
   const { t } = useTranslation();
@@ -30,13 +30,12 @@ const PreSubmitSummaryControllerDefault: React.FC = () => {
     <CardLayout title={t("forms.formsSummary.title")} subtitle={t("forms.formsSummary.message")}>
       <div className="mt-4">
         {isEmpty && (
-          <Alert className="mb-1" variant="destructive">
+          <Alert className="mb-1" variant="warning">
             <ExclamationIcon />
-            <AlertTitle>Missing</AlertTitle>
+            <AlertTitle>{t("forms.formsSummary.missing")}</AlertTitle>
             <AlertDescription>{t("forms.formsSummary.noData")}</AlertDescription>
           </Alert>
         )}
-        {isEmpty && <Alert color="warning">{t("forms.formsSummary.noData")}</Alert>}
         {isCreditCard && (
           <CreditCardFormSummary creditCard={creditCardInfo} editFunc={() => goToEditAPage("creditCard")} />
         )}

@@ -45,6 +45,7 @@
     "licenseUpload": {
       "title": "Führerschein",
       "message": "Laden Sie Vorder- und Rückseitenbilder Ihres Führerscheins hoch.",
+      "missing": "Fehlen",
       "goBack": {
         "title": "Bist du sicher?",
         "message": "Beim Zurückgehen werden die hinzugefügten Dateien verworfen.",
@@ -71,6 +72,7 @@
       "title_agreement": "Vertragsunterschrift",
       "message": "Zeichnen Sie unten Ihre Unterschrift und drücken Sie die Schaltfläche Speichern.",
       "message_agreement": "Zeichnen Sie unten Ihre Unterschrift und drücken Sie die Schaltfläche Speichern.",
+      "missing": "Fehlen",
       "clearInput": "Löschen Sie die Signatur",
       "errorNoSignature": "Bitte unterschreiben Sie.",
       "saveInput": "Schild",
@@ -94,6 +96,7 @@
       "message_submitted": "Bitte sehen Sie sich die Informationen an, die Sie für Ihre Anmietung eingereicht haben.",
       "noData": "Sie übermitteln derzeit keine Daten für Ihre Buchung.",
       "noData_submitted": "Sie haben keine Informationen zu Ihrer Anmietung übermittelt.",
+      "missing": "Fehlen",
       "creditCardTitle": "Kreditkarte",
       "licenseUploadTitle": "Führerschein",
       "rentalSignatureTitle": "Mietunterschrift"

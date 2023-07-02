@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "../../layouts/Card";
-import SignatureCanvasDefault from "@/components/SignatureCanvas/Default";
+import CardLayout from "@/components/card-layout";
+import SignatureCanvas from "@/components/signature-canvas";
 import { Button as UIButton } from "@/components/ui/button";
-import { GoBackConfirmationDialog } from "@/components/Dialogs";
+import { GoBackConfirmationDialog } from "@/components/go-back-confirmation-dialog";
 import { ExclamationIcon } from "@/components/Icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
@@ -137,11 +137,11 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
           {showRequiredMessage && (
             <Alert className="mb-1" variant="destructive">
               <ExclamationIcon />
-              <AlertTitle>Missing</AlertTitle>
+              <AlertTitle>{t("forms.rentalSignature.missing")}</AlertTitle>
               <AlertDescription>{t("forms.rentalSignature.signatureRequired")}</AlertDescription>
             </Alert>
           )}
-          <SignatureCanvasDefault
+          <SignatureCanvas
             onSignature={handleSettingSignatureUrl}
             initialDataURL={initialSignatureUrl !== "" ? initialSignatureUrl : undefined}
           />

@@ -1,11 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "../Card";
-import DefaultRentalSummary from "../../components/RentalSummary/Default";
+import CardLayout from "@/components/card-layout";
+import RentalChargesSummaryList from "@/components/rental-charges-summary-list";
 
-import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { APP_CONSTANTS, SuccessImgUri } from "../../utils/constants";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
 
 const RentalChargesSummarySuccessDefaultLayout: React.FC = () => {
   const { t } = useTranslation();
@@ -26,7 +26,11 @@ const RentalChargesSummarySuccessDefaultLayout: React.FC = () => {
         })}
       </p>
       <div className="mt-5">
-        <DefaultRentalSummary clientId={clientId ?? 0} referenceId={referenceId ?? 0} referenceType={referenceType} />
+        <RentalChargesSummaryList
+          clientId={clientId ?? 0}
+          referenceId={referenceId ?? 0}
+          referenceType={referenceType}
+        />
       </div>
     </CardLayout>
   );
