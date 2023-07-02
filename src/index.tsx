@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 
 import "./index.css";
-import App from "./app";
+import App from "./App";
 import "./i18n";
 import LoadingSubmission from "./pages/LoadingSubmission/LoadingSubmission";
 
