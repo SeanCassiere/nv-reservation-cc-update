@@ -185,7 +185,7 @@ const ConfigCreator = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {supportedLanguages.map((langItem) => (
+                    {supportedLanguages.sort(alphabeticalSortStrings).map((langItem) => (
                       <SelectItem key={`dev-language-${langItem}`} value={langItem}>
                         {langItem}
                       </SelectItem>
@@ -350,7 +350,7 @@ const ConfigCreator = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {ALL_SUCCESS_SCREENS.map((successScreen) => (
+                    {ALL_SUCCESS_SCREENS.sort(alphabeticalSortObjects).map((successScreen) => (
                       <SelectItem
                         key={`dev-select-successSubmissionScreen-${successScreen.value}`}
                         value={successScreen.value}
@@ -406,7 +406,7 @@ const ConfigCreator = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {ALL_SCREEN_FLOWS.map((screenFlow, idx) => (
+                            {ALL_SCREEN_FLOWS.sort(alphabeticalSortObjects).map((screenFlow, idx) => (
                               <SelectItem key={`${index}-screen-opt-${idx}`} value={screenFlow.value}>
                                 {screenFlow.label}
                               </SelectItem>
@@ -450,6 +450,26 @@ const ConfigCreator = () => {
     </Form>
   );
 };
+
+function alphabeticalSortStrings(item1: string, item2: string) {
+  if (item1 < item2) {
+    return -1;
+  }
+  if (item1 > item2) {
+    return 1;
+  }
+  return 0;
+}
+
+function alphabeticalSortObjects<T extends { value: string; label: string }>(item1: T, item2: T) {
+  if (item1.value < item2.value) {
+    return -1;
+  }
+  if (item1.value > item2.value) {
+    return 1;
+  }
+  return 0;
+}
 
 const DevGroupCard = ({ title, children }: { title: React.ReactNode; children: React.ReactNode }) => {
   return (
