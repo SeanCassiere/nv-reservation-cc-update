@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import CardLayout from "@/components/card-layout";
 import AnchorLink from "@/components/anchor-link";
 
+import { useClipboard } from "@/hooks/logic/useClipboard";
 import { useConfigStore } from "@/hooks/stores/useConfigStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
@@ -63,12 +64,15 @@ const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> =
 const ConfigCreator = () => {
   const { t, i18n } = useTranslation();
 
-  const [showCopiedMessage, setShowCopiedMessage] = React.useState(false);
-
   const rs = useRuntimeStore();
   const cs = useConfigStore();
+
   const queryParams = new URLSearchParams(cs.rawQueryString);
   const queryDev = queryParams.get("dev");
+
+  const [isCopied, copy] = useClipboard({
+    successDuration: 1250,
+  });
 
   const form = useForm<ConfigObjectFormValues>({
     resolver: zodResolver(configObjectFormSchema),
@@ -119,16 +123,10 @@ const ConfigCreator = () => {
             variant="secondary"
             size="sm"
             onClick={() => {
-              navigator.clipboard.writeText(window.location.origin + "/?" + newQueryString);
-              setShowCopiedMessage(true);
-              setTimeout(() => {
-                setShowCopiedMessage(false);
-              }, 1250);
+              copy(window.location.origin + "/?" + newQueryString);
             }}
           >
-            {showCopiedMessage
-              ? t("developer.configCreator.btnCopiedToClipboard")
-              : t("developer.configCreator.btnCopy")}
+            {isCopied ? t("developer.configCreator.btnCopiedToClipboard") : t("developer.configCreator.btnCopy")}
           </Button>
         </DevGroupCard>
 
