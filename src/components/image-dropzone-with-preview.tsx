@@ -1,19 +1,21 @@
 import React, { memo, useCallback, useState } from "react";
-import { useDropzone, Accept } from "react-dropzone";
+import { useDropzone, type Accept } from "react-dropzone";
 
 import { Button as UIButton } from "@/components/ui/button";
-import { AppNavMode } from "@/hooks/logic/useAppNavContext";
 import { cn } from "@/utils";
+
+export type PreviewImage = { fileName: string; url: string };
+export type PreviewImageState = PreviewImage | null;
+export type OnClearImageFn = (previewImageState: PreviewImageState) => void;
 
 interface Props {
   dragDisplayText: string;
   selectButtonText: string;
   clearButtonText: string;
   onSelectFile?: (file: File) => void;
-  onClearFile?: () => void;
+  onClearFile?: OnClearImageFn;
   acceptOnly?: Accept;
   initialPreview?: { fileName: string; url: string } | null | undefined;
-  navMode: AppNavMode;
 }
 
 const ImageDropzoneWithPreview: React.FC<Props> = ({
@@ -24,9 +26,8 @@ const ImageDropzoneWithPreview: React.FC<Props> = ({
   onClearFile,
   acceptOnly = undefined,
   initialPreview = null,
-  navMode,
 }) => {
-  const [previewImage, setPreviewImage] = useState<{ fileName: string; url: string } | null>(initialPreview);
+  const [previewImage, setPreviewImage] = useState<PreviewImageState>(initialPreview);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -45,14 +46,11 @@ const ImageDropzoneWithPreview: React.FC<Props> = ({
   );
 
   const handleClearImage = useCallback(() => {
+    onClearFile?.(previewImage);
     if (previewImage) {
       setPreviewImage(null);
-      if (navMode === "navigate") {
-        URL.revokeObjectURL(previewImage?.url);
-      }
     }
-    if (onClearFile) onClearFile();
-  }, [navMode, onClearFile, previewImage]);
+  }, [onClearFile, previewImage]);
 
   const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
     accept: acceptOnly,

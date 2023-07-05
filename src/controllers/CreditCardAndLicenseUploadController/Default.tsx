@@ -22,10 +22,9 @@ interface IProps {}
 
 const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
   const { t } = useTranslation();
-  const clearFormState = useFormStore((s) => s.clearFormStateKey);
+
   const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext, mode } = useAppNavContext();
 
-  const setDriversLicenseToStore = useFormStore((s) => s.setDriversLicense);
   const setCustomerCreditCardToStore = useFormStore((s) => s.setCustomerCreditCard);
   const initialCreditCardFormData = useFormStore((s) => s.customerCreditCard.data);
   const initialDriverLicenseData = useFormStore((s) => s.driversLicense.data);
@@ -39,48 +38,32 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
   const {
     frontLicenseImage,
     backLicenseImage,
-    setFrontImageError,
-    setBackImageError,
     noFrontImageError,
     noBackImageError,
     setFrontImage,
     setBackImage,
     clearFrontImage,
     clearBackImage,
-  } = useDriverLicenseLogic({
-    frontImageDataUrl: initialDriverLicenseData.frontImageUrl,
-    frontImageName: initialDriverLicenseData.frontImageName,
-    backImageDataUrl: initialDriverLicenseData.backImageUrl,
-    backImageName: initialDriverLicenseData.backImageName,
-  });
+    clearLicenseImagesFromStore,
+    saveLicenseImagesToStore,
+  } = useDriverLicenseLogic(
+    {
+      frontImageDataUrl: initialDriverLicenseData.frontImageUrl,
+      frontImageName: initialDriverLicenseData.frontImageName,
+      backImageDataUrl: initialDriverLicenseData.backImageUrl,
+      backImageName: initialDriverLicenseData.backImageName,
+    },
+    mode
+  );
 
   // validate the form data against the schema
-  const handleNextState = form.handleSubmit(
-    (values) => {
-      if (!frontLicenseImage) setFrontImageError(true);
-      if (!backLicenseImage) setBackImageError(true);
-      if (!backLicenseImage || !frontLicenseImage) {
-        return;
-      }
+  const handleNextState = form.handleSubmit((values) => {
+    const saveLicenseImagesResult = saveLicenseImagesToStore();
+    if (!saveLicenseImagesResult) return;
 
-      setCustomerCreditCardToStore(values);
-      setDriversLicenseToStore({
-        frontImageUrl: URL.createObjectURL(frontLicenseImage),
-        backImageUrl: URL.createObjectURL(backLicenseImage),
-        frontImageName: frontLicenseImage.name,
-        backImageName: backLicenseImage.name,
-      });
-
-      goNext();
-    },
-    () => {
-      if (!frontLicenseImage) setFrontImageError(true);
-      if (!backLicenseImage) setBackImageError(true);
-      if (!backLicenseImage || !frontLicenseImage) {
-        return;
-      }
-    }
-  );
+    setCustomerCreditCardToStore(values);
+    goNext();
+  });
 
   const dismissBackDialog = useCallback(() => {
     setBackConfirmationDialogState(false);
@@ -88,11 +71,11 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
 
   const confirmBackDialog = useCallback(() => {
     if (mode === "navigate") {
-      clearFormState("driversLicense");
+      clearLicenseImagesFromStore();
     }
     setBackConfirmationDialogState(false);
     goPrev();
-  }, [clearFormState, goPrev, mode, setBackConfirmationDialogState]);
+  }, [clearLicenseImagesFromStore, goPrev, mode, setBackConfirmationDialogState]);
 
   const handleOpenModalConfirmation = useCallback(() => {
     if (mode === "save") {
@@ -194,7 +177,6 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                           }
                         : null
                     }
-                    navMode={mode}
                   />
                 </div>
               </div>
@@ -227,7 +209,6 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                           }
                         : null
                     }
-                    navMode={mode}
                   />
                 </div>
               </div>

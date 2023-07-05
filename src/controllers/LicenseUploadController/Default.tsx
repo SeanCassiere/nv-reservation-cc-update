@@ -18,45 +18,40 @@ interface IProps {}
 
 const DefaultLicenseUploadController: React.FC<IProps> = () => {
   const { t } = useTranslation();
+
   const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext, mode } = useAppNavContext();
 
-  const clearFormState = useFormStore((s) => s.clearFormStateKey);
-  const setDriversLicenseToStore = useFormStore((s) => s.setDriversLicense);
   const initialDriverLicenseData = useFormStore((s) => s.driversLicense.data);
   const { setBackConfirmationDialogState, isBackConfirmationDialogOpen } = useDialogStore();
 
   const {
     frontLicenseImage,
     backLicenseImage,
-    setFrontImageError,
-    setBackImageError,
     noFrontImageError,
     noBackImageError,
     setFrontImage,
     setBackImage,
     clearFrontImage,
     clearBackImage,
-  } = useDriverLicenseLogic({
-    frontImageDataUrl: initialDriverLicenseData.frontImageUrl,
-    frontImageName: initialDriverLicenseData.frontImageName,
-    backImageDataUrl: initialDriverLicenseData.backImageUrl,
-    backImageName: initialDriverLicenseData.backImageName,
-  });
+    clearLicenseImagesFromStore,
+    saveLicenseImagesToStore,
+  } = useDriverLicenseLogic(
+    {
+      frontImageDataUrl: initialDriverLicenseData.frontImageUrl,
+      frontImageName: initialDriverLicenseData.frontImageName,
+      backImageDataUrl: initialDriverLicenseData.backImageUrl,
+      backImageName: initialDriverLicenseData.backImageName,
+    },
+    mode
+  );
 
   // General component state
   const handleNextState = useCallback(() => {
-    if (!frontLicenseImage) setFrontImageError(true);
-    if (!backLicenseImage) setBackImageError(true);
-    if (!frontLicenseImage || !backLicenseImage) return;
+    const result = saveLicenseImagesToStore();
+    if (!result) return;
 
-    setDriversLicenseToStore({
-      frontImageUrl: URL.createObjectURL(frontLicenseImage),
-      backImageUrl: URL.createObjectURL(backLicenseImage),
-      frontImageName: frontLicenseImage.name,
-      backImageName: backLicenseImage.name,
-    });
     goNext();
-  }, [frontLicenseImage, backLicenseImage, setFrontImageError, setBackImageError, setDriversLicenseToStore, goNext]);
+  }, [saveLicenseImagesToStore, goNext]);
 
   const dismissBackDialog = useCallback(() => {
     setBackConfirmationDialogState(false);
@@ -64,11 +59,11 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
 
   const confirmBackDialog = useCallback(() => {
     if (mode === "navigate") {
-      clearFormState("driversLicense");
+      clearLicenseImagesFromStore();
     }
     setBackConfirmationDialogState(false);
     goPrev();
-  }, [clearFormState, goPrev, mode, setBackConfirmationDialogState]);
+  }, [clearLicenseImagesFromStore, goPrev, mode, setBackConfirmationDialogState]);
 
   const handleOpenModalConfirmation = useCallback(() => {
     if (mode === "save") {
@@ -149,7 +144,6 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
                       }
                     : null
                 }
-                navMode={mode}
               />
             </div>
           </div>
@@ -185,7 +179,6 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
                       }
                     : null
                 }
-                navMode={mode}
               />
             </div>
           </div>
