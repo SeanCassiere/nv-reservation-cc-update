@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import { clientFetch } from "./clientV3";
 import { RentalSourcedDetails } from "./reservationApi";
 
@@ -32,9 +34,7 @@ const fetchAgreementById = async (opts: FetchAgreementByIdOrNumberProps): Promis
   }
 };
 
-const fetchAgreementsByNumber = async (
-  opts: FetchAgreementByIdOrNumberProps
-): Promise<{ AgreementId: number; AgreementNumber: string } | null> => {
+const fetchAgreementsByNumber = async (opts: FetchAgreementByIdOrNumberProps) => {
   try {
     if (!opts.adminUserId) {
       console.warn("systemUserId is 0, therefore /agreements?AgreementNumber=:referenceNo will not work");
@@ -45,9 +45,13 @@ const fetchAgreementsByNumber = async (
     params.append("clientId", `${opts.clientId}`);
     params.append("userId", `${opts.adminUserId}`);
     const list = await clientFetch(`/Agreements?` + params).then((r) => r.json());
-    const findAgreement = list.find(
-      (r: { AgreementId: number; AgreementNumber: string }) =>
-        r.AgreementNumber.toLowerCase() === String(opts.referenceId).toLowerCase()
+
+    const parsedList = z
+      .array(z.object({ AgreementId: z.number(), AgreementNumber: z.string() }))
+      .parse(Array.isArray(list) ? list : []);
+
+    const findAgreement = parsedList.find(
+      (r) => r.AgreementNumber.toLowerCase() === String(opts.referenceId).toLowerCase()
     );
     if (!findAgreement) {
       throw new Error("Not found");
