@@ -12,7 +12,7 @@ export function cn(...inputs: ClassValue[]) {
  * @param {String} className the class name to set on the html document
  * @returns {void}
  */
-export function setHtmlDocumentClass(className: string) {
+export function setHtmlDocumentTheme(className: string) {
   ALL_THEME_CLASS_NAMES.forEach((name) => {
     if (name && name.length > 0 && document.documentElement.classList.contains(name))
       document.documentElement.classList.remove(name);

@@ -1,7 +1,7 @@
 import { isValueTrue } from "../../utils/common";
 import { APP_CONSTANTS, COMPAT_KEYS } from "../../utils/constants";
 import { base64Decode } from "../../utils/base64";
-import { setHtmlDocumentClass } from "@/utils";
+import { setHtmlDocumentTheme } from "@/utils";
 
 type QueryConfigState = {
   clientid: string | null;
@@ -55,7 +55,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
   }
 
   if (config.theme) {
-    setHtmlDocumentClass(config.theme);
+    setHtmlDocumentTheme(config.theme);
   }
 
   if (!config.clientid) {
