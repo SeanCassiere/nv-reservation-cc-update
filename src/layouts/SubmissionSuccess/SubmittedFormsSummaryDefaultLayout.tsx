@@ -3,11 +3,11 @@ import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { ExclamationIcon } from "@/components/ui/icons";
 
 import { useFormStore } from "@/hooks/stores/useFormStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
-import { ExclamationIcon } from "@/components/Icons";
 
 const RentalChargesSummaryList = lazy(() => import("../../components/rental-charges-summary-list"));
 const CreditCardSummary = lazy(() => import("../../components/form-details-summary/credit-card-summary"));

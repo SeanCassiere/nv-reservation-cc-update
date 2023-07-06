@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
 import ImageDropzoneWithPreview from "@/components/image-dropzone-with-preview";
-import { ExclamationIcon } from "@/components/Icons";
+import { ExclamationIcon } from "@/components/ui/icons";
 import { GoBackConfirmationDialog } from "@/components/go-back-confirmation-dialog";
 
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";

@@ -10,7 +10,7 @@ import { Button as UIButton } from "@/components/ui/button";
 import { GoBackConfirmationDialog } from "@/components/go-back-confirmation-dialog";
 import { Form } from "@/components/ui/form";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { ExclamationIcon } from "@/components/Icons";
+import { ExclamationIcon } from "@/components/ui/icons";
 
 import { useCreditCardLogic } from "@/hooks/logic/useCreditCardLogic";
 import { useDriverLicenseLogic } from "@/hooks/logic/useDriverLicenseLogic";

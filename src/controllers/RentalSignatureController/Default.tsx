@@ -5,7 +5,7 @@ import CardLayout from "@/components/card-layout";
 import SignatureCanvas from "@/components/signature-canvas";
 import { Button as UIButton } from "@/components/ui/button";
 import { GoBackConfirmationDialog } from "@/components/go-back-confirmation-dialog";
-import { ExclamationIcon } from "@/components/Icons";
+import { ExclamationIcon } from "@/components/ui/icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { APP_CONSTANTS } from "@/utils/constants";
