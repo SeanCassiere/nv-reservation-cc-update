@@ -7,6 +7,9 @@ import { ExclamationIcon } from "@/components/ui/icons";
 
 import { useFormStore } from "@/hooks/stores/useFormStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { useRentalSummaryQuery } from "@/hooks/network/useRentalSummary";
+import { useClientProfileQuery } from "@/hooks/network/useClientProfile";
+
 import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
 
 const RentalChargesSummaryList = lazy(() => import("../../components/rental-charges-summary-list"));
@@ -21,7 +24,7 @@ export type SubmittedFormsSummaryDefaultLayoutProps = {
 const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSummaryDefaultLayoutProps) => {
   const { t } = useTranslation();
 
-  const { referenceIdentifier, referenceType, clientId } = useRuntimeStore();
+  const { clientId, referenceIdentifier, referenceType } = useRuntimeStore();
 
   const { isFilled: isCreditCard, data: creditCardInfo } = useFormStore((s) => s.customerCreditCard);
   const { isFilled: isDriverLicense, data: driversLicense } = useFormStore((s) => s.driversLicense);
@@ -31,6 +34,14 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
     () => isCreditCard === false && isDriverLicense === false && isRentalSignature === false,
     [isCreditCard, isDriverLicense, isRentalSignature]
   );
+
+  const rentalSummaryQuery = useRentalSummaryQuery({
+    clientId: String(clientId),
+    referenceId: String(referenceIdentifier),
+    referenceType,
+  });
+
+  const clientProfileQuery = useClientProfileQuery({ clientId: String(clientId) });
 
   return (
     <CardLayout title={t("successSubmission.title")} image={SuccessImgUri}>
@@ -69,9 +80,9 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
             })}
           </div>
           <RentalChargesSummaryList
-            clientId={clientId}
             referenceType={referenceType}
-            referenceId={referenceIdentifier}
+            summary={rentalSummaryQuery.status === "success" ? rentalSummaryQuery.data : null}
+            clientProfile={clientProfileQuery.status === "success" ? clientProfileQuery.data : null}
           />
         </div>
       )}

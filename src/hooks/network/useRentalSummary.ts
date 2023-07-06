@@ -1,5 +1,6 @@
 import { useQuery, QueryOptions } from "@tanstack/react-query";
-import { fetchRentalSummary, SummaryCharges } from "../../api/summaryApi";
+
+import { fetchRentalSummary, type SummaryCharges } from "@/api/summaryApi";
 
 export const useRentalSummaryQuery = (
   {

@@ -3,11 +3,14 @@ import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
 import { Button as UIButton } from "@/components/ui/button";
-import RentalChargesSummaryList from "../../components/rental-charges-summary-list";
+import RentalChargesSummaryList from "@/components/rental-charges-summary-list";
 
-import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { APP_CONSTANTS } from "../../utils/constants";
-import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
+import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { useRentalSummaryQuery } from "@/hooks/network/useRentalSummary";
+import { useClientProfileQuery } from "@/hooks/network/useClientProfile";
+
+import { APP_CONSTANTS } from "@/utils/constants";
 
 interface IProps {}
 
@@ -18,6 +21,14 @@ const DefaultRentalSummaryController: React.FC<IProps> = () => {
   const clientId = useRuntimeStore((s) => s.clientId);
   const referenceId = useRuntimeStore((s) => s.referenceIdentifier);
   const referenceType = useRuntimeStore((s) => s.referenceType);
+
+  const rentalSummaryQuery = useRentalSummaryQuery({
+    clientId: String(clientId),
+    referenceId: String(referenceId),
+    referenceType,
+  });
+
+  const clientProfileQuery = useClientProfileQuery({ clientId: String(clientId) });
 
   return (
     <CardLayout
@@ -30,9 +41,9 @@ const DefaultRentalSummaryController: React.FC<IProps> = () => {
     >
       <div className="mt-3">
         <RentalChargesSummaryList
-          clientId={clientId ?? 0}
-          referenceId={referenceId ?? 0}
           referenceType={referenceType}
+          summary={rentalSummaryQuery.status === "success" ? rentalSummaryQuery.data : null}
+          clientProfile={clientProfileQuery.status === "success" ? clientProfileQuery.data : null}
         />
         <div className="mt-6 flex">
           {isPreviousAvailable && (
