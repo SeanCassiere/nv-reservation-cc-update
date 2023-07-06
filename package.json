@@ -1,6 +1,6 @@
 {
   "name": "nav-reservation-cc-update",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "private": true,
   "scripts": {
     "dev": "netlify dev --targetPort 3000",
