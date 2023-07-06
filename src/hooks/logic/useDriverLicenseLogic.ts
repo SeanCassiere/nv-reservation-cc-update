@@ -1,11 +1,9 @@
 import React from "react";
 
-import type { OnClearImageFn } from "@/components/image-dropzone-with-preview";
+import type { OnClearImageFn, OnSelectImageFn, PreviewImage } from "@/components/image-dropzone-with-preview";
 
 import type { AppNavMode } from "@/hooks/logic/useAppNavContext";
 import { useFormStore } from "@/hooks/stores/useFormStore";
-
-import { urlToBlob } from "@/utils/blobUtils";
 
 type SaveLicenseImagesToStoreFn = () => boolean;
 
@@ -23,108 +21,83 @@ export const useDriverLicenseLogic = (
   const clearStoreFormStorage = useFormStore((s) => s.clearFormStateKey);
   const setDriversLicenseToStorage = useFormStore((s) => s.setDriversLicense);
 
-  const [frontImageFile, setFrontImageFile] = React.useState<File | null>(null);
-  const [displayNoFrontImageError, setDisplayNoFrontImageError] = React.useState(false);
+  const [frontImageState, setFrontImageState] = React.useState<PreviewImage | null>(
+    frontImageDataUrl && frontImageName ? { fileName: frontImageName, dataUrl: frontImageDataUrl } : null
+  );
+  const [isFrontImageError, setIsFrontImageError] = React.useState(false);
 
-  const [backImageFile, setBackImageFile] = React.useState<File | null>(null);
-  const [displayNoBackImageError, setDisplayNoBackImageError] = React.useState(false);
+  const [backImageState, setBackImageState] = React.useState<PreviewImage | null>(
+    backImageDataUrl && backImageName ? { fileName: backImageName, dataUrl: backImageDataUrl } : null
+  );
+  const [isBackImageError, setIsBackImageError] = React.useState(false);
 
-  const selectFrontImage = React.useCallback(async (file: File) => {
-    setDisplayNoFrontImageError(false);
-    setFrontImageFile(file);
+  const selectFrontImage: OnSelectImageFn = React.useCallback((saveDataFromComponent) => {
+    setIsFrontImageError(false);
+    setFrontImageState(saveDataFromComponent);
   }, []);
 
   const clearFrontImage: OnClearImageFn = React.useCallback(
     (previewImageState) => {
       if (previewImageState && navMode === "navigate") {
-        URL.revokeObjectURL(previewImageState.url);
+        URL.revokeObjectURL(previewImageState.dataUrl);
       }
-      setFrontImageFile(null);
+      setFrontImageState(null);
     },
     [navMode]
   );
 
-  const selectBackImage = React.useCallback((file: File) => {
-    setDisplayNoBackImageError(false);
-    setBackImageFile(file);
+  const selectBackImage: OnSelectImageFn = React.useCallback((saveDataFromComponent) => {
+    setIsBackImageError(false);
+    setBackImageState(saveDataFromComponent);
   }, []);
 
   const clearBackImage: OnClearImageFn = React.useCallback(
     (previewImageState) => {
       if (previewImageState && navMode === "navigate") {
-        URL.revokeObjectURL(previewImageState.url);
+        URL.revokeObjectURL(previewImageState.dataUrl);
       }
-      setBackImageFile(null);
+      setBackImageState(null);
     },
     [navMode]
   );
-
-  const setFrontImageError = React.useCallback((value: boolean) => {
-    setDisplayNoFrontImageError(value);
-  }, []);
-
-  const setBackImageError = React.useCallback((value: boolean) => {
-    setDisplayNoBackImageError(value);
-  }, []);
 
   const saveLicenseImagesToStore: SaveLicenseImagesToStoreFn = React.useCallback(() => {
     // locally tracking errors
     let hasFrontImageError = false;
     let hasBackImageError = false;
 
-    if (!frontImageFile) {
-      setDisplayNoFrontImageError(true);
+    if (!frontImageState) {
+      setIsFrontImageError(true);
       hasFrontImageError = true;
     }
 
-    if (!backImageFile) {
-      setDisplayNoBackImageError(true);
+    if (!backImageState) {
+      setIsBackImageError(true);
       hasBackImageError = true;
     }
 
-    if (hasFrontImageError || hasBackImageError || !frontImageFile || !backImageFile) return false;
+    if (hasFrontImageError || hasBackImageError || !frontImageState || !backImageState) return false;
 
     setDriversLicenseToStorage({
-      frontImageUrl: URL.createObjectURL(frontImageFile),
-      backImageUrl: URL.createObjectURL(backImageFile),
-      frontImageName: frontImageFile.name,
-      backImageName: backImageFile.name,
+      frontImageUrl: frontImageState.dataUrl,
+      backImageUrl: backImageState.dataUrl,
+      frontImageName: frontImageState.fileName,
+      backImageName: backImageState.fileName,
     });
-    return false;
-  }, [frontImageFile, backImageFile, setDriversLicenseToStorage]);
+    return true;
+  }, [frontImageState, backImageState, setDriversLicenseToStorage]);
 
   const clearLicenseImagesFromStore = React.useCallback(() => {
     clearStoreFormStorage("driversLicense");
   }, [clearStoreFormStorage]);
 
-  // On init, if data urls are available, convert them to blobs -> file and then set them to the state
-  React.useEffect(() => {
-    if (frontImageDataUrl && frontImageName) {
-      (async () => {
-        const blob = await urlToBlob(frontImageDataUrl);
-        const file = new File([blob], frontImageName);
-        setFrontImageFile(file);
-      })();
-    }
-
-    if (backImageDataUrl && backImageName) {
-      (async () => {
-        const blob = await urlToBlob(backImageDataUrl);
-        const file = new File([blob], backImageName);
-        setBackImageFile(file);
-      })();
-    }
-  }, [backImageDataUrl, backImageName, frontImageDataUrl, frontImageName]);
-
   return {
-    noFrontImageError: displayNoFrontImageError,
-    noBackImageError: displayNoBackImageError,
-    frontLicenseImage: frontImageFile,
-    backLicenseImage: backImageFile,
+    isFrontImageError,
+    isBackImageError,
+    frontLicenseImage: frontImageState,
+    backLicenseImage: backImageState,
     setFrontImage: selectFrontImage,
     setBackImage: selectBackImage,
-    setFrontImageError,
-    setBackImageError,
     clearFrontImage,
     clearBackImage,
     saveLicenseImagesToStore,

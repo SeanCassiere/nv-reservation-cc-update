@@ -4,18 +4,19 @@ import { useDropzone, type Accept } from "react-dropzone";
 import { Button as UIButton } from "@/components/ui/button";
 import { cn } from "@/utils";
 
-export type PreviewImage = { fileName: string; url: string };
+export type PreviewImage = { fileName: string; dataUrl: string };
 export type PreviewImageState = PreviewImage | null;
 export type OnClearImageFn = (previewImageState: PreviewImageState) => void;
+export type OnSelectImageFn = (previewImage: PreviewImage) => void;
 
 interface Props {
   dragDisplayText: string;
   selectButtonText: string;
   clearButtonText: string;
-  onSelectFile?: (file: File) => void;
+  onSelectFile?: OnSelectImageFn;
   onClearFile?: OnClearImageFn;
   acceptOnly?: Accept;
-  initialPreview?: { fileName: string; url: string } | null | undefined;
+  initialPreview?: PreviewImage | null;
 }
 
 const ImageDropzoneWithPreview: React.FC<Props> = ({
@@ -35,12 +36,9 @@ const ImageDropzoneWithPreview: React.FC<Props> = ({
       if (!file) return;
 
       const objectUrl = URL.createObjectURL(file);
-      setPreviewImage({ fileName: file.name, url: objectUrl });
-
-      if (onSelectFile) {
-        // callBack to lift file to parent state
-        onSelectFile(file);
-      }
+      const fileState = { fileName: file.name, dataUrl: objectUrl };
+      setPreviewImage(fileState);
+      onSelectFile?.(fileState);
     },
     [onSelectFile]
   );
@@ -80,7 +78,7 @@ const ImageDropzoneWithPreview: React.FC<Props> = ({
           <figure className="flex w-full flex-col items-center">
             <img
               alt={previewImage.fileName}
-              src={previewImage.url}
+              src={previewImage.dataUrl}
               className="object-contain"
               style={{ height: "130px" }}
             />
