@@ -2,10 +2,11 @@ import React, { memo, Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Button as UIButton } from "@/components/ui/button";
-import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 
-import { APP_CONSTANTS } from "../../utils/constants";
-import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
+import LoadingSubmission from "@/pages/loading-submission";
+
+import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
+import { APP_CONSTANTS } from "@/utils/constants";
 
 const CcControllerDefault = lazy(() => import("../CreditCardController/Default"));
 const LicenseUplControllerDefault = lazy(() => import("../LicenseUploadController/Default"));

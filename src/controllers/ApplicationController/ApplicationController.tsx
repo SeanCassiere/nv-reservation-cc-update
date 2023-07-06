@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import ErrorSubmission from "@/pages/error-submission";
-import LoadingSubmission from "@/pages/LoadingSubmission/LoadingSubmission";
+import LoadingSubmission from "@/pages/loading-submission";
 import DisplayCurrentController from "./DisplayCurrentController";
 
 import { AppNavContextProvider } from "@/hooks/logic/useAppNavContext";

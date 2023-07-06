@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import RequireAuth from "./require-auth";
-import LoadingSubmission from "@/pages/LoadingSubmission/LoadingSubmission";
+import LoadingSubmission from "@/pages/loading-submission";
 import NotAuthorized from "@/pages/not-authorized";
 import ApplicationController from "@/controllers/ApplicationController/ApplicationController";
 import SuccessSubmissionPage from "@/pages/success-submission";
