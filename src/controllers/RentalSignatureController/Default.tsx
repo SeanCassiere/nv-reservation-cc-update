@@ -135,7 +135,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
       >
         <div className="d-grid mt-3">
           {showRequiredMessage && (
-            <Alert className="mb-1" variant="destructive">
+            <Alert className="mb-2" variant="destructive">
               <ExclamationIcon />
               <AlertTitle>{t("forms.rentalSignature.missing")}</AlertTitle>
               <AlertDescription>{t("forms.rentalSignature.signatureRequired")}</AlertDescription>

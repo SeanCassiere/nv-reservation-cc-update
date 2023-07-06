@@ -30,7 +30,7 @@ const PreSubmitSummaryControllerDefault: React.FC = () => {
     <CardLayout title={t("forms.formsSummary.title")} subtitle={t("forms.formsSummary.message")}>
       <div className="mt-4">
         {isEmpty && (
-          <Alert className="mb-1" variant="warning">
+          <Alert className="mb-2" variant="warning">
             <ExclamationIcon />
             <AlertTitle>{t("forms.formsSummary.missing")}</AlertTitle>
             <AlertDescription>{t("forms.formsSummary.noData")}</AlertDescription>
