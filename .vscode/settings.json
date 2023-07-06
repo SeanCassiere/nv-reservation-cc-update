@@ -17,5 +17,6 @@
     "tailwindcss",
     "tanstack",
     "zustand"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
