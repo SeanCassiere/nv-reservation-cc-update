@@ -1,128 +1,48 @@
+import { z } from "zod";
+
 import { clientFetch } from "./clientV3";
 
-export type SummaryCharges = {
-  baseRate: number;
-  totalDays: number;
-  miscCharges: {
-    id: number;
-    name: string;
-    description: string | null;
-    calculationType: string;
-    isQuantity: boolean;
-    isOptional: boolean;
-    isTaxable: boolean;
-    value: number;
-    total: number;
-    locationMiscChargeId: number;
-    startDate: string;
-    endDate: string;
-    quantity: number;
-    units: number;
-    optionId: null;
-    optionName: null;
-    miscChargeType: string;
-    locationTaxIds: string;
-    miscChargeCode: null;
-    subTotal: number;
-    totaltax: number;
-    isSelected: boolean;
-    isBillToInsurance: boolean;
-  }[];
-  totalMiscChargesTaxable: number;
-  totalMiscChargesNonTaxable: number;
-  subTotal: number;
-  totalTax: number;
-  dropOffCharges: number;
-  total: number;
-  promotionDiscount: number;
-  rateSummaryItems: {
-    type: string;
-    rate: number;
-    units: number;
-    startDate: string;
-    endDate: string;
-    kMorMileageAllowed: number;
-  }[];
-  avgPerDayRate: number;
-  taxes: {
-    taxId: number;
-    locationTaxId: number;
-    name: string;
-    description: string | null;
-    value: number;
-    isOption: boolean;
-    isDeleted: boolean;
-    isDefaultSelectedForReservation: boolean;
-    misChargeId: number | null;
-    locationName: string | null;
-    totalRows: number;
-    locationId: number;
-    activeDate: string | null;
-    expiryDate: string | null;
-    clientId: number;
-    userId: number;
-    locationTaxes: null;
-    isSelected: boolean;
-  }[];
-  promotions: any[];
-  maxTotalDays: number;
-  freeMiles: number;
-  extraMilesCharge: number;
-  initialCharge: number;
-  initialChargeHours: number;
-  avgPerHourRate: number;
-  advancePayment: number;
-  balanceDue: number;
-  inventoryCharges: [];
-  totalInventoryChargesTaxable: number;
-  totalInventoryChargesNonTaxable: number;
-  finalBaseRate: number;
-  preAdjustment: number;
-  additionalCharge: number;
-  postAdjustment: number;
-  promotionDiscountOnSubTotal: number;
-  isHourlySlottedRate: false;
-  securityDeposit: number;
-  estimateTotalwithDeposit: number;
-  preSubTotal: number;
-  cancellationCharge: null;
-  extraDayCharge: number;
-  extraFuelCharge: number;
-  agreementCharges: number;
-  fineCharges: number;
-  amountPaid: number;
-  writeOffAmount: number;
-  totalKmUsed: number | null;
-  extraKMUsed: number | null;
-  insuranceBaseCharge: number;
-  insuranceTotalTax: number;
-  insuranceTotal: number;
-  customerBaseCharge: number;
-  customerTotalTax: number;
-  customerTotal: number;
-  insurancePaidAmount: number;
-  customerPaidAmount: number;
-  insuranceBalanceAmount: number;
-  customerBalanceAmount: number;
-  reimbursementAmount: number;
-  securityDepositPercentage: number;
-  unTaxableAdditional: number;
-  isExtraMileageChargeTaxable: boolean;
-  isExtraDayChargeTaxable: boolean;
-  isFuelChargeTaxable: boolean;
-  insuranceTotalMiscChargesNonTaxable: number;
-  customerTotalMiscChargesNonTaxable: number;
-  taxListString: string;
-};
+const numberNullable = z.number().nullable();
+const booleanNullable = z.boolean().nullable();
+
+const summaryChargesSchema = z.object({
+  baseRate: numberNullable,
+  promotionDiscount: numberNullable,
+  finalBaseRate: numberNullable,
+  totalMiscChargesTaxable: numberNullable,
+  totalMiscChargesNonTaxable: numberNullable,
+  extraMilesCharge: numberNullable,
+  isExtraMileageChargeTaxable: booleanNullable,
+  extraDayCharge: numberNullable,
+  isExtraDayChargeTaxable: booleanNullable,
+  extraFuelCharge: numberNullable,
+  isFuelChargeTaxable: booleanNullable,
+  preAdjustment: numberNullable,
+  preSubTotal: numberNullable,
+  promotionDiscountOnSubTotal: numberNullable,
+  subTotal: numberNullable,
+  totalTax: numberNullable,
+  additionalCharge: numberNullable,
+  estimateTotalwithDeposit: numberNullable,
+  postAdjustment: numberNullable,
+  total: numberNullable,
+  balanceDue: numberNullable,
+  amountPaid: numberNullable,
+  securityDeposit: numberNullable,
+});
+export type SummaryCharges = z.infer<typeof summaryChargesSchema>;
+
 type GetSummaryProps = {
   clientId: string | number;
   referenceType: "Agreement" | "Reservation";
   referenceId: string | number;
 };
 
-export async function fetchRentalSummary(opts: GetSummaryProps): Promise<SummaryCharges> {
+export async function fetchRentalSummary(opts: GetSummaryProps) {
   const params = new URLSearchParams();
   params.append("clientId", `${opts.clientId}`);
   const pathType = opts.referenceType === "Agreement" ? "Agreements" : "Reservations";
-  return clientFetch(`/${pathType}/${opts.referenceId}/Summary?${params.toString()}`).then((r) => r.json());
+  return clientFetch(`/${pathType}/${opts.referenceId}/Summary?${params.toString()}`)
+    .then((r) => r.json())
+    .then((data) => summaryChargesSchema.parse(data));
 }

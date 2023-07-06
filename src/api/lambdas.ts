@@ -1,9 +1,16 @@
+import { z } from "zod";
+
 import { useConfigStore } from "@/hooks/stores/useConfigStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
 const AUTH_URL = "/api/token";
 const QA_AUTH_URL = "/api/token-qa";
 const SUBMISSION_COMPLETION_URL = "/api/complete";
+
+const tokenSchema = z.object({
+  access_token: z.string(),
+  token_type: z.string(),
+});
 
 export async function authenticateWithLambda(opts: { clientId: string; qa: boolean }) {
   const { referenceType, referenceIdentifier, responseTemplateId } = useRuntimeStore.getState();
@@ -20,7 +27,8 @@ export async function authenticateWithLambda(opts: { clientId: string; qa: boole
       reference_id: `${referenceIdentifier}`,
     }),
   })
-    .then((res) => res.json() as Promise<{ access_token: string; token_type: string }>)
+    .then((res) => res.json())
+    .then((data) => tokenSchema.parse(data))
     .catch((err) => {
       console.error("Auth Error", err);
       isError = true;

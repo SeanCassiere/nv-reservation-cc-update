@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import { clientFetch } from "./clientV3";
 
 export type RentalSourcedDetails = {
@@ -35,18 +37,24 @@ const fetchReservationById = async (opts: FetchReservationByIdOrNumberProps): Pr
   }
 };
 
-const fetchReservationsByNumber = async (
-  opts: FetchReservationByIdOrNumberProps
-): Promise<{ ReserveId: number; ReservationNumber: string } | null> => {
+const fetchReservationsByNumber = async (opts: FetchReservationByIdOrNumberProps) => {
   try {
     const params = new URLSearchParams();
     params.append("ReservationNumber", `${opts.referenceId}`);
     params.append("clientId", `${opts.clientId}`);
     params.append("userId", `0`);
     const list = await clientFetch(`/Reservations?` + params).then((r) => r.json());
-    const findReservation = list.find(
-      (r: { ReserveId: number; ReservationNumber: string }) => r.ReservationNumber === opts.referenceId
-    );
+
+    const parsedList = z
+      .array(
+        z.object({
+          ReserveId: z.number(),
+          ReservationNumber: z.string(),
+        })
+      )
+      .parse(Array.isArray(list) ? list : []);
+
+    const findReservation = parsedList.find((r) => r.ReservationNumber === opts.referenceId);
 
     if (!findReservation) {
       throw new Error("Not found");
