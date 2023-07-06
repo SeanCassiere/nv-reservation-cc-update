@@ -8,13 +8,13 @@ import { APP_CONSTANTS } from "@/utils/constants";
 import type { SubmittedFormsSummaryDefaultLayoutProps } from "@/layouts/SubmissionSuccess/SubmittedFormsSummaryDefaultLayout";
 
 const SubmissionSuccessDefaultLayout = lazy(
-  () => import("../../layouts/SubmissionSuccess/SubmissionSuccessDefaultLayout")
+  () => import("../layouts/SubmissionSuccess/SubmissionSuccessDefaultLayout")
 );
 const RentalChargesSummarySuccessDefaultLayout = lazy(
-  () => import("../../layouts/SubmissionSuccess/RentalChargesSummarySuccessDefaultLayout")
+  () => import("../layouts/SubmissionSuccess/RentalChargesSummarySuccessDefaultLayout")
 );
 const SubmittedFormsSummaryDefaultLayout = lazy<React.FC<SubmittedFormsSummaryDefaultLayoutProps>>(
-  () => import("../../layouts/SubmissionSuccess/SubmittedFormsSummaryDefaultLayout")
+  () => import("../layouts/SubmissionSuccess/SubmittedFormsSummaryDefaultLayout")
 );
 
 const SuccessSubmissionPage: React.FC = () => {
