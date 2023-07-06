@@ -7,11 +7,10 @@ import {
   fetchEmailTemplate,
   fetchEmailTemplateHtml,
   fetchGlobalDocumentsForEmailTemplate,
+  type GlobalDocumentForEmail,
 } from "../emailsApi";
-import { fetchReservationByIdOrNumberProcedure, RentalSourcedDetails } from "../reservationApi";
+import { fetchReservationByIdOrNumberProcedure, type RentalSourcedDetails } from "../reservationApi";
 import { fetchAdminUser } from "../usersApi";
-
-import type { EmailGlobalDocumentAttachmentType } from "@/hooks/stores/useRuntimeStore";
 
 type RandomAll = string | number | null;
 
@@ -32,7 +31,7 @@ export async function initDataFetch(opts: {
   let toEmailAddress = "";
   let responseSubject = "";
   let emailDataBlobUrl: string | null = null;
-  let emailGlobalDocuments: EmailGlobalDocumentAttachmentType[] = [];
+  let emailGlobalDocuments: GlobalDocumentForEmail[] = [];
   let adminUserId = opts.adminUserId;
 
   // get the admin user account if the predefined admin user id is not set

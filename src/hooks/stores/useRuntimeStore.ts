@@ -2,15 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 import { APP_CONSTANTS } from "@/utils/constants";
-
-export type EmailGlobalDocumentAttachmentType = {
-  id: number;
-  name: string | null;
-  checked: boolean;
-  folderPath: string | null;
-  newFileName: string | null;
-  licenseNo: string | null;
-};
+import { GlobalDocumentForEmail } from "@/api/emailsApi";
 
 export type ConfirmationEmailStoreType = {
   ccList: string[];
@@ -21,7 +13,7 @@ export type ConfirmationEmailStoreType = {
   subject: string;
   templateId: number;
   templateTypeId: number;
-  globalDocuments: EmailGlobalDocumentAttachmentType[];
+  globalDocuments: GlobalDocumentForEmail[];
 };
 
 export type RentalStoreType = {

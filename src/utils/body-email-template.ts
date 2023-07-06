@@ -1,5 +1,4 @@
-import type { OneOffUploadAttachment } from "@/api/emailsApi";
-import type { EmailGlobalDocumentAttachmentType } from "@/hooks/stores/useRuntimeStore";
+import type { GlobalDocumentForEmail, OneOffUploadAttachment } from "@/api/emailsApi";
 import { APP_CONSTANTS } from "./constants";
 
 export type CreateBodyForEmail = {
@@ -15,7 +14,7 @@ export type CreateBodyForEmail = {
   userId: number;
   clientId: number;
   emailBody?: string;
-  globalDocuments?: EmailGlobalDocumentAttachmentType[];
+  globalDocuments?: GlobalDocumentForEmail[];
   oneOffAttachments?: OneOffUploadAttachment[];
 };
 
