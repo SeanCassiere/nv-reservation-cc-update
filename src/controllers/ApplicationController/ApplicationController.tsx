@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import ErrorSubmission from "../../pages/ErrorSubmission/ErrorSubmission";
-import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
+import ErrorSubmission from "@/pages/ErrorSubmission/ErrorSubmission";
+import LoadingSubmission from "@/pages/LoadingSubmission/LoadingSubmission";
 import DisplayCurrentController from "./DisplayCurrentController";
 
-import { useConfigStore } from "../../hooks/stores/useConfigStore";
-import { useAuthStore } from "../../hooks/stores/useAuthStore";
-import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { AppNavContextProvider } from "../../hooks/logic/useAppNavContext";
+import { AppNavContextProvider } from "@/hooks/logic/useAppNavContext";
+import { useConfigStore } from "@/hooks/stores/useConfigStore";
+import { useAuthStore } from "@/hooks/stores/useAuthStore";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
-import { APP_CONSTANTS } from "../../utils/constants";
-import { authenticateWithLambda } from "../../api/lambdas";
-import { bootUp } from "../../api/system/bootUp";
-import { initDataFetch } from "../../api/system/initDataFetch";
+import { APP_CONSTANTS } from "@/utils/constants";
+import { authenticateWithLambda } from "@/api/lambdas";
+import { bootUp } from "@/api/system/bootUp";
+import { initDataFetch } from "@/api/system/initDataFetch";
 
 const bootStatuses = ["authenticating", "loaded", "authentication_error", "core_details_fetch_failed"] as const;
 type BootStatus = (typeof bootStatuses)[number];
@@ -27,32 +27,32 @@ const ApplicationController: React.FC = () => {
 
   const setAuthValues = useAuthStore((s) => s.setAuthValues);
 
-  const setRawQuery = useConfigStore((s) => s.setRawQuery);
-  const setConfigStoreValues = useConfigStore((s) => s.setConfigValues);
-  const setInitReferenceValues = useRuntimeStore((s) => s.setReferenceInitValues);
-  const setEmailTemplateAndClientId = useRuntimeStore((s) => s.setEmailTemplateAndClientId);
-  const setRuntimeConfirmationEmail = useRuntimeStore((s) => s.setRuntimeConfirmationEmail);
-  const setRuntimeRental = useRuntimeStore((s) => s.setRuntimeRental);
-  const setRuntimeAdminUserId = useRuntimeStore((s) => s.setRuntimeAdminUserId);
-  const setRuntimeReferenceId = useRuntimeStore((s) => s.setRuntimeReferenceId);
+  const setRawQueryToStore = useConfigStore((s) => s.setRawQuery);
+  const setConfigStoreValuesToStore = useConfigStore((s) => s.setConfigValues);
+  const setInitReferenceValuesToStore = useRuntimeStore((s) => s.setReferenceInitValues);
+  const setEmailTemplateAndClientIdToStore = useRuntimeStore((s) => s.setEmailTemplateAndClientId);
+  const setRuntimeConfirmationEmailToStore = useRuntimeStore((s) => s.setRuntimeConfirmationEmail);
+  const setRuntimeRentalToStore = useRuntimeStore((s) => s.setRuntimeRental);
+  const setRuntimeAdminUserIdToStore = useRuntimeStore((s) => s.setRuntimeAdminUserId);
+  const setRuntimeReferenceIdToStore = useRuntimeStore((s) => s.setRuntimeReferenceId);
 
   const fullFlow = useConfigStore((s) => s.fullFlow);
   const referenceType = useRuntimeStore((s) => s.referenceType);
 
-  const [bootStatus, setBootStatus] = useState<BootStatus>("authenticating");
+  const [appBootStatus, setAppBootStatus] = useState<BootStatus>("authenticating");
 
   const { mutate: callInitDataFetch } = useMutation({
     mutationKey: ["app-init-details"],
     mutationFn: initDataFetch,
     onSuccess: (data) => {
-      setRuntimeReferenceId(data.referenceId);
-      setRuntimeConfirmationEmail(data.confirmationEmail);
-      setRuntimeRental(data.rental);
-      setRuntimeAdminUserId(data.adminUserId);
-      setBootStatus("loaded");
+      setRuntimeReferenceIdToStore(data.referenceId);
+      setRuntimeConfirmationEmailToStore(data.confirmationEmail);
+      setRuntimeRentalToStore(data.rental);
+      setRuntimeAdminUserIdToStore(data.adminUserId);
+      setAppBootStatus("loaded");
     },
-    onError: (err) => {
-      setBootStatus("core_details_fetch_failed");
+    onError: () => {
+      setAppBootStatus("core_details_fetch_failed");
     },
   });
 
@@ -70,15 +70,15 @@ const ApplicationController: React.FC = () => {
         adminUserId: data.userId,
       });
     },
-    onError: (err) => {
-      setBootStatus("authentication_error");
+    onError: () => {
+      setAppBootStatus("authentication_error");
     },
   });
 
   const {
+    data: bootData,
+    status: bootStatus,
     error: bootError,
-    isError: isBootError,
-    isLoading: isBootLoading,
   } = useQuery({
     queryKey: ["boot-sequence"],
     queryFn: async () => bootUp({ windowQueryString: window.location.search }),
@@ -86,13 +86,18 @@ const ApplicationController: React.FC = () => {
     refetchOnWindowFocus: false,
     refetchIntervalInBackground: false,
     retry: false,
-    onSuccess: (data) => {
+  });
+
+  useEffect(() => {
+    if (bootStatus === "success") {
+      const data = bootData;
       if (!data) {
         navigate("/not-available");
         return;
       }
-      setRawQuery({ rawConfig: data.rawConfig, rawQueryString: window.location.search });
-      setConfigStoreValues({
+
+      setRawQueryToStore({ rawConfig: data.rawConfig, rawQueryString: window.location.search });
+      setConfigStoreValuesToStore({
         flow: data.flow,
         qa: data.qa,
         predefinedAdminUserId: data.userId,
@@ -102,23 +107,34 @@ const ApplicationController: React.FC = () => {
         disableEmailAttachingDriverLicense: data.stopAttachingDriverLicenseFiles,
         theme: data.theme,
       });
-      setEmailTemplateAndClientId({ newClientId: data.clientId, newTemplateId: data.responseEmailTemplateId });
-      setInitReferenceValues({ newReferenceType: data.referenceType, newReferenceIdentifier: data.referenceId });
-      authorizeApp({ clientId: data.clientId, qa: data.qa });
-    },
-  });
+      setEmailTemplateAndClientIdToStore({ newClientId: data.clientId, newTemplateId: data.responseEmailTemplateId });
+      setInitReferenceValuesToStore({ newReferenceType: data.referenceType, newReferenceIdentifier: data.referenceId });
 
-  if (!isBootLoading && isBootError) {
+      // calls the authorization lambda
+      authorizeApp({ clientId: data.clientId, qa: data.qa });
+    }
+  }, [
+    authorizeApp,
+    bootData,
+    bootStatus,
+    navigate,
+    setConfigStoreValuesToStore,
+    setEmailTemplateAndClientIdToStore,
+    setInitReferenceValuesToStore,
+    setRawQueryToStore,
+  ]);
+
+  if (bootStatus === "error") {
     throw bootError;
   }
 
   return (
     <>
-      {bootStatus === "authenticating" && <LoadingSubmission title={t("authenticationSubmission.title")} />}
-      {bootStatus === "authentication_error" && (
+      {appBootStatus === "authenticating" && <LoadingSubmission title={t("authenticationSubmission.title")} />}
+      {appBootStatus === "authentication_error" && (
         <ErrorSubmission msg={t("authenticationSubmission.message")} tryAgainButton />
       )}
-      {bootStatus === "core_details_fetch_failed" && (
+      {appBootStatus === "core_details_fetch_failed" && (
         <ErrorSubmission
           title={
             t("coreDetailsFetchError.title", {
@@ -136,7 +152,7 @@ const ApplicationController: React.FC = () => {
           }
         />
       )}
-      {bootStatus === "loaded" && (
+      {appBootStatus === "loaded" && (
         <AppNavContextProvider configFlow={fullFlow}>
           <DisplayCurrentController />
         </AppNavContextProvider>
