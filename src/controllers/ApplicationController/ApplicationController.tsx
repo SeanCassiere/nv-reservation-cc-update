@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import ErrorSubmission from "@/pages/ErrorSubmission/ErrorSubmission";
+import ErrorSubmission from "@/pages/error-submission";
 import LoadingSubmission from "@/pages/LoadingSubmission/LoadingSubmission";
 import DisplayCurrentController from "./DisplayCurrentController";
 
