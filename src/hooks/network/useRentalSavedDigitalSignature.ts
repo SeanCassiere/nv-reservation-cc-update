@@ -1,5 +1,6 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
-import { reloadSavedDigitalSignatureBase64Url } from "../../api/digitalSignatureApi";
+
+import { reloadSavedDigitalSignatureBase64Url } from "@/api/digitalSignatureApi";
 
 export const useRentalSavedDigitalSignature = <T = Awaited<ReturnType<typeof reloadSavedDigitalSignatureBase64Url>>>(
   opts: { referenceType: string; referenceId: string; isCheckIn: boolean },

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
 import ImageDropzoneWithPreview from "@/components/image-dropzone-with-preview";
-import { ExclamationIcon } from "@/components/Icons";
+import { ExclamationIcon } from "@/components/ui/icons";
 import { GoBackConfirmationDialog } from "@/components/go-back-confirmation-dialog";
 
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -18,45 +18,40 @@ interface IProps {}
 
 const DefaultLicenseUploadController: React.FC<IProps> = () => {
   const { t } = useTranslation();
+
   const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext, mode } = useAppNavContext();
 
-  const clearFormState = useFormStore((s) => s.clearFormStateKey);
-  const setDriversLicenseToStore = useFormStore((s) => s.setDriversLicense);
   const initialDriverLicenseData = useFormStore((s) => s.driversLicense.data);
   const { setBackConfirmationDialogState, isBackConfirmationDialogOpen } = useDialogStore();
 
   const {
     frontLicenseImage,
     backLicenseImage,
-    setFrontImageError,
-    setBackImageError,
-    noFrontImageError,
-    noBackImageError,
+    isFrontImageError,
+    isBackImageError,
     setFrontImage,
     setBackImage,
     clearFrontImage,
     clearBackImage,
-  } = useDriverLicenseLogic({
-    frontImageDataUrl: initialDriverLicenseData.frontImageUrl,
-    frontImageName: initialDriverLicenseData.frontImageName,
-    backImageDataUrl: initialDriverLicenseData.backImageUrl,
-    backImageName: initialDriverLicenseData.backImageName,
-  });
+    clearLicenseImagesFromStore,
+    saveLicenseImagesToStore,
+  } = useDriverLicenseLogic(
+    {
+      frontImageDataUrl: initialDriverLicenseData.frontImageUrl,
+      frontImageName: initialDriverLicenseData.frontImageName,
+      backImageDataUrl: initialDriverLicenseData.backImageUrl,
+      backImageName: initialDriverLicenseData.backImageName,
+    },
+    mode
+  );
 
   // General component state
   const handleNextState = useCallback(() => {
-    if (!frontLicenseImage) setFrontImageError(true);
-    if (!backLicenseImage) setBackImageError(true);
-    if (!frontLicenseImage || !backLicenseImage) return;
+    const result = saveLicenseImagesToStore();
+    if (!result) return;
 
-    setDriversLicenseToStore({
-      frontImageUrl: URL.createObjectURL(frontLicenseImage),
-      backImageUrl: URL.createObjectURL(backLicenseImage),
-      frontImageName: frontLicenseImage.name,
-      backImageName: backLicenseImage.name,
-    });
     goNext();
-  }, [frontLicenseImage, backLicenseImage, setFrontImageError, setBackImageError, setDriversLicenseToStore, goNext]);
+  }, [saveLicenseImagesToStore, goNext]);
 
   const dismissBackDialog = useCallback(() => {
     setBackConfirmationDialogState(false);
@@ -64,36 +59,33 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
 
   const confirmBackDialog = useCallback(() => {
     if (mode === "navigate") {
-      clearFormState("driversLicense");
+      clearLicenseImagesFromStore();
     }
     setBackConfirmationDialogState(false);
     goPrev();
-  }, [clearFormState, goPrev, mode, setBackConfirmationDialogState]);
+  }, [clearLicenseImagesFromStore, goPrev, mode, setBackConfirmationDialogState]);
 
   const handleOpenModalConfirmation = useCallback(() => {
     if (mode === "save") {
-      // if (initialDriverLicenseData.frontImageName !== frontLicenseImage.name) || (initialDriverLicenseData.backImageName !== backLicenseImage.name), then open modal
+      // on save, if the driver license data in storage is NOT THE SAME as what is in state then open the modal.
       if (
-        initialDriverLicenseData.frontImageName !== frontLicenseImage?.name ||
-        initialDriverLicenseData.backImageName !== backLicenseImage?.name
+        initialDriverLicenseData.frontImageName !== frontLicenseImage?.fileName ||
+        initialDriverLicenseData.backImageName !== backLicenseImage?.fileName
       ) {
         setBackConfirmationDialogState(true);
         return;
       }
 
-      // if (initialDriverLicenseData.frontImageName === frontLicenseImage.name && initialDriverLicenseData.backImageName === backLicenseImage.name) then go back
       goPrev();
-      return;
     }
 
     if (mode === "navigate") {
-      // if (frontImageFile || backImageFile), then open modal
+      // if driver licenses have been added, then open the modal
       if (backLicenseImage || frontLicenseImage) {
         setBackConfirmationDialogState(true);
         return;
       }
 
-      // if (!frontImageFile && !backImageFile), then go back
       goPrev();
     }
   }, [
@@ -122,8 +114,8 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
           <div>
             <h2 className="mb-2 text-base text-primary">{t("forms.licenseUpload.frontImage.title")}</h2>
             <div>
-              {noFrontImageError && (
-                <Alert className="mb-1" variant="warning">
+              {isFrontImageError && (
+                <Alert className="mb-2" variant="warning">
                   <ExclamationIcon />
                   <AlertTitle>{t("forms.licenseUpload.missing")}</AlertTitle>
                   <AlertDescription>{t("forms.licenseUpload.frontImage.notSelected")}</AlertDescription>
@@ -145,11 +137,10 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
                   initialDriverLicenseData.frontImageUrl && initialDriverLicenseData.frontImageName
                     ? {
                         fileName: initialDriverLicenseData.frontImageName,
-                        url: initialDriverLicenseData.frontImageUrl,
+                        dataUrl: initialDriverLicenseData.frontImageUrl,
                       }
                     : null
                 }
-                navMode={mode}
               />
             </div>
           </div>
@@ -159,8 +150,8 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
           <div className="mt-2">
             <h2 className="mb-2 text-base text-primary">{t("forms.licenseUpload.backImage.title")}</h2>
             <div>
-              {noBackImageError && (
-                <Alert className="mb-1" variant="warning">
+              {isBackImageError && (
+                <Alert className="mb-2" variant="warning">
                   <ExclamationIcon />
                   <AlertTitle>{t("forms.licenseUpload.missing")}</AlertTitle>
                   <AlertDescription>{t("forms.licenseUpload.backImage.notSelected")}</AlertDescription>
@@ -181,11 +172,10 @@ const DefaultLicenseUploadController: React.FC<IProps> = () => {
                   initialDriverLicenseData.backImageUrl && initialDriverLicenseData.backImageName
                     ? {
                         fileName: initialDriverLicenseData.backImageName,
-                        url: initialDriverLicenseData.backImageUrl,
+                        dataUrl: initialDriverLicenseData.backImageUrl,
                       }
                     : null
                 }
-                navMode={mode}
               />
             </div>
           </div>

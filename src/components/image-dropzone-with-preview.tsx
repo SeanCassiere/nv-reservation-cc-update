@@ -1,19 +1,22 @@
 import React, { memo, useCallback, useState } from "react";
-import { useDropzone, Accept } from "react-dropzone";
+import { useDropzone, type Accept } from "react-dropzone";
 
 import { Button as UIButton } from "@/components/ui/button";
-import { AppNavMode } from "@/hooks/logic/useAppNavContext";
 import { cn } from "@/utils";
+
+export type PreviewImage = { fileName: string; dataUrl: string };
+export type PreviewImageState = PreviewImage | null;
+export type OnClearImageFn = (previewImageState: PreviewImageState) => void;
+export type OnSelectImageFn = (previewImage: PreviewImage) => void;
 
 interface Props {
   dragDisplayText: string;
   selectButtonText: string;
   clearButtonText: string;
-  onSelectFile?: (file: File) => void;
-  onClearFile?: () => void;
+  onSelectFile?: OnSelectImageFn;
+  onClearFile?: OnClearImageFn;
   acceptOnly?: Accept;
-  initialPreview?: { fileName: string; url: string } | null | undefined;
-  navMode: AppNavMode;
+  initialPreview?: PreviewImage | null;
 }
 
 const ImageDropzoneWithPreview: React.FC<Props> = ({
@@ -24,9 +27,8 @@ const ImageDropzoneWithPreview: React.FC<Props> = ({
   onClearFile,
   acceptOnly = undefined,
   initialPreview = null,
-  navMode,
 }) => {
-  const [previewImage, setPreviewImage] = useState<{ fileName: string; url: string } | null>(initialPreview);
+  const [previewImage, setPreviewImage] = useState<PreviewImageState>(initialPreview);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -34,25 +36,19 @@ const ImageDropzoneWithPreview: React.FC<Props> = ({
       if (!file) return;
 
       const objectUrl = URL.createObjectURL(file);
-      setPreviewImage({ fileName: file.name, url: objectUrl });
-
-      if (onSelectFile) {
-        // callBack to lift file to parent state
-        onSelectFile(file);
-      }
+      const fileState = { fileName: file.name, dataUrl: objectUrl };
+      setPreviewImage(fileState);
+      onSelectFile?.(fileState);
     },
     [onSelectFile]
   );
 
   const handleClearImage = useCallback(() => {
+    onClearFile?.(previewImage);
     if (previewImage) {
       setPreviewImage(null);
-      if (navMode === "navigate") {
-        URL.revokeObjectURL(previewImage?.url);
-      }
     }
-    if (onClearFile) onClearFile();
-  }, [navMode, onClearFile, previewImage]);
+  }, [onClearFile, previewImage]);
 
   const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
     accept: acceptOnly,
@@ -82,7 +78,7 @@ const ImageDropzoneWithPreview: React.FC<Props> = ({
           <figure className="flex w-full flex-col items-center">
             <img
               alt={previewImage.fileName}
-              src={previewImage.url}
+              src={previewImage.dataUrl}
               className="object-contain"
               style={{ height: "130px" }}
             />

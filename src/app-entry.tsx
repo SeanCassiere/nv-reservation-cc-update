@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AppRoutes from "./routes/app-routes";
-import ErrorSubmission from "./pages/ErrorSubmission/ErrorSubmission";
+import ErrorSubmission from "./pages/error-submission";
 import AnchorLink from "@/components/anchor-link";
 
 import { useConfigStore } from "./hooks/stores/useConfigStore";

@@ -3,11 +3,14 @@ import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { ExclamationIcon } from "@/components/ui/icons";
 
 import { useFormStore } from "@/hooks/stores/useFormStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { useRentalSummaryQuery } from "@/hooks/network/useRentalSummary";
+import { useClientProfileQuery } from "@/hooks/network/useClientProfile";
+
 import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
-import { ExclamationIcon } from "@/components/Icons";
 
 const RentalChargesSummaryList = lazy(() => import("../../components/rental-charges-summary-list"));
 const CreditCardSummary = lazy(() => import("../../components/form-details-summary/credit-card-summary"));
@@ -21,7 +24,7 @@ export type SubmittedFormsSummaryDefaultLayoutProps = {
 const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSummaryDefaultLayoutProps) => {
   const { t } = useTranslation();
 
-  const { referenceIdentifier, referenceType, clientId } = useRuntimeStore();
+  const { clientId, referenceIdentifier, referenceType } = useRuntimeStore();
 
   const { isFilled: isCreditCard, data: creditCardInfo } = useFormStore((s) => s.customerCreditCard);
   const { isFilled: isDriverLicense, data: driversLicense } = useFormStore((s) => s.driversLicense);
@@ -32,11 +35,19 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
     [isCreditCard, isDriverLicense, isRentalSignature]
   );
 
+  const rentalSummaryQuery = useRentalSummaryQuery({
+    clientId: String(clientId),
+    referenceId: String(referenceIdentifier),
+    referenceType,
+  });
+
+  const clientProfileQuery = useClientProfileQuery({ clientId: String(clientId) });
+
   return (
     <CardLayout title={t("successSubmission.title")} image={SuccessImgUri}>
       <div className="mt-4">
         {isEmpty && (
-          <Alert className="mb-1" variant="warning">
+          <Alert className="mb-2" variant="warning">
             <ExclamationIcon />
             <AlertTitle>{t("forms.formsSummary.missing", { context: "submitted" })}</AlertTitle>
             <AlertDescription>{t("forms.formsSummary.noData", { context: "submitted" })}</AlertDescription>
@@ -69,9 +80,9 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
             })}
           </div>
           <RentalChargesSummaryList
-            clientId={clientId}
             referenceType={referenceType}
-            referenceId={referenceIdentifier}
+            summary={rentalSummaryQuery.status === "success" ? rentalSummaryQuery.data : null}
+            clientProfile={clientProfileQuery.status === "success" ? clientProfileQuery.data : null}
           />
         </div>
       )}

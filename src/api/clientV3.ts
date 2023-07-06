@@ -1,5 +1,5 @@
-import { useAuthStore } from "../hooks/stores/useAuthStore";
-import { isValueTrue } from "../utils/common";
+import { useAuthStore } from "@/hooks/stores/useAuthStore";
+import { isValueTrue } from "@/utils/common";
 
 const baseURL = import.meta.env.VITE_APP_API_BASE_URL_V3 || "https://api.apprentall.com/api/v3";
 const baseURLQa = import.meta.env.VITE_APP_QA_API_BASE_URL_V3 || "https://testapi.appnavotar.com/api/v3";

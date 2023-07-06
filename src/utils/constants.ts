@@ -1,5 +1,7 @@
 export const REPO_URL = import.meta.env.VITE_APP_REPO_URL ?? "https://github.com/SeanCassiere/nv-reservation-cc-update";
+
 export const SuccessImgUri = "/assets/undraw_make_it_rain_iwk4.svg";
+
 export const APP_CONSTANTS = {
   REF_TYPE_AGREEMENT: "Agreement",
   REF_TYPE_RESERVATION: "Reservation",
@@ -36,7 +38,7 @@ export const COMPAT_KEYS = {
   DEFAULT_RENTAL_SIGNATURE_FORM: "Default/RentalSignatureForm",
 
   SUCCESS_RENTAL_SUMMARY: "SuccessRentalSummary",
-};
+} as const;
 
 export const ALL_SCREEN_FLOWS = [
   {

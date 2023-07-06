@@ -2,15 +2,17 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+import ApplicationController from "@/controllers/app";
+
+import LoadingSubmission from "@/pages/loading-submission";
+import NotAuthorized from "@/pages/not-authorized";
+import SuccessSubmissionPage from "@/pages/success-submission";
+import ErrorSubmission from "@/pages/error-submission";
+
 import RequireAuth from "./require-auth";
-import LoadingSubmission from "../pages/LoadingSubmission/LoadingSubmission";
-import NotAuthorized from "../pages/NotAuthorized/NotAuthorized";
-import ApplicationController from "../controllers/ApplicationController/ApplicationController";
-import SuccessSubmissionPage from "../pages/SuccessSubmission/SuccessSubmission";
-import ErrorSubmission from "../pages/ErrorSubmission/ErrorSubmission";
 import NavigateToNotAvailable from "./navigate-to-not-available";
 
-const PostFormDataController = lazy(() => import("../controllers/PostFormDataController/Default"));
+const PostFormDataController = lazy(() => import("../controllers/submit-form-data"));
 
 const AppRoutes: React.FC = () => {
   const { t } = useTranslation();

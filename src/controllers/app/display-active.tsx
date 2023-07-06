@@ -2,22 +2,23 @@ import React, { memo, Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Button as UIButton } from "@/components/ui/button";
-import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
 
-import { APP_CONSTANTS } from "../../utils/constants";
-import { useAppNavContext } from "../../hooks/logic/useAppNavContext";
+import LoadingSubmission from "@/pages/loading-submission";
 
-const CcControllerDefault = lazy(() => import("../CreditCardController/Default"));
-const LicenseUplControllerDefault = lazy(() => import("../LicenseUploadController/Default"));
+import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
+import { APP_CONSTANTS } from "@/utils/constants";
 
-const CcAndLicenseUplControllerDefault = lazy(() => import("../CreditCardAndLicenseUploadController/Default"));
+const CcControllerDefault = lazy(() => import("../cc-default"));
+const LicenseUplControllerDefault = lazy(() => import("../license-upload-default"));
 
-const RentalSignatureControllerDefault = lazy(() => import("../RentalSignatureController/Default"));
-const RentalSummaryControllerDefault = lazy(() => import("../RentalSummaryController/Default"));
+const CcAndLicenseUplControllerDefault = lazy(() => import("../cc-and-license-upload-default"));
 
-const PreSubmitSummaryControllerDefault = lazy(() => import("../PreSubmitSummaryController/Default"));
+const RentalSignatureControllerDefault = lazy(() => import("../rental-signature-default"));
+const RentalSummaryControllerDefault = lazy(() => import("../rental-charges-summary-default"));
 
-const DisplayCurrentController: React.FC = () => {
+const PreSubmitSummaryControllerDefault = lazy(() => import("../pre-submit-summary-default"));
+
+const DisplayActiveController: React.FC = () => {
   const { t } = useTranslation();
   const { activeController } = useAppNavContext();
 
@@ -39,7 +40,7 @@ const DisplayCurrentController: React.FC = () => {
   );
 };
 
-export default memo(DisplayCurrentController);
+export default memo(DisplayActiveController);
 
 const DevScreen = memo((props: { title: string }) => {
   const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext } = useAppNavContext();

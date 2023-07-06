@@ -5,6 +5,9 @@ import CardLayout from "@/components/card-layout";
 import RentalChargesSummaryList from "@/components/rental-charges-summary-list";
 
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { useRentalSummaryQuery } from "@/hooks/network/useRentalSummary";
+import { useClientProfileQuery } from "@/hooks/network/useClientProfile";
+
 import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
 
 const RentalChargesSummarySuccessDefaultLayout: React.FC = () => {
@@ -13,6 +16,14 @@ const RentalChargesSummarySuccessDefaultLayout: React.FC = () => {
   const clientId = useRuntimeStore((s) => s.clientId);
   const referenceId = useRuntimeStore((s) => s.referenceIdentifier);
   const referenceType = useRuntimeStore((s) => s.referenceType);
+
+  const rentalSummaryQuery = useRentalSummaryQuery({
+    clientId: String(clientId),
+    referenceId: String(referenceId),
+    referenceType,
+  });
+
+  const clientProfileQuery = useClientProfileQuery({ clientId: String(clientId) });
 
   return (
     <CardLayout image={SuccessImgUri} title={t("successSubmission.title")}>
@@ -27,9 +38,9 @@ const RentalChargesSummarySuccessDefaultLayout: React.FC = () => {
       </p>
       <div className="mt-5">
         <RentalChargesSummaryList
-          clientId={clientId ?? 0}
-          referenceId={referenceId ?? 0}
           referenceType={referenceType}
+          summary={rentalSummaryQuery.status === "success" ? rentalSummaryQuery.data : null}
+          clientProfile={clientProfileQuery.status === "success" ? clientProfileQuery.data : null}
         />
       </div>
     </CardLayout>

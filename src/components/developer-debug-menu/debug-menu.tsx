@@ -17,7 +17,7 @@ import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
 import { supportedLanguages } from "@/i18n";
 import { isValueTrue } from "@/utils/common";
-import { cn, setHtmlDocumentClass } from "@/utils";
+import { cn, setHtmlDocumentTheme } from "@/utils";
 import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "@/utils/constants";
 
 import { configObjectFormSchema, ConfigObjectFormValues, makeUrlQueryFromConfigObject } from "./utils";
@@ -202,7 +202,7 @@ const ConfigCreator = () => {
                 <FormLabel>{t("developer.configCreator.theme")}</FormLabel>
                 <Select
                   onValueChange={(value) => {
-                    setHtmlDocumentClass(value);
+                    setHtmlDocumentTheme(value);
                     field.onChange(value);
                   }}
                   defaultValue={field.value}

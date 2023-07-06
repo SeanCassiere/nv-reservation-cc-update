@@ -4,14 +4,14 @@ import { useTranslation } from "react-i18next";
 import CardLayout from "@/components/card-layout";
 import { Button as UIButton } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { ExclamationIcon } from "@/components/Icons";
+import { ExclamationIcon } from "@/components/ui/icons";
 
 import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
 import { useFormStore } from "@/hooks/stores/useFormStore";
 
-const CreditCardFormSummary = lazy(() => import("../../components/form-details-summary/credit-card-summary"));
-const DriverLicenseFormSummary = lazy(() => import("../../components/form-details-summary/driver-license-summary"));
-const RentalSignatureFormSummary = lazy(() => import("../../components/form-details-summary/rental-signature-summary"));
+const CreditCardFormSummary = lazy(() => import("../components/form-details-summary/credit-card-summary"));
+const DriverLicenseFormSummary = lazy(() => import("../components/form-details-summary/driver-license-summary"));
+const RentalSignatureFormSummary = lazy(() => import("../components/form-details-summary/rental-signature-summary"));
 
 const PreSubmitSummaryControllerDefault: React.FC = () => {
   const { t } = useTranslation();
@@ -30,7 +30,7 @@ const PreSubmitSummaryControllerDefault: React.FC = () => {
     <CardLayout title={t("forms.formsSummary.title")} subtitle={t("forms.formsSummary.message")}>
       <div className="mt-4">
         {isEmpty && (
-          <Alert className="mb-1" variant="warning">
+          <Alert className="mb-2" variant="warning">
             <ExclamationIcon />
             <AlertTitle>{t("forms.formsSummary.missing")}</AlertTitle>
             <AlertDescription>{t("forms.formsSummary.noData")}</AlertDescription>

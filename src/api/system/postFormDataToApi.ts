@@ -5,10 +5,10 @@ import type {
   CreditCardStoreType,
   DriversLicenseStoreType,
   RentalSignatureStoreType,
-} from "../../hooks/stores/useFormStore";
-import type { RentalStoreType } from "../../hooks/stores/useRuntimeStore";
-import { OneOffUploadAttachment } from "../emailsApi";
-import { splitMimeTypeFromBase64String, urlBlobToBase64 } from "../../utils/blobUtils";
+} from "@/hooks/stores/useFormStore";
+import type { RentalStoreType } from "@/hooks/stores/useRuntimeStore";
+import type { OneOffUploadAttachment } from "../emailsApi";
+import { splitMimeTypeFromBase64String, urlBlobToBase64 } from "@/utils/blobUtils";
 
 export async function postFormDataToApi(stores: {
   clientId: string | number;

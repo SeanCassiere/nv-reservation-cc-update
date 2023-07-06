@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import LoadingSubmission from "../../pages/LoadingSubmission/LoadingSubmission";
+import LoadingSubmission from "@/pages/loading-submission";
 
-import { useFormStore } from "../../hooks/stores/useFormStore";
-import { useRuntimeStore } from "../../hooks/stores/useRuntimeStore";
-import { useConfigStore } from "../../hooks/stores/useConfigStore";
-import { postConfirmationEmail } from "../../api/emailsApi";
-import { postCompletionLambda } from "../../api/lambdas";
-import { postFormDataToApi } from "../../api/system/postFormDataToApi";
+import { useFormStore } from "@/hooks/stores/useFormStore";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { useConfigStore } from "@/hooks/stores/useConfigStore";
+
+import { postConfirmationEmail } from "@/api/emailsApi";
+import { postCompletionLambda } from "@/api/lambdas";
+import { postFormDataToApi } from "@/api/system/postFormDataToApi";
 
 const PostFormDataControllerDefault: React.FC = () => {
   const navigate = useNavigate();
@@ -37,14 +38,17 @@ const PostFormDataControllerDefault: React.FC = () => {
 
   const [currentMessage, setCurrentMessage] = useState(t("appStatusMessages.submittingYourDetailsMsg"));
 
-  const getOpsForCompleteStatus = (statEnum: "success" | "failed") => ({
-    qa: isQa,
-    clientId: clientId ?? 0,
-    status: statEnum,
-    customerId: rentalData?.customerId ?? 0,
-    referenceType,
-    referenceId: referenceId ?? 0,
-  });
+  const getOpsForCompleteStatus = useCallback(
+    (statEnum: "success" | "failed") => ({
+      qa: isQa,
+      clientId: clientId ?? 0,
+      status: statEnum,
+      customerId: rentalData?.customerId ?? 0,
+      referenceType,
+      referenceId: referenceId ?? 0,
+    }),
+    [clientId, isQa, referenceId, referenceType, rentalData?.customerId]
+  );
 
   const { mutate: markCompletionStatus } = useMutation({
     mutationKey: ["submission", "completed"],
@@ -65,7 +69,7 @@ const PostFormDataControllerDefault: React.FC = () => {
     onError: () => markCompletionStatus(getOpsForCompleteStatus("failed")),
   });
 
-  useQuery({
+  const { status: submitStatus, data: submitData } = useQuery({
     queryKey: ["submission", "form-data"],
     queryFn: async () =>
       postFormDataToApi({
@@ -81,8 +85,15 @@ const PostFormDataControllerDefault: React.FC = () => {
           stopAttachingDriverLicenseFiles: isDriverLicenseAttachmentsStopped,
         },
       }),
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    retry: false,
+  });
 
-    onSuccess: (data) => {
+  useEffect(() => {
+    if (submitStatus === "success") {
+      const data = submitData;
+
       if (responseTemplateId && confirmationEmail && confirmationEmail?.dataUrl) {
         const dataUrl = confirmationEmail.dataUrl;
         setCurrentMessage(t("appStatusMessages.sendingConfirmationEmail"));
@@ -105,12 +116,29 @@ const PostFormDataControllerDefault: React.FC = () => {
         return;
       }
       markCompletionStatus(getOpsForCompleteStatus("success"));
-    },
-    onError: () => markCompletionStatus(getOpsForCompleteStatus("failed")),
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    retry: false,
-  });
+    }
+  }, [
+    submitStatus,
+    submitData,
+    t,
+    getOpsForCompleteStatus,
+    markCompletionStatus,
+    sendConfirmationEmail,
+    responseTemplateId,
+    confirmationEmail,
+    clientId,
+    adminUserId,
+    referenceId,
+    referenceType,
+    isGlobalDocumentsStopped,
+    fetchedGlobalDocuments,
+  ]);
+
+  useEffect(() => {
+    if (submitStatus === "error") {
+      markCompletionStatus(getOpsForCompleteStatus("failed"));
+    }
+  }, [submitStatus, getOpsForCompleteStatus, markCompletionStatus]);
 
   return <LoadingSubmission title={currentMessage} />;
 };

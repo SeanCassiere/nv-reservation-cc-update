@@ -2,8 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
-import { useClientProfileQuery } from "../hooks/network/useClientProfile";
-import { useRentalSummaryQuery } from "../hooks/network/useRentalSummary";
+import { type SummaryCharges } from "@/api/summaryApi";
 
 type RowItemProps = {
   label: string;
@@ -15,256 +14,254 @@ type RowItemProps = {
 };
 
 type Props = {
-  clientId: string | number;
-  referenceId: string | number;
   referenceType: string;
+  summary: SummaryCharges | null;
+  clientProfile: { currency: string } | null;
 };
 
 const RentalChargesSummaryList: React.FC<Props> = (props) => {
   const { t } = useTranslation();
-  const rentalSummary = useRentalSummaryQuery(props);
-  const clientProfile = useClientProfileQuery(props);
 
-  const isLoading = rentalSummary.isLoading || clientProfile.isLoading;
+  const isLoading = !Boolean(props.summary) || !Boolean(props.clientProfile);
 
-  const currency = clientProfile.data?.currency || "USD";
+  const currency = props.clientProfile?.currency || "USD";
 
   const reservationItems: RowItemProps[] = [
     {
       label: t("summaryOfCharges.baseRate"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.baseRate || 0, currency }) || 0,
-      value: rentalSummary.data?.baseRate || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.baseRate || 0, currency }) || 0,
+      value: props.summary?.baseRate || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.discountOnBaseRate"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.promotionDiscount || 0, currency }),
-      value: rentalSummary.data?.promotionDiscount || 0,
-      isVisible: rentalSummary.data?.promotionDiscount ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.promotionDiscount || 0, currency }),
+      value: props.summary?.promotionDiscount || 0,
+      isVisible: props.summary?.promotionDiscount ? true : false,
     },
     {
       label: t("summaryOfCharges.finalBaseRate"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.finalBaseRate || 0, currency }),
-      value: rentalSummary.data?.finalBaseRate || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.finalBaseRate || 0, currency }),
+      value: props.summary?.finalBaseRate || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.totalTaxMischarges"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.totalMiscChargesTaxable || 0, currency }),
-      value: rentalSummary.data?.totalMiscChargesTaxable || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.totalMiscChargesTaxable || 0, currency }),
+      value: props.summary?.totalMiscChargesTaxable || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.totalNonTaxMischarges"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.totalMiscChargesNonTaxable || 0, currency }),
-      value: rentalSummary.data?.totalMiscChargesNonTaxable || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.totalMiscChargesNonTaxable || 0, currency }),
+      value: props.summary?.totalMiscChargesNonTaxable || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.preTaxAdjustment"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.preAdjustment || 0, currency }),
-      value: rentalSummary.data?.preAdjustment || 0,
-      isVisible: rentalSummary.data?.preAdjustment ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.preAdjustment || 0, currency }),
+      value: props.summary?.preAdjustment || 0,
+      isVisible: props.summary?.preAdjustment ? true : false,
     },
     {
       label: t("summaryOfCharges.preSubtotal"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.preSubTotal || 0, currency }),
-      value: rentalSummary.data?.preSubTotal || 0,
-      isVisible: rentalSummary.data?.promotionDiscountOnSubTotal ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.preSubTotal || 0, currency }),
+      value: props.summary?.preSubTotal || 0,
+      isVisible: props.summary?.promotionDiscountOnSubTotal ? true : false,
     },
     {
       label: t("summaryOfCharges.discountOnSubtotal"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.promotionDiscountOnSubTotal || 0, currency }),
-      value: rentalSummary.data?.promotionDiscountOnSubTotal || 0,
-      isVisible: rentalSummary.data?.promotionDiscountOnSubTotal ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.promotionDiscountOnSubTotal || 0, currency }),
+      value: props.summary?.promotionDiscountOnSubTotal || 0,
+      isVisible: props.summary?.promotionDiscountOnSubTotal ? true : false,
     },
     {
       label: t("summaryOfCharges.subtotal"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.subTotal || 0, currency }),
-      value: rentalSummary.data?.subTotal || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.subTotal || 0, currency }),
+      value: props.summary?.subTotal || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.totalTaxCharges"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.totalTax || 0, currency }),
-      value: rentalSummary.data?.totalTax || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.totalTax || 0, currency }),
+      value: props.summary?.totalTax || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.additionalCharges"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.additionalCharge || 0, currency }),
-      value: rentalSummary.data?.additionalCharge || 0,
-      isVisible: rentalSummary.data?.additionalCharge ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.additionalCharge || 0, currency }),
+      value: props.summary?.additionalCharge || 0,
+      isVisible: props.summary?.additionalCharge ? true : false,
     },
     {
       label: t("summaryOfCharges.estimatedTotalWithDeposit"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.estimateTotalwithDeposit || 0, currency }),
-      value: rentalSummary.data?.totalTax || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.estimateTotalwithDeposit || 0, currency }),
+      value: props.summary?.totalTax || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.grandTotal"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.total || 0, currency }),
-      value: rentalSummary.data?.total || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.total || 0, currency }),
+      value: props.summary?.total || 0,
       isVisible: true,
       highlight: true,
     },
     {
       label: t("summaryOfCharges.balanceDue"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.balanceDue || 0, currency }),
-      value: rentalSummary.data?.balanceDue || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.balanceDue || 0, currency }),
+      value: props.summary?.balanceDue || 0,
       isVisible: true,
-      isRed: rentalSummary.data?.balanceDue ? true : false,
+      isRed: props.summary?.balanceDue ? true : false,
     },
     {
       label: t("summaryOfCharges.amountPaid"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.amountPaid || 0, currency }),
-      value: rentalSummary.data?.amountPaid || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.amountPaid || 0, currency }),
+      value: props.summary?.amountPaid || 0,
       isVisible: true,
-      isRed: rentalSummary.data?.amountPaid ? true : false,
+      isRed: props.summary?.amountPaid ? true : false,
     },
     {
       label: t("summaryOfCharges.securityDeposit"),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.securityDeposit || 0, currency }),
-      value: rentalSummary.data?.securityDeposit || 0,
-      isVisible: rentalSummary.data?.securityDeposit ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.securityDeposit || 0, currency }),
+      value: props.summary?.securityDeposit || 0,
+      isVisible: props.summary?.securityDeposit ? true : false,
     },
   ];
 
   const agreementItems: RowItemProps[] = [
     {
       label: t("summaryOfCharges.baseRate", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.baseRate || 0, currency }),
-      value: rentalSummary.data?.baseRate || 0,
-      isVisible: rentalSummary.data?.promotionDiscount ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.baseRate || 0, currency }),
+      value: props.summary?.baseRate || 0,
+      isVisible: props.summary?.promotionDiscount ? true : false,
     },
     {
       label: t("summaryOfCharges.discountOnBaseRate", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.promotionDiscount || 0, currency }),
-      value: rentalSummary.data?.promotionDiscount || 0,
-      isVisible: rentalSummary.data?.promotionDiscount ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.promotionDiscount || 0, currency }),
+      value: props.summary?.promotionDiscount || 0,
+      isVisible: props.summary?.promotionDiscount ? true : false,
     },
     {
       label: t("summaryOfCharges.finalBaseRate", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.finalBaseRate || 0, currency }),
-      value: rentalSummary.data?.finalBaseRate || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.finalBaseRate || 0, currency }),
+      value: props.summary?.finalBaseRate || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.totalTaxMischarges", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.totalMiscChargesTaxable || 0, currency }),
-      value: rentalSummary.data?.totalMiscChargesTaxable || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.totalMiscChargesTaxable || 0, currency }),
+      value: props.summary?.totalMiscChargesTaxable || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.totalNonTaxMischarges", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.totalMiscChargesNonTaxable || 0, currency }),
-      value: rentalSummary.data?.totalMiscChargesNonTaxable || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.totalMiscChargesNonTaxable || 0, currency }),
+      value: props.summary?.totalMiscChargesNonTaxable || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.extraMileageCharges", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.extraMilesCharge || 0, currency }),
-      value: rentalSummary.data?.extraMilesCharge || 0,
-      isVisible: rentalSummary.data?.isExtraMileageChargeTaxable || false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.extraMilesCharge || 0, currency }),
+      value: props.summary?.extraMilesCharge || 0,
+      isVisible: props.summary?.isExtraMileageChargeTaxable || false,
     },
     {
       label: t("summaryOfCharges.extraDurationCharges", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.extraDayCharge || 0, currency }),
-      value: rentalSummary.data?.extraDayCharge || 0,
-      isVisible: rentalSummary.data?.isExtraDayChargeTaxable || false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.extraDayCharge || 0, currency }),
+      value: props.summary?.extraDayCharge || 0,
+      isVisible: props.summary?.isExtraDayChargeTaxable || false,
     },
     {
       label: t("summaryOfCharges.extraFuelCharges", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.extraFuelCharge || 0, currency }),
-      value: rentalSummary.data?.extraFuelCharge || 0,
-      isVisible: rentalSummary.data?.isFuelChargeTaxable || false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.extraFuelCharge || 0, currency }),
+      value: props.summary?.extraFuelCharge || 0,
+      isVisible: props.summary?.isFuelChargeTaxable || false,
     },
     {
       label: t("summaryOfCharges.preTaxAdjustment", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.preAdjustment || 0, currency }),
-      value: rentalSummary.data?.preAdjustment || 0,
-      isVisible: rentalSummary.data?.preAdjustment ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.preAdjustment || 0, currency }),
+      value: props.summary?.preAdjustment || 0,
+      isVisible: props.summary?.preAdjustment ? true : false,
     },
     {
       label: t("summaryOfCharges.preSubtotal", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.preSubTotal || 0, currency }),
-      value: rentalSummary.data?.preSubTotal || 0,
-      isVisible: rentalSummary.data?.promotionDiscountOnSubTotal ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.preSubTotal || 0, currency }),
+      value: props.summary?.preSubTotal || 0,
+      isVisible: props.summary?.promotionDiscountOnSubTotal ? true : false,
     },
     {
       label: t("summaryOfCharges.discountOnSubtotal", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.promotionDiscountOnSubTotal || 0, currency }),
-      value: rentalSummary.data?.promotionDiscountOnSubTotal || 0,
-      isVisible: rentalSummary.data?.promotionDiscountOnSubTotal ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.promotionDiscountOnSubTotal || 0, currency }),
+      value: props.summary?.promotionDiscountOnSubTotal || 0,
+      isVisible: props.summary?.promotionDiscountOnSubTotal ? true : false,
     },
     {
       label: t("summaryOfCharges.subtotal", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.subTotal || 0, currency }),
-      value: rentalSummary.data?.subTotal || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.subTotal || 0, currency }),
+      value: props.summary?.subTotal || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.totalTaxCharges", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.totalTax || 0, currency }),
-      value: rentalSummary.data?.totalTax || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.totalTax || 0, currency }),
+      value: props.summary?.totalTax || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.extraMileageCharges", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.extraDayCharge || 0, currency }),
-      value: rentalSummary.data?.extraDayCharge || 0,
-      isVisible: !rentalSummary.data?.isExtraMileageChargeTaxable || false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.extraDayCharge || 0, currency }),
+      value: props.summary?.extraDayCharge || 0,
+      isVisible: !props.summary?.isExtraMileageChargeTaxable || false,
     },
     {
       label: t("summaryOfCharges.extraDurationCharges", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.extraDayCharge || 0, currency }),
-      value: rentalSummary.data?.extraDayCharge || 0,
-      isVisible: !rentalSummary.data?.isExtraDayChargeTaxable || false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.extraDayCharge || 0, currency }),
+      value: props.summary?.extraDayCharge || 0,
+      isVisible: !props.summary?.isExtraDayChargeTaxable || false,
     },
     {
       label: t("summaryOfCharges.extraFuelCharges", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.extraFuelCharge || 0, currency }),
-      value: rentalSummary.data?.extraFuelCharge || 0,
-      isVisible: !rentalSummary.data?.isFuelChargeTaxable || false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.extraFuelCharge || 0, currency }),
+      value: props.summary?.extraFuelCharge || 0,
+      isVisible: !props.summary?.isFuelChargeTaxable || false,
     },
     {
       label: t("summaryOfCharges.additionalCharges", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.additionalCharge || 0, currency }),
-      value: rentalSummary.data?.additionalCharge || 0,
-      isVisible: rentalSummary.data?.additionalCharge ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.additionalCharge || 0, currency }),
+      value: props.summary?.additionalCharge || 0,
+      isVisible: props.summary?.additionalCharge ? true : false,
     },
     {
       label: t("summaryOfCharges.postTaxAdjustment", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.postAdjustment || 0, currency }),
-      value: rentalSummary.data?.postAdjustment || 0,
-      isVisible: rentalSummary.data?.postAdjustment ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.postAdjustment || 0, currency }),
+      value: props.summary?.postAdjustment || 0,
+      isVisible: props.summary?.postAdjustment ? true : false,
     },
     {
       label: t("summaryOfCharges.grandTotal", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.total || 0, currency }),
-      value: rentalSummary.data?.total || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.total || 0, currency }),
+      value: props.summary?.total || 0,
       isVisible: true,
       highlight: true,
     },
     {
       label: t("summaryOfCharges.amountPaid", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.amountPaid || 0, currency }),
-      value: rentalSummary.data?.amountPaid || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.amountPaid || 0, currency }),
+      value: props.summary?.amountPaid || 0,
       isVisible: true,
     },
     {
       label: t("summaryOfCharges.balanceDue", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.balanceDue || 0, currency }),
-      value: rentalSummary.data?.balanceDue || 0,
+      currencyAmount: t("intlCurrency", { value: props.summary?.balanceDue || 0, currency }),
+      value: props.summary?.balanceDue || 0,
       isVisible: true,
-      isRed: rentalSummary.data?.balanceDue ? true : false,
+      isRed: props.summary?.balanceDue ? true : false,
     },
     {
       label: t("summaryOfCharges.securityDeposit", { context: "agreement" }),
-      currencyAmount: t("intlCurrency", { value: rentalSummary.data?.securityDeposit || 0, currency }),
-      value: rentalSummary.data?.securityDeposit || 0,
-      isVisible: rentalSummary.data?.securityDeposit ? true : false,
+      currencyAmount: t("intlCurrency", { value: props.summary?.securityDeposit || 0, currency }),
+      value: props.summary?.securityDeposit || 0,
+      isVisible: props.summary?.securityDeposit ? true : false,
     },
   ];
 

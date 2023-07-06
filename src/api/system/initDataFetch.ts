@@ -1,5 +1,5 @@
-import { createHtmlBlobDataUrl } from "../../utils/blobUtils";
-import { APP_CONSTANTS } from "../../utils/constants";
+import { createHtmlBlobDataUrl } from "@/utils/blobUtils";
+import { APP_CONSTANTS } from "@/utils/constants";
 
 import { fetchAgreementByIdOrNumberProcedure } from "../agreementApi";
 import {
@@ -11,7 +11,7 @@ import {
 import { fetchReservationByIdOrNumberProcedure, RentalSourcedDetails } from "../reservationApi";
 import { fetchAdminUser } from "../usersApi";
 
-import type { EmailGlobalDocumentAttachmentType } from "../../hooks/stores/useRuntimeStore";
+import type { EmailGlobalDocumentAttachmentType } from "@/hooks/stores/useRuntimeStore";
 
 type RandomAll = string | number | null;
 

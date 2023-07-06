@@ -1,7 +1,8 @@
 import { FC, ReactNode, createContext, useContext, useState, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { APP_CONSTANTS } from "../../utils/constants";
+
+import { APP_CONSTANTS } from "@/utils/constants";
 
 type PageTypeOptions = "creditCard" | "driversLicense" | "rentalSignature";
 const pagesTyped: { page: string; type: PageTypeOptions }[] = [
@@ -12,7 +13,17 @@ const pagesTyped: { page: string; type: PageTypeOptions }[] = [
   { page: APP_CONSTANTS.FLOW_RENTAL_SIGNATURE_FORM, type: "rentalSignature" },
 ];
 
+/**
+ * "navigate" - Refers to the default navigation flow.
+ *
+ * In this state, the user can navigate between the screens using the next and previous buttons.
+ *
+ * "save" - Refers to the state where the user is editing a page.
+ *
+ * In this state, the pressing of the next button will take the user to the last page of the flow.
+ */
 export type AppNavMode = "navigate" | "save";
+
 type AppNavContextType = {
   mode: AppNavMode;
   goNext: () => void;
