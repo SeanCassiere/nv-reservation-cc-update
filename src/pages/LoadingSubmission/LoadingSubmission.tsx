@@ -1,13 +1,14 @@
 import React from "react";
 
+import CardLayout from "@/components/card-layout";
+
 const LoadingSubmission: React.FC<{ title: any }> = ({ title }) => {
   return (
-    <div style={{ textAlign: "center", margin: "3rem 1rem" }}>
-      <p style={{ marginBottom: "5rem", fontSize: "1.5rem", textAlign: "center", width: "100%" }}>
-        {title !== "" ? <>{title}</> : <>&nbsp;</>}
-      </p>
-      <div className="custom-loader mx-auto" />
-    </div>
+    <CardLayout title={typeof title === "string" ? title : " "}>
+      <div className="mb-16 mt-16 h-full w-full">
+        <div className="custom-loader mx-auto" />
+      </div>
+    </CardLayout>
   );
 };
 

@@ -1,11 +1,11 @@
 import React, { Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
 
-import LoadingSubmission from "../LoadingSubmission/LoadingSubmission";
+import LoadingSubmission from "@/pages/LoadingSubmission/LoadingSubmission";
 
-import { useConfigStore } from "../../hooks/stores/useConfigStore";
-import { APP_CONSTANTS } from "../../utils/constants";
-import type { SubmittedFormsSummaryDefaultLayoutProps } from "../../layouts/SubmissionSuccess/SubmittedFormsSummaryDefaultLayout";
+import { useConfigStore } from "@/hooks/stores/useConfigStore";
+import { APP_CONSTANTS } from "@/utils/constants";
+import type { SubmittedFormsSummaryDefaultLayoutProps } from "@/layouts/SubmissionSuccess/SubmittedFormsSummaryDefaultLayout";
 
 const SubmissionSuccessDefaultLayout = lazy(
   () => import("../../layouts/SubmissionSuccess/SubmissionSuccessDefaultLayout")
