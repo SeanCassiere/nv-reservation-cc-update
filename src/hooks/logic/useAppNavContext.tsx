@@ -1,7 +1,8 @@
 import { FC, ReactNode, createContext, useContext, useState, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { APP_CONSTANTS } from "../../utils/constants";
+
+import { APP_CONSTANTS } from "@/utils/constants";
 
 type PageTypeOptions = "creditCard" | "driversLicense" | "rentalSignature";
 const pagesTyped: { page: string; type: PageTypeOptions }[] = [

@@ -1,7 +1,7 @@
 import { clientFetch } from "./clientV3";
 
-import { dataBase64StringToBlobDataUrl, urlBlobToBase64 } from "../utils/blobUtils";
-import { APP_CONSTANTS } from "../utils/constants";
+import { dataBase64StringToBlobDataUrl, urlBlobToBase64 } from "@/utils/blobUtils";
+import { APP_CONSTANTS } from "@/utils/constants";
 
 export async function postUploadRentalSignature(opts: {
   imageUrl: string;

@@ -1,8 +1,8 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
-import { useAuthStore } from "../hooks/stores/useAuthStore";
-import { useRuntimeStore } from "../hooks/stores/useRuntimeStore";
+import { useAuthStore } from "@/hooks/stores/useAuthStore";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
 const RequireAuth: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const location = useLocation();

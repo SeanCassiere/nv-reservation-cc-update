@@ -1,7 +1,6 @@
-import { isValueTrue } from "../../utils/common";
-import { APP_CONSTANTS, COMPAT_KEYS } from "../../utils/constants";
-import { base64Decode } from "../../utils/base64";
-import { setHtmlDocumentTheme } from "@/utils";
+import { setHtmlDocumentTheme, base64Decode } from "@/utils";
+import { APP_CONSTANTS, COMPAT_KEYS } from "@/utils/constants";
+import { isValueTrue } from "@/utils/common";
 
 type QueryConfigState = {
   clientid: string | null;

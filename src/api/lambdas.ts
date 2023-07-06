@@ -1,5 +1,5 @@
-import { useConfigStore } from "../hooks/stores/useConfigStore";
-import { useRuntimeStore } from "../hooks/stores/useRuntimeStore";
+import { useConfigStore } from "@/hooks/stores/useConfigStore";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
 const AUTH_URL = "/api/token";
 const QA_AUTH_URL = "/api/token-qa";

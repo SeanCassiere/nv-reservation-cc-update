@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { APP_CONSTANTS } from "../../utils/constants";
+
+import { APP_CONSTANTS } from "@/utils/constants";
 
 export type EmailGlobalDocumentAttachmentType = {
   id: number;

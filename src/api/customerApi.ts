@@ -1,5 +1,5 @@
 import { clientFetch } from "./clientV3";
-import type { CreditCardStoreType } from "../hooks/stores/useFormStore";
+import type { CreditCardStoreType } from "@/hooks/stores/useFormStore";
 
 export async function postDriverLicenseImage(opts: {
   clientId: number;

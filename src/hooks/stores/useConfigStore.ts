@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { APP_CONSTANTS } from "../../utils/constants";
+
+import { APP_CONSTANTS } from "@/utils/constants";
 
 const PROTECTED_FLOWS: string[] = [APP_CONSTANTS.FLOW_FORMS_SUMMARY];
 
