@@ -9,9 +9,9 @@ import { ExclamationIcon } from "@/components/ui/icons";
 import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
 import { useFormStore } from "@/hooks/stores/useFormStore";
 
-const CreditCardFormSummary = lazy(() => import("../../components/form-details-summary/credit-card-summary"));
-const DriverLicenseFormSummary = lazy(() => import("../../components/form-details-summary/driver-license-summary"));
-const RentalSignatureFormSummary = lazy(() => import("../../components/form-details-summary/rental-signature-summary"));
+const CreditCardFormSummary = lazy(() => import("../components/form-details-summary/credit-card-summary"));
+const DriverLicenseFormSummary = lazy(() => import("../components/form-details-summary/driver-license-summary"));
+const RentalSignatureFormSummary = lazy(() => import("../components/form-details-summary/rental-signature-summary"));
 
 const PreSubmitSummaryControllerDefault: React.FC = () => {
   const { t } = useTranslation();

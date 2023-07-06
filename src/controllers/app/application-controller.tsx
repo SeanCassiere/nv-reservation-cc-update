@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 import ErrorSubmission from "@/pages/error-submission";
 import LoadingSubmission from "@/pages/loading-submission";
-import DisplayCurrentController from "./DisplayCurrentController";
+import DisplayCurrentController from "./display-active";
 
 import { AppNavContextProvider } from "@/hooks/logic/useAppNavContext";
 import { useConfigStore } from "@/hooks/stores/useConfigStore";
