@@ -49,6 +49,7 @@
       "goBack": {
         "title": "Es-tu sûr?",
         "message": "Revenir en arrière supprimera les fichiers ajoutés.",
+        "message_edit": "Revenir en arrière annulera les modifications apportées aux fichiers.",
         "cancel": "Annuler",
         "submit": "Je comprends"
       },
