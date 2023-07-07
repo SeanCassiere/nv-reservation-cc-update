@@ -119,7 +119,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
       <GoBackConfirmationDialog
         isOpen={isBackConfirmationDialogOpen}
         title={t("forms.rentalSignature.goBack.title")}
-        message={t("forms.rentalSignature.goBack.message")}
+        message={t("forms.rentalSignature.goBack.message", { context: mode === "save" ? "edit" : "" })}
         onCancel={dismissBackDialog}
         onConfirm={confirmBackDialog}
         cancelBtnText={t("forms.rentalSignature.goBack.cancel")}
