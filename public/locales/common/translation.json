@@ -3,11 +3,13 @@
   "developer": {
     "drawerTitle": "Developer Menu",
     "viewProjectRepo": "GitHub Repository",
+    "open": "Open the developer menu",
     "configCreator": {
       "formSelectValue": "Select",
       "btnCopy": "Copy",
-      "btnCopiedToClipboard": "Copied to clipboard",
-      "btnSave": "Open new config",
+      "btnCopy_action": "Copied to clipboard",
+      "btnSave": "Confirm",
+      "btnReset": "Reset",
       "theme": "Theme",
       "referenceType": "Reference Type",
       "referenceId": "Reference ID",

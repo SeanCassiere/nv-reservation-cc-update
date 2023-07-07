@@ -1,6 +1,7 @@
 import React, { memo, Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
 
+import CardLayout from "@/components/card-layout";
 import { Button as UIButton } from "@/components/ui/button";
 
 import LoadingSubmission from "@/pages/loading-submission";
@@ -45,9 +46,8 @@ export default memo(DisplayActiveController);
 const DevScreen = memo((props: { title: string }) => {
   const { nextPageText, prevPageText, isPreviousAvailable, goPrev, goNext } = useAppNavContext();
   return (
-    <div>
-      <h5>{props.title}</h5>
-      <div className="flex gap-1">
+    <CardLayout title={props.title} subtitle={`This is the description for ${props.title}.`}>
+      <div className="mt-5 flex gap-1">
         <UIButton type="button" variant="outline" disabled={!isPreviousAvailable} onClick={goPrev}>
           {prevPageText}
         </UIButton>
@@ -55,6 +55,6 @@ const DevScreen = memo((props: { title: string }) => {
           {nextPageText}
         </UIButton>
       </div>
-    </div>
+    </CardLayout>
   );
 });
