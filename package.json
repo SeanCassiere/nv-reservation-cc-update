@@ -13,7 +13,6 @@
     "sync-i18n": "i18next-locales-sync -c ./locales-sync.config.js"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.15",
     "@hookform/resolvers": "^3.1.1",
     "@netlify/functions": "^1.6.0",
     "@radix-ui/react-alert-dialog": "^1.0.4",
