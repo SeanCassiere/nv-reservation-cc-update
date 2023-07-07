@@ -21,20 +21,23 @@ const App = () => {
   const { t, i18n } = useTranslation();
   document.body.dir = i18n.dir();
 
-  const query = new URLSearchParams(window.location.search);
-  const devQuery = query.get("dev");
-  const isDevQueryOpen = Boolean(isValueTrue(devQuery));
+  const searchParams = new URLSearchParams(window.location.search);
+  const devSearchParam = searchParams.get("dev");
+  const isDevQueryOpen = Boolean(isValueTrue(devSearchParam));
 
   const isDevOpenMain = useConfigStore((s) => s.isDevMenuOpen);
   const setDevOpenState = useConfigStore((s) => s.setDevMenuState);
 
-  const shouldDevMenuBeLoaded = useRef<boolean>(isDevQueryOpen); // will default to false if query is not present
+  const shouldDevMenuBeLoaded = useRef<boolean>(false); // ref to code-split the
 
   const handleCloseDeveloperDrawer = () => setDevOpenState(false);
   React.useEffect(() => {
     function onKeyDown(evt: KeyboardEvent) {
       if (evt.key === "k" && evt.shiftKey && (evt.metaKey || evt.ctrlKey)) {
-        shouldDevMenuBeLoaded.current = true;
+        if (shouldDevMenuBeLoaded.current === false) {
+          shouldDevMenuBeLoaded.current = true;
+        }
+
         setDevOpenState((v) => !v);
       }
     }
@@ -43,10 +46,17 @@ const App = () => {
   }, [setDevOpenState]);
 
   React.useEffect(() => {
-    if (isDevQueryOpen) {
+    const q = new URLSearchParams(window.location.search);
+    const dq = q.get("dev");
+    const isDevOpen = Boolean(isValueTrue(dq));
+
+    if (isDevOpen) {
+      if (shouldDevMenuBeLoaded.current === false) {
+        shouldDevMenuBeLoaded.current = true;
+      }
       setDevOpenState(true);
     }
-  }, [isDevQueryOpen, setDevOpenState]);
+  }, [setDevOpenState]);
 
   return (
     <QueryClientProvider client={queryClient}>
