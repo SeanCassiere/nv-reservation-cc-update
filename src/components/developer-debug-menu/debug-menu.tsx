@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,8 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import CardLayout from "@/components/card-layout";
-import AnchorLink from "@/components/anchor-link";
+import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
 import { useClipboard } from "@/hooks/logic/useClipboard";
 import { useConfigStore } from "@/hooks/stores/useConfigStore";
@@ -24,40 +23,21 @@ import { configObjectFormSchema, ConfigObjectFormValues, makeUrlQueryFromConfigO
 
 const DeveloperDebugMenu: React.FC<{ open: boolean; handleClose: () => void }> = ({ open, handleClose }) => {
   const { t } = useTranslation();
-  const divRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (open) {
-      divRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [open]);
-
-  if (!open) return null;
 
   return (
-    <div ref={divRef}>
-      <CardLayout
-        title={
-          <div className="flex justify-center align-middle">
-            <h2 className="flex-1">{t("developer.drawerTitle")}</h2>
-            <div>
-              <Button size="icon" variant="secondary" onClick={handleClose}>
-                &times;
-              </Button>
-            </div>
-          </div>
-        }
-      >
-        <div className="mt-0 pt-0">
-          <div className="pb-3 pt-1">
-            <AnchorLink href={REPO_URL} rel="noreferrer" target="_blank" className="font-bold text-primary/75">
+    <Sheet open={open} onOpenChange={handleClose}>
+      <SheetContent side="left" className="overflow-y-scroll">
+        <SheetHeader className="mb-4">
+          <SheetTitle>{t("developer.drawerTitle")}</SheetTitle>
+          <SheetDescription>
+            <a href={REPO_URL} rel="noreferrer" target="_blank">
               {t("developer.viewProjectRepo")}
-            </AnchorLink>
-          </div>
-          <ConfigCreator />
-        </div>
-      </CardLayout>
-    </div>
+            </a>
+          </SheetDescription>
+        </SheetHeader>
+        <ConfigCreator />
+      </SheetContent>
+    </Sheet>
   );
 };
 
@@ -126,7 +106,8 @@ const ConfigCreator = () => {
               copy(window.location.origin + "/?" + newQueryString);
             }}
           >
-            {isCopied ? t("developer.configCreator.btnCopiedToClipboard") : t("developer.configCreator.btnCopy")}
+            {isCopied ? "👍🏼 " : ""}
+            {t("developer.configCreator.btnCopy", { context: isCopied ? "action" : "" })}
           </Button>
         </DevGroupCard>
 
@@ -441,9 +422,12 @@ const ConfigCreator = () => {
           </div>
         </DevGroupCard>
 
-        <div className="flex w-full gap-2">
+        <SheetFooter>
+          <Button type="reset" variant="ghost">
+            {t("developer.configCreator.btnReset")}
+          </Button>
           <Button type="submit">{t("developer.configCreator.btnSave")}</Button>
-        </div>
+        </SheetFooter>
       </form>
     </Form>
   );
