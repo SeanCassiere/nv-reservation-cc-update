@@ -81,9 +81,9 @@
       "goBack": {
         "title": "Are you sure?",
         "message": "Going back will discard the added signature.",
-        "message_edit": "Going back will discard the changes made to the files."z,
+        "message_edit": "Going back will discard any changes made to the signature.",
         "cancel": "Cancel",
-        "submit": "I Understand"
+        "submit": "Confirm"
       }
     },
     "rentalSummary": {

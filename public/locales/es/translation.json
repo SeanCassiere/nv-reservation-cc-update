@@ -81,6 +81,7 @@
       "goBack": {
         "title": "Estas segura",
         "message": "Si retrocede, se descartará la firma agregada.",
+        "message_edit": "Si retrocede, se descartarán los cambios realizados en la firma.",
         "cancel": "Cancelar",
         "submit": "Entiendo"
       }

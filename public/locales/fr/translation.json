@@ -81,6 +81,7 @@
       "goBack": {
         "title": "Êtes-vous sûr?",
         "message": "Revenir en arrière supprimera la signature ajoutée.",
+        "message_edit": "Si vous revenez en arrière, toutes les modifications apportées à la signature seront supprimées.",
         "cancel": "Annuler",
         "submit": "Je comprend"
       }

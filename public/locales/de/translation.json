@@ -81,6 +81,7 @@
       "goBack": {
         "title": "Bist du dir sicher?",
         "message": "Wenn Sie zurückgehen, wird die hinzugefügte Signatur verworfen.",
+        "message_edit": "Wenn Sie zurückgehen, werden alle an der Signatur vorgenommenen Änderungen verworfen.",
         "cancel": "Absagen",
         "submit": "Ich verstehe"
       }
