@@ -3,6 +3,7 @@
   "developer": {
     "drawerTitle": "Developer Menu",
     "viewProjectRepo": "GitHub Repository",
+    "open": "Open the developer menu",
     "configCreator": {
       "formSelectValue": "Select",
       "btnCopy": "Copy",
