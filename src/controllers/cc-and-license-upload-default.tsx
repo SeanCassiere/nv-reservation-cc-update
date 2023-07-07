@@ -116,7 +116,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
         <GoBackConfirmationDialog
           isOpen={isBackConfirmationDialogOpen}
           title={t("forms.licenseUpload.goBack.title")}
-          message={t("forms.licenseUpload.goBack.message")}
+          message={t("forms.licenseUpload.goBack.message", { context: mode === "save" ? "edit" : "" })}
           onCancel={dismissBackDialog}
           onConfirm={confirmBackDialog}
           cancelBtnText={t("forms.licenseUpload.goBack.cancel")}
