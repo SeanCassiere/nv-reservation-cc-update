@@ -1,5 +1,5 @@
 import { setHtmlDocumentColorScheme, base64Decode } from "@/utils";
-import { APP_CONSTANTS, COMPAT_KEYS } from "@/utils/constants";
+import { APP_CONSTANTS, APP_DEFAULTS, COMPAT_KEYS } from "@/utils/constants";
 import { isValueTrue } from "@/utils/common";
 
 /**
@@ -40,10 +40,10 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     emailtemplateid: null,
     flow: [],
     userid: 0,
-    showpresubmitsummary: false,
-    stopemailglobaldocuments: false,
-    stopattachingdriverlicensefiles: false,
-    colorscheme: "",
+    showpresubmitsummary: APP_DEFAULTS.SHOW_PRE_SUBMIT_SUMMARY,
+    stopemailglobaldocuments: APP_DEFAULTS.STOP_EMAIL_GLOBAL_DOCUMENTS,
+    stopattachingdriverlicensefiles: APP_DEFAULTS.STOP_ATTACHING_DRIVER_LICENSE_FILES,
+    colorscheme: APP_DEFAULTS.COLOR_SCHEME,
   };
 
   try {

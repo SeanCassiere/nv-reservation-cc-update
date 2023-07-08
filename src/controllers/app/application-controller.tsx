@@ -12,7 +12,7 @@ import { useConfigStore } from "@/hooks/stores/useConfigStore";
 import { useAuthStore } from "@/hooks/stores/useAuthStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
-import { APP_CONSTANTS } from "@/utils/constants";
+import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
 import { authenticateWithLambda } from "@/api/lambdas";
 import { bootUp } from "@/api/system/bootUp";
 import { initDataFetch } from "@/api/system/initDataFetch";
@@ -102,7 +102,10 @@ const ApplicationController: React.FC = () => {
         qa: data.qa,
         predefinedAdminUserId: data.userId,
         successSubmissionScreen: data.successSubmissionScreen,
-        showPreSubmitSummary: data.showPreSubmitSummary ?? false,
+        showPreSubmitSummary:
+          typeof data.showPreSubmitSummary === "boolean"
+            ? data.showPreSubmitSummary
+            : APP_DEFAULTS.SHOW_PRE_SUBMIT_SUMMARY,
         disableGlobalDocumentsForConfirmationEmail: data.stopEmailGlobalDocuments,
         disableEmailAttachingDriverLicense: data.stopAttachingDriverLicenseFiles,
         colorScheme: data.colorScheme,

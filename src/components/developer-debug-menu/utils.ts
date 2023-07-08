@@ -1,8 +1,7 @@
 import { z } from "zod";
 
-import { APP_CONSTANTS } from "@/utils/constants";
+import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
-import { useConfigStore } from "@/hooks/stores/useConfigStore";
 import { base64Encode } from "@/utils/base64";
 
 const REQUIRED = "Required";
@@ -49,21 +48,27 @@ export function makeUrlQueryFromConfigObject(config: ConfigObjectFormValues): st
 
     emailTemplateId: Number(config.emailTemplateId) ?? Number(useRuntimeStore.getState().responseTemplateId),
 
-    flow: config.flow ? config.flow.map((i) => i.value) : useConfigStore.getState().flow,
+    flow: config.flow.length > 0 ? config.flow.map((f) => f.value) : APP_DEFAULTS.FLOW_SCREENS,
 
-    ...(config.successSubmissionScreen !== APP_CONSTANTS.SUCCESS_DEFAULT
+    ...(config.successSubmissionScreen !== APP_DEFAULTS.SUCCESS_SUBMISSION_SCREEN
       ? {
           successSubmissionScreen: config.successSubmissionScreen,
         }
       : {}),
 
-    ...(config.showPreSubmitSummary ? { showPreSubmitSummary: true } : {}),
+    ...(config.showPreSubmitSummary !== APP_DEFAULTS.SHOW_PRE_SUBMIT_SUMMARY
+      ? { showPreSubmitSummary: config.showPreSubmitSummary }
+      : {}),
 
-    ...(config.stopEmailGlobalDocuments ? { stopEmailGlobalDocuments: true } : {}),
+    ...(config.stopEmailGlobalDocuments !== APP_DEFAULTS.STOP_EMAIL_GLOBAL_DOCUMENTS
+      ? { stopEmailGlobalDocuments: config.stopEmailGlobalDocuments }
+      : {}),
 
-    ...(config.stopAttachingDriverLicenseFiles ? { stopAttachingDriverLicenseFiles: true } : {}),
+    ...(config.stopAttachingDriverLicenseFiles !== APP_DEFAULTS.STOP_ATTACHING_DRIVER_LICENSE_FILES
+      ? { stopAttachingDriverLicenseFiles: config.stopAttachingDriverLicenseFiles }
+      : {}),
 
-    ...(config.colorScheme !== APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS ? { colorScheme: config.colorScheme } : {}),
+    ...(config.colorScheme !== APP_DEFAULTS.COLOR_SCHEME ? { colorScheme: config.colorScheme } : {}),
   };
 
   // JSON stringify and base64 encode the config object

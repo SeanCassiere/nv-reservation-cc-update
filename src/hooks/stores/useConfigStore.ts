@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { APP_CONSTANTS } from "@/utils/constants";
+import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
 
 const PROTECTED_FLOWS: string[] = [APP_CONSTANTS.FLOW_FORMS_SUMMARY];
 
@@ -36,18 +36,18 @@ type ConfigStoreType = {
 export const useConfigStore = create(
   devtools<ConfigStoreType>(
     (set, get) => ({
-      flow: [APP_CONSTANTS.FLOW_CREDIT_CARD_FORM],
-      fullFlow: [APP_CONSTANTS.FLOW_CREDIT_CARD_FORM],
-      successSubmissionScreen: APP_CONSTANTS.SUCCESS_DEFAULT,
+      flow: APP_DEFAULTS.FLOW_SCREENS,
+      fullFlow: APP_DEFAULTS.FLOW_SCREENS,
+      successSubmissionScreen: APP_DEFAULTS.SUCCESS_SUBMISSION_SCREEN,
       rawConfig: "",
       rawQueryString: "",
       qa: false,
       showPreSubmitSummary: false,
       isDevMenuOpen: false,
       predefinedAdminUserId: 0,
-      disableGlobalDocumentsForConfirmationEmail: false,
-      disableEmailAttachingDriverLicense: false,
-      colorScheme: APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS,
+      disableGlobalDocumentsForConfirmationEmail: APP_DEFAULTS.STOP_EMAIL_GLOBAL_DOCUMENTS,
+      disableEmailAttachingDriverLicense: APP_DEFAULTS.STOP_ATTACHING_DRIVER_LICENSE_FILES,
+      colorScheme: APP_DEFAULTS.COLOR_SCHEME,
 
       setDevMenuState: (newState: ((value: boolean) => boolean) | boolean) => {
         if (typeof newState === "function") {

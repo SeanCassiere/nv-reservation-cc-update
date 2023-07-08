@@ -21,8 +21,6 @@ export const APP_CONSTANTS = {
   SUCCESS_SUBMITTED_FORMS_WITH_RENTAL_CHARGES_SUMMARY: "SuccessSubmittedFormsWithRentalChargesSummary",
   SUCCESS_TEST: "test/test",
 
-  FORM_SUMMARY_OFF: "off",
-
   COLOR_SCHEME_DEFAULT_CLASS: "",
   COLOR_SCHEME_DARK_CLASS: "dark",
 } as const;
@@ -31,6 +29,18 @@ export const ALL_COLOR_SCHEME_CLASSNAMES = [
   APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS,
   APP_CONSTANTS.COLOR_SCHEME_DARK_CLASS,
 ];
+
+export const APP_DEFAULTS = {
+  COLOR_SCHEME: APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS,
+
+  FLOW_SCREENS: [APP_CONSTANTS.FLOW_CREDIT_CARD_FORM], // the screens to show the user
+
+  SHOW_PRE_SUBMIT_SUMMARY: false, // show the user a summary of their submission before they submit
+  SUCCESS_SUBMISSION_SCREEN: APP_CONSTANTS.SUCCESS_DEFAULT, // shown once the user has submitted all forms
+
+  STOP_EMAIL_GLOBAL_DOCUMENTS: false, // for the response email
+  STOP_ATTACHING_DRIVER_LICENSE_FILES: false, // for the response email
+};
 
 export const COMPAT_KEYS = {
   DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM: "Default/CreditCardAndLicenseUploadForm",
