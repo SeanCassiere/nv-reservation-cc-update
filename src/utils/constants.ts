@@ -1,4 +1,4 @@
-export const REPO_URL = import.meta.env.VITE_APP_REPO_URL ?? "https://github.com/SeanCassiere/nv-reservation-cc-update";
+export const REPO_URL = "https://github.com/SeanCassiere/nv-reservation-cc-update";
 
 export const SuccessImgUri = "/assets/undraw_make_it_rain_iwk4.svg";
 
