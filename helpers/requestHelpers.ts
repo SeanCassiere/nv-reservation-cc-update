@@ -1,32 +1,36 @@
 import { z } from "zod";
-export const containsKey = (rawQueryString: string, key: string): boolean => {
-  return rawQueryString.indexOf(key) !== -1;
-};
-
-export const isValueTrue = (value: string | undefined | null | boolean): boolean => {
-  if (!value) return false;
-  return value &&
-    ((typeof value === "string" && value.toLowerCase() === "true") ||
-      (typeof value === "string" && value === "1") ||
-      value === true)
-    ? true
-    : false;
-};
 
 export const responseHeaders = {
   "Content-Type": "application/json",
   "Cache-Control": "no-store",
 };
 
+const client_id = z.string().min(1, "Client ID must be at least 1 character");
+const reference_type = z.string().min(1, "Reference type must be at least 1 character");
+const reference_id = z.string().min(1, "Reference ID must be at least 1 character");
 const environmentSchema = z.enum(["liquidweb-prod-1", "liquidweb-qa-1"]);
 export type ServerSupportedClientEnvironments = z.infer<typeof environmentSchema>;
 
 export const tokenRequestSchema = z.object({
-  client_id: z.string().min(1, "Client ID must be at least 1 character"),
-  reference_type: z.string().min(1, "Reference type must be at least 1 character"),
-  reference_id: z.string().min(1, "Reference ID must be at least 1 character"),
+  client_id,
+  reference_type,
+  reference_id,
   environment: environmentSchema,
 });
+
+export const requestCompletionSchema = z.object({
+  client_id,
+  reference_type,
+  reference_id,
+  environment: environmentSchema,
+  status: z.string(),
+  customer_id: z.string(),
+});
+
+export function formatZodErrors(errors: z.ZodIssue[]): string {
+  const errorMessages = errors.map((issue) => `${issue.path}: ${issue.message}`);
+  return `Errors: | ${errorMessages.join(" | ")}`;
+}
 
 export function getAuthProperties(environment: ServerSupportedClientEnvironments) {
   switch (environment) {

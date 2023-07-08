@@ -1,7 +1,7 @@
 import axios from "axios";
 import { type Handler } from "@netlify/functions";
 
-import { getAuthProperties, responseHeaders, tokenRequestSchema } from "../../helpers/requestHelpers";
+import { formatZodErrors, getAuthProperties, responseHeaders, tokenRequestSchema } from "../../helpers/requestHelpers";
 import { logAction } from "../../helpers/logActions";
 
 const tokenHandler: Handler = async (event) => {
@@ -27,10 +27,9 @@ const tokenHandler: Handler = async (event) => {
     const parsed = tokenRequestSchema.safeParse(body);
 
     if (!parsed.success) {
-      const errors = parsed.error.issues.map((issue) => `${issue.path}: ${issue.message}`);
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: `Errors: | ${errors.join(" | ")}` }),
+        body: JSON.stringify({ error: formatZodErrors(parsed.error.issues) }),
         headers: responseHeaders,
       };
     }

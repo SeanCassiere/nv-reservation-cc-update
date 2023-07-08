@@ -52,20 +52,21 @@ export async function authenticateWithLambda(opts: { clientId: string; environme
 
 export async function postCompletionLambda(opts: {
   status: string;
-  qa: boolean;
   clientId: string | number;
   customerId: string | number;
   referenceType: string;
   referenceId: string | number;
+  environment: SupportedEnvironments;
 }) {
-  const params = new URLSearchParams();
-  if (opts.qa) {
-    params.append("qa", "true");
-  }
-  params.append("client_id", `${opts.clientId}`);
-  params.append("reference_type", `${opts.referenceType}`);
-  params.append("reference_id", `${opts.referenceId}`);
-  params.append("customer_id", `${opts.customerId}`);
-  params.append("status", opts.status);
-  return fetch(SUBMISSION_COMPLETION_URL + "?" + params.toString());
+  return await fetch(SUBMISSION_COMPLETION_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      client_id: `${opts.clientId}`,
+      reference_type: `${opts.referenceType}`,
+      reference_id: `${opts.referenceId}`,
+      customer_id: `${opts.customerId}`,
+      status: opts.status,
+      environment: opts.environment,
+    }),
+  });
 }
