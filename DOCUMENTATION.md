@@ -74,7 +74,7 @@ These are the parameters supported in the configuration object.
 | showPreSubmitSummary            | boolean?   | Boolean value indicating whether a screen is shown to the user prior to submission allowing them to go back and edit their entered details. <br /><br /> **_Default_** `false`                                                                                   |
 | stopEmailGlobalDocuments        | boolean?   | Boolean value, when if `true`, it will prevent attaching any configured global documents for the confirmation email template. <br /><br /> **_Default_** `false`                                                                                                 |
 | stopAttachingDriverLicenseFiles | boolean?   | Boolean value, when if `true`, it will prevent attaching the uploaded driver's license images in the confirmation email. <br /><br /> **_Default_** `false`                                                                                                      |
-| theme                           | string?    | The class name that shall be applied to the `html` tag to use a custom theme. <br />Supported values are: `dark`                                                                                                                                                 |
+| colorScheme                     | string?    | The class name that shall be applied to the `html` tag to use a customized color scheme. <br />Supported values are: `""` and `"dark"`                                                                                                                           |
 
 Afterwards, you can encode this JSON object using Base64 to formulate the final URL-safe config string. [https://www.base64encode.org/](https://www.base64encode.org/)
 
