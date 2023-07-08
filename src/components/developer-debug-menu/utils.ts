@@ -1,8 +1,7 @@
 import { z } from "zod";
 
-import { APP_CONSTANTS } from "@/utils/constants";
+import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
-import { useConfigStore } from "@/hooks/stores/useConfigStore";
 import { base64Encode } from "@/utils/base64";
 
 const REQUIRED = "Required";
@@ -11,7 +10,7 @@ export const configObjectFormSchema = z.object({
   referenceId: z.string().min(1, REQUIRED),
   referenceType: z.string().min(1, REQUIRED),
   lang: z.string().min(1, REQUIRED),
-  qa: z.boolean().default(false),
+  environment: z.string().min(1, REQUIRED),
   dev: z.boolean().default(false),
   clientId: z.string().min(1, REQUIRED),
   userId: z.string().min(1, REQUIRED),
@@ -21,14 +20,13 @@ export const configObjectFormSchema = z.object({
   showPreSubmitSummary: z.boolean().default(false),
   stopEmailGlobalDocuments: z.boolean().default(false),
   stopAttachingDriverLicenseFiles: z.boolean().default(false),
-  theme: z.string(),
+  colorScheme: z.string(),
 });
 
 export type ConfigObjectFormValues = z.infer<typeof configObjectFormSchema>;
 
 export function makeUrlQueryFromConfigObject(config: ConfigObjectFormValues): string {
   const params = new URLSearchParams();
-  if (config.qa) params.append("qa", "true");
   if (config.dev) params.append("dev", "true");
 
   // setting agreementId or reservationId
@@ -44,16 +42,34 @@ export function makeUrlQueryFromConfigObject(config: ConfigObjectFormValues): st
   // setting the config
   const hashObj = {
     clientId: Number(config.clientId) ?? Number(useRuntimeStore.getState().clientId),
+
     ...(Number(config.userId) > 0 ? { userId: Number(config.userId) } : {}),
+
     emailTemplateId: Number(config.emailTemplateId) ?? Number(useRuntimeStore.getState().responseTemplateId),
-    flow: config.flow ? config.flow.map((i) => i.value) : useConfigStore.getState().flow,
-    successSubmissionScreen: config.successSubmissionScreen ?? useConfigStore.getState().successSubmissionScreen,
-    ...(useConfigStore.getState().showPreSubmitSummary || config.showPreSubmitSummary
-      ? { showPreSubmitSummary: true }
+
+    flow: config.flow.length > 0 ? config.flow.map((f) => f.value) : APP_DEFAULTS.FLOW_SCREENS,
+
+    ...(config.successSubmissionScreen !== APP_DEFAULTS.SUCCESS_SUBMISSION_SCREEN
+      ? {
+          successSubmissionScreen: config.successSubmissionScreen,
+        }
       : {}),
-    ...(config.stopEmailGlobalDocuments ? { stopEmailGlobalDocuments: true } : {}),
-    ...(config.stopAttachingDriverLicenseFiles ? { stopAttachingDriverLicenseFiles: true } : {}),
-    ...(config.theme ? { theme: config.theme } : {}),
+
+    ...(config.showPreSubmitSummary !== APP_DEFAULTS.SHOW_PRE_SUBMIT_SUMMARY
+      ? { showPreSubmitSummary: config.showPreSubmitSummary }
+      : {}),
+
+    ...(config.stopEmailGlobalDocuments !== APP_DEFAULTS.STOP_EMAIL_GLOBAL_DOCUMENTS
+      ? { stopEmailGlobalDocuments: config.stopEmailGlobalDocuments }
+      : {}),
+
+    ...(config.stopAttachingDriverLicenseFiles !== APP_DEFAULTS.STOP_ATTACHING_DRIVER_LICENSE_FILES
+      ? { stopAttachingDriverLicenseFiles: config.stopAttachingDriverLicenseFiles }
+      : {}),
+
+    ...(config.colorScheme !== APP_DEFAULTS.COLOR_SCHEME ? { colorScheme: config.colorScheme } : {}),
+
+    ...(config.environment !== APP_DEFAULTS.ENVIRONMENT ? { environment: config.environment } : {}),
   };
 
   // JSON stringify and base64 encode the config object

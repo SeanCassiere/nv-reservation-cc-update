@@ -2,9 +2,9 @@ import { z } from "zod";
 
 import { useConfigStore } from "@/hooks/stores/useConfigStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import { SupportedEnvironments } from "@/utils/app-env";
 
-const AUTH_URL = "/api/token";
-const QA_AUTH_URL = "/api/token-qa";
+const AUTHORIZATION_URL = "/api/token";
 const SUBMISSION_COMPLETION_URL = "/api/complete";
 
 const tokenSchema = z.object({
@@ -12,11 +12,11 @@ const tokenSchema = z.object({
   token_type: z.string(),
 });
 
-export async function authenticateWithLambda(opts: { clientId: string; qa: boolean }) {
+export async function authenticateWithLambda(opts: { clientId: string; environment: SupportedEnvironments }) {
   const { referenceType, referenceIdentifier, responseTemplateId } = useRuntimeStore.getState();
   const { disableGlobalDocumentsForConfirmationEmail, predefinedAdminUserId } = useConfigStore.getState();
 
-  const authUrl = opts.qa ? QA_AUTH_URL : AUTH_URL;
+  const authUrl = AUTHORIZATION_URL;
 
   let isError = false;
   const details = await fetch(authUrl, {
@@ -25,6 +25,7 @@ export async function authenticateWithLambda(opts: { clientId: string; qa: boole
       client_id: `${opts.clientId}`,
       reference_type: `${referenceType}`,
       reference_id: `${referenceIdentifier}`,
+      environment: opts.environment,
     }),
   })
     .then((res) => res.json())
@@ -51,20 +52,21 @@ export async function authenticateWithLambda(opts: { clientId: string; qa: boole
 
 export async function postCompletionLambda(opts: {
   status: string;
-  qa: boolean;
   clientId: string | number;
   customerId: string | number;
   referenceType: string;
   referenceId: string | number;
+  environment: SupportedEnvironments;
 }) {
-  const params = new URLSearchParams();
-  if (opts.qa) {
-    params.append("qa", "true");
-  }
-  params.append("client_id", `${opts.clientId}`);
-  params.append("reference_type", `${opts.referenceType}`);
-  params.append("reference_id", `${opts.referenceId}`);
-  params.append("customer_id", `${opts.customerId}`);
-  params.append("status", opts.status);
-  return fetch(SUBMISSION_COMPLETION_URL + "?" + params.toString());
+  return await fetch(SUBMISSION_COMPLETION_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      client_id: `${opts.clientId}`,
+      reference_type: `${opts.referenceType}`,
+      reference_id: `${opts.referenceId}`,
+      customer_id: `${opts.customerId}`,
+      status: opts.status,
+      environment: opts.environment,
+    }),
+  });
 }

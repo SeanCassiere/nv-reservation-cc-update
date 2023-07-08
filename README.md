@@ -6,7 +6,7 @@ This application is meant for usage a RENTALL/Navotar client's customer to be ab
 
 A custom URL pointed at the hosted application is added into the client account as a link in an email template sent to their customer.
 
-Example: [https://rentall-customer.pingstash.com/?agreementId=640904&lang=en&config=eyJjbGllbnRJZCI6MTAxMywiZW1haWxUZW1wbGF0ZUlkIjo4Mzg4LCJmbG93IjpbIkRlZmF1bHQvUmVudGFsU2lnbmF0dXJlRm9ybSJdLCJmcm9tUmVudGFsbCI6dHJ1ZX0=](https://rentall-customer.pingstash.com/?agreementId=640904&lang=en&config=eyJjbGllbnRJZCI6MTAxMywiZW1haWxUZW1wbGF0ZUlkIjo4Mzg4LCJmbG93IjpbIkRlZmF1bHQvUmVudGFsU2lnbmF0dXJlRm9ybSJdLCJmcm9tUmVudGFsbCI6dHJ1ZX0=)
+Example: [https://rentall-customer.pingstash.com/?agreementId=640904&lang=en&config=eyJjbGllbnRJZCI6MTAxMywiZW1haWxUZW1wbGF0ZUlkIjo4Mzg4LCJmbG93IjpbIkNyZWRpdENhcmRGb3JtIl19](https://rentall-customer.pingstash.com/?agreementId=640904&lang=en&config=eyJjbGllbnRJZCI6MTAxMywiZW1haWxUZW1wbGF0ZUlkIjo4Mzg4LCJmbG93IjpbIkNyZWRpdENhcmRGb3JtIl19)
 
 Once the customer accesses the application via the provided custom URL, they would then be able to add details requested by the client, directly against their booking.
 

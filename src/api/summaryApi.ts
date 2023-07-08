@@ -42,7 +42,7 @@ export async function fetchRentalSummary(opts: GetSummaryProps) {
   const params = new URLSearchParams();
   params.append("clientId", `${opts.clientId}`);
   const pathType = opts.referenceType === "Agreement" ? "Agreements" : "Reservations";
-  return clientFetch(`/${pathType}/${opts.referenceId}/Summary?${params.toString()}`)
+  return clientFetch(`/api/v3/${pathType}/${opts.referenceId}/Summary?${params.toString()}`)
     .then((r) => r.json())
     .then((data) => summaryChargesSchema.parse(data));
 }

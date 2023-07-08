@@ -18,7 +18,7 @@ const PostFormDataControllerDefault: React.FC = () => {
   const location = useLocation();
   const { t } = useTranslation();
 
-  const isQa = useConfigStore((s) => s.qa);
+  const environment = useConfigStore((s) => s.environment);
   const isGlobalDocumentsStopped = useConfigStore((s) => s.disableGlobalDocumentsForConfirmationEmail);
   const isDriverLicenseAttachmentsStopped = useConfigStore((s) => s.disableEmailAttachingDriverLicense);
   const adminUserId = useRuntimeStore((s) => s.adminUserId);
@@ -40,14 +40,14 @@ const PostFormDataControllerDefault: React.FC = () => {
 
   const getOpsForCompleteStatus = useCallback(
     (statEnum: "success" | "failed") => ({
-      qa: isQa,
+      environment,
       clientId: clientId ?? 0,
       status: statEnum,
       customerId: rentalData?.customerId ?? 0,
       referenceType,
       referenceId: referenceId ?? 0,
     }),
-    [clientId, isQa, referenceId, referenceType, rentalData?.customerId]
+    [clientId, environment, referenceId, referenceType, rentalData?.customerId]
   );
 
   const { mutate: markCompletionStatus } = useMutation({

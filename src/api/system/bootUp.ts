@@ -1,7 +1,10 @@
-import { setHtmlDocumentTheme, base64Decode } from "@/utils";
-import { APP_CONSTANTS, COMPAT_KEYS } from "@/utils/constants";
-import { isValueTrue } from "@/utils/common";
+import { setHtmlDocumentColorScheme, base64Decode } from "@/utils";
+import { APP_CONSTANTS, APP_DEFAULTS, COMPAT_KEYS } from "@/utils/constants";
+import { getEnvironment } from "@/utils/app-env";
 
+/**
+ * All keys are lowercased to make it easier to compare.
+ */
 type QueryConfigState = {
   clientid: string | null;
   emailtemplateid: string | null;
@@ -11,7 +14,8 @@ type QueryConfigState = {
   showpresubmitsummary?: boolean;
   stopemailglobaldocuments?: boolean;
   stopattachingdriverlicensefiles?: boolean;
-  theme?: string;
+  colorscheme?: string;
+  environment: string;
 };
 
 export async function bootUp({ windowQueryString }: { windowQueryString: string }) {
@@ -30,18 +34,19 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
   const configQuery = query.get("config");
   const qaQuery = query.get("qa");
 
+  if (!configQuery) return null;
+
   let config: QueryConfigState = {
     clientid: null,
     emailtemplateid: null,
     flow: [],
     userid: 0,
-    showpresubmitsummary: false,
-    stopemailglobaldocuments: false,
-    stopattachingdriverlicensefiles: false,
-    theme: "",
+    showpresubmitsummary: APP_DEFAULTS.SHOW_PRE_SUBMIT_SUMMARY,
+    stopemailglobaldocuments: APP_DEFAULTS.STOP_EMAIL_GLOBAL_DOCUMENTS,
+    stopattachingdriverlicensefiles: APP_DEFAULTS.STOP_ATTACHING_DRIVER_LICENSE_FILES,
+    colorscheme: APP_DEFAULTS.COLOR_SCHEME,
+    environment: APP_DEFAULTS.ENVIRONMENT,
   };
-
-  if (!configQuery) return null;
 
   try {
     const readConfig = JSON.parse(base64Decode(configQuery));
@@ -53,8 +58,8 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     throw new Error("Could not parse config");
   }
 
-  if (config.theme) {
-    setHtmlDocumentTheme(config.theme);
+  if (config.colorscheme) {
+    setHtmlDocumentColorScheme(config.colorscheme);
   }
 
   if (!config.clientid) {
@@ -66,7 +71,6 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     clientId: config.clientid,
     userId: config.userid ?? 0,
     responseEmailTemplateId: config.emailtemplateid,
-    qa: isValueTrue(qaQuery) ? true : false,
     referenceType: agreementId ? APP_CONSTANTS.REF_TYPE_AGREEMENT : APP_CONSTANTS.REF_TYPE_RESERVATION,
     referenceId: reservationId ? reservationId : agreementId ? agreementId : "",
     flow: config.flow.reduce(normalizeFlowScreens, []),
@@ -74,7 +78,8 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     successSubmissionScreen: normalizeSuccessSubmissionScreen(config.successsubmissionscreen),
     stopEmailGlobalDocuments: config.stopemailglobaldocuments ?? false,
     stopAttachingDriverLicenseFiles: config.stopattachingdriverlicensefiles ?? false,
-    theme: config.theme ?? "",
+    colorScheme: config.colorscheme ?? "",
+    environment: getEnvironment(config.environment),
   };
 }
 
@@ -113,13 +118,10 @@ function normalizeFlowScreens(prev: string[], current: string) {
 }
 
 /**
- * Used to remedy a mistake made when adding the license and cc upload controller for `ClientID 251`.
- * The config used on their account used the wording of "Controller" instead of "Form".
+ * Used to set a default success-submission-screen in the event that one isn't provided in the config.
  *
- * Now it's a way for me silently fix any mistakes I may ship in the naming of the flow screens 😊.
- * @param prev `string[]`
- * @param current `string`
- * @returns An array of usable flow screens. `string[]`
+ * @param configScreenName an optional parameter to represent the screen name.
+ * @returns A success-submission-screen.
  */
 function normalizeSuccessSubmissionScreen(configScreenName?: string) {
   let actualScreenName: string = configScreenName || APP_CONSTANTS.SUCCESS_DEFAULT;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ServerSupportedClientEnvironments } from "./requestHelpers";
 
 type LoggerAuthType = {
   loggerUri: string;
@@ -8,8 +9,8 @@ type LoggerAuthType = {
 type LoggerOptions = {
   ip?: string;
   lookupFilterValue?: string;
-  environment: string;
-  data?: Object | any[];
+  environment: ServerSupportedClientEnvironments;
+  data?: object | any[];
 };
 
 export async function logAction({ loggerUri, loggerServiceId }: LoggerAuthType, action: string, opts: LoggerOptions) {

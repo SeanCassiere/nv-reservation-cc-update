@@ -9,7 +9,7 @@ const systemUserSchema = z.object({
 export type FetchClientProfile = z.infer<typeof systemUserSchema>;
 
 export async function fetchClientProfile({ clientId }: { clientId: string | number }) {
-  return await clientFetch(`/Clients/${clientId}`)
+  return await clientFetch(`/api/v3/Clients/${clientId}`)
     .then((r) => r.json())
     .then((data) => systemUserSchema.parse(data));
 }

@@ -1,4 +1,4 @@
-export const REPO_URL = import.meta.env.VITE_APP_REPO_URL ?? "https://github.com/SeanCassiere/nv-reservation-cc-update";
+export const REPO_URL = "https://github.com/SeanCassiere/nv-reservation-cc-update";
 
 export const SuccessImgUri = "/assets/undraw_make_it_rain_iwk4.svg";
 
@@ -21,13 +21,32 @@ export const APP_CONSTANTS = {
   SUCCESS_SUBMITTED_FORMS_WITH_RENTAL_CHARGES_SUMMARY: "SuccessSubmittedFormsWithRentalChargesSummary",
   SUCCESS_TEST: "test/test",
 
-  FORM_SUMMARY_OFF: "off",
+  COLOR_SCHEME_DEFAULT_CLASS: "",
+  COLOR_SCHEME_DARK_CLASS: "dark",
 
-  THEME_DEFAULT_CLASS: "",
-  THEME_DARK_CLASS: "dark",
+  ENV_DEFAULT_PROD: "liquidweb-prod-1",
+  ENV_DEFAULT_QA: "liquidweb-qa-1",
 } as const;
 
-export const ALL_THEME_CLASS_NAMES = [APP_CONSTANTS.THEME_DEFAULT_CLASS, APP_CONSTANTS.THEME_DARK_CLASS];
+export const ALL_COLOR_SCHEME_CLASSNAMES = [
+  APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS,
+  APP_CONSTANTS.COLOR_SCHEME_DARK_CLASS,
+];
+
+export const APP_DEFAULTS = {
+  COLOR_SCHEME: APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS,
+
+  ENVIRONMENT: APP_CONSTANTS.ENV_DEFAULT_PROD,
+  BASE_URL: "https://api.apprentall.com",
+
+  FLOW_SCREENS: [APP_CONSTANTS.FLOW_CREDIT_CARD_FORM], // the screens to show the user
+
+  SHOW_PRE_SUBMIT_SUMMARY: false, // show the user a summary of their submission before they submit
+  SUCCESS_SUBMISSION_SCREEN: APP_CONSTANTS.SUCCESS_DEFAULT, // shown once the user has submitted all forms
+
+  STOP_EMAIL_GLOBAL_DOCUMENTS: false, // for the response email
+  STOP_ATTACHING_DRIVER_LICENSE_FILES: false, // for the response email
+};
 
 export const COMPAT_KEYS = {
   DEFAULT_CREDIT_CARD_LICENSE_UPLOAD_FORM: "Default/CreditCardAndLicenseUploadForm",

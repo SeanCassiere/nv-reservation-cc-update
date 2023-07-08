@@ -1,53 +1,58 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { APP_CONSTANTS } from "@/utils/constants";
+import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
+import { SupportedEnvironments } from "@/utils/app-env";
 
 const PROTECTED_FLOWS: string[] = [APP_CONSTANTS.FLOW_FORMS_SUMMARY];
 
 type ConfigStoreType = {
+  environment: SupportedEnvironments;
   flow: string[];
   fullFlow: string[];
   successSubmissionScreen: string;
   rawConfig: string;
   rawQueryString: string;
-  qa: boolean;
+
   isDevMenuOpen: boolean;
   predefinedAdminUserId: number;
   showPreSubmitSummary: boolean;
   disableGlobalDocumentsForConfirmationEmail: boolean;
   disableEmailAttachingDriverLicense: boolean;
-  theme: string;
+  colorScheme: string;
 
   setDevMenuState: (newState: ((value: boolean) => boolean) | boolean) => void;
   setRawQuery: (payload: { rawConfig: string; rawQueryString: string }) => void;
   setConfigValues: (payload: {
     flow: string[];
-    qa: boolean;
     predefinedAdminUserId: number;
     successSubmissionScreen?: string;
     showPreSubmitSummary: boolean;
     disableGlobalDocumentsForConfirmationEmail: boolean;
     disableEmailAttachingDriverLicense: boolean;
-    theme: string;
+    colorScheme: string;
+    environment: SupportedEnvironments;
   }) => void;
 };
 
 export const useConfigStore = create(
   devtools<ConfigStoreType>(
     (set, get) => ({
-      flow: [APP_CONSTANTS.FLOW_CREDIT_CARD_FORM],
-      fullFlow: [APP_CONSTANTS.FLOW_CREDIT_CARD_FORM],
-      successSubmissionScreen: APP_CONSTANTS.SUCCESS_DEFAULT,
+      environment: APP_DEFAULTS.ENVIRONMENT,
+
+      flow: APP_DEFAULTS.FLOW_SCREENS,
+      fullFlow: APP_DEFAULTS.FLOW_SCREENS,
+
+      successSubmissionScreen: APP_DEFAULTS.SUCCESS_SUBMISSION_SCREEN,
       rawConfig: "",
       rawQueryString: "",
-      qa: false,
+
       showPreSubmitSummary: false,
       isDevMenuOpen: false,
       predefinedAdminUserId: 0,
-      disableGlobalDocumentsForConfirmationEmail: false,
-      disableEmailAttachingDriverLicense: false,
-      theme: "",
+      disableGlobalDocumentsForConfirmationEmail: APP_DEFAULTS.STOP_EMAIL_GLOBAL_DOCUMENTS,
+      disableEmailAttachingDriverLicense: APP_DEFAULTS.STOP_ATTACHING_DRIVER_LICENSE_FILES,
+      colorScheme: APP_DEFAULTS.COLOR_SCHEME,
 
       setDevMenuState: (newState: ((value: boolean) => boolean) | boolean) => {
         if (typeof newState === "function") {
@@ -64,13 +69,13 @@ export const useConfigStore = create(
 
       setConfigValues({
         flow,
-        qa,
         successSubmissionScreen,
         showPreSubmitSummary,
         disableGlobalDocumentsForConfirmationEmail,
         disableEmailAttachingDriverLicense,
         predefinedAdminUserId,
-        theme,
+        colorScheme,
+        environment,
       }) {
         const filterFlow = flow.filter((flow) => !PROTECTED_FLOWS.includes(flow));
         const flowSet = new Set(filterFlow);
@@ -81,7 +86,7 @@ export const useConfigStore = create(
 
         set(
           {
-            qa: qa === true ? true : false,
+            environment,
             ...(flow && flow.length > 0 ? { flow: Array.from(flowSet) } : {}),
             ...(flow && flow.length > 0 ? { fullFlow: Array.from(fullFlowSet) } : {}),
             ...(successSubmissionScreen ? { successSubmissionScreen } : {}),
@@ -89,7 +94,7 @@ export const useConfigStore = create(
             disableGlobalDocumentsForConfirmationEmail: disableGlobalDocumentsForConfirmationEmail,
             disableEmailAttachingDriverLicense: disableEmailAttachingDriverLicense,
             predefinedAdminUserId: predefinedAdminUserId,
-            theme,
+            colorScheme,
           },
           false,
           "setConfigValues"

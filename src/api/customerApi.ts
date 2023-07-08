@@ -16,7 +16,7 @@ export async function postDriverLicenseImage(opts: {
   const imageBase64 = opts.imageBase64;
   const imageMineType = opts.imageMimeType;
 
-  return await clientFetch(`/Customers/${customerId}/Documents`, {
+  return await clientFetch(`/api/v3/Customers/${customerId}/Documents`, {
     method: "POST",
     body: JSON.stringify({
       clientId,
@@ -42,7 +42,7 @@ export async function postCustomerCreditCard(opts: {
   const expiryMonth = creditCard.monthYearExpiry.split("/")[0];
   const expiryYear = creditCard.monthYearExpiry.split("/")[1];
 
-  return await clientFetch(`/Customers/${customerId}/CreditCards`, {
+  return await clientFetch(`/api/v3/Customers/${customerId}/CreditCards`, {
     method: "POST",
     body: JSON.stringify({
       creditCardType: creditCard.type,

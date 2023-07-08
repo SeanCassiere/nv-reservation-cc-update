@@ -1,63 +1,71 @@
-import { builder, Handler } from "@netlify/functions";
+import { type Handler } from "@netlify/functions";
 
+import { formatZodErrors, requestCompletionSchema, responseHeaders } from "../../helpers/requestHelpers";
 import { logAction } from "../../helpers/logActions";
-import { containsKey, isValueTrue, responseHeaders } from "../../helpers/requestHelpers";
 
 const completionHandler: Handler = async (event) => {
-  const qaQuery = containsKey(event.rawQuery, "qa");
-  const isQa = Boolean(isValueTrue(qaQuery));
-
-  const requestParams = new URLSearchParams(event.rawQuery);
-
-  const requestClientIds = requestParams.getAll("client_id");
-  const requestBookingTypes = requestParams.getAll("reference_type");
-  const requestBookingIds = requestParams.getAll("reference_id");
-  const requestCustomerIds = requestParams.getAll("customer_id");
-  const requestStatusValues = requestParams.getAll("status");
-  const requestIp = event.headers["x-nf-client-connection-ip"] ?? event.headers["client-ip"];
-
-  if (
-    requestClientIds.length === 0 ||
-    requestBookingTypes.length === 0 ||
-    requestBookingIds.length === 0 ||
-    requestCustomerIds.length === 0 ||
-    requestStatusValues.length === 0
-  ) {
+  if (event.httpMethod.toLowerCase() !== "post") {
     return {
-      statusCode: 400,
-      body: JSON.stringify({
-        success: false,
-        message: "Missing client_id, reference_type, reference_id, customer_id, or status",
-      }),
+      statusCode: 405,
+      body: "Method Not Allowed",
       headers: responseHeaders,
     };
   }
 
+  const requestIp = event.headers["x-nf-client-connection-ip"] ?? event.headers["client-ip"];
+
   const LOGGER_SERVICE_URI = process.env.LOGGER_SERVICE_URI;
   const LOGGER_SERVICE_ID = process.env.LOGGER_SERVICE_ID;
 
-  if (LOGGER_SERVICE_URI && LOGGER_SERVICE_ID) {
-    await logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "submitted-details", {
-      ip: requestIp,
-      environment: isQa ? "qa" : "production",
-      lookupFilterValue: requestClientIds[0],
-      data: {
-        status: requestStatusValues[0],
-        clientId: requestClientIds[0],
-        referenceType: requestBookingTypes[0],
-        referenceId: requestBookingIds[0],
-        customerId: requestCustomerIds[0],
-      },
-    }).then(() => {});
-  }
+  try {
+    if (!event.body) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ success: false, error: "Missing body" }),
+        headers: responseHeaders,
+      };
+    }
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ success: true, message: "Submission completed" }),
-    headers: responseHeaders,
-  };
+    const body = JSON.parse(event.body);
+    const parsed = requestCompletionSchema.safeParse(body);
+
+    if (!parsed.success) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: formatZodErrors(parsed.error.issues) }),
+        headers: responseHeaders,
+      };
+    }
+
+    if (LOGGER_SERVICE_URI && LOGGER_SERVICE_ID) {
+      await logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "submitted-details", {
+        ip: requestIp,
+        environment: parsed.data.environment,
+        lookupFilterValue: parsed.data.client_id,
+        data: {
+          status: parsed.data.status,
+          clientId: parsed.data.client_id,
+          referenceType: parsed.data.reference_type,
+          referenceId: parsed.data.reference_id,
+          customerId: parsed.data.customer_id,
+        },
+      }).then(() => {});
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ success: true, message: "Submission completed" }),
+      headers: responseHeaders,
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ success: false, error: error instanceof Error ? error.message : "Fatal error occurred" }),
+      headers: responseHeaders,
+    };
+  }
 };
 
-const handler = builder(completionHandler);
+const handler = completionHandler;
 
 export { handler };
