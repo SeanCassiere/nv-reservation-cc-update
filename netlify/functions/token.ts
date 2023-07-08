@@ -34,7 +34,7 @@ const tokenHandler: Handler = async (event) => {
       };
     }
 
-    const { AUTH_URL, CLIENT_ID, CLIENT_SECRET } = getAuthProperties(parsed.data.environment);
+    const { AUTH_URL, CLIENT_ID, CLIENT_SECRET, BASE_URL } = getAuthProperties(parsed.data.environment);
 
     const params = new URLSearchParams();
     params.append("grant_type", "client_credentials");
@@ -59,7 +59,7 @@ const tokenHandler: Handler = async (event) => {
       }).then(() => {});
     }
 
-    return { statusCode: 200, body: JSON.stringify(data), headers: responseHeaders };
+    return { statusCode: 200, body: JSON.stringify({ ...data, client_base_url: BASE_URL }), headers: responseHeaders };
   } catch (error) {
     console.error(error);
     return {
