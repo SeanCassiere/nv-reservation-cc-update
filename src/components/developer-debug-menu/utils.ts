@@ -44,15 +44,25 @@ export function makeUrlQueryFromConfigObject(config: ConfigObjectFormValues): st
   // setting the config
   const hashObj = {
     clientId: Number(config.clientId) ?? Number(useRuntimeStore.getState().clientId),
+
     ...(Number(config.userId) > 0 ? { userId: Number(config.userId) } : {}),
+
     emailTemplateId: Number(config.emailTemplateId) ?? Number(useRuntimeStore.getState().responseTemplateId),
+
     flow: config.flow ? config.flow.map((i) => i.value) : useConfigStore.getState().flow,
-    successSubmissionScreen: config.successSubmissionScreen ?? useConfigStore.getState().successSubmissionScreen,
-    ...(useConfigStore.getState().showPreSubmitSummary || config.showPreSubmitSummary
-      ? { showPreSubmitSummary: true }
+
+    ...(config.successSubmissionScreen !== APP_CONSTANTS.SUCCESS_DEFAULT
+      ? {
+          successSubmissionScreen: config.successSubmissionScreen,
+        }
       : {}),
+
+    ...(config.showPreSubmitSummary ? { showPreSubmitSummary: true } : {}),
+
     ...(config.stopEmailGlobalDocuments ? { stopEmailGlobalDocuments: true } : {}),
+
     ...(config.stopAttachingDriverLicenseFiles ? { stopAttachingDriverLicenseFiles: true } : {}),
+
     ...(config.theme ? { theme: config.theme } : {}),
   };
 
