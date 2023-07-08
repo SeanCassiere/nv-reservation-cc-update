@@ -10,6 +10,7 @@ const SUBMISSION_COMPLETION_URL = "/api/complete";
 const tokenSchema = z.object({
   access_token: z.string(),
   token_type: z.string(),
+  client_base_url: z.string().url(),
 });
 
 export async function authenticateWithLambda(opts: { clientId: string; environment: SupportedEnvironments }) {

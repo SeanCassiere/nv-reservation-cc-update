@@ -14,14 +14,3 @@ export function getEnvironment(attempt?: string): SupportedEnvironments {
       return APP_DEFAULTS.ENVIRONMENT;
   }
 }
-
-export function getBaseUrlForEnvironment(environment: string) {
-  switch (environment) {
-    case APP_CONSTANTS.ENV_DEFAULT_QA:
-      return "https://testapi.appnavotar.com";
-    case APP_CONSTANTS.ENV_DEFAULT_PROD:
-      return "https://api.apprentall.com";
-    default:
-      return APP_DEFAULTS.BASE_URL;
-  }
-}
