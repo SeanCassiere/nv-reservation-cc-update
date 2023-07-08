@@ -16,6 +16,7 @@ import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
 import { authenticateWithLambda } from "@/api/lambdas";
 import { bootUp } from "@/api/system/bootUp";
 import { initDataFetch } from "@/api/system/initDataFetch";
+import { getBaseUrlForEnvironment } from "@/utils/app-env";
 
 const bootStatuses = ["authenticating", "loaded", "authentication_error", "core_details_fetch_failed"] as const;
 type BootStatus = (typeof bootStatuses)[number];
@@ -26,6 +27,7 @@ const ApplicationController: React.FC = () => {
   const { t } = useTranslation();
 
   const setAuthValues = useAuthStore((s) => s.setAuthValues);
+  const setBaseUrl = useAuthStore((s) => s.setBaseUrl);
 
   const setRawQueryToStore = useConfigStore((s) => s.setRawQuery);
   const setConfigStoreValuesToStore = useConfigStore((s) => s.setConfigValues);
@@ -97,9 +99,10 @@ const ApplicationController: React.FC = () => {
       }
 
       setRawQueryToStore({ rawConfig: data.rawConfig, rawQueryString: window.location.search });
+      setBaseUrl({ baseUrl: getBaseUrlForEnvironment(data.environment) });
       setConfigStoreValuesToStore({
+        environment: data.environment,
         flow: data.flow,
-        qa: data.qa,
         predefinedAdminUserId: data.userId,
         successSubmissionScreen: data.successSubmissionScreen,
         showPreSubmitSummary:
@@ -114,13 +117,14 @@ const ApplicationController: React.FC = () => {
       setInitReferenceValuesToStore({ newReferenceType: data.referenceType, newReferenceIdentifier: data.referenceId });
 
       // calls the authorization lambda
-      authorizeApp({ clientId: data.clientId, qa: data.qa });
+      authorizeApp({ clientId: data.clientId, environment: data.environment });
     }
   }, [
     authorizeApp,
     bootData,
     bootStatus,
     navigate,
+    setBaseUrl,
     setConfigStoreValuesToStore,
     setEmailTemplateAndClientIdToStore,
     setInitReferenceValuesToStore,

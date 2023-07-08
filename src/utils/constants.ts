@@ -23,6 +23,9 @@ export const APP_CONSTANTS = {
 
   COLOR_SCHEME_DEFAULT_CLASS: "",
   COLOR_SCHEME_DARK_CLASS: "dark",
+
+  ENV_DEFAULT_PROD: "liquidweb-prod-1",
+  ENV_DEFAULT_QA: "liquidweb-qa-1",
 } as const;
 
 export const ALL_COLOR_SCHEME_CLASSNAMES = [
@@ -32,6 +35,9 @@ export const ALL_COLOR_SCHEME_CLASSNAMES = [
 
 export const APP_DEFAULTS = {
   COLOR_SCHEME: APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS,
+
+  ENVIRONMENT: APP_CONSTANTS.ENV_DEFAULT_PROD,
+  BASE_URL: "https://api.apprentall.com",
 
   FLOW_SCREENS: [APP_CONSTANTS.FLOW_CREDIT_CARD_FORM], // the screens to show the user
 

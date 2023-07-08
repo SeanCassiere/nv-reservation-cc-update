@@ -1,6 +1,6 @@
 import { setHtmlDocumentColorScheme, base64Decode } from "@/utils";
 import { APP_CONSTANTS, APP_DEFAULTS, COMPAT_KEYS } from "@/utils/constants";
-import { isValueTrue } from "@/utils/common";
+import { getEnvironment } from "@/utils/app-env";
 
 /**
  * All keys are lowercased to make it easier to compare.
@@ -15,6 +15,7 @@ type QueryConfigState = {
   stopemailglobaldocuments?: boolean;
   stopattachingdriverlicensefiles?: boolean;
   colorscheme?: string;
+  environment: string;
 };
 
 export async function bootUp({ windowQueryString }: { windowQueryString: string }) {
@@ -44,6 +45,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     stopemailglobaldocuments: APP_DEFAULTS.STOP_EMAIL_GLOBAL_DOCUMENTS,
     stopattachingdriverlicensefiles: APP_DEFAULTS.STOP_ATTACHING_DRIVER_LICENSE_FILES,
     colorscheme: APP_DEFAULTS.COLOR_SCHEME,
+    environment: APP_DEFAULTS.ENVIRONMENT,
   };
 
   try {
@@ -69,7 +71,6 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     clientId: config.clientid,
     userId: config.userid ?? 0,
     responseEmailTemplateId: config.emailtemplateid,
-    qa: isValueTrue(qaQuery) ? true : false,
     referenceType: agreementId ? APP_CONSTANTS.REF_TYPE_AGREEMENT : APP_CONSTANTS.REF_TYPE_RESERVATION,
     referenceId: reservationId ? reservationId : agreementId ? agreementId : "",
     flow: config.flow.reduce(normalizeFlowScreens, []),
@@ -78,6 +79,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     stopEmailGlobalDocuments: config.stopemailglobaldocuments ?? false,
     stopAttachingDriverLicenseFiles: config.stopattachingdriverlicensefiles ?? false,
     colorScheme: config.colorscheme ?? "",
+    environment: getEnvironment(config.environment),
   };
 }
 

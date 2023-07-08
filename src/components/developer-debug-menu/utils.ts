@@ -10,7 +10,7 @@ export const configObjectFormSchema = z.object({
   referenceId: z.string().min(1, REQUIRED),
   referenceType: z.string().min(1, REQUIRED),
   lang: z.string().min(1, REQUIRED),
-  qa: z.boolean().default(false),
+  environment: z.string().min(1, REQUIRED),
   dev: z.boolean().default(false),
   clientId: z.string().min(1, REQUIRED),
   userId: z.string().min(1, REQUIRED),
@@ -27,7 +27,6 @@ export type ConfigObjectFormValues = z.infer<typeof configObjectFormSchema>;
 
 export function makeUrlQueryFromConfigObject(config: ConfigObjectFormValues): string {
   const params = new URLSearchParams();
-  if (config.qa) params.append("qa", "true");
   if (config.dev) params.append("dev", "true");
 
   // setting agreementId or reservationId
@@ -69,6 +68,8 @@ export function makeUrlQueryFromConfigObject(config: ConfigObjectFormValues): st
       : {}),
 
     ...(config.colorScheme !== APP_DEFAULTS.COLOR_SCHEME ? { colorScheme: config.colorScheme } : {}),
+
+    ...(config.environment !== APP_DEFAULTS.ENVIRONMENT ? { environment: config.environment } : {}),
   };
 
   // JSON stringify and base64 encode the config object

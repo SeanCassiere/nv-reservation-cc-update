@@ -60,7 +60,7 @@ const ConfigCreator = () => {
       referenceId: rs.referenceIdentifier ? String(rs.referenceIdentifier) : "0",
       referenceType: rs.referenceType,
       lang: i18n.language,
-      qa: cs.qa,
+      environment: cs.environment,
       dev: Boolean(isValueTrue(queryDev)),
       clientId: rs.clientId ? String(rs.clientId) : "0",
       userId: cs.predefinedAdminUserId ? String(cs.predefinedAdminUserId) : "0",
@@ -153,6 +153,32 @@ const ConfigCreator = () => {
         <DevGroupCard title={t("developer.configCreator.generalApplicationConfiguration")}>
           <FormField
             control={form.control}
+            name="environment"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("developer.configCreator.environment")}</FormLabel>
+                <Select
+                  key={`dev-select-environment-${formValues.environment}`}
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("developer.configCreator.formSelectValue")} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={APP_CONSTANTS.ENV_DEFAULT_PROD}>{APP_CONSTANTS.ENV_DEFAULT_PROD}</SelectItem>
+                    <SelectItem value={APP_CONSTANTS.ENV_DEFAULT_QA}>{APP_CONSTANTS.ENV_DEFAULT_QA}</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormDescription>{t("developer.configCreator.environmentDescription")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="lang"
             render={({ field }) => (
               <FormItem>
@@ -226,23 +252,6 @@ const ConfigCreator = () => {
                 </FormControl>
                 <FormDescription>{t("developer.configCreator.userIdHelperText")}</FormDescription>
                 <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="qa"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={(state) => field.onChange(typeof state === "boolean" ? state : false)}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>{t("developer.configCreator.useQaEnvironment")}</FormLabel>
-                </div>
               </FormItem>
             )}
           />

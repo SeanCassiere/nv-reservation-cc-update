@@ -17,6 +17,8 @@
       "userId": "User ID",
       "userIdHelperText": "Navotar UserId used for api (optional)",
       "lang": "Language",
+      "environment": "Environment",
+      "environmentDescription": "Which environment to use for the application",
       "responseTemplateId": "Response Email Template ID",
       "applicationFlows": "Flow screens",
       "applicationFlowsDescription": "Select the screens you want to show in the application flow",

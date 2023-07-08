@@ -15,7 +15,7 @@ const fetchAgreementById = async (opts: FetchAgreementByIdOrNumberProps): Promis
   try {
     const params = new URLSearchParams();
     params.append("ClientId", `${opts.clientId}`);
-    const res = await clientFetch(`/Agreements/${opts.referenceId}?` + params).then((r) => r.json());
+    const res = await clientFetch(`/api/v3/Agreements/${opts.referenceId}?` + params).then((r) => r.json());
 
     const agreementInfo: RentalSourcedDetails = {
       locationId: res?.checkoutLocation ?? 0,
@@ -44,7 +44,7 @@ const fetchAgreementsByNumber = async (opts: FetchAgreementByIdOrNumberProps) =>
     params.append("AgreementNumber", `${opts.referenceId}`);
     params.append("clientId", `${opts.clientId}`);
     params.append("userId", `${opts.adminUserId}`);
-    const list = await clientFetch(`/Agreements?` + params).then((r) => r.json());
+    const list = await clientFetch(`/api/v3/Agreements?` + params).then((r) => r.json());
 
     const parsedList = z
       .array(z.object({ AgreementId: z.number(), AgreementNumber: z.string() }))

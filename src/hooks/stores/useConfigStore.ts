@@ -2,16 +2,18 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
+import { SupportedEnvironments } from "@/utils/app-env";
 
 const PROTECTED_FLOWS: string[] = [APP_CONSTANTS.FLOW_FORMS_SUMMARY];
 
 type ConfigStoreType = {
+  environment: SupportedEnvironments;
   flow: string[];
   fullFlow: string[];
   successSubmissionScreen: string;
   rawConfig: string;
   rawQueryString: string;
-  qa: boolean;
+
   isDevMenuOpen: boolean;
   predefinedAdminUserId: number;
   showPreSubmitSummary: boolean;
@@ -23,25 +25,28 @@ type ConfigStoreType = {
   setRawQuery: (payload: { rawConfig: string; rawQueryString: string }) => void;
   setConfigValues: (payload: {
     flow: string[];
-    qa: boolean;
     predefinedAdminUserId: number;
     successSubmissionScreen?: string;
     showPreSubmitSummary: boolean;
     disableGlobalDocumentsForConfirmationEmail: boolean;
     disableEmailAttachingDriverLicense: boolean;
     colorScheme: string;
+    environment: SupportedEnvironments;
   }) => void;
 };
 
 export const useConfigStore = create(
   devtools<ConfigStoreType>(
     (set, get) => ({
+      environment: APP_DEFAULTS.ENVIRONMENT,
+
       flow: APP_DEFAULTS.FLOW_SCREENS,
       fullFlow: APP_DEFAULTS.FLOW_SCREENS,
+
       successSubmissionScreen: APP_DEFAULTS.SUCCESS_SUBMISSION_SCREEN,
       rawConfig: "",
       rawQueryString: "",
-      qa: false,
+
       showPreSubmitSummary: false,
       isDevMenuOpen: false,
       predefinedAdminUserId: 0,
@@ -64,13 +69,13 @@ export const useConfigStore = create(
 
       setConfigValues({
         flow,
-        qa,
         successSubmissionScreen,
         showPreSubmitSummary,
         disableGlobalDocumentsForConfirmationEmail,
         disableEmailAttachingDriverLicense,
         predefinedAdminUserId,
         colorScheme,
+        environment,
       }) {
         const filterFlow = flow.filter((flow) => !PROTECTED_FLOWS.includes(flow));
         const flowSet = new Set(filterFlow);
@@ -81,7 +86,7 @@ export const useConfigStore = create(
 
         set(
           {
-            qa: qa === true ? true : false,
+            environment,
             ...(flow && flow.length > 0 ? { flow: Array.from(flowSet) } : {}),
             ...(flow && flow.length > 0 ? { fullFlow: Array.from(fullFlowSet) } : {}),
             ...(successSubmissionScreen ? { successSubmissionScreen } : {}),
