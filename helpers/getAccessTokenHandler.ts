@@ -1,16 +1,16 @@
 import axios from "axios";
-import { logAction } from "./logActions";
+import { type ServerSupportedClientEnvironments, logAction } from "./logActions";
 import { responseHeaders, tokenRequestSchema } from "./requestHelpers";
 
 type GetAccessTokenOptions = {
-  qa: boolean;
+  env: ServerSupportedClientEnvironments;
   requestIp?: string | null;
   body: string | null;
 };
 export async function getAccessTokenHandler(opts: GetAccessTokenOptions) {
-  const AUTH_URL = opts.qa ? process.env.QA_V3_AUTH_URL! : process.env.V3_AUTH_URL!;
-  const CLIENT_ID = opts.qa ? process.env.QA_V3_CLIENT_ID! : process.env.V3_CLIENT_ID!;
-  const CLIENT_SECRET = opts.qa ? process.env.QA_V3_CLIENT_SECRET! : process.env.V3_CLIENT_SECRET!;
+  const AUTH_URL = opts.env ? process.env.QA_V3_AUTH_URL! : process.env.V3_AUTH_URL!;
+  const CLIENT_ID = opts.env ? process.env.QA_V3_CLIENT_ID! : process.env.V3_CLIENT_ID!;
+  const CLIENT_SECRET = opts.env ? process.env.QA_V3_CLIENT_SECRET! : process.env.V3_CLIENT_SECRET!;
 
   const LOGGER_SERVICE_URI = process.env.LOGGER_SERVICE_URI;
   const LOGGER_SERVICE_ID = process.env.LOGGER_SERVICE_ID;
@@ -43,7 +43,7 @@ export async function getAccessTokenHandler(opts: GetAccessTokenOptions) {
     if (LOGGER_SERVICE_URI && LOGGER_SERVICE_ID && opts.requestIp) {
       await logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "request-access-token", {
         ip: opts.requestIp,
-        environment: opts.qa ? "qa" : "production",
+        environment: opts.env,
         lookupFilterValue: parsed.client_id,
         data: {
           clientId: parsed.client_id,

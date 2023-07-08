@@ -4,12 +4,13 @@ type LoggerAuthType = {
   loggerUri: string;
   loggerServiceId: string;
 };
+export type ServerSupportedClientEnvironments = "liquidweb-prod-1" | "liquidweb-qa-1";
 
 type LoggerOptions = {
   ip?: string;
   lookupFilterValue?: string;
-  environment: string;
-  data?: Object | any[];
+  environment: ServerSupportedClientEnvironments;
+  data?: object | any[];
 };
 
 export async function logAction({ loggerUri, loggerServiceId }: LoggerAuthType, action: string, opts: LoggerOptions) {

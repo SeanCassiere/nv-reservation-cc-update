@@ -17,7 +17,7 @@ const tokenHandlerQa: Handler = async (event) => {
   return await getAccessTokenHandler({
     requestIp,
     body: event.body,
-    qa: true,
+    env: "liquidweb-qa-1",
   });
 };
 
