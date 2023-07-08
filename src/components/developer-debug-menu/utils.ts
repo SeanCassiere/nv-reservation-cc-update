@@ -21,7 +21,7 @@ export const configObjectFormSchema = z.object({
   showPreSubmitSummary: z.boolean().default(false),
   stopEmailGlobalDocuments: z.boolean().default(false),
   stopAttachingDriverLicenseFiles: z.boolean().default(false),
-  theme: z.string(),
+  colorScheme: z.string(),
 });
 
 export type ConfigObjectFormValues = z.infer<typeof configObjectFormSchema>;
@@ -63,7 +63,7 @@ export function makeUrlQueryFromConfigObject(config: ConfigObjectFormValues): st
 
     ...(config.stopAttachingDriverLicenseFiles ? { stopAttachingDriverLicenseFiles: true } : {}),
 
-    ...(config.theme ? { theme: config.theme } : {}),
+    ...(config.colorScheme !== APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS ? { colorScheme: config.colorScheme } : {}),
   };
 
   // JSON stringify and base64 encode the config object

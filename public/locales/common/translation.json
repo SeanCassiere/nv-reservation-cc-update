@@ -10,7 +10,7 @@
       "btnCopy_action": "Copied to clipboard",
       "btnSave": "Confirm",
       "btnReset": "Reset",
-      "theme": "Theme",
+      "colorScheme": "Color scheme",
       "referenceType": "Reference Type",
       "referenceId": "Reference ID",
       "clientId": "Client ID",

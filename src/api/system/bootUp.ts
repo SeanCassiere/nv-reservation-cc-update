@@ -1,7 +1,10 @@
-import { setHtmlDocumentTheme, base64Decode } from "@/utils";
+import { setHtmlDocumentColorScheme, base64Decode } from "@/utils";
 import { APP_CONSTANTS, COMPAT_KEYS } from "@/utils/constants";
 import { isValueTrue } from "@/utils/common";
 
+/**
+ * All keys are lowercased to make it easier to compare.
+ */
 type QueryConfigState = {
   clientid: string | null;
   emailtemplateid: string | null;
@@ -11,7 +14,7 @@ type QueryConfigState = {
   showpresubmitsummary?: boolean;
   stopemailglobaldocuments?: boolean;
   stopattachingdriverlicensefiles?: boolean;
-  theme?: string;
+  colorscheme?: string;
 };
 
 export async function bootUp({ windowQueryString }: { windowQueryString: string }) {
@@ -30,6 +33,8 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
   const configQuery = query.get("config");
   const qaQuery = query.get("qa");
 
+  if (!configQuery) return null;
+
   let config: QueryConfigState = {
     clientid: null,
     emailtemplateid: null,
@@ -38,10 +43,8 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     showpresubmitsummary: false,
     stopemailglobaldocuments: false,
     stopattachingdriverlicensefiles: false,
-    theme: "",
+    colorscheme: "",
   };
-
-  if (!configQuery) return null;
 
   try {
     const readConfig = JSON.parse(base64Decode(configQuery));
@@ -53,8 +56,8 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     throw new Error("Could not parse config");
   }
 
-  if (config.theme) {
-    setHtmlDocumentTheme(config.theme);
+  if (config.colorscheme) {
+    setHtmlDocumentColorScheme(config.colorscheme);
   }
 
   if (!config.clientid) {
@@ -74,7 +77,7 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
     successSubmissionScreen: normalizeSuccessSubmissionScreen(config.successsubmissionscreen),
     stopEmailGlobalDocuments: config.stopemailglobaldocuments ?? false,
     stopAttachingDriverLicenseFiles: config.stopattachingdriverlicensefiles ?? false,
-    theme: config.theme ?? "",
+    colorScheme: config.colorscheme ?? "",
   };
 }
 

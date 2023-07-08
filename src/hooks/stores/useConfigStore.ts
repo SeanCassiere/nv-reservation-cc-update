@@ -17,7 +17,7 @@ type ConfigStoreType = {
   showPreSubmitSummary: boolean;
   disableGlobalDocumentsForConfirmationEmail: boolean;
   disableEmailAttachingDriverLicense: boolean;
-  theme: string;
+  colorScheme: string;
 
   setDevMenuState: (newState: ((value: boolean) => boolean) | boolean) => void;
   setRawQuery: (payload: { rawConfig: string; rawQueryString: string }) => void;
@@ -29,7 +29,7 @@ type ConfigStoreType = {
     showPreSubmitSummary: boolean;
     disableGlobalDocumentsForConfirmationEmail: boolean;
     disableEmailAttachingDriverLicense: boolean;
-    theme: string;
+    colorScheme: string;
   }) => void;
 };
 
@@ -47,7 +47,7 @@ export const useConfigStore = create(
       predefinedAdminUserId: 0,
       disableGlobalDocumentsForConfirmationEmail: false,
       disableEmailAttachingDriverLicense: false,
-      theme: "",
+      colorScheme: APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS,
 
       setDevMenuState: (newState: ((value: boolean) => boolean) | boolean) => {
         if (typeof newState === "function") {
@@ -70,7 +70,7 @@ export const useConfigStore = create(
         disableGlobalDocumentsForConfirmationEmail,
         disableEmailAttachingDriverLicense,
         predefinedAdminUserId,
-        theme,
+        colorScheme,
       }) {
         const filterFlow = flow.filter((flow) => !PROTECTED_FLOWS.includes(flow));
         const flowSet = new Set(filterFlow);
@@ -89,7 +89,7 @@ export const useConfigStore = create(
             disableGlobalDocumentsForConfirmationEmail: disableGlobalDocumentsForConfirmationEmail,
             disableEmailAttachingDriverLicense: disableEmailAttachingDriverLicense,
             predefinedAdminUserId: predefinedAdminUserId,
-            theme,
+            colorScheme,
           },
           false,
           "setConfigValues"

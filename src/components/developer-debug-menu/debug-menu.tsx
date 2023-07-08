@@ -16,7 +16,7 @@ import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 
 import { supportedLanguages } from "@/i18n";
 import { isValueTrue } from "@/utils/common";
-import { cn, setHtmlDocumentTheme } from "@/utils";
+import { cn, setHtmlDocumentColorScheme } from "@/utils";
 import { ALL_SCREEN_FLOWS, ALL_SUCCESS_SCREENS, APP_CONSTANTS, REPO_URL } from "@/utils/constants";
 
 import { configObjectFormSchema, ConfigObjectFormValues, makeUrlQueryFromConfigObject } from "./utils";
@@ -70,7 +70,7 @@ const ConfigCreator = () => {
       successSubmissionScreen: cs.successSubmissionScreen,
       stopEmailGlobalDocuments: cs.disableGlobalDocumentsForConfirmationEmail,
       stopAttachingDriverLicenseFiles: cs.disableEmailAttachingDriverLicense,
-      theme: cs.theme,
+      colorScheme: cs.colorScheme,
     },
   });
   const formValues = form.watch();
@@ -177,13 +177,13 @@ const ConfigCreator = () => {
           />
           <FormField
             control={form.control}
-            name="theme"
+            name="colorScheme"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("developer.configCreator.theme")}</FormLabel>
+                <FormLabel>{t("developer.configCreator.colorScheme")}</FormLabel>
                 <Select
                   onValueChange={(value) => {
-                    setHtmlDocumentTheme(value);
+                    setHtmlDocumentColorScheme(value);
                     field.onChange(value);
                   }}
                   defaultValue={field.value}
@@ -194,8 +194,8 @@ const ConfigCreator = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value={APP_CONSTANTS.THEME_DEFAULT_CLASS}>Default</SelectItem>
-                    <SelectItem value={APP_CONSTANTS.THEME_DARK_CLASS}>Dark</SelectItem>
+                    <SelectItem value={APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS}>Default</SelectItem>
+                    <SelectItem value={APP_CONSTANTS.COLOR_SCHEME_DARK_CLASS}>Dark</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
