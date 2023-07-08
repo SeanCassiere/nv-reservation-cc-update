@@ -1,10 +1,10 @@
 import axios from "axios";
+import { ServerSupportedClientEnvironments } from "./requestHelpers";
 
 type LoggerAuthType = {
   loggerUri: string;
   loggerServiceId: string;
 };
-export type ServerSupportedClientEnvironments = "liquidweb-prod-1" | "liquidweb-qa-1";
 
 type LoggerOptions = {
   ip?: string;

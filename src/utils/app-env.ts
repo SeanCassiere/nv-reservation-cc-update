@@ -25,14 +25,3 @@ export function getBaseUrlForEnvironment(environment: string) {
       return APP_DEFAULTS.BASE_URL;
   }
 }
-
-export function getLambdaAuthUrlForEnvironment(environment: string) {
-  switch (environment) {
-    case APP_CONSTANTS.ENV_DEFAULT_QA:
-      return "/api/token-qa";
-    case APP_CONSTANTS.ENV_DEFAULT_PROD:
-      return "/api/token";
-    default:
-      return "/api/token";
-  }
-}

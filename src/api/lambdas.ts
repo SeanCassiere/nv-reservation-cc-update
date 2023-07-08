@@ -2,8 +2,9 @@ import { z } from "zod";
 
 import { useConfigStore } from "@/hooks/stores/useConfigStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
-import { SupportedEnvironments, getLambdaAuthUrlForEnvironment } from "@/utils/app-env";
+import { SupportedEnvironments } from "@/utils/app-env";
 
+const AUTHORIZATION_URL = "/api/token";
 const SUBMISSION_COMPLETION_URL = "/api/complete";
 
 const tokenSchema = z.object({
@@ -15,7 +16,7 @@ export async function authenticateWithLambda(opts: { clientId: string; environme
   const { referenceType, referenceIdentifier, responseTemplateId } = useRuntimeStore.getState();
   const { disableGlobalDocumentsForConfirmationEmail, predefinedAdminUserId } = useConfigStore.getState();
 
-  const authUrl = getLambdaAuthUrlForEnvironment(opts.environment);
+  const authUrl = AUTHORIZATION_URL;
 
   let isError = false;
   const details = await fetch(authUrl, {
@@ -24,6 +25,7 @@ export async function authenticateWithLambda(opts: { clientId: string; environme
       client_id: `${opts.clientId}`,
       reference_type: `${referenceType}`,
       reference_id: `${referenceIdentifier}`,
+      environment: opts.environment,
     }),
   })
     .then((res) => res.json())
