@@ -98,7 +98,7 @@ const App = () => {
                 size="sm"
                 variant="link"
                 onClick={() => {
-                  setDevOpenState(true);
+                  setOpenDevMenuLocal(true);
                 }}
               >
                 {t("developer.open")}
