@@ -25,12 +25,12 @@ const App = () => {
   const devSearchParam = searchParams.get("dev");
   const isDevQueryOpen = Boolean(isValueTrue(devSearchParam));
 
-  const isDevOpenMain = useConfigStore((s) => s.isDevMenuOpen);
+  const [openDevMenuLocal, setOpenDevMenuLocal] = React.useState(false);
   const setDevOpenState = useConfigStore((s) => s.setDevMenuState);
 
-  const shouldDevMenuBeLoaded = useRef<boolean>(false); // ref to code-split the
+  const shouldDevMenuBeLoaded = useRef<boolean>(false); // ref to code-split the dev menu
 
-  const handleCloseDeveloperDrawer = () => setDevOpenState(false);
+  const handleCloseDeveloperDrawer = () => setOpenDevMenuLocal(false);
   React.useEffect(() => {
     function onKeyDown(evt: KeyboardEvent) {
       if (evt.key === "k" && evt.shiftKey && (evt.metaKey || evt.ctrlKey)) {
@@ -38,7 +38,7 @@ const App = () => {
           shouldDevMenuBeLoaded.current = true;
         }
 
-        setDevOpenState((v) => !v);
+        setOpenDevMenuLocal((prev) => !prev); // local state
       }
     }
     window.addEventListener("keydown", onKeyDown);
@@ -54,7 +54,8 @@ const App = () => {
       if (shouldDevMenuBeLoaded.current === false) {
         shouldDevMenuBeLoaded.current = true;
       }
-      setDevOpenState(true);
+      setOpenDevMenuLocal(true); // local state
+      setDevOpenState(true); // set to the config store for use in the dev menu
     }
   }, [setDevOpenState]);
 
@@ -73,7 +74,7 @@ const App = () => {
                   }
                 >
                   {shouldDevMenuBeLoaded.current && (
-                    <DeveloperDebugMenu open={isDevOpenMain} handleClose={handleCloseDeveloperDrawer} />
+                    <DeveloperDebugMenu open={openDevMenuLocal} handleClose={handleCloseDeveloperDrawer} />
                   )}
                 </Suspense>
                 <AppRoutes />
