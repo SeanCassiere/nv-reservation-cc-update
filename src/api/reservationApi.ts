@@ -18,7 +18,7 @@ const fetchReservationById = async (opts: FetchReservationByIdOrNumberProps): Pr
   try {
     const params = new URLSearchParams();
     params.append("ClientId", `${opts.clientId}`);
-    const res = await clientFetch(`/api/v3/Reservations/${opts.referenceId}?` + params).then((r) => r.json());
+    const res = await clientFetch(`/api/v3/reservations/${opts.referenceId}?` + params).then((r) => r.json());
 
     const reservationInfo: RentalSourcedDetails = {
       locationId: res.reservationview?.startLocationId ?? 0,
@@ -43,7 +43,7 @@ const fetchReservationsByNumber = async (opts: FetchReservationByIdOrNumberProps
     params.append("ReservationNumber", `${opts.referenceId}`);
     params.append("clientId", `${opts.clientId}`);
     params.append("userId", `0`);
-    const list = await clientFetch(`/api/v3/Reservations?` + params).then((r) => r.json());
+    const list = await clientFetch(`/api/v3/reservations?` + params).then((r) => r.json());
 
     const parsedList = z
       .array(

@@ -37,7 +37,7 @@ export const APP_DEFAULTS = {
   COLOR_SCHEME: APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS,
 
   ENVIRONMENT: APP_CONSTANTS.ENV_DEFAULT_PROD,
-  BASE_URL: "https://api.apprentall.com",
+  BASE_URL: "https://api.apprentall.com" as const,
 
   FLOW_SCREENS: [APP_CONSTANTS.FLOW_CREDIT_CARD_FORM], // the screens to show the user
 

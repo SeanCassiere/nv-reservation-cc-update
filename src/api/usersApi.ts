@@ -12,7 +12,7 @@ export async function fetchAdminUser(clientId: string | number) {
   params.append("clientId", `${clientId}`);
 
   try {
-    const users = await clientFetch("/api/v3/Users?" + params)
+    const users = await clientFetch("/api/v3/users?" + params)
       .then((r) => r.json())
       .then((data) => z.array(systemUserSchema).parse(data ?? []));
     const adminUserIdToUse = users.filter((u) => u.userRoleID === 1);

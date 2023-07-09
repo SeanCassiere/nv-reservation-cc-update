@@ -16,7 +16,6 @@ import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
 import { authenticateWithLambda } from "@/api/lambdas";
 import { bootUp } from "@/api/system/bootUp";
 import { initDataFetch } from "@/api/system/initDataFetch";
-import { getBaseUrlForEnvironment } from "@/utils/app-env";
 
 const bootStatuses = ["authenticating", "loaded", "authentication_error", "core_details_fetch_failed"] as const;
 type BootStatus = (typeof bootStatuses)[number];
@@ -27,10 +26,10 @@ const ApplicationController: React.FC = () => {
   const { t } = useTranslation();
 
   const setAuthValues = useAuthStore((s) => s.setAuthValues);
-  const setBaseUrl = useAuthStore((s) => s.setBaseUrl);
 
   const setRawQueryToStore = useConfigStore((s) => s.setRawQuery);
   const setConfigStoreValuesToStore = useConfigStore((s) => s.setConfigValues);
+
   const setInitReferenceValuesToStore = useRuntimeStore((s) => s.setReferenceInitValues);
   const setEmailTemplateAndClientIdToStore = useRuntimeStore((s) => s.setEmailTemplateAndClientId);
   const setRuntimeConfirmationEmailToStore = useRuntimeStore((s) => s.setRuntimeConfirmationEmail);
@@ -99,7 +98,6 @@ const ApplicationController: React.FC = () => {
       }
 
       setRawQueryToStore({ rawConfig: data.rawConfig, rawQueryString: window.location.search });
-      setBaseUrl({ baseUrl: getBaseUrlForEnvironment(data.environment) });
       setConfigStoreValuesToStore({
         environment: data.environment,
         flow: data.flow,
@@ -124,7 +122,6 @@ const ApplicationController: React.FC = () => {
     bootData,
     bootStatus,
     navigate,
-    setBaseUrl,
     setConfigStoreValuesToStore,
     setEmailTemplateAndClientIdToStore,
     setInitReferenceValuesToStore,
