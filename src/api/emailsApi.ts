@@ -115,18 +115,20 @@ export async function postConfirmationEmail(opts: PostConfirmationEmailProps) {
   const dataUrl = opts.dataUrl;
   const emailBodyHtml = await fetch(dataUrl).then((r) => r.text());
 
-  await clientFetch("/api/v3/Emails", {
-    method: "POST",
-    body: JSON.stringify(
-      createBodyForEmail({
-        ...opts,
-        emailBody: emailBodyHtml,
-        globalDocuments: opts.globalDocuments,
-        oneOffAttachments: opts.attachments,
-      })
-    ),
-  });
-  URL.revokeObjectURL(dataUrl);
+  if (opts.toEmails.length > 0 && dataUrl && opts.fromEmail) {
+    await clientFetch("/api/v3/emails", {
+      method: "POST",
+      body: JSON.stringify(
+        createBodyForEmail({
+          ...opts,
+          emailBody: emailBodyHtml,
+          globalDocuments: opts.globalDocuments,
+          oneOffAttachments: opts.attachments,
+        })
+      ),
+    });
+    URL.revokeObjectURL(dataUrl);
+  }
   return true;
 }
 
