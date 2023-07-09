@@ -42,7 +42,7 @@ export async function fetchEmailTemplate(opts: {
   const params = new URLSearchParams();
   params.append("clientId", opts.clientId);
   try {
-    const response = await clientFetch(`/api/v3/Emails/${opts.templateId}/EmailTemplate?` + params)
+    const response = await clientFetch(`/api/v3/emails/${opts.templateId}/emailtemplate?` + params)
       .then((r) => r.json())
       .then((data) => fetchEmailTemplateSchema.parse(data));
     return response;
@@ -68,7 +68,7 @@ export async function fetchComposeEmailDetails(opts: {
     params.append("referenceType", opts.referenceType);
     params.append("referenceId", opts.referenceId);
 
-    const res = await clientFetch("/api/v3/Emails/ComposeEmail?" + params)
+    const res = await clientFetch("/api/v3/emails/composeemail?" + params)
       .then((r) => r.json())
       .then((data) => getComposeDetailsSchema.parse(data));
     apiResponseDetails = res;
@@ -95,7 +95,7 @@ export async function fetchComposeEmailDetails(opts: {
 
 export async function fetchEmailTemplateHtml(opts: CreateBodyForEmail) {
   try {
-    return await clientFetch("/api/v3/Emails/PreviewTemplate", {
+    return await clientFetch("/api/v3/emails/previewtemplate", {
       method: "POST",
       body: JSON.stringify(createBodyForEmail(opts)),
     }).then((r) => r.text());
@@ -151,7 +151,7 @@ export async function fetchGlobalDocumentsForEmailTemplate(opts: {
   params.append("ClientId", `${opts.clientId}`);
   params.append("TemplateTypeId", `${opts.templateTypeId}`);
   params.append("TemplateId", `${opts.templateId}`);
-  return await clientFetch("/api/v3/Emails/AttachmentForComposeEmail?" + params.toString())
+  return await clientFetch("/api/v3/emails/attachmentforcomposeemail?" + params.toString())
     .then((r) => r.json())
     .then((data) => z.array(globalDocumentForEmailSchema).parse(data ?? []));
 }

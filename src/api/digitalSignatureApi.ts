@@ -16,7 +16,7 @@ export async function postUploadRentalSignature(opts: {
   const imageType = `.${imageBase64.split(";")[0].split(":")[1].split("/")[1]}`;
   const imageName = `${date}) ${opts.referenceType} Signature`;
 
-  return await clientFetch("/api/v3/DigitalSignature/UploadSignature", {
+  return await clientFetch("/api/v3/digitalsignature/uploadsignature", {
     method: "POST",
     body: JSON.stringify({
       agreementId: opts.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? opts.referenceId : 0,
@@ -44,7 +44,7 @@ export async function reloadSavedDigitalSignatureBase64Url(opts: {
     ...(opts.referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? { agreementId: opts.referenceId } : {}),
     ...(opts.referenceType === APP_CONSTANTS.REF_TYPE_RESERVATION ? { reservationID: opts.referenceId } : {}),
   };
-  const find = await clientFetch("/api/v3/DigitalSignature/ReloadSignatureImageURL", {
+  const find = await clientFetch("/api/v3/digitalsignature/reloadsignatureimageurl", {
     method: "POST",
     body: JSON.stringify(body),
   }).then((r) => r.text());
