@@ -23,7 +23,11 @@ export async function logAction({ loggerUri, loggerServiceId }: LoggerAuthType, 
   };
 
   return await axios
-    .post(`${loggerUri}/api/service/${loggerServiceId}/log`, body)
+    .post(`${loggerUri}/api/v2/log`, body, {
+      headers: {
+        "X-APP-SERVICE-ID": loggerServiceId,
+      },
+    })
     .then((res) => {
       return { success: true, data: res.data };
     })
