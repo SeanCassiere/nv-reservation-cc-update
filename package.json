@@ -30,7 +30,7 @@
     "i18next": "^23.2.8",
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.1",
-    "lucide-react": "^0.258.0",
+    "lucide-react": "^0.263.1",
     "payment": "^2.4.6",
     "react": "^18.2.0",
     "react-credit-cards-2": "^1.0.1",
