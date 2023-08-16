@@ -32,7 +32,6 @@ export async function bootUp({ windowQueryString }: { windowQueryString: string 
   }
 
   const configQuery = query.get("config");
-  const qaQuery = query.get("qa");
 
   if (!configQuery) return null;
 
