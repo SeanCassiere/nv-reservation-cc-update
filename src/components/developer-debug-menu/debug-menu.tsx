@@ -220,8 +220,9 @@ const ConfigCreator = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value={APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS}>Default</SelectItem>
-                    <SelectItem value={APP_CONSTANTS.COLOR_SCHEME_DARK_CLASS}>Dark</SelectItem>
+                    <SelectItem value={APP_CONSTANTS.COLOR_SCHEME_DEFAULT_CLASS}>Default - Light</SelectItem>
+                    <SelectItem value={APP_CONSTANTS.COLOR_SCHEME_DARK_CLASS}>Default - Dark</SelectItem>
+                    <SelectItem value={APP_CONSTANTS.COLOR_SCHEME_GREEN_CLASS}>Green - Light</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
