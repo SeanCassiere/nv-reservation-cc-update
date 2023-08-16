@@ -1,0 +1,73 @@
+import axios from "axios";
+import type { SupportedEnvironments } from "./common";
+
+type LogKey = string;
+type LogPayload = Record<string, string>;
+type LogOptions = { ip: string | undefined; lookup: string | undefined; appEnvironment: SupportedEnvironments };
+
+interface LogService {
+  /**
+   * Save a log to the database
+   */
+  save: (key: LogKey, payload: LogPayload, options: LogOptions) => Promise<{ success: boolean; data: any }>;
+}
+
+/**
+ * An implementation for calling the simple logging service.
+ * @repo https://github.com/SeanCassiere/simple-logging-server
+ */
+class SimpleLoggingService implements LogService {
+  #serviceId = process.env.LOGGER_SERVICE_ID;
+  #serviceUri = process.env.LOGGER_SERVICE_URI;
+
+  async save(key: LogKey, payload: LogPayload, options: LogOptions) {
+    if (!this.#serviceId || !this.#serviceUri) {
+      return { success: false, data: "Missing logger service id or uri" };
+    }
+
+    const body = {
+      action: key,
+      environment: options.appEnvironment,
+      ip: options.ip,
+      lookupFilterValue: options.lookup,
+      data: payload,
+    };
+
+    return await axios
+      .post(`${this.#serviceUri}/api/v2/log`, body, {
+        headers: {
+          "X-APP-SERVICE-ID": this.#serviceId,
+        },
+      })
+      .then((res) => {
+        return { success: true, data: res.data };
+      })
+      .catch((err) => {
+        return { success: false, data: err };
+      });
+  }
+}
+
+class LocalLoggingService implements LogService {
+  public async save(key: LogKey, payload: LogPayload) {
+    const dateStr = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+    console.log(dateStr, "LocalLoggingService.save", key, "\n", payload);
+
+    return {
+      success: true,
+      data: { foo: "bar" },
+    };
+  }
+}
+
+export class LoggingService {
+  public static createLogger(): LogService {
+    const deployEnv = process.env.DEPLOYMENT_ENV;
+    if (deployEnv === "production") {
+      return new SimpleLoggingService();
+    } else {
+      return new LocalLoggingService();
+    }
+  }
+}

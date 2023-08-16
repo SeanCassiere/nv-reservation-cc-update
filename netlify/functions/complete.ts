@@ -1,67 +1,65 @@
 import { type Handler } from "@netlify/functions";
 
-import { formatZodErrors, requestCompletionSchema, responseHeaders } from "../../helpers/requestHelpers";
-import { logAction } from "../../helpers/logActions";
+import { formatZodErrors, SubmissionCompletedRequestSchema, ResponseHeaders } from "../../helpers/common";
+import { LoggingService } from "../../helpers/log.service";
 
 const completionHandler: Handler = async (event) => {
   if (event.httpMethod.toLowerCase() !== "post") {
     return {
       statusCode: 405,
       body: "Method Not Allowed",
-      headers: responseHeaders,
+      headers: ResponseHeaders,
     };
   }
 
   const requestIp = event.headers["x-nf-client-connection-ip"] ?? event.headers["client-ip"];
 
-  const LOGGER_SERVICE_URI = process.env.LOGGER_SERVICE_URI;
-  const LOGGER_SERVICE_ID = process.env.LOGGER_SERVICE_ID;
+  const logger = LoggingService.createLogger();
 
   try {
     if (!event.body) {
       return {
         statusCode: 400,
         body: JSON.stringify({ success: false, error: "Missing body" }),
-        headers: responseHeaders,
+        headers: ResponseHeaders,
       };
     }
 
     const body = JSON.parse(event.body);
-    const parsed = requestCompletionSchema.safeParse(body);
+    const parsed = SubmissionCompletedRequestSchema.safeParse(body);
 
     if (!parsed.success) {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: formatZodErrors(parsed.error.issues) }),
-        headers: responseHeaders,
+        headers: ResponseHeaders,
       };
     }
 
-    if (LOGGER_SERVICE_URI && LOGGER_SERVICE_ID) {
-      await logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "submitted-details", {
-        ip: requestIp,
-        environment: parsed.data.environment,
-        lookupFilterValue: parsed.data.client_id,
-        data: {
+    logger
+      .save(
+        "submitted-details",
+        {
           status: parsed.data.status,
           clientId: parsed.data.client_id,
           referenceType: parsed.data.reference_type,
           referenceId: parsed.data.reference_id,
           customerId: parsed.data.customer_id,
         },
-      }).then(() => {});
-    }
+        { appEnvironment: parsed.data.environment, lookup: parsed.data.client_id, ip: requestIp }
+      )
+      .then(() => {});
 
     return {
       statusCode: 200,
       body: JSON.stringify({ success: true, message: "Submission completed" }),
-      headers: responseHeaders,
+      headers: ResponseHeaders,
     };
   } catch (error) {
     return {
       statusCode: 500,
       body: JSON.stringify({ success: false, error: error instanceof Error ? error.message : "Fatal error occurred" }),
-      headers: responseHeaders,
+      headers: ResponseHeaders,
     };
   }
 };

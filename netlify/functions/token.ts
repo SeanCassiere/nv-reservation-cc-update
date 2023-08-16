@@ -1,36 +1,36 @@
 import axios from "axios";
 import { type Handler } from "@netlify/functions";
 
-import { formatZodErrors, getAuthProperties, responseHeaders, tokenRequestSchema } from "../../helpers/requestHelpers";
-import { logAction } from "../../helpers/logActions";
+import { getAuthProperties } from "../../helpers/requestHelpers";
+import { formatZodErrors, ResponseHeaders, GetTokenRequestSchema } from "../../helpers/common";
+import { LoggingService } from "../../helpers/log.service";
 
 const tokenHandler: Handler = async (event) => {
   if (event.httpMethod.toLowerCase() !== "post") {
     return {
       statusCode: 405,
       body: "Method Not Allowed",
-      headers: responseHeaders,
+      headers: ResponseHeaders,
     };
   }
 
   const requestIp = event.headers["x-nf-client-connection-ip"] ?? event.headers["client-ip"];
 
-  const LOGGER_SERVICE_URI = process.env.LOGGER_SERVICE_URI;
-  const LOGGER_SERVICE_ID = process.env.LOGGER_SERVICE_ID;
+  const logger = LoggingService.createLogger();
 
   try {
     if (!event.body) {
-      return { statusCode: 400, body: JSON.stringify({ error: "Missing body" }), headers: responseHeaders };
+      return { statusCode: 400, body: JSON.stringify({ error: "Missing body" }), headers: ResponseHeaders };
     }
 
     const body = JSON.parse(event.body);
-    const parsed = tokenRequestSchema.safeParse(body);
+    const parsed = GetTokenRequestSchema.safeParse(body);
 
     if (!parsed.success) {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: formatZodErrors(parsed.error.issues) }),
-        headers: responseHeaders,
+        headers: ResponseHeaders,
       };
     }
 
@@ -46,26 +46,29 @@ const tokenHandler: Handler = async (event) => {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 
-    if (LOGGER_SERVICE_URI && LOGGER_SERVICE_ID && requestIp) {
-      await logAction({ loggerUri: LOGGER_SERVICE_URI, loggerServiceId: LOGGER_SERVICE_ID }, "request-access-token", {
-        ip: requestIp,
-        environment: parsed.data.environment,
-        lookupFilterValue: parsed.data.client_id,
-        data: {
+    logger
+      .save(
+        "request-access-token",
+        {
           clientId: parsed.data.client_id,
           referenceType: parsed.data.reference_type,
           referenceId: parsed.data.reference_id,
         },
-      }).then(() => {});
-    }
+        {
+          appEnvironment: parsed.data.environment,
+          lookup: parsed.data.client_id,
+          ip: requestIp,
+        }
+      )
+      .then(() => {});
 
-    return { statusCode: 200, body: JSON.stringify({ ...data, client_base_url: BASE_URL }), headers: responseHeaders };
+    return { statusCode: 200, body: JSON.stringify({ ...data, client_base_url: BASE_URL }), headers: ResponseHeaders };
   } catch (error) {
     console.error(error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error instanceof Error ? error.message : "Fatal error occurred" }),
-      headers: responseHeaders,
+      headers: ResponseHeaders,
     };
   }
 };
