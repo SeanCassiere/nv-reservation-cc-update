@@ -12,6 +12,17 @@ interface LogService {
   save: (key: LogKey, payload: LogPayload, options: LogOptions) => Promise<{ success: boolean; data: any }>;
 }
 
+export class LoggingClient {
+  public static getLoggingService(): LogService {
+    const deployEnv = process.env.DEPLOYMENT_ENV;
+    if (deployEnv === "production") {
+      return new SimpleLoggingService();
+    } else {
+      return new LocalLoggingService();
+    }
+  }
+}
+
 /**
  * An implementation for calling the simple logging service.
  * @repo https://github.com/SeanCassiere/simple-logging-server
@@ -58,16 +69,5 @@ class LocalLoggingService implements LogService {
       success: true,
       data: { foo: "bar" },
     };
-  }
-}
-
-export class LoggingService {
-  public static createLogger(): LogService {
-    const deployEnv = process.env.DEPLOYMENT_ENV;
-    if (deployEnv === "production") {
-      return new SimpleLoggingService();
-    } else {
-      return new LocalLoggingService();
-    }
   }
 }

@@ -1,7 +1,7 @@
 import { type Handler } from "@netlify/functions";
 
 import { formatZodErrors, SubmissionCompletedRequestSchema, ResponseHeaders } from "../../helpers/common";
-import { LoggingService } from "../../helpers/log.service";
+import { LoggingClient } from "../../helpers/log.service";
 
 const completionHandler: Handler = async (event) => {
   if (event.httpMethod.toLowerCase() !== "post") {
@@ -14,7 +14,7 @@ const completionHandler: Handler = async (event) => {
 
   const requestIp = event.headers["x-nf-client-connection-ip"] ?? event.headers["client-ip"];
 
-  const logger = LoggingService.createLogger();
+  const logger = LoggingClient.getLoggingService();
 
   try {
     if (!event.body) {

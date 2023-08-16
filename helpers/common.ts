@@ -22,6 +22,13 @@ export const SubmissionCompletedRequestSchema = z.object({
   customer_id: z.string(),
 });
 
+export const AccessTokenResponseSchema = z.object({
+  access_token: z.string(),
+  expires_in: z.number(),
+  token_type: z.string(),
+  scope: z.string(),
+});
+
 export function formatZodErrors(errors: z.ZodIssue[]): string {
   const errorMessages = errors.map((issue) => `${issue.path}: ${issue.message}`);
   return `Errors: | ${errorMessages.join(" | ")}`;

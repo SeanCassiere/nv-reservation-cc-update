@@ -1,9 +1,8 @@
-import axios from "axios";
 import { type Handler } from "@netlify/functions";
 
-import { getAuthProperties } from "../../helpers/requestHelpers";
 import { formatZodErrors, ResponseHeaders, GetTokenRequestSchema } from "../../helpers/common";
-import { LoggingService } from "../../helpers/log.service";
+import { AuthorizationClient } from "../../helpers/auth.service";
+import { LoggingClient } from "../../helpers/log.service";
 
 const tokenHandler: Handler = async (event) => {
   if (event.httpMethod.toLowerCase() !== "post") {
@@ -16,7 +15,7 @@ const tokenHandler: Handler = async (event) => {
 
   const requestIp = event.headers["x-nf-client-connection-ip"] ?? event.headers["client-ip"];
 
-  const logger = LoggingService.createLogger();
+  const logger = LoggingClient.getLoggingService();
 
   try {
     if (!event.body) {
@@ -34,17 +33,8 @@ const tokenHandler: Handler = async (event) => {
       };
     }
 
-    const { AUTH_URL, CLIENT_ID, CLIENT_SECRET, BASE_URL } = getAuthProperties(parsed.data.environment);
-
-    const params = new URLSearchParams();
-    params.append("grant_type", "client_credentials");
-    params.append("client_id", CLIENT_ID);
-    params.append("client_secret", CLIENT_SECRET);
-    params.append("scope", "Api");
-
-    const { data } = await axios.post(AUTH_URL, params, {
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    });
+    const authService = AuthorizationClient.getAuthService(parsed.data.environment);
+    const authData = await authService.getAccessToken();
 
     logger
       .save(
@@ -62,7 +52,7 @@ const tokenHandler: Handler = async (event) => {
       )
       .then(() => {});
 
-    return { statusCode: 200, body: JSON.stringify({ ...data, client_base_url: BASE_URL }), headers: ResponseHeaders };
+    return { statusCode: 200, body: JSON.stringify(authData), headers: ResponseHeaders };
   } catch (error) {
     console.error(error);
     return {
