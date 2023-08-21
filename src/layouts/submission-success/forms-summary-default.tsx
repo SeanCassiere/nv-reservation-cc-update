@@ -32,7 +32,7 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
 
   const isEmpty = useMemo(
     () => isCreditCard === false && isDriverLicense === false && isRentalSignature === false,
-    [isCreditCard, isDriverLicense, isRentalSignature]
+    [isCreditCard, isDriverLicense, isRentalSignature],
   );
 
   const rentalSummaryQuery = useRentalSummaryQuery({
@@ -49,15 +49,13 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
         {isEmpty && (
           <Alert className="mb-2" variant="warning">
             <ExclamationIcon />
-            <AlertTitle>{t("forms.formsSummary.missing", { context: "submitted" })}</AlertTitle>
+            <AlertTitle>{t("forms.formsSummary.missing")}</AlertTitle>
             <AlertDescription>{t("forms.formsSummary.noData", { context: "submitted" })}</AlertDescription>
           </Alert>
         )}
         {!isEmpty && (
           <>
-            <div className="text-md pb-1 pt-2 font-medium text-primary">
-              {t("forms.formsSummary.title", { context: "submitted" })}
-            </div>
+            <div className="text-md pb-1 pt-2 font-medium text-primary">{t("forms.formsSummary.title")}</div>
             <div className="pb-4 pt-1 text-sm text-primary">
               {t("forms.formsSummary.message", { context: "submitted" })}
             </div>
