@@ -30,6 +30,8 @@ export class AuthorizationClient {
 class LiquidwebProd1AuthService implements AuthService {
   #clientId = process.env.V3_CLIENT_ID;
   #clientSecret = process.env.V3_CLIENT_SECRET;
+  readonly auth_url = "https://auth.appnavotar.com/connect/token";
+  readonly api_url = "https://api.apprentall.com";
 
   public async getAccessToken(): Promise<{
     access_token: string;
@@ -48,19 +50,21 @@ class LiquidwebProd1AuthService implements AuthService {
     params.append("client_secret", this.#clientSecret);
     params.append("scope", "Api");
 
-    const response = await axios.post("https://auth.appnavotar.com/connect/token", params, {
+    const response = await axios.post(this.auth_url, params, {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 
     const data = AccessTokenResponseSchema.parse(response.data);
 
-    return { ...data, client_base_url: "https://api.apprentall.com" };
+    return { ...data, client_base_url: this.api_url };
   }
 }
 
 class LiquidwebQa1AuthService implements AuthService {
   #clientId = process.env.QA_V3_CLIENT_ID;
   #clientSecret = process.env.QA_V3_CLIENT_SECRET;
+  readonly auth_url = "https://testauth.appnavotar.com/connect/token";
+  readonly api_url = "https://testapi.appnavotar.com";
 
   public async getAccessToken(): Promise<{
     access_token: string;
@@ -79,12 +83,12 @@ class LiquidwebQa1AuthService implements AuthService {
     params.append("client_secret", this.#clientSecret);
     params.append("scope", "Api");
 
-    const response = await axios.post("https://testauth.appnavotar.com/connect/token", params, {
+    const response = await axios.post(this.auth_url, params, {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 
     const data = AccessTokenResponseSchema.parse(response.data);
 
-    return { ...data, client_base_url: "https://testapi.appnavotar.com" };
+    return { ...data, client_base_url: this.api_url };
   }
 }
