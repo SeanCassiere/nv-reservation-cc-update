@@ -16,18 +16,18 @@ type UseDriverLicenseInitialData = {
 
 export const useDriverLicenseLogic = (
   { frontImageDataUrl, frontImageName, backImageDataUrl, backImageName }: UseDriverLicenseInitialData,
-  navMode: AppNavMode
+  navMode: AppNavMode,
 ) => {
   const clearStoreFormStorage = useFormStore((s) => s.clearFormStateKey);
   const setDriversLicenseToStorage = useFormStore((s) => s.setDriversLicense);
 
   const [frontImageState, setFrontImageState] = React.useState<PreviewImage | null>(
-    frontImageDataUrl && frontImageName ? { fileName: frontImageName, dataUrl: frontImageDataUrl } : null
+    frontImageDataUrl && frontImageName ? { fileName: frontImageName, dataUrl: frontImageDataUrl } : null,
   );
   const [isFrontImageError, setIsFrontImageError] = React.useState(false);
 
   const [backImageState, setBackImageState] = React.useState<PreviewImage | null>(
-    backImageDataUrl && backImageName ? { fileName: backImageName, dataUrl: backImageDataUrl } : null
+    backImageDataUrl && backImageName ? { fileName: backImageName, dataUrl: backImageDataUrl } : null,
   );
   const [isBackImageError, setIsBackImageError] = React.useState(false);
 
@@ -43,7 +43,7 @@ export const useDriverLicenseLogic = (
       }
       setFrontImageState(null);
     },
-    [navMode]
+    [navMode],
   );
 
   const selectBackImage: OnSelectImageFn = React.useCallback((saveDataFromComponent) => {
@@ -58,7 +58,7 @@ export const useDriverLicenseLogic = (
       }
       setBackImageState(null);
     },
-    [navMode]
+    [navMode],
   );
 
   const saveLicenseImagesToStore: SaveLicenseImagesToStoreFn = React.useCallback(() => {

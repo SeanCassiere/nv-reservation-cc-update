@@ -124,7 +124,7 @@ export async function postConfirmationEmail(opts: PostConfirmationEmailProps) {
           emailBody: emailBodyHtml,
           globalDocuments: opts.globalDocuments,
           oneOffAttachments: opts.attachments,
-        })
+        }),
       ),
     });
     URL.revokeObjectURL(dataUrl);

@@ -21,6 +21,6 @@ export const useDialogStore = create(
         set({ isBackConfirmationDialogOpen: targetState }, false, `setBackConfirmationDialogState/${targetState}`);
       },
     }),
-    { enabled: true, name: "zustand/dialogStore" }
-  )
+    { enabled: true, name: "zustand/dialogStore" },
+  ),
 );

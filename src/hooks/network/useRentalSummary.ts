@@ -12,7 +12,7 @@ export const useRentalSummaryQuery = (
     referenceId: string | number;
     referenceType: string;
   },
-  queryOpts?: UseQueryOptions<SummaryCharges>
+  queryOpts?: UseQueryOptions<SummaryCharges>,
 ) => {
   return useQuery({
     queryKey: ["rental", "summary-of-charges"],

@@ -1,19 +1,19 @@
-import React, { Fragment, useEffect, useState, useCallback, useMemo } from "react";
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
-import SignatureCanvas from "@/components/signature-canvas";
-import { Button as UIButton } from "@/components/ui/button";
 import { GoBackConfirmationDialog } from "@/components/go-back-confirmation-dialog";
-import { ExclamationIcon } from "@/components/ui/icons";
+import SignatureCanvas from "@/components/signature-canvas";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button as UIButton } from "@/components/ui/button";
+import { ExclamationIcon } from "@/components/ui/icons";
 
-import { APP_CONSTANTS } from "@/utils/constants";
+import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
 import { useRentalSavedDigitalSignature } from "@/hooks/network/useRentalSavedDigitalSignature";
+import { useDialogStore } from "@/hooks/stores/useDialogStore";
 import { useFormStore } from "@/hooks/stores/useFormStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
-import { useDialogStore } from "@/hooks/stores/useDialogStore";
-import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
+import { APP_CONSTANTS } from "@/utils/constants";
 
 interface IProps {}
 
@@ -105,7 +105,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
           setRentalSignature({ signatureUrl: url });
         }
       },
-    }
+    },
   );
 
   useEffect(() => {

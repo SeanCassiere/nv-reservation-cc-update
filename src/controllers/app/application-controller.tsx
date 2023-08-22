@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
-import ErrorSubmission from "@/pages/error-submission";
-import LoadingSubmission from "@/pages/loading-submission";
-import DisplayCurrentController from "./display-active";
-
-import { AppNavContextProvider } from "@/hooks/logic/useAppNavContext";
-import { useConfigStore } from "@/hooks/stores/useConfigStore";
-import { useAuthStore } from "@/hooks/stores/useAuthStore";
-import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
-
-import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
 import { authenticateWithLambda } from "@/api/lambdas";
 import { bootUp } from "@/api/system/bootUp";
 import { initDataFetch } from "@/api/system/initDataFetch";
+import { AppNavContextProvider } from "@/hooks/logic/useAppNavContext";
+import { useAuthStore } from "@/hooks/stores/useAuthStore";
+import { useConfigStore } from "@/hooks/stores/useConfigStore";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import ErrorSubmission from "@/pages/error-submission";
+import LoadingSubmission from "@/pages/loading-submission";
+import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
+
+import DisplayCurrentController from "./display-active";
 
 const bootStatuses = ["authenticating", "loaded", "authentication_error", "core_details_fetch_failed"] as const;
 type BootStatus = (typeof bootStatuses)[number];

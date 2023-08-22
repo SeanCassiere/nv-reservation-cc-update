@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import FormSummaryItem from "./form-summary-item";
-
 import type { DriversLicenseStoreType } from "@/hooks/stores/useFormStore";
+
+import FormSummaryItem from "./form-summary-item";
 
 type Props = {
   driverLicense: DriversLicenseStoreType["data"];

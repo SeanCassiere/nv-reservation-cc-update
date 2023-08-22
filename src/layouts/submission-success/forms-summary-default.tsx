@@ -2,14 +2,13 @@ import React, { lazy, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ExclamationIcon } from "@/components/ui/icons";
 
+import { useClientProfileQuery } from "@/hooks/network/useClientProfile";
+import { useRentalSummaryQuery } from "@/hooks/network/useRentalSummary";
 import { useFormStore } from "@/hooks/stores/useFormStore";
 import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
-import { useRentalSummaryQuery } from "@/hooks/network/useRentalSummary";
-import { useClientProfileQuery } from "@/hooks/network/useClientProfile";
-
 import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
 
 const RentalChargesSummaryList = lazy(() => import("../../components/rental-charges-summary-list"));

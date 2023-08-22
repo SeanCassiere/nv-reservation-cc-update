@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type InternalCopyFn = (text: string) => Promise<boolean>; // Return success
 type CopyFn = (text: string) => void;

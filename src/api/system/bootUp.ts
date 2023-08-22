@@ -1,6 +1,6 @@
-import { setHtmlDocumentColorScheme, base64Decode } from "@/utils";
-import { APP_CONSTANTS, APP_DEFAULTS, COMPAT_KEYS } from "@/utils/constants";
+import { base64Decode, setHtmlDocumentColorScheme } from "@/utils";
 import { getEnvironment } from "@/utils/app-env";
+import { APP_CONSTANTS, APP_DEFAULTS, COMPAT_KEYS } from "@/utils/constants";
 
 /**
  * All keys are lowercased to make it easier to compare.

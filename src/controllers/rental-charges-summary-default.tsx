@@ -2,14 +2,13 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
-import { Button as UIButton } from "@/components/ui/button";
 import RentalChargesSummaryList from "@/components/rental-charges-summary-list";
+import { Button as UIButton } from "@/components/ui/button";
 
 import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
-import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
-import { useRentalSummaryQuery } from "@/hooks/network/useRentalSummary";
 import { useClientProfileQuery } from "@/hooks/network/useClientProfile";
-
+import { useRentalSummaryQuery } from "@/hooks/network/useRentalSummary";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS } from "@/utils/constants";
 
 interface IProps {}

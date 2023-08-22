@@ -4,10 +4,9 @@ import { useTranslation } from "react-i18next";
 import CardLayout from "@/components/card-layout";
 import RentalChargesSummaryList from "@/components/rental-charges-summary-list";
 
-import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
-import { useRentalSummaryQuery } from "@/hooks/network/useRentalSummary";
 import { useClientProfileQuery } from "@/hooks/network/useClientProfile";
-
+import { useRentalSummaryQuery } from "@/hooks/network/useRentalSummary";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
 import { APP_CONSTANTS, SuccessImgUri } from "@/utils/constants";
 
 const RentalChargesSummarySuccessDefaultLayout: React.FC = () => {

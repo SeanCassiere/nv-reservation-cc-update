@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout from "@/components/card-layout";
 import AnchorLink from "@/components/anchor-link";
+import CardLayout from "@/components/card-layout";
 
 const NotFoundImgUri = "/assets/undraw_page_not_found_su7k.svg";
 

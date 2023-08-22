@@ -1,16 +1,15 @@
-import React, { Suspense, lazy } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import ApplicationController from "@/controllers/app";
-
+import ErrorSubmission from "@/pages/error-submission";
 import LoadingSubmission from "@/pages/loading-submission";
 import NotAuthorized from "@/pages/not-authorized";
 import SuccessSubmissionPage from "@/pages/success-submission";
-import ErrorSubmission from "@/pages/error-submission";
 
-import RequireAuth from "./require-auth";
 import NavigateToNotAvailable from "./navigate-to-not-available";
+import RequireAuth from "./require-auth";
 
 const PostFormDataController = lazy(() => import("../controllers/submit-form-data"));
 

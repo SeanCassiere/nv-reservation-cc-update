@@ -50,7 +50,7 @@ const fetchReservationsByNumber = async (opts: FetchReservationByIdOrNumberProps
         z.object({
           ReserveId: z.number(),
           ReservationNumber: z.string(),
-        })
+        }),
       )
       .parse(Array.isArray(list) ? list : []);
 
@@ -68,7 +68,7 @@ const fetchReservationsByNumber = async (opts: FetchReservationByIdOrNumberProps
 type FetchReservationByIdOrNumberProps = { clientId: string; referenceId: string };
 
 export async function fetchReservationByIdOrNumberProcedure(
-  opts: FetchReservationByIdOrNumberProps
+  opts: FetchReservationByIdOrNumberProps,
 ): Promise<RentalSourcedDetails> {
   const initialSearchById = await fetchReservationById(opts);
 

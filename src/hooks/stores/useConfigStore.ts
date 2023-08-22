@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
 import { SupportedEnvironments } from "@/utils/app-env";
+import { APP_CONSTANTS, APP_DEFAULTS } from "@/utils/constants";
 
 const PROTECTED_FLOWS: string[] = [APP_CONSTANTS.FLOW_FORMS_SUMMARY];
 
@@ -97,10 +97,10 @@ export const useConfigStore = create(
             colorScheme,
           },
           false,
-          "setConfigValues"
+          "setConfigValues",
         );
       },
     }),
-    { enabled: true, name: "zustand/configStore" }
-  )
+    { enabled: true, name: "zustand/configStore" },
+  ),
 );
