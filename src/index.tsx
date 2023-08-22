@@ -2,8 +2,11 @@ import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 
 import "./index.css";
+
 import App from "./app-entry";
+
 import "./i18n";
+
 import LoadingSubmission from "./pages/loading-submission";
 
 const documentElement = document.getElementById("root");
@@ -17,5 +20,5 @@ ReactDOM.createRoot(documentElement).render(
     <Suspense fallback={<LoadingSubmission title=" " />}>
       <App />
     </Suspense>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

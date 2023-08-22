@@ -1,6 +1,7 @@
-import { APP_DEFAULTS } from "@/utils/constants";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
+
+import { APP_DEFAULTS } from "@/utils/constants";
 
 type AuthStoreType = {
   base_url: string;
@@ -21,10 +22,10 @@ export const useAuthStore = create(
         set(
           { access_token: payload.access_token, token_type: payload.token_type, base_url: payload.client_base_url },
           false,
-          "setAuthValues"
+          "setAuthValues",
         );
       },
     }),
-    { enabled: true, name: "zustand/authStore" }
-  )
+    { enabled: true, name: "zustand/authStore" },
+  ),
 );

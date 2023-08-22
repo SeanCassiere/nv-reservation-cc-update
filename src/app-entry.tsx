@@ -1,16 +1,15 @@
 import React, { lazy, Suspense, useRef } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-import AppRoutes from "./routes/app-routes";
-import ErrorSubmission from "./pages/error-submission";
 
 import AnchorLink from "@/components/anchor-link";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { useConfigStore } from "./hooks/stores/useConfigStore";
+import ErrorSubmission from "./pages/error-submission";
+import AppRoutes from "./routes/app-routes";
 import { isValueTrue } from "./utils/common";
 
 const DeveloperDebugMenu = lazy(() => import("./components/developer-debug-menu"));

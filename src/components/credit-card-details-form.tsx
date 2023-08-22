@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 
 import { useCreditCardLogic } from "@/hooks/logic/useCreditCardLogic";
 import {
+  creditCardTypeFormat,
   formatCreditCardNumber,
   getFormattedExpirationDate,
-  creditCardTypeFormat,
 } from "@/utils/credit-card-type-format";
 
 type CreditCardFormHook = ReturnType<typeof useCreditCardLogic>["form"];

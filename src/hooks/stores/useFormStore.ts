@@ -84,6 +84,6 @@ export const useFormStore = create(
     {
       enabled: true,
       name: "zustand/formsStore",
-    }
-  )
+    },
+  ),
 );

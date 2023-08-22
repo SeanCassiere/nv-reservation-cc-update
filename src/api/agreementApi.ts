@@ -51,7 +51,7 @@ const fetchAgreementsByNumber = async (opts: FetchAgreementByIdOrNumberProps) =>
       .parse(Array.isArray(list) ? list : []);
 
     const findAgreement = parsedList.find(
-      (r) => r.AgreementNumber.toLowerCase() === String(opts.referenceId).toLowerCase()
+      (r) => r.AgreementNumber.toLowerCase() === String(opts.referenceId).toLowerCase(),
     );
     if (!findAgreement) {
       throw new Error("Not found");
@@ -63,7 +63,7 @@ const fetchAgreementsByNumber = async (opts: FetchAgreementByIdOrNumberProps) =>
 };
 
 export async function fetchAgreementByIdOrNumberProcedure(
-  opts: FetchAgreementByIdOrNumberProps
+  opts: FetchAgreementByIdOrNumberProps,
 ): Promise<RentalSourcedDetails> {
   const initialSearchById = await fetchAgreementById(opts);
 

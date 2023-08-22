@@ -40,7 +40,7 @@ export const CardTitleHeading = React.forwardRef<HTMLHeadingElement, { children:
         {children}
       </h1>
     );
-  }
+  },
 );
 
 export const CardSubtitleSpan = React.forwardRef<HTMLSpanElement, { children: React.ReactNode }>(
@@ -50,7 +50,7 @@ export const CardSubtitleSpan = React.forwardRef<HTMLSpanElement, { children: Re
         {children}
       </span>
     );
-  }
+  },
 );
 
 export default CardLayout;

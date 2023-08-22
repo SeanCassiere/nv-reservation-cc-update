@@ -1,18 +1,17 @@
-import React, { Suspense, lazy } from "react";
+import React, { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 
-import LoadingSubmission from "@/pages/loading-submission";
-
 import { useConfigStore } from "@/hooks/stores/useConfigStore";
-import { APP_CONSTANTS } from "@/utils/constants";
 import type { SubmittedFormsSummaryDefaultLayoutProps } from "@/layouts/submission-success/forms-summary-default";
+import LoadingSubmission from "@/pages/loading-submission";
+import { APP_CONSTANTS } from "@/utils/constants";
 
 const SubmissionSuccessDefaultLayout = lazy(() => import("../layouts/submission-success/success-default"));
 const RentalChargesSummarySuccessDefaultLayout = lazy(
-  () => import("../layouts/submission-success/rental-charges-summary-default")
+  () => import("../layouts/submission-success/rental-charges-summary-default"),
 );
 const SubmittedFormsSummaryDefaultLayout = lazy<React.FC<SubmittedFormsSummaryDefaultLayoutProps>>(
-  () => import("../layouts/submission-success/forms-summary-default")
+  () => import("../layouts/submission-success/forms-summary-default"),
 );
 
 const SuccessSubmissionPage: React.FC = () => {

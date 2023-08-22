@@ -77,7 +77,7 @@ const SignatureCanvas: React.FC<IProps> = ({
         });
       }
     },
-    [onSignature, trimmed]
+    [onSignature, trimmed],
   );
 
   const handleInitialUrl = React.useCallback(
@@ -97,7 +97,7 @@ const SignatureCanvas: React.FC<IProps> = ({
       signaturePadRef.current?.off();
       onSignature(url);
     },
-    [canvasHeight, canvasWidth, handleSave, onSignature]
+    [canvasHeight, canvasWidth, handleSave, onSignature],
   );
 
   useEffect(() => {

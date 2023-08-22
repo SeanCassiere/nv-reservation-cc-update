@@ -1,14 +1,14 @@
-import { postCustomerCreditCard, postDriverLicenseImage } from "../customerApi";
-import { postUploadRentalSignature } from "../digitalSignatureApi";
-
 import type {
   CreditCardStoreType,
   DriversLicenseStoreType,
   RentalSignatureStoreType,
 } from "@/hooks/stores/useFormStore";
 import type { RentalStoreType } from "@/hooks/stores/useRuntimeStore";
-import type { OneOffUploadAttachment } from "../emailsApi";
 import { splitMimeTypeFromBase64String, urlBlobToBase64 } from "@/utils/blobUtils";
+
+import { postCustomerCreditCard, postDriverLicenseImage } from "../customerApi";
+import { postUploadRentalSignature } from "../digitalSignatureApi";
+import type { OneOffUploadAttachment } from "../emailsApi";
 
 export async function postFormDataToApi(stores: {
   clientId: string | number;
@@ -54,7 +54,7 @@ export async function postFormDataToApi(stores: {
           imageMimeType: frontImageMimeType,
           imageBase64: frontImageBase64,
           side: "Front",
-        })
+        }),
       );
       if (attachmentOptions.stopAttachingDriverLicenseFiles !== true) {
         oneOffAttachmentsToUpload.push({
@@ -76,7 +76,7 @@ export async function postFormDataToApi(stores: {
           imageMimeType: backImageMimeType,
           imageBase64: backImageBase64,
           side: "Back",
-        })
+        }),
       );
       if (attachmentOptions.stopAttachingDriverLicenseFiles !== true) {
         oneOffAttachmentsToUpload.push({
@@ -96,7 +96,7 @@ export async function postFormDataToApi(stores: {
         referenceType,
         referenceId: `${referenceId}`,
         isCheckedIn: rental.isCheckIn,
-      })
+      }),
     );
   }
 

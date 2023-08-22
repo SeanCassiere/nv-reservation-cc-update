@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-import { APP_CONSTANTS } from "@/utils/constants";
 import { GlobalDocumentForEmail } from "@/api/emailsApi";
+import { APP_CONSTANTS } from "@/utils/constants";
 
 export type ConfirmationEmailStoreType = {
   ccList: string[];
@@ -71,14 +71,14 @@ export const useRuntimeStore = create(
         set(
           { referenceType: payload.newReferenceType, referenceIdentifier: payload.newReferenceIdentifier },
           false,
-          "setReferenceInitValues"
+          "setReferenceInitValues",
         );
       },
       setEmailTemplateAndClientId: (payload) => {
         set(
           { responseTemplateId: payload.newTemplateId, clientId: payload.newClientId },
           false,
-          "setEmailTemplateAndClientId"
+          "setEmailTemplateAndClientId",
         );
       },
       setRuntimeConfirmationEmail: (payload) =>
@@ -90,6 +90,6 @@ export const useRuntimeStore = create(
       setRuntimeReferenceId: (newReferenceId) =>
         set({ referenceIdentifier: newReferenceId }, false, `setRuntimeReferenceId/${newReferenceId}`),
     }),
-    { enabled: true, name: "zustand/runtimeStore" }
-  )
+    { enabled: true, name: "zustand/runtimeStore" },
+  ),
 );

@@ -1,12 +1,11 @@
-import React, { memo, Suspense, lazy } from "react";
+import React, { lazy, memo, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
 import { Button as UIButton } from "@/components/ui/button";
 
-import LoadingSubmission from "@/pages/loading-submission";
-
 import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
+import LoadingSubmission from "@/pages/loading-submission";
 import { APP_CONSTANTS } from "@/utils/constants";
 
 const CcControllerDefault = lazy(() => import("../cc-default"));

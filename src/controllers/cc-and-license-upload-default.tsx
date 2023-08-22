@@ -1,22 +1,21 @@
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-import CardLayout, { CardTitleHeading, CardSubtitleSpan } from "@/components/card-layout";
-import ImageDropzoneWithPreview from "@/components/image-dropzone-with-preview";
-import DynamicCreditCard from "@/components/dynamic-credit-card";
+import CardLayout, { CardSubtitleSpan, CardTitleHeading } from "@/components/card-layout";
 import CreditCardDetailsForm from "@/components/credit-card-details-form";
-
-import { Button as UIButton } from "@/components/ui/button";
+import DynamicCreditCard from "@/components/dynamic-credit-card";
 import { GoBackConfirmationDialog } from "@/components/go-back-confirmation-dialog";
+import ImageDropzoneWithPreview from "@/components/image-dropzone-with-preview";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button as UIButton } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { ExclamationIcon } from "@/components/ui/icons";
 
+import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
 import { useCreditCardLogic } from "@/hooks/logic/useCreditCardLogic";
 import { useDriverLicenseLogic } from "@/hooks/logic/useDriverLicenseLogic";
-import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
-import { useFormStore } from "@/hooks/stores/useFormStore";
 import { useDialogStore } from "@/hooks/stores/useDialogStore";
+import { useFormStore } from "@/hooks/stores/useFormStore";
 
 interface IProps {}
 
@@ -53,7 +52,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
       backImageDataUrl: initialDriverLicenseData.backImageUrl,
       backImageName: initialDriverLicenseData.backImageName,
     },
-    mode
+    mode,
   );
 
   // validate the form data against the schema

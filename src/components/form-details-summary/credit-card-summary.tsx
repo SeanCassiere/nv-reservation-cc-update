@@ -1,10 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import FormSummaryItem from "./form-summary-item";
-
 import { CreditCardIcon, MapIcon, PersonIcon } from "@/components/ui/icons";
+
 import type { CreditCardStoreType } from "@/hooks/stores/useFormStore";
+
+import FormSummaryItem from "./form-summary-item";
 
 type Props = {
   creditCard: CreditCardStoreType["data"];

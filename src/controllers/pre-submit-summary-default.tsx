@@ -1,9 +1,9 @@
-import React, { useMemo, lazy } from "react";
+import React, { lazy, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import CardLayout from "@/components/card-layout";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button as UIButton } from "@/components/ui/button";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { ExclamationIcon } from "@/components/ui/icons";
 
 import { useAppNavContext } from "@/hooks/logic/useAppNavContext";
@@ -23,7 +23,7 @@ const PreSubmitSummaryControllerDefault: React.FC = () => {
 
   const isEmpty = useMemo(
     () => isCreditCard === false && isDriverLicense === false && isRentalSignature === false,
-    [isCreditCard, isDriverLicense, isRentalSignature]
+    [isCreditCard, isDriverLicense, isRentalSignature],
   );
 
   return (

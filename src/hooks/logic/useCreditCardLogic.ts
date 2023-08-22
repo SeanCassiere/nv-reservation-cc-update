@@ -1,12 +1,12 @@
 import React from "react";
-import Payment from "payment";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Payment from "payment";
 import { ReactCreditCardsProps } from "react-credit-cards-2";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import i18n from "@/i18n";
 import { CreditCardStoreType } from "@/hooks/stores/useFormStore";
+import i18n from "@/i18n";
 
 type StateStorage = CreditCardStoreType["data"];
 
@@ -19,7 +19,7 @@ const creditCardSchema = z.object({
     .string()
     .refine(
       (value) => Payment.fns.validateCardNumber(`${value}`),
-      i18n.t("forms.creditCard.errors.cardNumber") as unknown as string
+      i18n.t("forms.creditCard.errors.cardNumber") as unknown as string,
     ),
   cvv: z
     .string({

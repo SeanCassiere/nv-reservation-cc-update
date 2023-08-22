@@ -2,6 +2,7 @@ import React, { memo, useCallback, useState } from "react";
 import { useDropzone, type Accept } from "react-dropzone";
 
 import { Button as UIButton } from "@/components/ui/button";
+
 import { cn } from "@/utils";
 
 export type PreviewImage = { fileName: string; dataUrl: string };
@@ -40,7 +41,7 @@ const ImageDropzoneWithPreview: React.FC<Props> = ({
       setPreviewImage(fileState);
       onSelectFile?.(fileState);
     },
-    [onSelectFile]
+    [onSelectFile],
   );
 
   const handleClearImage = useCallback(() => {
@@ -66,7 +67,7 @@ const ImageDropzoneWithPreview: React.FC<Props> = ({
             "flex flex-1 flex-col items-center justify-center p-6 border-2 border-dashed border-primary-foreground rounded outline-none bg-muted-foreground/10 text-primary/75",
             isDragActive ? "border-accent" : undefined,
             isDragAccept ? "border-success" : undefined,
-            isDragReject ? "border-destructive" : undefined
+            isDragReject ? "border-destructive" : undefined,
           ),
           style: {
             transition: "border .24s ease-in-out",

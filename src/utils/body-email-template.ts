@@ -1,4 +1,5 @@
 import type { GlobalDocumentForEmail, OneOffUploadAttachment } from "@/api/emailsApi";
+
 import { APP_CONSTANTS } from "./constants";
 
 export type CreateBodyForEmail = {

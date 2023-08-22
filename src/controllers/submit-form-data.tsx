@@ -1,17 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "@tanstack/react-query";
-
-import LoadingSubmission from "@/pages/loading-submission";
-
-import { useFormStore } from "@/hooks/stores/useFormStore";
-import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
-import { useConfigStore } from "@/hooks/stores/useConfigStore";
+import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { postConfirmationEmail } from "@/api/emailsApi";
 import { postCompletionLambda } from "@/api/lambdas";
 import { postFormDataToApi } from "@/api/system/postFormDataToApi";
+import { useConfigStore } from "@/hooks/stores/useConfigStore";
+import { useFormStore } from "@/hooks/stores/useFormStore";
+import { useRuntimeStore } from "@/hooks/stores/useRuntimeStore";
+import LoadingSubmission from "@/pages/loading-submission";
 
 const PostFormDataControllerDefault: React.FC = () => {
   const navigate = useNavigate();
@@ -47,7 +45,7 @@ const PostFormDataControllerDefault: React.FC = () => {
       referenceType,
       referenceId: referenceId ?? 0,
     }),
-    [clientId, environment, referenceId, referenceType, rentalData?.customerId]
+    [clientId, environment, referenceId, referenceType, rentalData?.customerId],
   );
 
   const { mutate: markCompletionStatus } = useMutation({

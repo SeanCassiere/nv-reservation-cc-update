@@ -1,4 +1,4 @@
-import { FC, ReactNode, createContext, useContext, useState, useCallback, useMemo } from "react";
+import { createContext, FC, ReactNode, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -57,7 +57,7 @@ export const AppNavContextProvider: FC<{
   const [currentNavMode, setCurrentNavMode] = useState<AppNavContextType["mode"]>("navigate");
 
   const [selectedController, setSelectedController] = useState<AppNavContextType["activeController"]>(
-    configFlow.length >= 0 ? configFlow[0] : null
+    configFlow.length >= 0 ? configFlow[0] : null,
   );
 
   const goNext = useCallback(() => {
@@ -126,13 +126,13 @@ export const AppNavContextProvider: FC<{
         }
       }
     },
-    [configFlow]
+    [configFlow],
   );
 
   const nextPageText = useMemo(
     () =>
       t("forms.navSubmit", { context: currentNavMode === "save" ? "save" : isNextControllerAvailable ? "next" : "" }),
-    [currentNavMode, isNextControllerAvailable, t]
+    [currentNavMode, isNextControllerAvailable, t],
   );
 
   return (
