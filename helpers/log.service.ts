@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import type { SupportedEnvironments } from "./common";
 
 type LogKey = string;

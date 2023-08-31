@@ -1,7 +1,7 @@
 import { type Handler } from "@netlify/functions";
 
-import { formatZodErrors, ResponseHeaders, GetTokenRequestSchema } from "../../helpers/common";
 import { AuthorizationClient } from "../../helpers/auth.service";
+import { formatZodErrors, GetTokenRequestSchema, ResponseHeaders } from "../../helpers/common";
 import { LoggingClient } from "../../helpers/log.service";
 
 const tokenHandler: Handler = async (event) => {
@@ -48,7 +48,7 @@ const tokenHandler: Handler = async (event) => {
           appEnvironment: parsed.data.environment,
           lookup: parsed.data.client_id,
           ip: requestIp,
-        }
+        },
       )
       .then(() => {});
 

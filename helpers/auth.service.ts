@@ -1,11 +1,12 @@
 import axios from "axios";
+
 import { AccessTokenResponseSchema, type SupportedEnvironments } from "./common";
 
 interface AuthService {
   /**
    * Get an access token.
    */
-  getAccessToken(): Promise<{
+  getAccessToken: () => Promise<{
     access_token: string;
     client_base_url: string;
     expires_in: number;

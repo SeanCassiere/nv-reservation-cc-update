@@ -9,7 +9,10 @@
     "preview": "vite preview",
     "lint": "eslint --max-warnings=0 src",
     "lint:fix": "eslint --fix --max-warnings=0 src",
-    "format": "prettier --write './src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.cjs",
+    "format-src": "prettier --write './src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.cjs",
+    "format-helpers": "prettier --write './helpers/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.cjs",
+    "format-netlify": "prettier --write './netlify/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.cjs",
+    "format": "npm run format-src && npm run format-helpers && npm run format-netlify",
     "sync-i18n": "i18next-locales-sync -c ./locales-sync.config.js"
   },
   "dependencies": {

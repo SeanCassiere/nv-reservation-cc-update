@@ -1,6 +1,6 @@
 import { type Handler } from "@netlify/functions";
 
-import { formatZodErrors, SubmissionCompletedRequestSchema, ResponseHeaders } from "../../helpers/common";
+import { formatZodErrors, ResponseHeaders, SubmissionCompletedRequestSchema } from "../../helpers/common";
 import { LoggingClient } from "../../helpers/log.service";
 
 const completionHandler: Handler = async (event) => {
@@ -46,7 +46,7 @@ const completionHandler: Handler = async (event) => {
           referenceId: parsed.data.reference_id,
           customerId: parsed.data.customer_id,
         },
-        { appEnvironment: parsed.data.environment, lookup: parsed.data.client_id, ip: requestIp }
+        { appEnvironment: parsed.data.environment, lookup: parsed.data.client_id, ip: requestIp },
       )
       .then(() => {});
 
