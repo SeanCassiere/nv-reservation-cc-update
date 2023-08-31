@@ -64,7 +64,7 @@ const ImageDropzoneWithPreview: React.FC<Props> = ({
       <div
         {...getRootProps({
           className: cn(
-            "flex flex-1 flex-col items-center justify-center p-6 border-2 border-dashed border-primary-foreground rounded outline-none bg-muted-foreground/10 text-primary/75",
+            "flex flex-1 flex-col items-center justify-center p-6 border-2 border-dashed border-primary-foreground rounded outline-none bg-muted-foreground/10 text-foreground/75",
             isDragActive ? "border-accent" : undefined,
             isDragAccept ? "border-success" : undefined,
             isDragReject ? "border-destructive" : undefined,

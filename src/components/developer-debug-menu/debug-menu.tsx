@@ -94,7 +94,7 @@ const ConfigCreator = () => {
     <Form {...form}>
       <form className="flex-col space-y-4" onSubmit={handleSubmit} onReset={() => form.reset()}>
         <DevGroupCard title={t("developer.configCreator.newUrl")}>
-          <p className="m-0 text-sm text-primary" style={{ overflowWrap: "anywhere" }}>
+          <p className="m-0 text-sm text-foreground/90" style={{ overflowWrap: "anywhere" }}>
             {window.location.origin + "/?" + newQueryString}
           </p>
           <Button
@@ -465,7 +465,7 @@ function alphabeticalSortObjects<T extends { value: string; label: string }>(ite
 const DevGroupCard = ({ title, children }: { title: React.ReactNode; children: React.ReactNode }) => {
   return (
     <div className="rounded border border-muted px-4 py-4">
-      <span className="select-none text-base font-semibold text-primary">{title}</span>
+      <span className="select-none text-base font-semibold text-foreground">{title}</span>
       <div className="mt-4 flex flex-col space-y-4 px-1">{children}</div>
     </div>
   );

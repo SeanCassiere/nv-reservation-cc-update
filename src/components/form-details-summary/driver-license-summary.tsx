@@ -14,12 +14,12 @@ const DriverLicense: React.FC<Props> = ({ driverLicense, editFunc }) => {
   const { t } = useTranslation();
   return (
     <FormSummaryItem title={t("forms.formsSummary.licenseUploadTitle")} onEdit={editFunc}>
-      <div className="text-md mt-2 flex items-center justify-center rounded border border-muted bg-foreground/5 px-3 py-2 text-primary/80">
+      <div className="text-md mt-2 flex items-center justify-center rounded border border-muted bg-foreground/5 px-3 py-2 text-foreground/80">
         {driverLicense.frontImageUrl && (
           <img src={driverLicense.frontImageUrl} className="object-contain md:max-w-xs" alt="" />
         )}
       </div>
-      <div className="text-md mt-2 flex items-center justify-center rounded border border-muted bg-foreground/5 px-3 py-2 text-primary/80">
+      <div className="text-md mt-2 flex items-center justify-center rounded border border-muted bg-foreground/5 px-3 py-2 text-foreground/80">
         {driverLicense.backImageUrl && (
           <img src={driverLicense.backImageUrl} className="object-contain md:max-w-xs" alt="" />
         )}

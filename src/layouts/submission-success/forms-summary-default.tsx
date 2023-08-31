@@ -54,8 +54,8 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
         )}
         {!isEmpty && (
           <>
-            <div className="text-md pb-1 pt-2 font-medium text-primary">{t("forms.formsSummary.title")}</div>
-            <div className="pb-4 pt-1 text-sm text-primary">
+            <div className="text-md pb-1 pt-2 font-medium text-foreground">{t("forms.formsSummary.title")}</div>
+            <div className="pb-4 pt-1 text-sm text-foreground">
               {t("forms.formsSummary.message", { context: "submitted" })}
             </div>
           </>
@@ -66,12 +66,12 @@ const SubmittedFormsSummaryDefaultLayout: React.FC = (props: SubmittedFormsSumma
       </div>
       {props.includeRentalChargesSummary && clientId && referenceIdentifier && (
         <div className="mt-4 border-t border-t-muted pt-4">
-          <h3 className="text-md font-medium text-primary">
+          <h3 className="text-md font-medium text-foreground">
             {t("forms.rentalSummary.title", {
               context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
             })}
           </h3>
-          <div className="pb-4 pt-2 text-sm text-primary">
+          <div className="pb-4 pt-2 text-sm text-foreground">
             {t("forms.rentalSummary.message", {
               context: referenceType === APP_CONSTANTS.REF_TYPE_AGREEMENT ? "agreement" : "reservation",
             })}

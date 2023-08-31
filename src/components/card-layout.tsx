@@ -36,7 +36,7 @@ const CardLayout: React.FC<Props> = ({ title, subtitle, image, children }) => {
 export const CardTitleHeading = React.forwardRef<HTMLHeadingElement, { children: React.ReactNode }>(
   ({ children }, ref) => {
     return (
-      <h1 ref={ref} className="pb-2 text-2xl font-semibold  text-primary transition-colors">
+      <h1 ref={ref} className="pb-2 text-2xl font-semibold text-foreground transition-colors">
         {children}
       </h1>
     );
@@ -46,7 +46,7 @@ export const CardTitleHeading = React.forwardRef<HTMLHeadingElement, { children:
 export const CardSubtitleSpan = React.forwardRef<HTMLSpanElement, { children: React.ReactNode }>(
   ({ children }, ref) => {
     return (
-      <span ref={ref} className="text-base leading-7 text-primary">
+      <span ref={ref} className="text-base leading-7 text-foreground/90">
         {children}
       </span>
     );

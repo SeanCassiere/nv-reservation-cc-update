@@ -286,10 +286,10 @@ const RowItem: React.FC<RowItemProps & { isLoading?: boolean }> = ({ isLoading, 
         "py-2",
         "font-medium",
         {
-          "text-primary": props.value && !props.highlight && !props.isRed, // not special or red and above 0
-          "text-primary/60": !props.value && !props.highlight && !props.isRed, // not special or red but 0
+          "text-foreground": props.value && !props.highlight && !props.isRed, // not special or red and above 0
+          "text-foreground/60": !props.value && !props.highlight && !props.isRed, // not special or red but 0
           "text-destructive": props.isRed, // red
-          "text-primary-foreground": props.highlight, // special
+          "text-foreground/95": props.highlight, // special
         },
         {
           "bg-muted-foreground": props.highlight,
