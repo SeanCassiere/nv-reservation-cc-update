@@ -2,6 +2,8 @@ export const REPO_URL = "https://github.com/SeanCassiere/nv-reservation-cc-updat
 
 export const SuccessImgUri = "/assets/undraw_make_it_rain_iwk4.svg";
 
+export const PACKAGE_VERSION = import.meta.env.PACKAGE_VERSION ?? "0.0.0";
+
 export const APP_CONSTANTS = {
   REF_TYPE_AGREEMENT: "Agreement",
   REF_TYPE_RESERVATION: "Reservation",

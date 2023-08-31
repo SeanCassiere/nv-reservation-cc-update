@@ -1,7 +1,9 @@
 import path from "path";
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 import eslintPlugin from "vite-plugin-eslint";
+
+import packageJson from "./package.json";
 
 const commonPlugins = [react()];
 
@@ -24,5 +26,8 @@ export default defineConfig(({ mode }) => ({
   },
   server: {
     port: 3000,
+  },
+  define: {
+    "import.meta.env.PACKAGE_VERSION": JSON.stringify(packageJson.version),
   },
 }));
