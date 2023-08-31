@@ -11,6 +11,7 @@ import { useConfigStore } from "./hooks/stores/useConfigStore";
 import ErrorSubmission from "./pages/error-submission";
 import AppRoutes from "./routes/app-routes";
 import { isValueTrue } from "./utils/common";
+import { PACKAGE_VERSION } from "./utils/constants";
 
 const DeveloperDebugMenu = lazy(() => import("./components/developer-debug-menu"));
 
@@ -91,6 +92,9 @@ const App = () => {
               >
                 RENTALL
               </AnchorLink>
+            </p>
+            <p className="text-center text-sm text-foreground/80">
+              {t("footer.poweredBy")}&nbsp;{PACKAGE_VERSION}
             </p>
             {isDevQueryOpen && (
               <Button
