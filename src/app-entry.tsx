@@ -94,7 +94,7 @@ const App = () => {
               </AnchorLink>
             </p>
             <p className="text-center text-sm text-foreground/80">
-              {t("footer.poweredBy")}&nbsp;{PACKAGE_VERSION}
+              {t("footer.version")}&nbsp;{PACKAGE_VERSION}
             </p>
             {isDevQueryOpen && (
               <Button

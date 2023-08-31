@@ -162,6 +162,7 @@
     "report": "Por favor, preséntese a"
   },
   "footer": {
-    "poweredBy": "Funciona con"
+    "poweredBy": "Funciona con",
+    "version": "Versión"
   }
 }

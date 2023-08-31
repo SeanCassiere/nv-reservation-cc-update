@@ -162,6 +162,7 @@
     "report": "Bitte melden Sie sich bei"
   },
   "footer": {
-    "poweredBy": "Unterstützt von"
+    "poweredBy": "Unterstützt von",
+    "version": "Ausführung"
   }
 }

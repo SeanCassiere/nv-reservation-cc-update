@@ -162,6 +162,7 @@
     "report": "Please report to"
   },
   "footer": {
-    "poweredBy": "Powered by"
+    "poweredBy": "Powered by",
+    "version": "Version"
   }
 }
