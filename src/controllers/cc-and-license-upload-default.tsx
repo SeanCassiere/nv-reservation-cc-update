@@ -144,7 +144,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
             <CardSubtitleSpan>{t("forms.licenseUpload.message")}</CardSubtitleSpan>
             <div className="d-grid mt-4">
               <div>
-                <h2 className="mb-2 text-base text-primary/90">{t("forms.licenseUpload.frontImage.title")}</h2>
+                <h2 className="mb-2 text-base text-foreground/90">{t("forms.licenseUpload.frontImage.title")}</h2>
                 <div>
                   {isFrontImageError && (
                     <Alert className="mb-2" variant="warning">
@@ -177,7 +177,7 @@ const DefaultCreditCardAndLicenseUploadController: React.FC<IProps> = () => {
                 </div>
               </div>
               <div className="mt-6">
-                <h2 className="mb-2 text-base text-primary/90">{t("forms.licenseUpload.backImage.title")}</h2>
+                <h2 className="mb-2 text-base text-foreground/90">{t("forms.licenseUpload.backImage.title")}</h2>
                 <div>
                   {isBackImageError && (
                     <Alert className="mb-2" variant="warning">
