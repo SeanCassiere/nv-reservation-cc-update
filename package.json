@@ -34,7 +34,7 @@
     "i18next": "^23.6.0",
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.2",
-    "lucide-react": "^0.272.0",
+    "lucide-react": "^0.288.0",
     "payment": "^2.4.6",
     "react": "^18.2.0",
     "react-credit-cards-2": "^1.0.1",
