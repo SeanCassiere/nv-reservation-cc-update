@@ -1,14 +1,22 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { reloadSavedDigitalSignatureBase64Url } from "@/api/digitalSignatureApi";
 
-export const useRentalSavedDigitalSignature = <T = Awaited<ReturnType<typeof reloadSavedDigitalSignatureBase64Url>>>(
-  opts: { referenceType: string; referenceId: string; isCheckIn: boolean },
-  queryOpts?: Omit<UseQueryOptions<T>, "queryKey" | "queryFn" | "initialData">,
+export const useRentalSavedDigitalSignature = (
+  opts: {
+    referenceType: string;
+    referenceId: string;
+    isCheckIn: boolean;
+  },
+  extra: { enabled: boolean },
 ) => {
-  return useQuery<T>({
+  const enabled = extra.enabled;
+  return useQuery({
     queryKey: ["rental", "digital-signature"],
-    queryFn: async () => (await reloadSavedDigitalSignatureBase64Url(opts)) as unknown as T,
-    ...queryOpts,
+    queryFn: () => reloadSavedDigitalSignatureBase64Url(opts),
+    refetchOnMount: true,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    enabled,
   });
 };

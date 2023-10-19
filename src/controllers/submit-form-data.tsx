@@ -69,7 +69,7 @@ const PostFormDataControllerDefault: React.FC = () => {
 
   const { status: submitStatus, data: submitData } = useQuery({
     queryKey: ["submission", "form-data"],
-    queryFn: async () =>
+    queryFn: () =>
       postFormDataToApi({
         clientId: clientId ?? 0,
         creditCard: creditCardState,

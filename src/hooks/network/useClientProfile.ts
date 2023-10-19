@@ -1,14 +1,10 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
-import { FetchClientProfile, fetchClientProfile } from "@/api/clientApi";
+import { fetchClientProfile } from "@/api/clientApi";
 
-export const useClientProfileQuery = (
-  { clientId }: { clientId: string | number },
-  queryOpts?: UseQueryOptions<FetchClientProfile>,
-) => {
+export const useClientProfileQuery = ({ clientId }: { clientId: string | number }) => {
   return useQuery({
     queryKey: ["client", "profile"],
-    queryFn: async () => fetchClientProfile({ clientId }),
-    ...queryOpts,
+    queryFn: () => fetchClientProfile({ clientId }),
   });
 };

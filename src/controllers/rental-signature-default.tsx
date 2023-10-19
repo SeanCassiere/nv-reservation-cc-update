@@ -24,6 +24,7 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
   const clearFormState = useFormStore((s) => s.clearFormStateKey);
   const setRentalSignature = useFormStore((s) => s.setRentalSignature);
   const initialSignatureUrl = useFormStore((s) => s.rentalSignature.data.signatureUrl);
+
   const referenceType = useRuntimeStore((s) => s.referenceType);
   const referenceId = useRuntimeStore((s) => s.referenceIdentifier);
   const isCheckInStoreValue = useRuntimeStore((s) => s.rental?.isCheckIn);
@@ -93,18 +94,10 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
     }
   }, [goPrev, initialSignatureUrl, mode, setBackConfirmationDialogState, signatureUrl]);
 
-  useRentalSavedDigitalSignature(
+  const signatureQuery = useRentalSavedDigitalSignature(
     { referenceType, referenceId: `${referenceId}`, isCheckIn },
     {
       enabled: initialSignatureUrl === "",
-      refetchOnMount: true,
-      refetchOnReconnect: false,
-      refetchOnWindowFocus: false,
-      onSuccess: (url) => {
-        if (url) {
-          setRentalSignature({ signatureUrl: url });
-        }
-      },
     },
   );
 
@@ -113,6 +106,13 @@ const DefaultRentalSignatureController: React.FC<IProps> = () => {
       setSignatureUrl(initialSignatureUrl);
     }
   }, [initialSignatureUrl]);
+
+  useEffect(() => {
+    if (!initialSignatureUrl && signatureQuery.status === "success" && signatureQuery.data) {
+      const url = signatureQuery.data;
+      setRentalSignature({ signatureUrl: url });
+    }
+  }, [signatureQuery.data, signatureQuery.status, initialSignatureUrl, setRentalSignature]);
 
   return (
     <Fragment>
