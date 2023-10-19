@@ -81,7 +81,7 @@ const ApplicationController: React.FC = () => {
     error: bootError,
   } = useQuery({
     queryKey: ["boot-sequence"],
-    queryFn: async () => bootUp({ windowQueryString: window.location.search }),
+    queryFn: () => bootUp({ windowQueryString: window.location.search }),
     enabled: true,
     refetchOnWindowFocus: false,
     refetchIntervalInBackground: false,
