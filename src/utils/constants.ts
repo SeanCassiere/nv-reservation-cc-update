@@ -23,7 +23,7 @@ export const APP_CONSTANTS = {
   SUCCESS_SUBMITTED_FORMS_WITH_RENTAL_CHARGES_SUMMARY: "SuccessSubmittedFormsWithRentalChargesSummary",
   SUCCESS_TEST: "test/test",
 
-  COLOR_SCHEME_DEFAULT_CLASS: "",
+  COLOR_SCHEME_DEFAULT_CLASS: "default", // this value should never be saved with the config
   COLOR_SCHEME_DARK_CLASS: "dark",
   COLOR_SCHEME_GREEN_CLASS: "green",
 

@@ -10,9 +10,9 @@ The information being requested from the client is based on the flow setup withi
 
 To create your own config and flow, you can use the built-in developer menu. You can access this menu using the following keyboard shortcut.
 
-Windows: `CTRL + SHIFT + K`
+Windows: `CTRL + K`
 
-Mac: `CMD + SHIFT + K`
+Mac: `CMD + K`
 
 ## URL params
 
@@ -58,6 +58,7 @@ Should you wish to manually create your own config string, you will need to crea
   "emailTemplateId": 7388,
   "flow": ["CreditCardForm"]
 }
+
 
 // Example Base64 --> eyJjbGllbnRJZCI6MTAxMywiZW1haWxUZW1wbGF0ZUlkIjo3Mzg4LCJmbG93IjpbIkRlZmF1bHQvQ3JlZGl0Q2FyZEZvcm0iXSwiZnJvbVJlbnRhbGwiOnRydWV9
 ```

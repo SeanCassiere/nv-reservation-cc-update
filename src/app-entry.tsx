@@ -33,7 +33,7 @@ const App = () => {
   const handleCloseDeveloperDrawer = () => setOpenDevMenuLocal(false);
   React.useEffect(() => {
     function onKeyDown(evt: KeyboardEvent) {
-      if (evt.key === "k" && evt.shiftKey && (evt.metaKey || evt.ctrlKey)) {
+      if (evt.key === "k" && (evt.metaKey || evt.ctrlKey)) {
         if (shouldDevMenuBeLoaded.current === false) {
           shouldDevMenuBeLoaded.current = true;
         }
