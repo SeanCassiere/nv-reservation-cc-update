@@ -59,7 +59,9 @@ export default async function handler(request: Request) {
           ip: requestIp,
         },
       )
-      .then(() => {});
+      .then((data) => {
+        console.info("Saved log", JSON.stringify(data));
+      });
 
     return new Response(JSON.stringify(authData), {
       status: 200,

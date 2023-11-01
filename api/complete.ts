@@ -52,7 +52,9 @@ export default async function handler(request: Request) {
         },
         { appEnvironment: parsed.data.environment, lookup: parsed.data.client_id, ip: requestIp },
       )
-      .then(() => {});
+      .then((data) => {
+        console.info("Saved log", JSON.stringify(data));
+      });
 
     return new Response(JSON.stringify({ success: true, message: "Submission completed" }), {
       status: 200,
