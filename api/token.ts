@@ -14,10 +14,6 @@ export default async function handler(request: Request) {
     });
   }
 
-  const urlParams = new URL(request.url).searchParams;
-  const query = Object.fromEntries(urlParams);
-  const cookies = request.headers.get("cookie");
-
   const realIp = request.headers.get("x-real-ip");
 
   const requestIp = realIp ?? "no-ip-address";
