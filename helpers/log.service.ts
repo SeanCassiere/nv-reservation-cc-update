@@ -44,6 +44,7 @@ class SimpleLoggingService implements LogService {
       data: payload,
     };
 
+    console.log("adt");
     return await fetch(`${this.#serviceUri}/api/v2/log`, {
       method: "POST",
       body: JSON.stringify(body),
