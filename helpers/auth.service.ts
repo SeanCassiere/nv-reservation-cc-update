@@ -1,6 +1,4 @@
-import axios from "axios";
-
-import { AccessTokenResponseSchema, type SupportedEnvironments } from "./common";
+import { AccessTokenResponseSchema, makeXFormUrlEncodedBody, type SupportedEnvironments } from "./common";
 
 interface AuthService {
   /**
@@ -45,17 +43,22 @@ class LiquidwebProd1AuthService implements AuthService {
       throw new Error("client id or client secret not set for 'liquidweb-prod-1'");
     }
 
-    const params = new URLSearchParams();
-    params.append("grant_type", "client_credentials");
-    params.append("client_id", this.#clientId);
-    params.append("client_secret", this.#clientSecret);
-    params.append("scope", "Api");
+    const authDetails = {
+      grant_type: "client_credentials",
+      client_id: this.#clientId,
+      client_secret: this.#clientSecret,
+      scope: "Api",
+    };
 
-    const response = await axios.post(this.auth_url, params, {
+    const body = makeXFormUrlEncodedBody(authDetails);
+
+    const response = await fetch(`${this.auth_url}`, {
+      method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    });
+      body,
+    }).then((res) => res.json());
 
-    const data = AccessTokenResponseSchema.parse(response.data);
+    const data = AccessTokenResponseSchema.parse(response);
 
     return { ...data, client_base_url: this.api_url };
   }
@@ -78,17 +81,22 @@ class LiquidwebQa1AuthService implements AuthService {
       throw new Error("client id or client secret not set for 'liquidweb-qa-1'");
     }
 
-    const params = new URLSearchParams();
-    params.append("grant_type", "client_credentials");
-    params.append("client_id", this.#clientId);
-    params.append("client_secret", this.#clientSecret);
-    params.append("scope", "Api");
+    const authDetails = {
+      grant_type: "client_credentials",
+      client_id: this.#clientId,
+      client_secret: this.#clientSecret,
+      scope: "Api",
+    };
 
-    const response = await axios.post(this.auth_url, params, {
+    const body = makeXFormUrlEncodedBody(authDetails);
+
+    const response = await fetch(`${this.auth_url}`, {
+      method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    });
+      body,
+    }).then((res) => res.json());
 
-    const data = AccessTokenResponseSchema.parse(response.data);
+    const data = AccessTokenResponseSchema.parse(response);
 
     return { ...data, client_base_url: this.api_url };
   }

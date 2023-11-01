@@ -34,6 +34,14 @@ export function formatZodErrors(errors: z.ZodIssue[]): string {
   return `Errors: | ${errorMessages.join(" | ")}`;
 }
 
+export function makeXFormUrlEncodedBody(body: Record<string, string>): string {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(body)) {
+    params.append(key, value);
+  }
+  return params.toString();
+}
+
 export const ResponseHeaders = {
   "Content-Type": "application/json",
   "Cache-Control": "no-store",
