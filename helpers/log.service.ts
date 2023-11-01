@@ -47,6 +47,9 @@ class SimpleLoggingService implements LogService {
     return await fetch(`${this.#serviceUri}/api/v2/log`, {
       method: "POST",
       body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
       .then((res) => {
         return { success: true, data: res.json() };
