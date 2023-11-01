@@ -14,7 +14,6 @@ interface LogService {
 export class LoggingClient {
   public static getLoggingService(): LogService {
     const deployEnv = process.env.DEPLOYMENT_ENV;
-    console.log("deploymentEnv", deployEnv);
     if (deployEnv === "production") {
       return new SimpleLoggingService();
     } else {
@@ -33,6 +32,7 @@ class SimpleLoggingService implements LogService {
 
   async save(key: LogKey, payload: LogPayload, options: LogOptions) {
     if (!this.#serviceId || !this.#serviceUri) {
+      console.error("Missing logger service id or uri");
       return { success: false, data: "Missing logger service id or uri" };
     }
 
