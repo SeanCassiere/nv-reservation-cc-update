@@ -51,7 +51,7 @@ export default async function handler(request: Request) {
           clientId: parsed.data.client_id,
           referenceType: parsed.data.reference_type,
           referenceId: parsed.data.reference_id,
-          vercelRequestId: request.headers.get("x-vercel-id") || "no-vercel-id",
+          "x-vercel-id": request.headers.get("x-vercel-id") || "no-vercel-id",
         },
         {
           appEnvironment: parsed.data.environment,
