@@ -48,7 +48,8 @@ class SimpleLoggingService implements LogService {
       method: "POST",
       body: JSON.stringify(body),
       headers: {
-        "Content-Type": "application/json",
+        "content-type": "application/json",
+        "x-app-service-id": this.#serviceId,
       },
     })
       .then((res) => {
