@@ -44,7 +44,7 @@ export default async function handler(request: Request) {
     const authService = AuthorizationClient.getAuthService(parsed.data.environment);
     const authData = await authService.getAccessToken();
 
-    logger
+    await logger
       .save(
         "request-access-token",
         {

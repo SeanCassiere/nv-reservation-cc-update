@@ -39,7 +39,7 @@ export default async function handler(request: Request) {
       };
     }
 
-    logger
+    await logger
       .save(
         "submitted-details",
         {
