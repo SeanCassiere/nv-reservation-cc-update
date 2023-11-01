@@ -1,5 +1,5 @@
 import { AuthorizationClient } from "../helpers/auth.service";
-import { formatZodErrors, GetTokenRequestSchema } from "../helpers/common";
+import { formatZodErrors, GetTokenRequestSchema, ResponseHeaders } from "../helpers/common";
 import { LoggingClient } from "../helpers/log.service";
 
 export const config = {
@@ -7,13 +7,10 @@ export const config = {
 };
 
 export default async function handler(request: Request) {
-  console.log(Object.fromEntries(request.headers.entries()));
   if (request.method !== "POST") {
     return new Response("Method Not Allowed", {
       status: 405,
-      headers: {
-        "content-type": "text/plain",
-      },
+      headers: ResponseHeaders,
     });
   }
 
@@ -30,9 +27,7 @@ export default async function handler(request: Request) {
     if (!request.body) {
       return new Response(JSON.stringify({ error: "Missing body" }), {
         status: 400,
-        headers: {
-          "content-type": "application/json",
-        },
+        headers: ResponseHeaders,
       });
     }
 
@@ -42,9 +37,7 @@ export default async function handler(request: Request) {
     if (!parsed.success) {
       return new Response(JSON.stringify({ error: formatZodErrors(parsed.error.issues) }), {
         status: 400,
-        headers: {
-          "content-type": "application/json",
-        },
+        headers: ResponseHeaders,
       });
     }
 
@@ -69,17 +62,13 @@ export default async function handler(request: Request) {
 
     return new Response(JSON.stringify(authData), {
       status: 200,
-      headers: {
-        "content-type": "application/json",
-      },
+      headers: ResponseHeaders,
     });
   } catch (error) {
     console.error(error);
     return new Response(JSON.stringify({ error: error instanceof Error ? error.message : "Fatal error occurred" }), {
       status: 500,
-      headers: {
-        "content-type": "application/json",
-      },
+      headers: ResponseHeaders,
     });
   }
 }
