@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import type { SupportedEnvironments } from "./common";
 
 type LogKey = string;
@@ -34,6 +32,7 @@ class SimpleLoggingService implements LogService {
 
   async save(key: LogKey, payload: LogPayload, options: LogOptions) {
     if (!this.#serviceId || !this.#serviceUri) {
+      console.error("Missing logger service id or uri");
       return { success: false, data: "Missing logger service id or uri" };
     }
 
@@ -45,14 +44,16 @@ class SimpleLoggingService implements LogService {
       data: payload,
     };
 
-    return await axios
-      .post(`${this.#serviceUri}/api/v2/log`, body, {
-        headers: {
-          "X-APP-SERVICE-ID": this.#serviceId,
-        },
-      })
+    return await fetch(`${this.#serviceUri}/api/v2/log`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "content-type": "application/json",
+        "x-app-service-id": this.#serviceId,
+      },
+    })
       .then((res) => {
-        return { success: true, data: res.data };
+        return { success: true, data: res.json() };
       })
       .catch((err) => {
         return { success: false, data: err };
@@ -68,7 +69,7 @@ class LocalLoggingService implements LogService {
 
     return {
       success: true,
-      data: { foo: "bar" },
+      data: payload,
     };
   }
 }
