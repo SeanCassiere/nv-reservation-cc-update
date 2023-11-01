@@ -43,6 +43,9 @@ class SimpleLoggingService implements LogService {
       lookupFilterValue: options.lookup,
       data: payload,
     };
+    console.log("serviceId", this.#serviceId);
+    console.log("serviceUri", this.#serviceUri);
+    console.log("body", body);
 
     return await fetch(`${this.#serviceUri}/api/v2/log`, {
       method: "POST",
