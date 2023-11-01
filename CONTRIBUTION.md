@@ -15,6 +15,10 @@ Pull Request Process
 
 You may merge your pull request after receiving an approval from Sean, or any other core contributor.
 
+## Development
+
+This project uses the Vercel-CLI to run the application locally. You can install it by running `npm i -g vercel`.
+
 ## Documentation
 
 Update the [DOCUMENTATION](/DOCUMENTATION.md) if your contribution involves adding or changing configuration values.
