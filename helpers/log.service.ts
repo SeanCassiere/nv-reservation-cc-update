@@ -1,9 +1,7 @@
-import type { SupportedEnvironments } from "./common";
-
 type LogKey = string;
 type LogPayload = Record<string, string>;
 type LogLevel = "debug" | "info" | "warn" | "error" | "fatal";
-type LogOptions = { ip: string | undefined; lookup: string | undefined; appEnvironment: SupportedEnvironments };
+type LogOptions = { ip: string | undefined; lookup: string | undefined; appEnvironment: string };
 
 interface LogService {
   /**
