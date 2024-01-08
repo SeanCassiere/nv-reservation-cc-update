@@ -1,0 +1,85 @@
+name: "🐛 Bug report"
+description: Create a report to help us improve nv-reservation-cc-update.
+title: "fix: "
+labels:
+  - "bug"
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Thank you for finding and reporting this issue :pray:!**
+        We kindly ask that you search to see if an issue [already exists](https://github.com/SeanCassiere/nv-reservation-cc-update/issues?q=is%3Aissue+sort%3Acreated-desc+) for your bug.
+
+        We are also happy to accept contributions from our users. For more details see [here](https://github.com/SeanCassiere/nv-reservation-cc-update/blob/master/CONTRIBUTION.md).
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: Provide a clear and concise description of the challenge you are running into.
+    validations:
+      required: true
+
+  - type: input
+    id: link
+    attributes:
+      label: Your Example Website or App
+      description: |
+        An example of the bug you are currently experiencing.
+        Note:
+        - To create a shareable code example using Stackblitz or a hosted Github repository. Please no localhost URLs.
+        - Please read these tips for providing a minimal example: https://stackoverflow.com/help/mcve.
+      placeholder: Reproduction URL/Repo
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce the Bug or Issue
+      description: Describe the steps needed to reproduce the behavior.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Provide a clear and concise description of what you expected to happen.
+      placeholder: |
+        As a user, I expected ___ behavior but i am seeing ___
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots_or_videos
+    attributes:
+      label: Screenshots or Videos
+      description: |
+        If applicable, add screenshots or a video to help explain your problem.
+        For more information on the supported file image/file types and the file size limits, please refer
+        to the following link: https://docs.github.com/en/github/writing-on-github/working-with-advanced-formatting/attaching-files
+      placeholder: |
+        You can drag your video or image files inside of this editor ↓
+
+  - type: textarea
+    id: platform
+    attributes:
+      label: Platform
+      value: |
+        - OS: [e.g. macOS, Windows, Linux]
+        - Node Version: [e.g. 18.7.1, 20.0.0]
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
