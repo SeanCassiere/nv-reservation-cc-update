@@ -43,7 +43,7 @@ class SimpleLoggingService implements LogService {
     // debug-level logs will not be persisted to this service
     if (level === "debug") {
       const dateStr = new Date().toISOString().slice(0, 19).replace("T", " ");
-      console.log(level, dateStr, "SimpleLoggingService.save", key, "\n", payload);
+      console.log(level.toUpperCase(), dateStr, "SimpleLoggingService.save", key, "\n", payload);
 
       return {
         success: true,
@@ -80,7 +80,7 @@ class LocalLoggingService implements LogService {
   public async save(level: LogLevel, key: LogKey, payload: LogPayload) {
     const dateStr = new Date().toISOString().slice(0, 19).replace("T", " ");
 
-    console.log(level, dateStr, "LocalLoggingService.save", key, "\n", payload);
+    console.log(level.toUpperCase(), dateStr, "LocalLoggingService.save", key, "\n", payload);
 
     return {
       success: true,
