@@ -1,14 +1,18 @@
-import type { SupportedEnvironments } from "./common";
-
 type LogKey = string;
 type LogPayload = Record<string, string>;
-type LogOptions = { ip: string | undefined; lookup: string | undefined; appEnvironment: SupportedEnvironments };
+type LogLevel = "debug" | "info" | "warn" | "error" | "fatal";
+type LogOptions = { ip: string | undefined; lookup: string | undefined; appEnvironment: string };
 
 interface LogService {
   /**
    * Save a log to the database
    */
-  save: (key: LogKey, payload: LogPayload, options: LogOptions) => Promise<{ success: boolean; data: any }>;
+  save: (
+    level: LogLevel,
+    key: LogKey,
+    payload: LogPayload,
+    options: LogOptions,
+  ) => Promise<{ success: boolean; data: any }>;
 }
 
 export class LoggingClient {
@@ -30,10 +34,21 @@ class SimpleLoggingService implements LogService {
   #serviceId = process.env.LOGGER_SERVICE_ID;
   #serviceUri = process.env.LOGGER_SERVICE_URI;
 
-  async save(key: LogKey, payload: LogPayload, options: LogOptions) {
+  async save(level: LogLevel, key: LogKey, payload: LogPayload, options: LogOptions) {
     if (!this.#serviceId || !this.#serviceUri) {
       console.error("Missing logger service id or uri");
       return { success: false, data: "Missing logger service id or uri" };
+    }
+
+    // debug-level logs will not be persisted to this service
+    if (level === "debug") {
+      const dateStr = new Date().toISOString().slice(0, 19).replace("T", " ");
+      console.log(level.toUpperCase(), dateStr, "SimpleLoggingService.save", key, "\n", payload);
+
+      return {
+        success: true,
+        data: payload,
+      };
     }
 
     const body = {
@@ -62,10 +77,10 @@ class SimpleLoggingService implements LogService {
 }
 
 class LocalLoggingService implements LogService {
-  public async save(key: LogKey, payload: LogPayload) {
+  public async save(level: LogLevel, key: LogKey, payload: LogPayload) {
     const dateStr = new Date().toISOString().slice(0, 19).replace("T", " ");
 
-    console.log(dateStr, "LocalLoggingService.save", key, "\n", payload);
+    console.log(level.toUpperCase(), dateStr, "LocalLoggingService.save", key, "\n", payload);
 
     return {
       success: true,
