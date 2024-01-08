@@ -1,3 +1,5 @@
+import { ZodError } from "zod";
+
 import { AuthorizationClient } from "../helpers/auth.service";
 import { formatZodErrors, GetTokenRequestSchema, ResponseHeaders } from "../helpers/common";
 import { LoggingClient } from "../helpers/log.service";
@@ -13,6 +15,11 @@ export default async function handler(request: Request) {
       headers: ResponseHeaders,
     });
   }
+
+  let parentEnvironment = "undetermined-environment";
+  let parentClientId = "undetermined-client-id";
+  let parentReferenceId = "undetermined-reference-id";
+  let parentReferenceType = "undetermined-reference-type";
 
   const realIp = request.headers.get("x-real-ip");
 
@@ -37,35 +44,56 @@ export default async function handler(request: Request) {
       });
     }
 
+    parentEnvironment = parsed.data.environment;
+    parentClientId = parsed.data.client_id;
+    parentReferenceId = parsed.data.reference_id;
+    parentReferenceType = parsed.data.reference_type;
+
     const authService = AuthorizationClient.getAuthService(parsed.data.environment);
     const authData = await authService.getAccessToken();
 
-    await logger
-      .save(
-        "request-access-token",
-        {
-          clientId: parsed.data.client_id,
-          referenceType: parsed.data.reference_type,
-          referenceId: parsed.data.reference_id,
-          "x-vercel-id": request.headers.get("x-vercel-id") || "no-vercel-id",
-        },
-        {
-          appEnvironment: parsed.data.environment,
-          lookup: parsed.data.client_id,
-          ip: requestIp,
-        },
-      )
-      .then((data) => {
-        console.info("Saved log", JSON.stringify(data));
-      });
+    await logger.save(
+      "info",
+      "request-access-token-success",
+      {
+        clientId: parsed.data.client_id,
+        referenceType: parsed.data.reference_type,
+        referenceId: parsed.data.reference_id,
+        "x-vercel-id": request.headers.get("x-vercel-id") || "no-vercel-id",
+      },
+      {
+        appEnvironment: parsed.data.environment,
+        lookup: parsed.data.client_id,
+        ip: requestIp,
+      },
+    );
 
     return new Response(JSON.stringify(authData), {
       status: 200,
       headers: ResponseHeaders,
     });
   } catch (error) {
-    console.error(error);
-    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : "Fatal error occurred" }), {
+    let errorMessage = "Something went wrong at api/token";
+    let errorType = "Error";
+
+    if (error instanceof ZodError) {
+      errorMessage = "Validation error with zod";
+      errorType = "ZodError";
+    } else {
+      errorMessage =
+        error instanceof Error
+          ? error?.message || "Something went wrong at api/token"
+          : "Something went wrong at api/token";
+    }
+
+    await logger.save(
+      "error",
+      "request-access-token-fail",
+      { errorType, errorMessage },
+      { ip: requestIp, appEnvironment: parentEnvironment, lookup: "error" },
+    );
+
+    return new Response(JSON.stringify({ error: errorMessage, error_type: errorType }), {
       status: 500,
       headers: ResponseHeaders,
     });
