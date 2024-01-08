@@ -19,6 +19,8 @@ You may merge your pull request after receiving an approval from Sean, or any ot
 
 This project uses the Vercel-CLI to run the application locally. You can install it by running `npm i -g vercel`.
 
+After installation, use the `vercel dev` option to run the application alongside the necessary development serverless endpoints.
+
 ## Documentation
 
 Update the [DOCUMENTATION](/DOCUMENTATION.md) if your contribution involves adding or changing configuration values.
