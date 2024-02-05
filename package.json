@@ -65,7 +65,7 @@
     "eslint-plugin-prettier": "^5.1.2",
     "i18next-locales-sync": "^2.0.1",
     "postcss": "^8.4.33",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
