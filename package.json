@@ -35,7 +35,7 @@
     "lucide-react": "^0.379.0",
     "payment": "^2.4.6",
     "react": "^18.3.1",
-    "react-credit-cards-2": "^1.0.1",
+    "react-credit-cards-2": "^1.0.2",
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.2.3",
     "react-error-boundary": "^4.0.12",
