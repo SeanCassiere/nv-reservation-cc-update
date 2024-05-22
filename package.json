@@ -11,8 +11,8 @@
     "lint:fix": "eslint --fix --max-warnings=0 src",
     "format-src": "prettier --write './src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.cjs",
     "format-helpers": "prettier --write './helpers/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.cjs",
-    "format-netlify": "prettier --write './netlify/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.cjs",
-    "format": "npm run format-src && npm run format-helpers && npm run format-netlify",
+    "format-api": "prettier --write './api/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.cjs",
+    "format": "npm run format-src && npm run format-helpers && npm run format-api",
     "sync-i18n": "i18next-locales-sync -c ./locales-sync.config.js"
   },
   "dependencies": {
