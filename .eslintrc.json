@@ -3,7 +3,7 @@
     "React": true,
     "react": true
   },
-  "extends": ["plugin:@typescript-eslint/recommended", "react-app", "prettier"],
+  "extends": ["plugin:@typescript-eslint/recommended", "prettier"],
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
     "no-unused-vars": "off",
