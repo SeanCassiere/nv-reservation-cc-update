@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite --port $PORT",
     "start": "vite",
-    "build": "tsc && vite build",
+    "build:code": "tsc && vite build",
+    "build": "npm run lint && npm run build:code",
     "preview": "vite preview",
     "lint": "eslint --max-warnings=0 src",
     "lint:fix": "eslint --fix --max-warnings=0 src",
@@ -72,7 +73,6 @@
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.3.3",
-    "vite": "^5.2.11",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite": "^5.2.11"
   }
 }

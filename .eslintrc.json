@@ -3,6 +3,14 @@
     "React": true,
     "react": true
   },
+  "settings": {
+    "react": {
+      "createClass": "createReactClass", // Regex for Component Factory to use,
+      "pragma": "React",
+      "fragment": "Fragment",
+      "version": "detect"
+    }
+  },
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
